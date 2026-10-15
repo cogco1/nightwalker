@@ -44,6 +44,13 @@ func bind_player(player: CharacterBody2D) -> void:
 	player.charge_started.connect(play.bind("charge", 1.0))
 	player.charge_ready.connect(play.bind("charge_ready", 1.0))
 	player.charge_ended.connect(func(_released: bool) -> void: _voices["charge"].stop())
+	# Taking a hit: a low heavy impact; a perfect dodge: a high chime.
+	player.attack_received.connect(func(result: int, _attack: Dictionary) -> void:
+		if result == 0:
+			play("hit_heavy", 0.7)
+		elif result == 2:
+			play("charge_ready", 1.4)
+	)
 
 
 func play(sound: String, pitch := 1.0) -> void:

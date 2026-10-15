@@ -15,10 +15,13 @@ signal move_started(move: StringName)
 signal charge_started
 signal charge_ready
 signal charge_ended(released: bool)
+## An enemy attack reached the hero: AttackResult and the attack (see receive_attack).
+signal attack_received(result: int, attack: Dictionary)
 
 enum ViewMode { TOP_DOWN, SIDE_VIEW }
 ## One combat state at a time; the old flags below are read-only views of it.
 enum State { FREE, ATTACK, CHARGE, RECOVERY, HURT }
+enum AttackResult { HIT, EVADE, PERFECT }
 
 @export var view_mode: ViewMode = ViewMode.TOP_DOWN
 @export var move_speed := 60.0
@@ -55,6 +58,13 @@ const DASH_BUFFER_SECONDS := 0.15
 # Dodge offset: an attack press this soon after the dash ends gives the offset follow-up, and a dash this soon after a
 # string hit ends keeps that string going.
 const DODGE_OFFSET_SECONDS := 0.25
+# Hit by an enemy: knocked back HURT_KNOCKBACK px over HURT_SLIDE_SECONDS, stunned and blinking red for HURT_SECONDS.
+const HURT_SECONDS := 0.3
+const HURT_SLIDE_SECONDS := 0.25
+const HURT_KNOCKBACK := 20.0
+const HURT_TINT := Color(1.0, 0.3, 0.3)
+# A dash started at most this long before an enemy's hit window opens (or during it) is a perfect dodge.
+const PERFECT_LEAD_SECONDS := 0.2
 ## Attack buttons in the combo graph: left click (light) and right click (heavy).
 const ATTACK_INPUTS: Array[StringName] = [&"light", &"heavy"]
 # Code-drawn blade circle of spinning moves: radius and centre height above the feet, native px.
@@ -96,6 +106,8 @@ var _last_string_id: StringName = &""
 var _string_end_time := -INF
 var _offset_from: StringName = &""
 var _offset_until := 0.0
+var _dash_started_at := -INF
+var _hurt_brake := 0.0
 var dash_start := Vector2.ZERO
 var dash_end := Vector2.ZERO
 var dash_executed := false
@@ -192,7 +204,9 @@ func _physics_process(delta: float) -> void:
 	if state == State.ATTACK:
 		move_ticks += 1
 	_recovery_left = maxf(0.0, _recovery_left - delta)
-	if state == State.RECOVERY and _recovery_left <= 0.0:
+	if (state == State.RECOVERY or state == State.HURT) and _recovery_left <= 0.0:
+		if state == State.HURT:
+			sprite.modulate = Color.WHITE
 		state = State.FREE
 	_expire_intents()
 	if _intents.has(&"dive"):
@@ -209,7 +223,7 @@ func _physics_process(delta: float) -> void:
 			_jumps_used = 0
 		if not is_attacking and not is_charging and _recovery_left <= 0.0:
 			_update_crouch(delta)
-		if Input.is_action_just_pressed("jump") and not is_crouching and _jumps_used < 2 and not move.get("dive", false) and (not was_grounded or not is_attacking):
+		if Input.is_action_just_pressed("jump") and state != State.HURT and not is_crouching and _jumps_used < 2 and not move.get("dive", false) and (not was_grounded or not is_attacking):
 			_jumps_used = 1 if was_grounded else 2
 			_crouch_exiting = false
 			velocity.y = jump_velocity
@@ -255,6 +269,13 @@ func _physics_process(delta: float) -> void:
 			velocity = attack_direction * impulse
 		else:
 			velocity.x = direction.x * crouch_speed if not was_grounded and move.get("steer", false) else attack_direction.x * impulse
+	elif state == State.HURT:
+		# Knocked back, braking to a stop inside the stun; the hero blinks red.
+		if view_mode == ViewMode.TOP_DOWN:
+			velocity = velocity.move_toward(Vector2.ZERO, _hurt_brake * delta)
+		else:
+			velocity.x = move_toward(velocity.x, 0.0, _hurt_brake * delta)
+		sprite.modulate = HURT_TINT if int(_recovery_left * 30.0) % 2 == 0 else Color.WHITE
 	elif _recovery_left > 0.0 or is_charging:
 		if view_mode == ViewMode.TOP_DOWN:
 			velocity = Vector2.ZERO
@@ -802,7 +823,7 @@ func request_rising_slash() -> bool:
 
 
 func request_dive_slash() -> bool:
-	if view_mode != ViewMode.SIDE_VIEW or is_on_floor() or move.get("dive", false):
+	if view_mode != ViewMode.SIDE_VIEW or is_on_floor() or move.get("dive", false) or state == State.HURT:
 		return false
 	_air_hold_left = 0.0
 	velocity.y = DIVE_SPEED
@@ -826,6 +847,7 @@ func request_dash_stab(direction: int) -> bool:
 		_offset_from = &""
 	facing = "right" if direction > 0 else "left"
 	_crouch_exiting = false
+	_dash_started_at = combat_time
 	dash_executed = false
 	dash_start = global_position
 	dash_end = global_position
@@ -1021,6 +1043,56 @@ func _expire_intents() -> void:
 func _set_recovery(seconds: float) -> void:
 	_recovery_left = seconds
 	state = State.RECOVERY if seconds > 0.0 else State.FREE
+
+
+## Body rectangle enemy attacks test against.
+func hurtbox() -> Rect2:
+	var size := (body_shape.shape as RectangleShape2D).size
+	return Rect2(body_shape.global_position - size / 2.0, size)
+
+
+## An enemy attack reaches the hero (scripts/enemies/enemy_attacker.gd). attack: {source, direction (the push),
+## contact (false: the hit window closed without touching the hero), window_age (seconds since the attacker's hit
+## window opened), knockback (px)}. A dash started at most PERFECT_LEAD_SECONDS before the window opened, or inside
+## it, is PERFECT; otherwise a dash's invulnerability or being out of the way is EVADE; else HIT, into HURT.
+func receive_attack(attack: Dictionary) -> int:
+	var result := AttackResult.HIT
+	if combat_time - _dash_started_at <= float(attack.get("window_age", 0.0)) + PERFECT_LEAD_SECONDS:
+		result = AttackResult.PERFECT
+	elif not attack.get("contact", true) or (state == State.ATTACK and move.get("dodge", false)):
+		result = AttackResult.EVADE
+	if result == AttackResult.HIT:
+		_take_hit(attack)
+	attack_received.emit(result, attack)
+	return result
+
+
+# Interrupts the move or charge, knocks the hero back and stuns it (HURT) for HURT_SECONDS.
+func _take_hit(attack: Dictionary) -> void:
+	if is_charging:
+		_cancel_charge()
+	_clear_attack_intents()
+	stage_is_critical = false
+	move_id = &""
+	move = {}
+	_string_id = &""
+	_air_hold_left = 0.0
+	is_running = false
+	state = State.HURT
+	_recovery_left = HURT_SECONDS
+	var push: Vector2 = attack.get("direction", -_facing_vector())
+	var speed := 2.0 * float(attack.get("knockback", HURT_KNOCKBACK)) / HURT_SLIDE_SECONDS
+	_hurt_brake = speed / HURT_SLIDE_SECONDS
+	if view_mode == ViewMode.SIDE_VIEW:
+		velocity.x = signf(push.x) * speed
+		velocity.y = minf(velocity.y, 0.0)
+		_set_manual_frame("jump_" + facing, 13)
+	else:
+		velocity = push.normalized() * speed
+	sprite.modulate = HURT_TINT
+	fx.clear_trails()
+	fx.sparks(global_position + Vector2(0, -15))
+	combo_changed.emit(0)
 
 
 func show_idle() -> void:

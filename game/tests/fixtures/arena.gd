@@ -3,6 +3,7 @@ extends Node2D
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const PLAYER_SCENE = preload("res://scenes/player.tscn")
 const TARGET_SCRIPT = preload("res://tests/fixtures/training_target.gd")
+const DRONE_SCRIPT = preload("res://tests/fixtures/attack_drone.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 # The fixture runs the shipped GameSession (hit-stop, settings menu, combat sounds); the names below forward
@@ -15,6 +16,8 @@ var view_mode := 0
 var world: Node2D
 var player: CharacterBody2D
 var targets: Array[CharacterBody2D] = []
+## Drones that attack the hero; only suites that ask for them get them (add_attacker).
+var attackers: Array[CharacterBody2D] = []
 var obstacles: Array[Rect2] = []
 var hits := 0
 var defeated := 0
@@ -77,6 +80,7 @@ func build_arena(mode: int) -> void:
 	world.y_sort_enabled = view_mode == 0
 	add_child(world)
 	targets.clear()
+	attackers.clear()
 	obstacles.clear()
 	hits = 0
 	defeated = 0
@@ -112,6 +116,7 @@ func build_arena(mode: int) -> void:
 	player.normal_contact_stop.connect(_on_normal_contact_stop)
 	player.special_started.connect(_on_special_started)
 	player.landing_impact.connect(_on_landing_impact)
+	player.attack_received.connect(_on_attack_received)
 	var spawn_points: Array[Vector2] = [Vector2(90, 83), Vector2(171, 143), Vector2(273, 93)]
 	if view_mode == 1:
 		spawn_points = [Vector2(99, 160), Vector2(153, 122), Vector2(278, 160), Vector2(119, 160), Vector2(135, 160)]
@@ -128,6 +133,16 @@ func build_arena(mode: int) -> void:
 	session.bind_player(player)
 	_refresh_hud()
 	queue_redraw()
+
+
+## Side view: a hovering drone at `at` (its body centre) that telegraphs and lunges at the hero.
+func add_attacker(at: Vector2) -> CharacterBody2D:
+	var drone := DRONE_SCRIPT.new()
+	drone.position = at
+	world.add_child(drone)
+	drone.attacker.bind_target(player)
+	attackers.append(drone)
+	return drone
 
 
 func add_wall(rectangle: Rect2) -> StaticBody2D:
@@ -184,6 +199,11 @@ func _on_combo_changed(_stage: int) -> void:
 
 func _on_hit_resolved(_target: Node, damage: int, critical: bool, kind: String) -> void:
 	message = "CRITICAL x3! %d damage." % damage if critical else ("%s hit!" % kind if kind != "" else "Hit! %d damage." % damage)
+	_refresh_hud()
+
+
+func _on_attack_received(result: int, _attack: Dictionary) -> void:
+	message = ["HIT TAKEN", "EVADED", "PERFECT DODGE"][result]
 	_refresh_hud()
 
 

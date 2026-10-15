@@ -27,6 +27,8 @@ var settings_open := false
 var keybindings_menu: CanvasLayer
 var combat_feedback: Node
 var hit_stop_active := false
+## Speed of the world relative to the hero: enemies scale their delta by it (1 = normal).
+var world_time_scale := 1.0
 var hit_stop_requested_frames := 0
 var hit_stop_min_seconds := 0.0
 var hit_stop_elapsed_seconds := 0.0
