@@ -26,6 +26,9 @@ enum Phase { IDLE, TELEGRAPH, LUNGE, RECOVER, RETURN, COOLDOWN }
 @export var cooldown_seconds := 1.2
 ## Attack box around the parent's origin, native px.
 @export var hitbox := Rect2(-8, -8, 16, 12)
+## Where the parent's origin aims, from the hero's feet: (0, -13) for a body centred on its origin, (0, 0) for a body
+## drawn above an origin on the floor.
+@export var aim_offset := Vector2(0, -13)
 @export var knockback := 20.0
 @export var warning_color := Color(1.0, 0.25, 0.25)
 
@@ -68,6 +71,12 @@ func window_age() -> float:
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(target) or not is_instance_valid(_body):
 		return
+	# A destroyed body (hit points used up) stands down until it has them again.
+	if _body.get("hp") != null and int(_body.get("hp")) <= 0:
+		if phase != Phase.COOLDOWN:
+			reset()
+		phase_time = 0.0
+		return
 	phase_time += delta * world_scale()
 	match phase:
 		Phase.IDLE:
@@ -78,7 +87,7 @@ func _physics_process(delta: float) -> void:
 				telegraph_started.emit()
 		Phase.TELEGRAPH:
 			if phase_time <= telegraph_seconds - lock_lead:
-				aim = target.global_position + Vector2(0, -13)
+				aim = target.global_position + aim_offset
 			_body.modulate = warning_color if int(phase_time / 0.06) % 2 == 0 else _base_modulate
 			if phase_time >= telegraph_seconds:
 				_body.modulate = _base_modulate
