@@ -93,6 +93,7 @@ func custom_profile() -> Dictionary:
 	result["crouch"] = KEY_C
 	result["rising_modifier"] = KEY_U
 	result["attack_mouse"] = MOUSE_BUTTON_RIGHT
+	result["heavy_mouse"] = MOUSE_BUTTON_MIDDLE
 	result["switch_view"] = KEY_V
 	result["reset_arena"] = KEY_N
 	return result
@@ -150,6 +151,7 @@ func run_tests() -> void:
 	mouse(MOUSE_BUTTON_RIGHT, true)
 	mouse(MOUSE_BUTTON_RIGHT, false)
 	check(menu.draft["attack_mouse"] == MOUSE_BUTTON_RIGHT and menu.waiting_slot.is_empty(), "mouse attack button can be rebound")
+	check(menu.draft["heavy_mouse"] == MOUSE_BUTTON_LEFT, "taking the heavy button swaps heavy onto the old attack button")
 	menu.begin_capture("jump")
 	await tap(KEY_ESCAPE)
 	check(arena.settings_open and menu.waiting_slot.is_empty(), "Esc cancels capture while keeping the settings open")
@@ -255,6 +257,23 @@ func run_tests() -> void:
 	var clash := custom_profile()
 	clash["dash_modifier"] = clash["run"]
 	check(not CONTROLS.validate(clash).is_empty(), "the dash key can no longer share the run key")
+	clash = custom_profile()
+	clash["heavy_mouse"] = clash["attack_mouse"]
+	check(not CONTROLS.validate(clash).is_empty(), "attack and heavy cannot share a mouse button")
+	clash = custom_profile()
+	clash["heavy_mouse"] = KEY_H
+	check(not CONTROLS.validate(clash).is_empty(), "the heavy slot only takes mouse buttons")
+	# A profile saved before the heavy attack existed gets the right button when attack is not on it.
+	var before_heavy := ConfigFile.new()
+	before_heavy.set_value("bindings", "version", 3)
+	for slot in CONTROLS.SLOTS:
+		if slot != "heavy_mouse":
+			before_heavy.set_value("bindings", slot, CONTROLS.defaults()[slot])
+	before_heavy.save(TEST_PATH)
+	CONTROLS.current.clear()
+	CONTROLS.install()
+	check(CONTROLS.current == CONTROLS.defaults() and CONTROLS.load_notice.contains("RMB"), "a profile saved before the heavy attack gets RMB for heavy and says so")
+	check(InputMap.action_get_events("heavy_mouse").size() == 1, "the heavy action is bound to one mouse button")
 	# The reload stage expects the custom profile on disk.
 	check(CONTROLS.save_bindings(custom_profile()).is_empty(), "the custom profile is saved again for the reload stage")
 	check(InputMap.action_get_events("attack").size() == 1 and not CONTROLS.current.has("attack_keyboard"), "old saved J attack is discarded during migration")

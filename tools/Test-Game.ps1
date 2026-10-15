@@ -21,7 +21,8 @@ $suites = @(
     @{ Name = 'contact_refresh_v07';      Script = 'test_contact_refresh_v07'; Fps = 144 },
     @{ Name = 'charged_slash';            Script = 'test_charged_slash' },
     @{ Name = 'moveset';                  Script = 'test_moveset' },
-    @{ Name = 'combat_state';             Script = 'test_combat_state' }
+    @{ Name = 'combat_state';             Script = 'test_combat_state' },
+    @{ Name = 'rhythm_combat';            Script = 'test_rhythm_combat' }
 )
 
 $failed = @()

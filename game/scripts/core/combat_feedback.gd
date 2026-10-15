@@ -2,6 +2,7 @@ extends Node
 ## Attack sounds for the hero. GameSession owns one per scene and binds the player; it keeps running while
 ## the hit-stop pauses the tree, so an impact sound is never cut by the freeze it causes.
 
+const MOVESET = preload("res://scripts/player/moves_long_blade.gd")
 const SOUNDS := {
 	"swing_light": preload("res://assets/audio/sfx/swing_light.wav"),
 	"swing_heavy": preload("res://assets/audio/sfx/swing_heavy.wav"),
@@ -57,7 +58,8 @@ func play(sound: String, pitch := 1.0) -> void:
 
 
 func _on_move_started(move: StringName) -> void:
-	if move == &"heavy_slash":
-		play("swing_heavy")
+	var row: Dictionary = MOVESET.MOVES.get(move, {})
+	if row.get("swing", &"light") == &"heavy":
+		play("swing_heavy", float(row.get("pitch", 1.0)))
 	else:
-		play("swing_light", SWING_PITCH.get(move, 1.0))
+		play("swing_light", SWING_PITCH.get(move, float(row.get("pitch", 1.0))))

@@ -284,11 +284,19 @@ func run_tests() -> void:
 		check(await wait_stage(3), "second strike flows into third, mode " + str(mode))
 		check(arena.player.sprite.animation == "attack3_right", "third strike uses distinct animation, mode " + str(mode))
 		await mouse_tap()
-		check(not arena.player.queued_attack, "third strike refuses fourth buffer, mode " + str(mode))
+		if mode == 0:
+			check(not arena.player.queued_attack, "third strike refuses fourth buffer, mode " + str(mode))
+		else:
+			# The side-view light string goes on to the thrust and the spin (tests/test_rhythm_combat.gd).
+			check(arena.player.queued_attack, "third strike buffers the fourth-hit thrust, mode " + str(mode))
 		await tick(40)
 		check(arena.targets[0].hp == 0 and arena.hits == 3, "three-hit chain hits same target once per strike, mode " + str(mode))
 		check(arena.defeated == 1 and arena.targets[0].body_shape.disabled, "combo defeat disables target collider, mode " + str(mode))
-		check(arena.player.combo_stage == 0 and not arena.player.is_attacking, "three-hit chain ends, mode " + str(mode))
+		for _index in range(60):
+			if not arena.player.is_attacking:
+				break
+			await tick(1)
+		check(arena.player.combo_stage == 0 and not arena.player.is_attacking, "the light string ends, mode " + str(mode))
 	await prepare_target(0)
 	await mouse_tap()
 	check(await wait_attack_frame(14), "first strike reaches late recovery frame")

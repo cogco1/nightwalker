@@ -264,12 +264,12 @@ func _refresh_hud() -> void:
 	var right := CONTROLS.binding_text("move_right")
 	controls_label.text = "%s/%s/%s/%s Move %s Run F1 Keys\n%s Combo %s View %s Reset" % [CONTROLS.binding_text("move_up"), left, CONTROLS.binding_text("move_down"), right, CONTROLS.binding_text("run"), attack, CONTROLS.binding_text("switch_view"), CONTROLS.binding_text("reset_arena")]
 	if view_mode == 1:
-		controls_label.text = "%s/%s Move %s Duck/Dive %s x2 Jump %s Run\n%s+%s Rise %s Dash %s Air combo" % [left, right, CONTROLS.binding_text("crouch"), CONTROLS.binding_text("jump"), CONTROLS.binding_text("run"), CONTROLS.binding_text("rising_modifier"), attack, CONTROLS.binding_text("dash_modifier"), attack]
+		controls_label.text = "%s/%s Move %s Duck/Dive %s x2 Jump %s Run\n%s+%s Rise %s Dash %s Combo %s Heavy" % [left, right, CONTROLS.binding_text("crouch"), CONTROLS.binding_text("jump"), CONTROLS.binding_text("run"), CONTROLS.binding_text("rising_modifier"), attack, CONTROLS.binding_text("dash_modifier"), attack, CONTROLS.binding_text("heavy_mouse")]
 	var width := controls_label.get_theme_font("font").get_multiline_string_size(controls_label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 8).x
 	var hud_size := 8 if width <= 304 else (7 if width <= 347 else 6)
 	controls_label.add_theme_font_size_override("font_size", hud_size)
 	var combo: int = player.combo_stage if is_instance_valid(player) else 0
-	status_label.text = "COMBO %d/3 HIT %d KO %d/%d | %s" % [combo, hits, defeated, targets.size(), message]
+	status_label.text = "COMBO %d/5 HIT %d KO %d/%d | %s" % [combo, hits, defeated, targets.size(), message]
 
 
 func _draw() -> void:

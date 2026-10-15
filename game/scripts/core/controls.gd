@@ -1,12 +1,14 @@
 extends RefCounted
 
 const SETTINGS_PATH := "user://keybindings.cfg"
-const SLOTS := ["move_up", "move_down", "move_left", "move_right", "run", "jump", "crouch", "rising_modifier", "dash_modifier", "attack_mouse", "switch_view", "reset_arena"]
+const SLOTS := ["move_up", "move_down", "move_left", "move_right", "run", "jump", "crouch", "rising_modifier", "dash_modifier", "attack_mouse", "heavy_mouse", "switch_view", "reset_arena"]
+## Slots bound to a mouse button rather than a key.
+const MOUSE_SLOTS := ["attack_mouse", "heavy_mouse"]
 const LABELS := {
 	"move_up": "俯视上移", "move_down": "俯视下移", "move_left": "左移 / 突刺", "move_right": "右移 / 突刺",
 	"run": "按住跑步", "jump": "跳跃 / 二段跳", "crouch": "下蹲 / 下劈", "rising_modifier": "上挑修饰键",
 	"dash_modifier": "突刺键",
-	"attack_mouse": "攻击鼠标键", "switch_view": "切换视角", "reset_arena": "重置位置",
+	"attack_mouse": "攻击鼠标键", "heavy_mouse": "重击鼠标键", "switch_view": "切换视角", "reset_arena": "重置位置",
 }
 const MOUSE_BUTTONS := [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_MIDDLE, MOUSE_BUTTON_XBUTTON1, MOUSE_BUTTON_XBUTTON2]
 
@@ -20,7 +22,7 @@ static func defaults() -> Dictionary:
 		"move_up": KEY_W, "move_down": KEY_S, "move_left": KEY_A, "move_right": KEY_D,
 		"run": KEY_CAPSLOCK, "jump": KEY_SPACE, "crouch": KEY_S, "rising_modifier": KEY_W,
 		"dash_modifier": KEY_SHIFT,
-		"attack_mouse": MOUSE_BUTTON_LEFT, "switch_view": KEY_TAB, "reset_arena": KEY_R,
+		"attack_mouse": MOUSE_BUTTON_LEFT, "heavy_mouse": MOUSE_BUTTON_RIGHT, "switch_view": KEY_TAB, "reset_arena": KEY_R,
 	}
 
 
@@ -45,6 +47,9 @@ static func _load_saved() -> void:
 		if slot == "dash_modifier" and not config.has_section_key("bindings", slot):
 			profile[slot] = KEY_SHIFT
 			continue
+		if slot == "heavy_mouse" and not config.has_section_key("bindings", slot):
+			profile[slot] = -1
+			continue
 		if not config.has_section_key("bindings", slot):
 			load_notice = "设置文件不完整，已使用默认按键。"
 			return
@@ -53,6 +58,13 @@ static func _load_saved() -> void:
 		# The dash key used to be a modifier that could share run's key; it is now a press of its own.
 		profile["dash_modifier"] = _free_dash_key(profile)
 		load_notice = "突刺键改成单按触发，已从跑步键移到「%s」。" % binding_text("dash_modifier", profile)
+	if profile["heavy_mouse"] == -1:
+		# Saved before the heavy attack existed: right button, or the first mouse button attack leaves free.
+		for button in [MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_MIDDLE, MOUSE_BUTTON_XBUTTON1, MOUSE_BUTTON_XBUTTON2, MOUSE_BUTTON_LEFT]:
+			if button != profile["attack_mouse"]:
+				profile["heavy_mouse"] = button
+				break
+		load_notice = (load_notice + " " if not load_notice.is_empty() else "") + "新增重击，鼠标键为「%s」。" % binding_text("heavy_mouse", profile)
 	if not validate(profile).is_empty():
 		load_notice = "设置文件无效，已使用默认按键。"
 		return
@@ -62,7 +74,7 @@ static func _load_saved() -> void:
 static func _free_dash_key(profile: Dictionary) -> int:
 	var used: Array = []
 	for slot in SLOTS:
-		if slot != "dash_modifier" and slot != "attack_mouse":
+		if slot != "dash_modifier" and slot not in MOUSE_SLOTS:
 			used.append(profile[slot])
 	for code in [KEY_SHIFT, KEY_CTRL, KEY_ALT, KEY_F, KEY_Q, KEY_E, KEY_L, KEY_K]:
 		if code not in used:
@@ -91,18 +103,20 @@ static func validate(profile: Dictionary) -> String:
 		if not profile.has(slot) or typeof(profile[slot]) != TYPE_INT:
 			return "按键设置无效。"
 		var code: int = profile[slot]
-		if slot == "attack_mouse":
+		if slot in MOUSE_SLOTS:
 			if code not in MOUSE_BUTTONS:
 				return "请选择鼠标左键、右键、中键或侧键。"
 		elif code == KEY_ESCAPE or code == KEY_F1:
 			return "Esc 和 F1 保留用于打开 / 关闭改键界面。"
 		elif not _valid_key(code):
 			return "这个按键暂不支持，请换一个键。"
+	if profile["attack_mouse"] == profile["heavy_mouse"]:
+		return "与「%s」/「%s」冲突，请换一个键。" % [LABELS["attack_mouse"], LABELS["heavy_mouse"]]
 	for left in range(SLOTS.size()):
 		for right in range(left + 1, SLOTS.size()):
 			var a: String = SLOTS[left]
 			var b: String = SLOTS[right]
-			if a == "attack_mouse" or b == "attack_mouse" or profile[a] != profile[b]:
+			if a in MOUSE_SLOTS or b in MOUSE_SLOTS or profile[a] != profile[b]:
 				continue
 			# Cross-view pairs may share a key; the dash key is a press of its own and cannot share with run.
 			if [a, b] in [["move_up", "rising_modifier"], ["move_down", "crouch"]]:
@@ -149,7 +163,7 @@ static func _apply() -> void:
 		InputMap.action_erase_events(action)
 	for slot in SLOTS:
 		var event: InputEvent
-		if slot == "attack_mouse":
+		if slot in MOUSE_SLOTS:
 			var mouse := InputEventMouseButton.new()
 			mouse.button_index = current[slot]
 			event = mouse
@@ -161,14 +175,14 @@ static func _apply() -> void:
 
 
 static func binding_pressed(slot: String) -> bool:
-	if slot == "attack_mouse":
+	if slot in MOUSE_SLOTS:
 		return Input.is_mouse_button_pressed(current[slot])
 	return Input.is_physical_key_pressed(current[slot])
 
 
 static func binding_text(slot: String, profile: Dictionary = {}) -> String:
 	var bindings := current if profile.is_empty() else profile
-	if slot == "attack_mouse":
+	if slot in MOUSE_SLOTS:
 		match int(bindings[slot]):
 			MOUSE_BUTTON_LEFT: return "LMB"
 			MOUSE_BUTTON_RIGHT: return "RMB"

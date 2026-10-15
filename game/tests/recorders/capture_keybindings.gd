@@ -65,6 +65,7 @@ func capture() -> void:
 	profile["crouch"] = KEY_C
 	profile["rising_modifier"] = KEY_U
 	profile["attack_mouse"] = MOUSE_BUTTON_RIGHT
+	profile["heavy_mouse"] = MOUSE_BUTTON_LEFT
 	profile["switch_view"] = KEY_V
 	profile["reset_arena"] = KEY_N
 	CONTROLS.current = profile
