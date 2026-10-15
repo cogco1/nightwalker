@@ -24,7 +24,8 @@ $suites = @(
     @{ Name = 'moveset';                  Script = 'test_moveset' },
     @{ Name = 'combat_state';             Script = 'test_combat_state' },
     @{ Name = 'rhythm_combat';            Script = 'test_rhythm_combat' },
-    @{ Name = 'enemy_attack';             Script = 'test_enemy_attack' }
+    @{ Name = 'enemy_attack';             Script = 'test_enemy_attack' },
+    @{ Name = 'perfect_counter';          Script = 'test_perfect_counter' }
 )
 
 $failed = @()

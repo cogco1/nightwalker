@@ -17,6 +17,8 @@ signal charge_ready
 signal charge_ended(released: bool)
 ## An enemy attack reached the hero: AttackResult and the attack (see receive_attack).
 signal attack_received(result: int, attack: Dictionary)
+## The perfect-dodge counter blinked behind this enemy and swings.
+signal counter_started(enemy: Node2D)
 
 enum ViewMode { TOP_DOWN, SIDE_VIEW }
 ## One combat state at a time; the old flags below are read-only views of it.
@@ -65,6 +67,8 @@ const HURT_KNOCKBACK := 20.0
 const HURT_TINT := Color(1.0, 0.3, 0.3)
 # A dash started at most this long before an enemy's hit window opens (or during it) is a perfect dodge.
 const PERFECT_LEAD_SECONDS := 0.2
+# The counter lands the hero this far past the enemy's centre, on its far side.
+const COUNTER_BEHIND := 18.0
 ## Attack buttons in the combo graph: left click (light) and right click (heavy).
 const ATTACK_INPUTS: Array[StringName] = [&"light", &"heavy"]
 # Code-drawn blade circle of spinning moves: radius and centre height above the feet, native px.
@@ -107,6 +111,9 @@ var _string_end_time := -INF
 var _offset_from: StringName = &""
 var _offset_until := 0.0
 var _dash_started_at := -INF
+## Set by GameSession during the perfect-dodge slow motion: enemy attacks cannot hit.
+var invulnerable := false
+var _counter_target: Node2D = null
 var _hurt_brake := 0.0
 var dash_start := Vector2.ZERO
 var dash_end := Vector2.ZERO
@@ -240,6 +247,9 @@ func _physics_process(delta: float) -> void:
 		elif is_attacking and sprite.frame < int(move.get("dash_cancel", -1)):
 			# The press waits for this swing's dodge window.
 			_intents[&"dash"]["expires"] = combat_time + DASH_BUFFER_SECONDS
+	# During the perfect-dodge slow motion either button is the counter, whatever the hero is doing.
+	if is_instance_valid(_counter_target) and (_intent_stage(&"light") == &"raw" or _intent_stage(&"heavy") == &"raw"):
+		_start_counter()
 	# Taps are processed while attacking too. Holding a button never auto-chains.
 	if _mouse_attack_pending:
 		var special := false
@@ -1057,7 +1067,9 @@ func hurtbox() -> Rect2:
 ## it, is PERFECT; otherwise a dash's invulnerability or being out of the way is EVADE; else HIT, into HURT.
 func receive_attack(attack: Dictionary) -> int:
 	var result := AttackResult.HIT
-	if combat_time - _dash_started_at <= float(attack.get("window_age", 0.0)) + PERFECT_LEAD_SECONDS:
+	if invulnerable:
+		result = AttackResult.EVADE
+	elif combat_time - _dash_started_at <= float(attack.get("window_age", 0.0)) + PERFECT_LEAD_SECONDS:
 		result = AttackResult.PERFECT
 	elif not attack.get("contact", true) or (state == State.ATTACK and move.get("dodge", false)):
 		result = AttackResult.EVADE
@@ -1065,6 +1077,55 @@ func receive_attack(attack: Dictionary) -> int:
 		_take_hit(attack)
 	attack_received.emit(result, attack)
 	return result
+
+
+## GameSession opens the counter on a perfect dodge (the enemy that missed) and closes it when the slow motion ends.
+func open_counter(enemy: Node2D) -> void:
+	_counter_target = enemy
+
+
+func close_counter() -> void:
+	_counter_target = null
+
+
+# Perfect-dodge counter: blinks to the far side of the enemy (the near side if a wall is there) and cuts it with
+# counter_slash, a sure critical with the heavy freeze.
+func _start_counter() -> void:
+	var enemy := _counter_target
+	_counter_target = null
+	_clear_attack_intents()
+	if is_charging:
+		_cancel_charge()
+	var from := global_position
+	var side := 1.0 if from.x <= enemy.global_position.x else -1.0
+	var to := Vector2(enemy.global_position.x + side * COUNTER_BEHIND, from.y)
+	if not _clear_at(to):
+		side = -side
+		to = Vector2(enemy.global_position.x + side * COUNTER_BEHIND, from.y)
+		if not _clear_at(to):
+			to = from
+	fx.ghost(sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame), from + sprite.offset, 0.2)
+	for lane in range(3):
+		var y := -10.0 - lane * 6.0
+		fx.add({"position": to + Vector2(0, y), "velocity": Vector2.ZERO, "tail": (to - from) * (1.0 - lane * 0.25),
+			"life": 0.12, "color": PLAYER_FX.WHITE if lane == 1 else PLAYER_FX.BLUE})
+	global_position = to
+	facing = "left" if side > 0.0 else "right"
+	attack_direction = _facing_vector()
+	_start_move(&"counter_slash")
+	counter_started.emit(enemy)
+
+
+func _clear_at(point: Vector2) -> bool:
+	var shape := RectangleShape2D.new()
+	# Inset, so standing on the floor is not a collision.
+	shape.size = (body_shape.shape as RectangleShape2D).size - Vector2(0.2, 0.2)
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = shape
+	query.transform = Transform2D(0.0, point + body_shape.position)
+	query.collision_mask = 1
+	query.exclude = [get_rid()]
+	return get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 
 
 # Interrupts the move or charge, knocks the hero back and stuns it (HURT) for HURT_SECONDS.

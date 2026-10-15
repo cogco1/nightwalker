@@ -114,6 +114,11 @@ const MOVES := {
 		"shockwave": {"half_width": 36.0, "launch": true, "crit": true, "crit_stop": &"critical"},
 		"side_only": true, "swing": &"heavy", "pitch": 0.9},
 
+	# Perfect-dodge counter (player._start_counter): a sure critical with the heavy freeze, 3x damage.
+	&"counter_slash": {"stage": 3, "anim": "attack3", "air_anim": "air_attack3", "fps": 48.0, "start_frame": 3,
+		"active": Vector2i(5, 9), "box": BIG_BLADE, "crit": &"always", "crit_stop": &"heavy", "ghosts": [4, 6],
+		"recovery": 0.16, "air": LIGHT_AIR, "special": "counter", "side_only": true, "swing": &"heavy", "pitch": 0.9},
+
 	# Dodge offset: right after the dash. The shadow slash is a quicker, longer-reaching attack1 that takes the place
 	# of the next light hit (the string goes on from there); the chase cleave is a rush cleave with a longer lunge.
 	&"shadow_slash": {"stage": 1, "anim": "attack1", "air_anim": "air_attack1", "fps": 52.0, "active": Vector2i(6, 9),

@@ -10,7 +10,7 @@ const TOP = preload("res://assets/top_down.tres")
 # Moves the top-down view can start (no crouch, no specials there).
 const TOP_MOVES := [&"attack1", &"attack2", &"attack3", &"heavy_slash"]
 # Moves player.gd starts by request rather than through the combo graph.
-const REQUESTED := [&"crouch_stab", &"rising_slash", &"dive_slash", &"dash_stab", &"heavy_slash"]
+const REQUESTED := [&"crouch_stab", &"rising_slash", &"dive_slash", &"dash_stab", &"heavy_slash", &"counter_slash"]
 const CRITS := [&"none", &"roll", &"always"]
 
 var checks := 0

@@ -1,16 +1,19 @@
 extends "res://tests/support/isolated_suite.gd"
 ## Real-GPU capture of enemy attacks and the hero's reactions: hospital side view, one attack drone (the
-## combat_lab fixture) hovering in front of the hero. Four lunges: standing still (HIT), a dash 0.26 s early
-## (EVADE), a dash 0.14 s before the hit window (PERFECT), a jump over it (EVADE). Run windowed:
+## combat_lab fixture) hovering in front of the hero. Five lunges: standing still (HIT), a dash 0.26 s early
+## (EVADE), a dash 0.14 s before the hit window (PERFECT), a jump over it (EVADE), and a perfect dodge followed by the
+## counter in the slow motion. Run windowed:
 ##   godot --path game --fixed-fps 60 --script res://tests/recorders/record_enemy_attack.gd
 ## Output: res://evidence/enemy_attack/ (stills, frames/NNNN.png every second physics tick, capture_report.json with
 ## the sound timeline and results). tools/art_qa/compose_combat_capture.py makes the MP4.
 
 const HOSPITAL = preload("res://scenes/underground_hospital.tscn")
 const DRONE = preload("res://tests/fixtures/attack_drone.gd")
+const L := MOUSE_BUTTON_LEFT
 const OUTPUT := "res://evidence/enemy_attack/"
 # name, action, telegraph seconds at which to act
-const CASES := [["stand", "", 0.0], ["early_dash", "dash", 0.30], ["perfect_dash", "dash", 0.42], ["jump", "jump", 0.31]]
+const CASES := [["stand", "", 0.0], ["early_dash", "dash", 0.30], ["perfect_dash", "dash", 0.42], ["jump", "jump", 0.31],
+	["counter", "counter", 0.42]]
 var hospital: Node2D
 var feedback: Node
 var player: CharacterBody2D
@@ -30,6 +33,15 @@ func key(code: Key, pressed: bool) -> void:
 	var event := InputEventKey.new()
 	event.keycode = code
 	event.physical_keycode = code
+	event.pressed = pressed
+	Input.parse_input_event(event)
+	Input.flush_buffered_events()
+
+
+func mouse(pressed: bool) -> void:
+	var event := InputEventMouseButton.new()
+	event.button_index = L
+	event.position = Vector2(160, 90)
 	event.pressed = pressed
 	Input.parse_input_event(event)
 	Input.flush_buffered_events()
@@ -81,6 +93,7 @@ func run() -> void:
 	var results: Array[int] = []
 	player.attack_received.connect(func(result: int, _attack: Dictionary) -> void: results.append(result))
 	for entry in CASES:
+		hospital.get_node("GameSession").end_slowmo()
 		player.position = base
 		player.velocity = Vector2.ZERO
 		player.facing = "right"
@@ -96,12 +109,23 @@ func run() -> void:
 		await still(entry[0] + "_telegraph")
 		if entry[1] != "":
 			await wait_for(func() -> bool: return attacker.phase_time >= entry[2] or attacker.phase != attacker.Phase.TELEGRAPH, 60)
-			var code := KEY_SHIFT if entry[1] == "dash" else KEY_SPACE
+			var code := KEY_SPACE if entry[1] == "jump" else KEY_SHIFT
 			key(code, true)
 			await tick(2)
 			key(code, false)
 		await wait_for(func() -> bool: return not results.is_empty(), 60)
 		await still(entry[0] + "_result")
+		if entry[1] == "counter":
+			# slow motion: let it read for a moment, then counter
+			await tick(16)
+			await still("counter_slowmo")
+			mouse(true)
+			await tick(2)
+			mouse(false)
+			await wait_for(func() -> bool: return hospital.get_node("GameSession").hit_stop_active, 40)
+			await tick(1)
+			await still("counter_hit")
+			report["counter_damage"] = drone.max_hp - drone.hp
 		await wait_for(func() -> bool: return player.state == player.State.FREE and player.is_on_floor(), 120)
 		await tick(40)
 		report["cases"].append({"name": entry[0], "result": ["HIT", "EVADE", "PERFECT"][results[0]] if not results.is_empty() else "none"})

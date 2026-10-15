@@ -1,10 +1,11 @@
 extends Node
-## Shared settings menu, impact pause (hit-stop) and combat sounds for every scene with a player,
-## including the combat test fixture, so tests exercise the same hit-stop the game ships.
+## Shared settings menu, impact pause (hit-stop), perfect-dodge slow motion and combat sounds for every scene with
+## a player, including the combat test fixture, so tests exercise the same hit-stop the game ships.
 
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const MENU = preload("res://scripts/ui/keybindings_menu.gd")
 const COMBAT_FEEDBACK = preload("res://scripts/core/combat_feedback.gd")
+const PLAYER = preload("res://scripts/player/player.gd")
 # Impact weight -> displayed frames held (and at least frames/60 s), shake in native px, flash of the frozen
 # frame, and the camera after-shock once it resumes. light 4 / critical 6 are the source game's guarantees.
 const STOPS := {
@@ -14,6 +15,12 @@ const STOPS := {
 		"aftershock": [Vector2(2, 1), Vector2(-2, -1), Vector2(2, 0), Vector2(-1, 1), Vector2(1, 0), Vector2(-1, 0), Vector2.ZERO]},
 }
 const HEAVY_STOP_FRAMES := 10
+# Perfect dodge: the world runs at SLOWMO_SCALE for SLOWMO_SECONDS of real time while the hero keeps full speed
+# (enemies scale their delta by world_time_scale; Engine.time_scale stays 1). The clock stands still during hit-stops
+# and the settings menu. The screen edges glow cyan, the hero cannot be hit, and the hero's counter ends it.
+const SLOWMO_SCALE := 0.25
+const SLOWMO_SECONDS := 1.2
+const SLOWMO_TINT := Color(0.42, 0.89, 0.91)
 
 const GROUP := &"game_session"
 
@@ -23,12 +30,20 @@ signal hit_stop_frame(frame: int, shake: Vector2i)
 signal hit_stop_finished(frames: int)
 ## After the settings menu closes; scenes redraw hints that name keys.
 signal keybindings_closed(saved: bool)
+signal slowmo_started
+signal slowmo_finished
 var settings_open := false
 var keybindings_menu: CanvasLayer
 var combat_feedback: Node
 var hit_stop_active := false
 ## Speed of the world relative to the hero: enemies scale their delta by it (1 = normal).
 var world_time_scale := 1.0
+var slowmo_active := false
+## Real seconds of slow motion left.
+var slowmo_left := 0.0
+var slowmo_overlay: TextureRect
+var _slowmo_layer: CanvasLayer
+var _counter_swung := false
 var hit_stop_requested_frames := 0
 var hit_stop_min_seconds := 0.0
 var hit_stop_elapsed_seconds := 0.0
@@ -73,6 +88,18 @@ func _ready() -> void:
 	hit_stop_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hit_stop_overlay.hide()
 	_overlay_layer.add_child(hit_stop_overlay)
+	# Below the hit-stop overlay, so a freeze inside the slow motion snapshots the glow once.
+	_slowmo_layer = CanvasLayer.new()
+	_slowmo_layer.layer = 99
+	_slowmo_layer.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(_slowmo_layer)
+	slowmo_overlay = TextureRect.new()
+	slowmo_overlay.size = Vector2(320, 180)
+	slowmo_overlay.texture = _edge_glow()
+	slowmo_overlay.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	slowmo_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	slowmo_overlay.hide()
+	_slowmo_layer.add_child(slowmo_overlay)
 	combat_feedback = COMBAT_FEEDBACK.new()
 	combat_feedback.name = "CombatFeedback"
 	add_child(combat_feedback)
@@ -80,11 +107,15 @@ func _ready() -> void:
 
 
 func bind_player(player: CharacterBody2D) -> void:
+	end_slowmo()
 	_player = player
 	if not is_instance_valid(_player):
 		return
 	if not _player.impact.is_connected(_on_impact):
 		_player.impact.connect(_on_impact)
+	if not _player.attack_received.is_connected(_on_attack_received):
+		_player.attack_received.connect(_on_attack_received)
+		_player.counter_started.connect(_on_counter_started)
 	combat_feedback.bind_player(_player)
 
 
@@ -92,6 +123,55 @@ func _process(delta: float) -> void:
 	if hit_stop_active:
 		hit_stop_elapsed_seconds += delta
 		stop_clock_step.emit()
+	elif slowmo_active and not get_tree().paused:
+		slowmo_left -= delta
+		if slowmo_left <= 0.0:
+			end_slowmo()
+
+
+func start_slowmo(enemy: Node2D) -> void:
+	slowmo_active = true
+	slowmo_left = SLOWMO_SECONDS
+	world_time_scale = SLOWMO_SCALE
+	_counter_swung = false
+	slowmo_overlay.show()
+	if is_instance_valid(_player):
+		_player.invulnerable = true
+		_player.open_counter(enemy)
+	slowmo_started.emit()
+
+
+func end_slowmo() -> void:
+	if not slowmo_active:
+		return
+	slowmo_active = false
+	slowmo_left = 0.0
+	world_time_scale = 1.0
+	slowmo_overlay.hide()
+	if is_instance_valid(_player):
+		_player.invulnerable = false
+		_player.close_counter()
+	slowmo_finished.emit()
+
+
+func _on_attack_received(result: int, attack: Dictionary) -> void:
+	if result == PLAYER.AttackResult.PERFECT and not slowmo_active:
+		start_slowmo(attack.get("source"))
+
+
+func _on_counter_started(_enemy: Node2D) -> void:
+	_counter_swung = true
+
+
+# Cyan glow along the screen edges in a few flat steps, so it stays on the pixel grid.
+static func _edge_glow() -> ImageTexture:
+	var image := Image.create(320, 180, false, Image.FORMAT_RGBA8)
+	for y in range(180):
+		for x in range(320):
+			var edge := mini(mini(x, 319 - x), mini(y, 179 - y))
+			var alpha: float = [0.42, 0.30, 0.20, 0.12, 0.06][edge / 3] if edge < 15 else 0.0
+			image.set_pixel(x, y, Color(SLOWMO_TINT, alpha))
+	return ImageTexture.create_from_image(image)
 
 
 func push_modal(owner: Object) -> void:
@@ -143,6 +223,9 @@ func _close_keybindings(saved: bool) -> void:
 
 # One pause per attack stage: the player emits impact once per stage, and a request during a pause is ignored.
 func _on_impact(weight: StringName, direction: Vector2) -> void:
+	# The counter's hit ends the slow motion; its freeze follows at normal speed.
+	if slowmo_active and _counter_swung:
+		end_slowmo()
 	if not hit_stop_active:
 		_run_hit_stop(direction, weight)
 
@@ -172,7 +255,7 @@ func _run_hit_stop(direction: Vector2, weight: StringName) -> void:
 	get_viewport().canvas_transform = shifted
 	_layer_offsets.clear()
 	for layer in _host.find_children("*", "CanvasLayer", true, false):
-		if layer != _overlay_layer:
+		if layer != _overlay_layer and layer != _slowmo_layer:
 			_layer_offsets[layer] = layer.offset
 			layer.offset += Vector2(hit_stop_shake)
 	get_tree().paused = true
@@ -239,5 +322,6 @@ func cancel_hit_stop() -> void:
 
 func _exit_tree() -> void:
 	cancel_hit_stop()
+	end_slowmo()
 	if settings_open:
 		_close_keybindings(false)

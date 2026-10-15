@@ -83,6 +83,8 @@ func run() -> void:
 # Hero at x on the floor facing right, practice targets parked, one fresh drone at `drone_at`.
 func stage(x: float, drone_at: Vector2) -> void:
 	var player: CharacterBody2D = arena.player
+	# a perfect dodge's slow motion (test_perfect_counter.gd) must not carry into the next case
+	arena.session.end_slowmo()
 	if is_instance_valid(drone):
 		arena.attackers.erase(drone)
 		drone.queue_free()
