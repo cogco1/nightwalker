@@ -143,11 +143,13 @@ func _build_world() -> void:
 	world.add_child(drone)
 	_beam_light = _make_light(Vector2(300, FLOOR_Y - 8), BEAM_DRONE.WATCH, 1.2, 42.0)
 	world.add_child(_beam_light)
+	var hover_targets: Array = []
 	for spot in TARGET_POSITIONS:
 		var target := HOVER_TARGET.new()
 		target.position = spot
 		target.z_index = 1
 		world.add_child(target)
+		hover_targets.append(target)
 	player = PLAYER_SCENE.instantiate()
 	player.name = "Player"
 	player.view_mode = 1
@@ -155,6 +157,8 @@ func _build_world() -> void:
 	player.floor_snap_length = 6.0
 	player.z_index = 2
 	world.add_child(player)
+	for target in hover_targets:
+		target.attacker.bind_target(player)
 	_hero_material = player.get_node("Sprite").material as ShaderMaterial
 	_hero_material.set_shader_parameter("emission_lift", Vector3(1.0 / AMBIENT.r, 1.0 / AMBIENT.g, 1.0 / AMBIENT.b))
 	_hero_material.set_shader_parameter("emission_gain", 1.5)
@@ -273,7 +277,7 @@ func _create_ui() -> void:
 	add_child(canvas)
 	var title := PIXEL_UI.label(canvas, Vector2(5, 3), Vector2(310, 16), "C区 · 夜街（原型）")
 	title.modulate = Color("c9b8e8")
-	var hint := PIXEL_UI.label(canvas, Vector2(5, 162), Vector2(310, 16), "AD走 左键斩 长按重斩 Shift突刺 F9原色 R重置")
+	var hint := PIXEL_UI.label(canvas, Vector2(5, 162), Vector2(310, 16), "AD走 左键斩 右键重击 长按蓄力 Shift闪避 R重置")
 	hint.modulate = Color("9d8fc0")
 	_status = PIXEL_UI.label(canvas, Vector2(206, 16), Vector2(110, 16))
 	_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT

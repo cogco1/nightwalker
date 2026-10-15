@@ -1,8 +1,10 @@
 extends StaticBody2D
-## Hittable hover drone for the night-street prototype. Same hit API as tests/fixtures/training_target.gd
-## (take_damage, damage_point, receive_hit_reaction), so player combos, criticals and hit-stop work unchanged.
+## Hover drone for the night-street prototype. Same hit API as tests/fixtures/training_target.gd (take_damage,
+## damage_point, receive_hit_reaction), so player combos, criticals and hit-stop work unchanged. It fights back with
+## scripts/enemies/enemy_attacker.gd: a red blink, then a lunge at the hero (night_street.gd binds the hero).
 
 const EMISSIVE = preload("res://shaders/emissive_add.gdshader")
+const ATTACKER = preload("res://scripts/enemies/enemy_attacker.gd")
 const RESPAWN_SECONDS := 2.5
 
 @export var max_hp := 3
@@ -15,6 +17,7 @@ var _respawn_left := 0.0
 var _sparks: Array[Dictionary] = []
 var _shape: CollisionShape2D
 var _lights: Node2D
+var attacker: Node
 
 
 func _ready() -> void:
@@ -36,6 +39,13 @@ func _ready() -> void:
 	_lights.material = glow
 	add_child(_lights)
 	_lights.draw.connect(_draw_lights)
+	# The origin is on the floor and the body is drawn 18 px above it: aim the origin at the hero's feet and hit with
+	# the box around the drawn body.
+	attacker = ATTACKER.new()
+	attacker.name = "Attacker"
+	attacker.aim_offset = Vector2.ZERO
+	attacker.hitbox = Rect2(-7, -23, 14, 10)
+	add_child(attacker)
 
 
 func damage_point() -> Vector2:

@@ -1,6 +1,7 @@
 extends "res://tests/support/isolated_suite.gd"
 ## Night-street prototype: hero material everywhere, surveillance exposure, combat and hit-stop on hover
-## drones, prototype-only controls, and no route into it from the shipped safe house / hospital flow.
+## drones, the drones' own attack (hit, perfect dodge, counter), prototype-only controls, and no route into it from
+## the shipped safe house / hospital flow.
 
 const STREET = preload("res://scenes/night_street_proto.tscn")
 const PLAYER = preload("res://scenes/player.tscn")
@@ -84,6 +85,7 @@ func run() -> void:
 	observations["street_lights"] = lights.size()
 	await verify_exposure(player)
 	await verify_combat(player)
+	await verify_drone_attack(player)
 	await verify_prototype_keys(player, material)
 	finish()
 
@@ -154,6 +156,8 @@ func verify_combat(player: CharacterBody2D) -> void:
 	if target == null:
 		return
 	street.drone.position.x = 900.0
+	# the drone's own attack is checked on its own (verify_drone_attack)
+	target.attacker.set_physics_process(false)
 	player.position = Vector2(target.global_position.x - 18.0, 156)
 	player.velocity = Vector2.ZERO
 	player.facing = "right"
@@ -171,6 +175,64 @@ func verify_combat(player: CharacterBody2D) -> void:
 	check(hits[0] >= 2, "The ground combo hits a hover drone")
 	check(target.hp < target.max_hp, "Hits reduce the hover drone's health")
 	check(not session.completed_stop_frames.is_empty(), "Hits on hover drones trigger the shared hit-stop")
+
+
+func verify_drone_attack(player: CharacterBody2D) -> void:
+	var targets := street.get_node("World").get_children().filter(func(node: Node) -> bool: return node.has_method("take_damage"))
+	check(targets.all(func(node: Node) -> bool: return node.attacker.target == player), "Every hover drone is bound to attack the hero")
+	var target: Node = targets[1]
+	var attacker: Node = target.attacker
+	# only this drone attacks here, so another one's lunge cannot cut in
+	for other in targets:
+		other.attacker.set_physics_process(other == target)
+	var session: Node = street.get_node("GameSession")
+	var results: Array[int] = []
+	player.attack_received.connect(func(result: int, _attack: Dictionary) -> void: results.append(result))
+	street.drone.position.x = 900.0
+	target.hp = target.max_hp
+	await frames(4)
+	# standing still in reach: the drone blinks red, lunges and hits
+	player.position = Vector2(target.global_position.x - 40.0, 156)
+	player.velocity = Vector2.ZERO
+	player.facing = "right"
+	await frames(70)
+	check(results.size() == 1 and results[0] == player.AttackResult.HIT, "A hover drone lunges at a hero in reach and hits")
+	observations["drone_first_result"] = results.duplicate()
+	# after its cooldown: a timely dash is a perfect dodge, the street slows, and a click counters
+	for _index in range(240):
+		if attacker.phase == attacker.Phase.TELEGRAPH:
+			break
+		player.position = Vector2(target.global_position.x - 40.0, 156)
+		player.facing = "right"
+		await frames(1)
+	for _index in range(60):
+		if attacker.phase_time >= 0.42:
+			break
+		await frames(1)
+	await tap(KEY_SHIFT)
+	for _index in range(40):
+		if results.size() >= 2:
+			break
+		await frames(1)
+	check(results.size() == 2 and results[1] == player.AttackResult.PERFECT, "A timely dash perfectly dodges the hover drone")
+	check(session.slowmo_active and is_equal_approx(session.world_time_scale, 0.25), "The perfect dodge slows the street")
+	await click()
+	check(player.move_id == &"counter_slash", "A click in the slow motion counters")
+	for _index in range(40):
+		if target.hp == 0:
+			break
+		await frames(1)
+	check(target.hp == 0, "The counter destroys the hover drone")
+	for _index in range(30):
+		if not session.hit_stop_active:
+			break
+		await frames(1)
+	check(not session.slowmo_active, "The street returns to full speed after the counter")
+	await frames(20)
+	check(attacker.phase == attacker.Phase.COOLDOWN, "A destroyed hover drone stands down")
+	# the controls hint fits the screen
+	var hint: Label = street.get_node("StreetUI").find_children("*", "Label", true, false).filter(func(label: Label) -> bool: return label.text.contains("右键重击"))[0]
+	check(hint.get_theme_font("font").get_string_size(hint.text, HORIZONTAL_ALIGNMENT_LEFT, -1, hint.get_theme_font_size("font_size")).x <= 310.0, "The controls hint names the heavy button and fits the screen")
 
 
 func verify_prototype_keys(player: CharacterBody2D, material: ShaderMaterial) -> void:
