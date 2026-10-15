@@ -136,6 +136,8 @@ func run_tests() -> void:
 	check(menu.draft["move_left"] == KEY_A, "conflicting assignment leaves the old key intact")
 	await tap(KEY_F1)
 	check(menu.waiting_slot == "move_left" and menu.status.text.contains("保留"), "F1 remains a reliable settings shortcut")
+	await tap(KEY_E)
+	check(menu.waiting_slot == "move_left" and menu.status.text.contains("E 保留") and menu.draft["move_left"] == KEY_A, "E stays reserved for interaction and cannot be captured")
 	await tap(KEY_K)
 	check(menu.waiting_slot.is_empty() and menu.draft["move_left"] == KEY_K, "new physical keyboard key is captured")
 	menu.begin_capture("jump")

@@ -4,6 +4,7 @@ extends Node2D
 const STORY_STATE = preload("res://scripts/core/story_state.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 const CONTROLS = preload("res://scripts/core/controls.gd")
+const GAME_SESSION = preload("res://scripts/core/game_session.gd")
 const STORY_NODE_NAME := "NightwalkerStoryState"
 const DOOR_TEXTURE_PATH := "res://assets/underground_hospital/security/door_closed.png"
 const BREAKER_TEXTURE_PATH := "res://assets/underground_hospital/security/breaker_closed.png"
@@ -22,7 +23,7 @@ var _host: Node2D
 var _settings: Dictionary = {}
 var _interactions: Node2D
 var _frozen_player: WeakRef
-var _previous_process_mode := Node.PROCESS_MODE_INHERIT
+var _session: WeakRef
 var _door_bodies: Dictionary = {}
 var _door_progress: Dictionary = {}
 var _opening: Dictionary = {}
@@ -232,13 +233,12 @@ func open_keypad(id: String) -> bool:
 		return false
 	keypad_active = true
 	active_door_id = id
+	player.freeze(self)
 	_frozen_player = weakref(player)
-	_previous_process_mode = player.process_mode
-	player.velocity = Vector2.ZERO
-	player.input_suspended = true
-	player.clear_input_buffer()
-	CONTROLS.release_actions()
-	player.process_mode = Node.PROCESS_MODE_DISABLED
+	var session := GAME_SESSION.of(self)
+	if session != null:
+		session.push_modal(self)
+		_session = weakref(session)
 	_title.text = String(item.get("title", "密码门"))
 	_code_edit.text = ""
 	_status.text = "请输入四位数字"
@@ -285,15 +285,16 @@ func close_keypad() -> void:
 
 
 func _restore_player() -> void:
+	if _session != null:
+		var session: Variant = _session.get_ref()
+		if is_instance_valid(session):
+			session.pop_modal(self)
+		_session = null
 	if _frozen_player == null:
 		return
 	var player: Variant = _frozen_player.get_ref()
 	if is_instance_valid(player):
-		player.process_mode = _previous_process_mode
-		player.velocity = Vector2.ZERO
-		player.input_suspended = false
-		player.clear_input_buffer()
-		CONTROLS.release_actions()
+		player.unfreeze(self)
 	_frozen_player = null
 
 
@@ -364,7 +365,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_E or event.physical_keycode == KEY_E:
+		if CONTROLS.is_interact(event):
 			var nearest := _nearest_locked_door()
 			if not nearest.is_empty() and open_keypad(nearest):
 				get_viewport().set_input_as_handled()
@@ -421,18 +422,14 @@ func _filter_digits(text: String) -> void:
 		_filtering = false
 
 
+# The hospital's refresh_ui hides its control hint while a dialogue or this keypad is open.
 func _refresh_host_hint() -> void:
 	if not is_instance_valid(_host):
 		return
-	if _host.has_method("_refresh_ui"):
-		_host.call("_refresh_ui")
-	var hint: Variant = _host.get("_hint")
-	if hint is Label:
-		hint.visible = not keypad_active and not (is_instance_valid(_interactions) and bool(_interactions.get("dialogue_active")))
-	if is_instance_valid(_interactions):
-		var interaction_hint: Variant = _interactions.get("_hint")
-		if interaction_hint is Label and keypad_active:
-			interaction_hint.hide()
+	if _host.has_method("refresh_ui"):
+		_host.refresh_ui()
+	if is_instance_valid(_interactions) and keypad_active:
+		_interactions.hide_hint()
 
 
 func _refresh_hint() -> void:
@@ -441,7 +438,7 @@ func _refresh_hint() -> void:
 	var id := _nearest_locked_door()
 	_hint.visible = not id.is_empty() and not keypad_active
 	if _hint.visible:
-		_hint.text = "E · " + String(_door(id).get("title", "密码门"))
+		_hint.text = CONTROLS.interact_text() + " · " + String(_door(id).get("title", "密码门"))
 
 
 func _draw() -> void:
@@ -499,7 +496,7 @@ func _create_ui() -> void:
 	canvas.name = "HospitalSecurityUI"
 	canvas.layer = 31
 	add_child(canvas)
-	_hint = _label(canvas, Vector2(10, 146), Vector2(300, 16), "")
+	_hint = PIXEL_UI.label(canvas, Vector2(10, 146), Vector2(300, 16))
 	_hint.modulate = Color("b4d6df")
 	_hint.hide()
 	_panel = Panel.new()
@@ -513,9 +510,9 @@ func _create_ui() -> void:
 	_panel.add_theme_stylebox_override("panel", style)
 	canvas.add_child(_panel)
 	PIXEL_UI.shrink_dialogue(_panel)
-	_title = _label(_panel, Vector2(8, 5), Vector2(204, 16), "密码门")
+	_title = PIXEL_UI.label(_panel, Vector2(8, 5), Vector2(204, 16), "密码门")
 	_title.modulate = Color("91c8d4")
-	var instructions := _label(_panel, Vector2(8, 24), Vector2(204, 16), "Enter确认 · Esc取消")
+	var instructions := PIXEL_UI.label(_panel, Vector2(8, 24), Vector2(204, 16), "Enter确认 · Esc取消")
 	instructions.modulate = Color("849da8")
 	_code_edit = LineEdit.new()
 	_code_edit.name = "CodeEntry"
@@ -529,24 +526,12 @@ func _create_ui() -> void:
 	_panel.add_child(_code_edit)
 	_code_edit.text_changed.connect(_filter_digits)
 	_code_edit.text_submitted.connect(func(code: String) -> void: submit_code(code))
-	_status = _label(_panel, Vector2(8, 66), Vector2(204, 16), "请输入四位数字")
+	_status = PIXEL_UI.label(_panel, Vector2(8, 66), Vector2(204, 16), "请输入四位数字")
 	_confirm = _button(_panel, Vector2(8, 89), "确认")
 	_cancel = _button(_panel, Vector2(116, 89), "取消")
 	_confirm.pressed.connect(func() -> void: submit_code(_code_edit.text))
 	_cancel.pressed.connect(close_keypad)
 	_panel.hide()
-
-
-func _label(parent: Node, position: Vector2, dimensions: Vector2, text: String) -> Label:
-	var label := Label.new()
-	label.position = position
-	label.add_theme_font_override("font", PIXEL_UI.font())
-	label.add_theme_font_size_override("font_size", 12)
-	label.size = dimensions
-	label.text = text
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	parent.add_child(label)
-	return label
 
 
 func _button(parent: Node, position: Vector2, text: String) -> Button:

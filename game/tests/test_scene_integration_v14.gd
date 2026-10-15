@@ -149,10 +149,10 @@ func validate_player(host: Node2D, side: bool, label: String) -> void:
 	check(stop_signals_connected, label + " binds the new player to reusable normal and critical impact feedback")
 
 
-func validate_dialogue(owner: Node, panel_property: String, label: String) -> void:
-	var panel: Panel = owner.get(panel_property)
-	var body: Label = owner.get("_body")
-	var portrait: TextureRect = owner.get("_portrait")
+func validate_dialogue(owner: Node, label: String) -> void:
+	var panel: Panel = owner.get("dialogue")
+	var body: Label = panel.get("body")
+	var portrait: TextureRect = panel.get("portrait")
 	check(panel.scale.is_equal_approx(Vector2(0.8, 0.8)) and panel.size == Vector2(284, 72), label + " preserves the approved compact 80-percent dialogue presentation")
 	check(body.get_theme_font("font") is FontFile and body.get_theme_font_size("font_size") == 12, label + " preserves the clear native 12px pixel font")
 	check(portrait.texture != null and portrait.size == Vector2(48, 64), label + " keeps the original protagonist portrait source")
@@ -220,7 +220,7 @@ func validate_reset_remap(host: Node2D, label: String) -> void:
 		var spawn: Array = host.get("layout")["spawn"]
 		expected = Vector2(spawn[0], spawn[1])
 	else:
-		expected = host.call("_start_position")
+		expected = host.start_position()
 	check(player.position.distance_to(expected) < 0.5, label + " honors the remapped T reset action and returns to its real spawn")
 	release()
 	CONTROLS.current = CONTROLS.defaults()
@@ -251,7 +251,7 @@ func validate_impact_timing(hospital: Node2D) -> void:
 
 func validate_jump_f7_remap(hospital: Node2D) -> Node2D:
 	release()
-	hospital.call("_activate_view", 1, "storage", Vector2(470, 286))
+	hospital.activate_view(1, "storage", Vector2(470, 286))
 	await frames(10)
 	var profile := CONTROLS.defaults()
 	profile["jump"] = KEY_F7
@@ -269,14 +269,14 @@ func validate_jump_f7_remap(hospital: Node2D) -> Node2D:
 	await tap(KEY_F7)
 	check(await wait_for_hospital(true), "Default F7 travel can return to the hospital after testing a custom F7 binding")
 	var returned := current_scene as Node2D
-	returned.call("_activate_view", 1, "storage", Vector2(470, 286))
+	returned.activate_view(1, "storage", Vector2(470, 286))
 	await frames(8)
 	return returned
 
 
 func validate_air_dash(hospital: Node2D, direction: int) -> void:
 	release()
-	hospital.call("_activate_view", 1, "storage", Vector2(470, 286))
+	hospital.activate_view(1, "storage", Vector2(470, 286))
 	await frames(10)
 	var player: CharacterBody2D = hospital.get("player")
 	var side := "right" if direction > 0 else "left"
@@ -322,7 +322,7 @@ func validate_security(hospital: Node2D) -> void:
 		return
 	security.call("open_keypad", "storage_door")
 	check(hospital.view_mode == 1 and not bool(security.get("keypad_active")), "The integrated password locks stay exclusive to the top-down projection")
-	hospital.call("_activate_view", 0, "storage", Vector2(538, 65))
+	hospital.activate_view(0, "storage", Vector2(538, 65))
 	await frames(5)
 	key(KEY_S, true)
 	await frames(35)
@@ -346,7 +346,7 @@ func validate_security(hospital: Node2D) -> void:
 	key(KEY_S, false)
 	await frames(5)
 	check(hospital.player.position.y > 100.0, "The received protagonist can actually traverse the authenticated doorway")
-	hospital.call("_activate_view", 0, "entry", Vector2(116, 157))
+	hospital.activate_view(0, "entry", Vector2(116, 157))
 	await frames(5)
 	var before := bool(hospital.interactions.power_states.get("clinical", true))
 	await tap(KEY_E)
@@ -393,7 +393,7 @@ func run() -> void:
 	await frames(4)
 	await tap(KEY_E)
 	check(home.dialogue_active and home.current_interaction == "frame", "The received protagonist can inspect the original safehouse objects with E")
-	validate_dialogue(home, "_dialogue_panel", "Safehouse dialogue")
+	validate_dialogue(home, "Safehouse dialogue")
 	await validate_reading(home, home, "Safehouse dialogue")
 	home.player.position = Vector2(127, 66)
 	home.player.velocity = Vector2.ZERO
@@ -414,7 +414,7 @@ func run() -> void:
 	await frames(4)
 	await tap(KEY_E)
 	check(hospital.interactions.dialogue_active and hospital.interactions.current_interaction == "ward_bed", "The new protagonist reads the hospital's existing environmental narrative")
-	validate_dialogue(hospital.interactions, "_panel", "Hospital dialogue")
+	validate_dialogue(hospital.interactions, "Hospital dialogue")
 	await validate_reading(hospital, hospital.interactions, "Hospital dialogue")
 	await tap(KEY_TAB)
 	await frames(8)
@@ -434,7 +434,7 @@ func run() -> void:
 	if bool(observations.get("security_integrated", false)):
 		var security: Node = hospital.get("security")
 		check(bool(security.call("is_door_unlocked", "storage_door")) and bool(security.call("has_item", "breaker_key")) and bool(security.call("is_breaker_unlocked")), "Integrated security progress survives returning through the safehouse")
-	hospital.call("_activate_view", 0, "office", Vector2(590, 175))
+	hospital.activate_view(0, "office", Vector2(590, 175))
 	await frames(5)
 	await tap(KEY_E)
 	check(await wait_for_hospital(false) and is_home(), "The hospital exit's real E interaction returns to the safehouse")

@@ -19,10 +19,14 @@ const STOPS := {
 }
 const HEAVY_STOP_FRAMES := 10
 
+const GROUP := &"game_session"
+
 signal stop_clock_step
 signal hit_stop_started
 signal hit_stop_frame(frame: int, shake: Vector2i)
 signal hit_stop_finished(frames: int)
+## After the settings menu closes; scenes redraw hints that name keys.
+signal keybindings_closed(saved: bool)
 var settings_open := false
 var keybindings_menu: CanvasLayer
 var combat_feedback: Node
@@ -44,10 +48,18 @@ var _menu_saved_pause := false
 var _saved_canvas := Transform2D.IDENTITY
 var _layer_offsets: Dictionary = {}
 var _token := 0
+# Open story modals (dialogue boxes, keypads) by instance id -> weakref; while any is open, Esc / F1 belong to it.
+var _modals: Dictionary = {}
+
+
+## The current scene's session, for story modals to register with; null outside a game scene (bare test hosts).
+static func of(node: Node) -> Node:
+	return node.get_tree().get_first_node_in_group(GROUP) if node.is_inside_tree() else null
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	add_to_group(GROUP)
 	_host = get_parent()
 	keybindings_menu = MENU.new()
 	keybindings_menu.name = "KeybindingsMenu"
@@ -88,19 +100,26 @@ func _process(delta: float) -> void:
 		stop_clock_step.emit()
 
 
-func _story_modal() -> bool:
-	if _host.has_method("close_dialogue") and bool(_host.get("dialogue_active")):
-		return true
-	var interactions := _host.get_node_or_null("HospitalInteractions")
-	var security := _host.get_node_or_null("HospitalSecurity")
-	return (interactions != null and bool(interactions.get("dialogue_active"))) or (security != null and bool(security.get("keypad_active")))
+func push_modal(owner: Object) -> void:
+	_modals[owner.get_instance_id()] = weakref(owner)
+
+
+func pop_modal(owner: Object) -> void:
+	_modals.erase(owner.get_instance_id())
+
+
+func has_modal() -> bool:
+	for id in _modals.keys():
+		if _modals[id].get_ref() == null:
+			_modals.erase(id)
+	return not _modals.is_empty()
 
 
 func _input(event: InputEvent) -> void:
 	if settings_open:
 		return
 	if event is InputEventKey and event.pressed and not event.echo and (event.keycode in [KEY_F1, KEY_ESCAPE] or event.physical_keycode in [KEY_F1, KEY_ESCAPE]):
-		if not _story_modal():
+		if not has_modal():
 			open_keybindings()
 			get_viewport().set_input_as_handled()
 		return
@@ -109,27 +128,23 @@ func _input(event: InputEvent) -> void:
 
 
 func open_keybindings() -> void:
-	if settings_open or _story_modal() or not is_instance_valid(_player):
+	if settings_open or has_modal() or not is_instance_valid(_player):
 		return
 	cancel_hit_stop()
 	_menu_saved_pause = get_tree().paused
 	settings_open = true
-	_player.input_suspended = true
-	_player.clear_input_buffer()
-	CONTROLS.release_actions()
+	_player.freeze(self, false)
 	get_tree().paused = true
 	keybindings_menu.open()
 
 
-func _close_keybindings(_saved: bool) -> void:
+func _close_keybindings(saved: bool) -> void:
 	CONTROLS.release_actions()
 	if is_instance_valid(_player):
-		_player.clear_input_buffer()
-		_player.input_suspended = false
+		_player.unfreeze(self)
 	settings_open = false
 	get_tree().paused = _menu_saved_pause
-	if _host.has_method("_refresh_ui"):
-		_host.call("_refresh_ui")
+	keybindings_closed.emit(saved)
 
 
 # One pause per attack stage: the player emits impact once per stage, and a request during a pause is ignored.
