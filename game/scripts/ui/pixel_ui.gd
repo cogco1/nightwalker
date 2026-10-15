@@ -23,6 +23,24 @@ static func font() -> FontFile:
 	return _font
 
 
+## Label on the native grid with the 12px pixel font (or custom_font) that ignores the mouse. dimensions ZERO
+## keeps the label's own size; tight sets zero line spacing, used by the dialogue boxes and the safehouse HUD.
+static func label(parent: Node, location: Vector2, dimensions := Vector2.ZERO, text := "",
+		font_size := FONT_SIZE, tight := false, custom_font: Font = null) -> Label:
+	var result := Label.new()
+	result.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	result.add_theme_font_override("font", custom_font if custom_font != null else font())
+	result.add_theme_font_size_override("font_size", font_size)
+	if tight:
+		result.add_theme_constant_override("line_spacing", 0)
+	result.text = text
+	parent.add_child(result)
+	result.position = location
+	if dimensions != Vector2.ZERO:
+		result.size = dimensions
+	return result
+
+
 static func shrink_dialogue(panel: Panel) -> void:
 	# Preserve source glyphs, portrait and local layout; resize the complete panel.
 	# Composite at window resolution so a12px source stroke survives the80% scale.
@@ -53,9 +71,9 @@ static func set_speaker(portrait: TextureRect, title: Label, body: Label, footer
 	var is_protagonist := speaker == "protagonist"
 	portrait.visible = is_protagonist
 	var left := 60.0 if is_protagonist else 6.0
-	for label in [title, body, footer]:
-		label.position.x = left
-		label.size.x = 278.0 - left
+	for field in [title, body, footer]:
+		field.position.x = left
+		field.size.x = 278.0 - left
 	var speaker_name := "独白"
 	match speaker:
 		"television": speaker_name = "电视播报"

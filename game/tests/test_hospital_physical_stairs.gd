@@ -52,7 +52,7 @@ func release() -> void:
 
 func fixture(point: Vector2, room := "entry") -> void:
 	release()
-	environment._activate_view(1, room, point)
+	environment.activate_view(1, room, point)
 	await frames(10)
 
 

@@ -297,7 +297,7 @@ func run() -> void:
 	await frames(3)
 	check(environment.floor_id == 2, "E at the first-floor stair actually goes upstairs")
 	check(environment.background.texture.resource_path.ends_with("hospital_floor_2_native.png"), "upstairs shows only the second-floor artwork")
-	check(environment._room_for_position(environment.player.position, 0) == "reception", "upstairs arrives at the matching reception landing")
+	check(environment.room_for_position(environment.player.position, 0) == "reception", "upstairs arrives at the matching reception landing")
 	check(environment.world_size == Vector2i(640, 224) and environment.camera.zoom == Vector2.ONE, "upstairs remains local pixel-perfect rather than whole-building overview")
 	await tap(KEY_TAB)
 	check(environment.view_mode == 1 and environment.floor_id == 2, "Tab from upstairs maps to the upper side-view level")

@@ -8,6 +8,16 @@ class MockPlayer extends CharacterBody2D:
 	func _process(_delta: float) -> void:
 		ticks += 1
 
+	# The player's freeze contract as far as this suite observes it: processing stops and movement clears.
+	func freeze(_owner: Object, halt := true) -> void:
+		if halt:
+			velocity = Vector2.ZERO
+		process_mode = Node.PROCESS_MODE_DISABLED
+
+	func unfreeze(_owner: Object) -> void:
+		process_mode = Node.PROCESS_MODE_INHERIT
+		velocity = Vector2.ZERO
+
 
 class MockHospital extends Node2D:
 	var player: CharacterBody2D
@@ -20,7 +30,7 @@ class MockHospital extends Node2D:
 	func _process(_delta: float) -> void:
 		ambient_ticks += 1
 
-	func _room_for_position(point: Vector2, mode: int) -> String:
+	func room_for_position(point: Vector2, mode: int) -> String:
 		return "west" if point.x < (80.0 if mode == 0 else 180.0) else "east"
 
 
@@ -107,18 +117,18 @@ func run() -> void:
 	var ambient_ticks := host.ambient_ticks
 	await frames(5)
 	check(host.player.ticks == frozen_ticks and host.ambient_ticks > ambient_ticks, "Ambient processing remains active while player processing stops")
-	var pages: Array = interactions.get("_pages")
+	var pages: Array = interactions.dialogue.pages
 	var short_pages := not pages.is_empty()
 	for page in pages:
 		short_pages = short_pages and String(page).length() <= 32
 	check(short_pages and pages.size() > 1, "Long narrative text is paged into readable blocks")
 	key(KEY_E, true)
-	check(interactions.get("_page_index") == 0 and interactions.interaction_counts["casefile"] == 1, "Keyboard repeat neither advances nor reopens inspection")
+	check(interactions.dialogue.page_index == 0 and interactions.interaction_counts["casefile"] == 1, "Keyboard repeat neither advances nor reopens inspection")
 	key(KEY_E)
-	var body: Label = interactions.get("_body")
+	var body: Label = interactions.dialogue.body
 	check(body.visible_characters == -1, "First E reveals the current typed page")
 	key(KEY_E)
-	check(interactions.get("_page_index") == 1, "Next E advances the narrative page")
+	check(interactions.dialogue.page_index == 1, "Next E advances the narrative page")
 	key(KEY_ESCAPE)
 	check(not interactions.dialogue_active and host.player.process_mode == Node.PROCESS_MODE_INHERIT, "Esc closes inspection and restores movement processing")
 	host.player.position = Vector2(500, 200)
@@ -126,7 +136,7 @@ func run() -> void:
 	host.player.position = Vector2(60, 20)
 	key(KEY_E)
 	check(interactions.current_interaction == "breaker" and not interactions.power_states["surgery"], "Breaker interaction switches its lighting section off")
-	check(interactions.get("_pages")[0] == "测试提供的断电描述。", "Power-off narrative uses scene-provided text")
+	check(interactions.dialogue.pages[0] == "测试提供的断电描述。", "Power-off narrative uses scene-provided text")
 	check(interactions.get("_feedback_remaining") > 0.0, "Interacting produces brief pixel feedback")
 	interactions.close_dialogue()
 	var old_player := host.player
@@ -143,7 +153,7 @@ func run() -> void:
 	check(interactions.get("_feedback_remaining") == 0.0, "Changing view clears feedback at the previous projection")
 	key(KEY_E)
 	check(interactions.power_states["surgery"] and interactions.interaction_counts["breaker"] == 2, "Breaker can restore power in the other projection")
-	check(interactions.get("_pages")[0] == "测试提供的接通描述。", "Restored-power narrative uses scene-provided text")
+	check(interactions.dialogue.pages[0] == "测试提供的接通描述。", "Restored-power narrative uses scene-provided text")
 	interactions.on_view_change()
 	check(not interactions.dialogue_active and host.player.process_mode == Node.PROCESS_MODE_INHERIT, "Changing view closes dialogue and releases the currently frozen player")
 	host.player.position = Vector2(120, 20)

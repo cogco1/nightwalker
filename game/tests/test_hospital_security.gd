@@ -107,7 +107,7 @@ func activate_top(door: Dictionary) -> void:
 	var rectangle: Rect2 = door["rect"]
 	var down := int(door["direction"]) > 0
 	var point := Vector2(rectangle.get_center().x, rectangle.position.y - 17.0 if down else rectangle.end.y + 19.0)
-	hospital.call("_activate_view", 0, String(door["room"]), point)
+	hospital.activate_view(0, String(door["room"]), point)
 	await frames(5)
 	security = hospital.get("security")
 
@@ -183,14 +183,14 @@ func verify_door(door: Dictionary) -> void:
 
 func verify_breaker() -> void:
 	close_ui()
-	hospital.call("_activate_view", 0, "entry", Vector2(116, 157))
+	hospital.activate_view(0, "entry", Vector2(116, 157))
 	await frames(5)
 	check(not bool(security.call("has_item", "breaker_key")) and not bool(security.call("is_breaker_unlocked")), "The top-down power cabinet begins locked without an invented key pickup")
 	var initial_power := bool(hospital.interactions.power_states.get("clinical", true))
 	await tap(KEY_E)
 	check(hospital.interactions.dialogue_active and hospital.interactions.current_interaction == "breaker", "E at the locked cabinet opens its existing story dialogue")
 	var text := ""
-	for page in hospital.interactions.get("_pages"):
+	for page in hospital.interactions.dialogue.pages:
 		text += String(page)
 	check(text.contains("钥匙"), "The locked cabinet explains that a key is needed")
 	check(bool(hospital.interactions.power_states.get("clinical", true)) == initial_power and not bool(security.call("is_breaker_unlocked")), "Inspecting the cabinet without its key neither opens it nor changes power")
@@ -211,7 +211,7 @@ func verify_breaker() -> void:
 
 
 func verify_side_view_before_unlocks() -> void:
-	hospital.call("_activate_view", 1, "storage", Vector2(510, 286))
+	hospital.activate_view(1, "storage", Vector2(510, 286))
 	await frames(10)
 	var no_security_bodies := true
 	for door in DOORS:
@@ -221,7 +221,7 @@ func verify_side_view_before_unlocks() -> void:
 	check(crossed.x > 545.0 and hospital.player.is_on_floor(), "Side-view D still walks freely through the existing storage route")
 	security.call("open_keypad", "storage_door")
 	check(not bool(security.get("keypad_active")), "The top-down keypad cannot activate while in side view")
-	hospital.call("_activate_view", 1, "entry", Vector2(71, 286))
+	hospital.activate_view(1, "entry", Vector2(71, 286))
 	await frames(8)
 	var before := bool(hospital.interactions.power_states.get("clinical", true))
 	await tap(KEY_E)
@@ -235,7 +235,7 @@ func verify_side_view_before_unlocks() -> void:
 
 func verify_persistence() -> void:
 	close_ui()
-	hospital.call("_activate_view", 0, "entry", Vector2(74, 174))
+	hospital.activate_view(0, "entry", Vector2(74, 174))
 	await frames(5)
 	await tap(KEY_E)
 	check(hospital.floor_id == 2 and hospital.view_mode == 0, "Existing staircase E still reaches the upper floor after using the security system")

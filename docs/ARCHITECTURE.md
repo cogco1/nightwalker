@@ -28,13 +28,16 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 │  └─ 顿帧覆盖层 CanvasLayer(100)
 ├─ HospitalInteractions    （仅医院）对话、阅读、楼梯、出口
 ├─ HospitalSecurity        （仅医院）密码门、电闸
-└─ UI CanvasLayer          标题、提示、对话框（pixel_ui.gd 统一字体和立绘）
+└─ UI CanvasLayer          标题、提示、DialogueBox（scripts/ui/dialogue_box.gd）
 ```
 
-- **GameSession**：所有有玩家的场景共用，测试夹具 combat_lab 也挂同一个（夹具里原来那份顿帧副本已删除，测到的就是正式代码）。负责 F1/Esc 改键菜单；监听玩家的 `impact(档位, 方向)` 信号，按 `STOPS` 表做全屏顿帧：light 4 帧 / 至少 0.0667 秒、critical 6 帧 / 至少 0.1 秒（这两档是原作保证）、heavy 10 帧偏移 2 像素并闪白，critical 和 heavy 结束后镜头有几帧余震。对外有 `hit_stop_started / hit_stop_frame / hit_stop_finished` 信号和帧数、时长等观测字段。
+- **DialogueBox**（`scripts/ui/dialogue_box.gd`）：安全屋和医院共用的阅读框，80% 大小、12px 像素字体、48×64 立绘不变。每个场景自己定分页字数和打字速度（安全屋 24 字 / 每秒 28 字，医院 32 / 36）；说话人写在 layout.json 的 `speakers`（逐行）和 `speaker`（默认）里。打开时冻结玩家、向 GameSession 登记为剧情弹窗，关闭时释放。
+- **pixel_ui.gd**：`label()` 是所有关卡文字标签的唯一入口；`shrink_dialogue()`、`add_portrait()`、`set_speaker()` 给对话框用。
+
+- **GameSession**：所有有玩家的场景共用，测试夹具 combat_lab 也挂同一个（夹具里原来那份顿帧副本已删除，测到的就是正式代码）。负责 F1/Esc 改键菜单（关闭后发 `keybindings_closed`，场景据此重写带按键名的提示）；对话框、密码门这类剧情弹窗用 `push_modal(owner)` / `pop_modal(owner)` 登记，有弹窗时 F1/Esc 归弹窗；监听玩家的 `impact(档位, 方向)` 信号，按 `STOPS` 表做全屏顿帧：light 4 帧 / 至少 0.0667 秒、critical 6 帧 / 至少 0.1 秒（这两档是原作保证）、heavy 10 帧偏移 2 像素并闪白，critical 和 heavy 结束后镜头有几帧余震。对外有 `hit_stop_started / hit_stop_frame / hit_stop_finished` 信号和帧数、时长等观测字段。
 - **CombatFeedback**（`scripts/core/combat_feedback.gd`）：GameSession 的子节点，`PROCESS_MODE_ALWAYS`，所以顿帧暂停时命中声不被截断。只听玩家主动发的信号：`move_started(招式)` 决定挥刀声，`impact(档位)` 决定命中声，`charge_started / charge_ready / charge_ended` 决定蓄力声，不读玩家内部字段；`played` 记录播放顺序供测试和录屏使用。音效是 `tools/audio/gen_combat_sfx.py` 合成的占位 WAV（`assets/audio/sfx/`），同名替换即可换成正式音效。无头模式下只记录不播放。
 - **NightwalkerStoryState**（`scripts/core/story_state.gd`）：由 `hospital_security.gd` 按需挂到 `/root`，存放本次进程内的物品和标记（`grant_item`、`has_item`、`set_flag`、`has_flag`）。没有存档，退出游戏就清空。
-- **Controls**（`scripts/core/controls.gd`）：静态类，持有当前按键方案，读写 `user://keybindings.cfg`，把方案应用到 InputMap。各脚本通过 `CONTROLS.binding_pressed(slot)` 读输入。
+- **Controls**（`scripts/core/controls.gd`）：静态类，持有当前按键方案，读写 `user://keybindings.cfg`，把方案应用到 InputMap。各脚本通过 `CONTROLS.binding_pressed(slot)` 读输入。交互键 E（`INTERACT_KEY`）是保留键，不在改键表里，`validate` 不允许其他动作用它；场景用 `is_interact(event)` 判断，提示文字用 `binding_text` / `hint_text` 按当前键位生成。
 
 ## 玩家
 
@@ -55,7 +58,7 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 - 蓄力重斩：一段地面轻击结束时左键仍按着，就进入 `is_charging`：前 60%（`CHARGE_COIL_PORTION`）从 attack3 第 0 帧逐帧收到第 3 帧并后撤 `CHARGE_BACKSTEP` 3 像素，之后原地不动，蓄满后 sprite 左右 1 像素微颤；`charge_time` 到 `CHARGE_FULL_SECONDS` 发 `charge_ready`；松开时蓄满就以 `special_kind = "heavy_slash"` 从第 4 帧播 attack3（46 fps，第 4–9 帧前冲 `HEAVY_LUNGE` 32 像素并留 2 个残影，判定加长 10、加宽 8，固定暴击、不掷骰），否则取消。离地、`clear_input_buffer()` 都会取消蓄力。
 - 空中：二段跳、空中三连、S 下劈和落地冲击、空中突刺（结束接 `air_idle`，0.30 秒、6 像素/秒缓降）。
 - 刀尖命中区按 `assets/blade_paths.json` 逐帧取刀刃位置，和画面上的钢刃一致。
-- 对外信号：`impact(档位, 方向)`（每段攻击第一次命中时发一次）、`move_started(招式)`、`attack_started`、`attack_hit`、`combo_changed`、`hit_resolved`、`critical_hit`、`normal_contact_stop`、`special_started`、`landing_impact`、`charge_started`、`charge_ready`、`charge_ended(released)`。外部输入走 `handle_input(event)`，回到待机用 `show_idle()`。
+- 对外信号：`impact(档位, 方向)`（每段攻击第一次命中时发一次）、`move_started(招式)`、`attack_started`、`attack_hit`、`combo_changed`、`hit_resolved`、`critical_hit`、`normal_contact_stop`、`special_started`、`landing_impact`、`charge_started`、`charge_ready`、`charge_ended(released)`。外部输入走 `handle_input(event)`，回到待机用 `show_idle()`。对话框、密码门和改键菜单用 `freeze(owner)` / `unfreeze(owner)` 暂停玩家，按持有者计数，最后一个持有者释放时才恢复；改键菜单冻结时不清速度。
 - 命中特效分三档（轻、暴击、重斩）：沿挥刀方向的斩痕、放射冲击线、火花；顿帧会冻结在这一帧上。
 
 ## 数据和素材
@@ -65,7 +68,7 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 | `frames/<视角>_<方向>_<动作>/NN.png` | 64 个动作 × 16 帧。原 992 帧保持原字节，v14 新增 `air_dash_stab_*` 32 帧（112×96 画布，足点 56,84） |
 | `assets/side_view.tres`、`top_down.tres` | 把 frames 组装成 SpriteFrames |
 | `assets/home_601/layout.json` | 安全屋碰撞、可交互物、对话文本 |
-| `assets/underground_hospital/layout.json` | 医院俯视两层和侧视的房间、墙、楼梯、门禁、交互点 |
+| `assets/underground_hospital/layout.json` | 医院俯视两层和侧视的房间、墙、楼梯（`stairs.side_flight`：侧视楼梯两端平台高度和上下楼判定区间）、门禁、交互点 |
 | `assets/fonts/` | fusion-pixel 10/12px 中文像素字体（OFL） |
 | `art_metadata/` | 原画、提示词、遮罩、导入脚本和校验报告；有 `.gdignore`，Godot 不导入 |
 
@@ -74,6 +77,8 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 - `tests/test_*.gd` 都是继承 `tests/support/isolated_suite.gd` 的无头脚本，用 `--script` 运行，输出 JSON（`checks`、`failures`、`status`），报告写进 `evidence/`。基类把改键文件指到测试专用路径，玩家本机的改键不影响测试结果。`tools/Test-Game.ps1` 每组可以单独设帧率（contact_refresh 在 144 fps 下跑），每次运行有 300 秒超时。
 - 战斗类套件加载 `tests/fixtures/combat_lab.tscn`（旧训练场 + 木桩），不进入正式流程。
 - 改键测试使用独立的 `settings_path`，不会覆盖玩家真实的 `user://keybindings.cfg`。
+- `tests/test_level_shared.gd` 覆盖关卡共用部分：冻结计数、剧情弹窗、对话框参数和说话人、E 键保留与旧配置迁移、提示文字跟随改键。
+- `tests/recorders/capture_levels.gd` 在窗口模式下截安全屋、医院俯视和侧视、每一页对话、密码门和楼梯提示（88 张），改关卡代码前后各跑一次逐像素比对，就能确认画面没变。
 - `tests/recorders/` 用真实渲染录制截图和 GIF，`tools/art_qa/` 的 Python 脚本再拿这些输出做像素校验和预览合成。
 - `tests/legacy/` 是 v02–v06 的旧套件，针对旧美术和旧操作，现在会失败，只作参考。
 

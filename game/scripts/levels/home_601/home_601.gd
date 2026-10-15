@@ -5,25 +5,21 @@ const CONTROLS = preload("res://scripts/core/controls.gd")
 const PROP_EFFECTS = preload("res://scripts/levels/home_601/home_prop_fx.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
+const DIALOGUE_BOX = preload("res://scripts/ui/dialogue_box.gd")
+# Safehouse reading pace; the hospital keeps its own 32 / 36.
+const PAGE_CHARACTERS := 24
+const TYPE_SPEED := 28.0
 
 var layout: Dictionary = {}
 var world: Node2D
 var player: CharacterBody2D
 var prop_effects: Node2D
-var dialogue_active := false
+var dialogue: Panel
+var dialogue_active: bool:
+	get: return dialogue != null and dialogue.active
 var current_interaction := ""
 var nearest_interaction := ""
-var _pages: Array[String] = []
-var _page_speakers: Array[String] = []
-var _page_index := 0
-var _typing_clock := 0.0
-var _body: Label
-var _dialogue_title: Label
-var _footer: Label
 var _hint: Label
-var _dialogue_panel: Panel
-var _font: FontFile
-var _portrait: TextureRect
 
 
 func _ready() -> void:
@@ -70,6 +66,7 @@ func _ready() -> void:
 	var session := GAME_SESSION.new()
 	session.name = "GameSession"
 	add_child(session)
+	session.keybindings_closed.connect(func(_saved: bool) -> void: _refresh_nearest())
 	_refresh_nearest()
 
 
@@ -96,9 +93,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				close_dialogue()
 				get_viewport().set_input_as_handled()
 			return
-		if event.physical_keycode == KEY_E or event.keycode == KEY_E:
+		if CONTROLS.is_interact(event):
 			if dialogue_active:
-				_advance_dialogue()
+				dialogue.advance()
 			else:
 				interact_nearest()
 			get_viewport().set_input_as_handled()
@@ -107,15 +104,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			reset_home()
 			get_viewport().set_input_as_handled()
 	if dialogue_active and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_advance_dialogue()
+		dialogue.advance()
 		get_viewport().set_input_as_handled()
 
 
-func _process(delta: float) -> void:
-	if dialogue_active:
-		_typing_clock += delta
-		_body.visible_characters = mini(int(_typing_clock * 28.0), _body.text.length())
-	else:
+func _process(_delta: float) -> void:
+	if not dialogue_active:
 		_refresh_nearest()
 
 
@@ -128,8 +122,14 @@ func _refresh_nearest() -> void:
 		if distance <= float(item["radius"]) and distance < best:
 			best = distance
 			nearest_interaction = String(item["id"])
-	if _hint != null:
-		_hint.text = "WASD移动  E交互" if nearest_interaction.is_empty() else "E · " + String(_find_item(nearest_interaction)["name"])
+	if _hint == null:
+		return
+	var interact := CONTROLS.interact_text()
+	if nearest_interaction.is_empty():
+		_hint.text = "%s%s%s%s移动  %s交互" % [CONTROLS.hint_text("move_up"), CONTROLS.hint_text("move_left"),
+			CONTROLS.hint_text("move_down"), CONTROLS.hint_text("move_right"), interact]
+	else:
+		_hint.text = interact + " · " + String(_find_item(nearest_interaction)["name"])
 
 
 func _find_item(id: String) -> Dictionary:
@@ -157,78 +157,16 @@ func _open_interaction(id: String) -> void:
 		get_tree().root.get_node("SceneRoutes").call("switch_to", "res://scenes/underground_hospital.tscn")
 		return
 	current_interaction = id
-	dialogue_active = true
-	player.velocity = Vector2.ZERO
-	player.input_suspended = true
-	player.clear_input_buffer()
-	CONTROLS.release_actions()
-	player.process_mode = Node.PROCESS_MODE_DISABLED
 	prop_effects.call("play_interaction", id)
-	_pages.clear()
-	_page_speakers.clear()
-	var lines: Array = item.get("lines", [])
-	for line_index in range(lines.size()):
-		var speaker := _line_speaker(id, line_index)
-		var remaining := String(lines[line_index])
-		while remaining.length() > 24:
-			_pages.append(remaining.substr(0, 24))
-			_page_speakers.append(speaker)
-			remaining = remaining.substr(24)
-		if not remaining.is_empty():
-			_pages.append(remaining)
-			_page_speakers.append(speaker)
-	if _pages.is_empty():
-		_pages.append("……")
-		_page_speakers.append("protagonist")
-	_page_index = 0
-	_dialogue_title.text = String(item["name"])
-	_dialogue_panel.position.y = 16 if id in ["fridge", "bed", "dumbbells"] else 116
-	_dialogue_panel.show()
+	# Props low in the room read at the top so the box never covers them.
+	dialogue.position.y = 16 if id in ["fridge", "bed", "dumbbells"] else 116
+	dialogue.open(item.get("lines", []), String(item["name"]), player, item.get("speakers", []))
 	_hint.hide()
-	_show_page()
-
-
-func _line_speaker(id: String, line_index: int) -> String:
-	if id == "television" and line_index < 2:
-		return "television"
-	if id == "computer":
-		if line_index < 2:
-			return "qiaolun"
-		if line_index == 3:
-			return "terminal"
-	return "protagonist"
-
-
-func _show_page() -> void:
-	PIXEL_UI.set_speaker(_portrait, _dialogue_title, _body, _footer,
-		_page_speakers[_page_index], String(_find_item(current_interaction)["name"]))
-	_body.text = _pages[_page_index]
-	_body.visible_characters = 0
-	_typing_clock = 0.0
-	_footer.text = "E继续  Esc关闭  %d/%d" % [_page_index + 1, _pages.size()]
-
-
-func _advance_dialogue() -> void:
-	if _body.visible_characters >= 0 and _body.visible_characters < _body.text.length():
-		_typing_clock = _body.text.length() / 28.0 + 1.0
-		_body.visible_characters = -1
-		return
-	_page_index += 1
-	if _page_index >= _pages.size():
-		close_dialogue()
-	else:
-		_show_page()
 
 
 func close_dialogue() -> void:
-	dialogue_active = false
+	dialogue.close()
 	current_interaction = ""
-	player.process_mode = Node.PROCESS_MODE_INHERIT
-	player.input_suspended = false
-	player.clear_input_buffer()
-	CONTROLS.release_actions()
-	player.velocity = Vector2.ZERO
-	_dialogue_panel.hide()
 	_hint.show()
 	_refresh_nearest()
 
@@ -244,45 +182,17 @@ func reset_home() -> void:
 
 
 func _create_ui() -> void:
-	_font = PIXEL_UI.font()
 	var canvas := CanvasLayer.new()
 	canvas.name = "HomeUI"
 	canvas.layer = 20
 	add_child(canvas)
-	var title := _label(canvas, Vector2(6, 3), Vector2(308, 16), 12)
-	title.text = "C区 · 601  12:00"
+	var title := PIXEL_UI.label(canvas, Vector2(6, 3), Vector2(308, 16), "C区 · 601  12:00", PIXEL_UI.FONT_SIZE, true)
 	title.modulate = Color("98adb9")
-	_hint = _label(canvas, Vector2(6, 162), Vector2(308, 16), 12)
+	_hint = PIXEL_UI.label(canvas, Vector2(6, 162), Vector2(308, 16), "", PIXEL_UI.FONT_SIZE, true)
 	_hint.modulate = Color("bac9d1")
-	_dialogue_panel = Panel.new()
-	_dialogue_panel.position = Vector2(18, 116)
-	_dialogue_panel.size = Vector2(284, 72)
-	_dialogue_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color("101b24")
-	panel_style.border_color = Color("52717f")
-	panel_style.set_border_width_all(1)
-	_dialogue_panel.add_theme_stylebox_override("panel", panel_style)
-	canvas.add_child(_dialogue_panel)
-	PIXEL_UI.shrink_dialogue(_dialogue_panel)
-	_portrait = PIXEL_UI.add_portrait(_dialogue_panel)
-	_dialogue_title = _label(_dialogue_panel, Vector2(60, 2), Vector2(218, 16), 12)
-	_dialogue_title.modulate = Color("82b9ca")
-	_body = _label(_dialogue_panel, Vector2(60, 20), Vector2(218, 32), 12)
-	_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_body.clip_text = true
-	_footer = _label(_dialogue_panel, Vector2(60, 54), Vector2(218, 16), 12)
-	_footer.modulate = Color("81949e")
-	_dialogue_panel.hide()
-
-
-func _label(parent: Node, location: Vector2, dimensions: Vector2, font_size: int) -> Label:
-	var label := Label.new()
-	parent.add_child(label)
-	label.position = location
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.add_theme_font_override("font", _font)
-	label.add_theme_font_size_override("font_size", font_size)
-	label.add_theme_constant_override("line_spacing", 0)
-	label.size = dimensions
-	return label
+	dialogue = DIALOGUE_BOX.new()
+	dialogue.name = "DialogueBox"
+	canvas.add_child(dialogue)
+	dialogue.setup(Vector2(18, 116), {"background": Color("101b24"), "border": Color("52717f"),
+		"title": Color("82b9ca"), "footer": Color("81949e")}, PAGE_CHARACTERS, TYPE_SPEED)
+	dialogue.finished.connect(close_dialogue)

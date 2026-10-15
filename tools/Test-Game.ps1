@@ -17,6 +17,7 @@ $suites = @(
     @{ Name = 'hospital_physical_stairs'; Script = 'test_hospital_physical_stairs' },
     @{ Name = 'hospital_ward_layout';     Script = 'test_hospital_ward_layout' },
     @{ Name = 'hospital_security';        Script = 'test_hospital_security' },
+    @{ Name = 'level_shared';             Script = 'test_level_shared' },
     # Fps: physics/process rate passed as --fixed-fps (default 60); contact_refresh is the high-refresh case.
     @{ Name = 'contact_refresh_v07';      Script = 'test_contact_refresh_v07'; Fps = 144 },
     @{ Name = 'charged_slash';            Script = 'test_charged_slash' },
