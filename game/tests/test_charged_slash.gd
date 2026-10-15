@@ -3,6 +3,8 @@ extends SceneTree
 ## swing coils into a charge, and releasing it full fires a heavy slash (3x damage, critical hit-stop).
 
 const MAIN = preload("res://tests/fixtures/combat_lab.tscn")
+const HOSPITAL = preload("res://scenes/underground_hospital.tscn")
+const TARGET = preload("res://tests/fixtures/training_target.gd")
 var arena: Node2D
 var checks := 0
 var failures: Array[String] = []
@@ -86,6 +88,9 @@ func run() -> void:
 	await verify_early_release_cancels()
 	await verify_charge_locks_and_jump_cancels()
 	await verify_specials_and_air_never_coil()
+	arena.queue_free()
+	await frames(2)
+	await verify_session_feedback()
 	finish()
 
 
@@ -206,6 +211,62 @@ func verify_specials_and_air_never_coil() -> void:
 	check(not player.is_charging, "Holding through an air attack does not coil after landing")
 	mouse(false)
 	await frames(10)
+
+
+# Real scene path: GameSession hit-stops and CombatFeedback sounds in the hospital side view, with one
+# fixture target dropped next to the hero (the shipped hospital has no enemies).
+func verify_session_feedback() -> void:
+	var hospital: Node2D = HOSPITAL.instantiate()
+	root.add_child(hospital)
+	current_scene = hospital
+	await frames(10)
+	hospital.call("switch_view")
+	await frames(20)
+	var player: CharacterBody2D = hospital.player
+	var session: Node = hospital.get_node("GameSession")
+	var feedback: Node = session.get_node_or_null("CombatFeedback")
+	check(feedback != null, "GameSession owns a CombatFeedback node")
+	if feedback == null:
+		return
+	check(feedback.process_mode == Node.PROCESS_MODE_ALWAYS, "Combat sounds keep playing through the hit-stop pause")
+	player.facing = "right"
+	player.call("_show_idle")
+	var target := TARGET.new()
+	target.side_view = true
+	target.max_hp = 30
+	target.position = player.global_position + Vector2(30, 0)
+	hospital.world.add_child(target)
+	target.hp = 30
+	player.critical_roll_override = 0.99
+	await frames(4)
+	mouse(true)
+	await frames(1)
+	mouse(false)
+	await wait_until(func() -> bool: return not player.is_attacking, 90)
+	await frames(20)
+	observations["session_light_stops"] = session.completed_stop_frames.duplicate()
+	check(target.hp == 29 and session.completed_stop_frames == [4], "A light hit in a real scene keeps the 4-frame stop")
+	check(feedback.played.has("swing_light") and feedback.played.has("hit_light"), "A light hit plays the light swing and hit sounds")
+	feedback.played.clear()
+	player.position = target.global_position - Vector2(46, 0)
+	await frames(4)
+	check(await hold_into_charge(player), "Real scene: holding coils into the charge")
+	await frames(int(ceil(player.CHARGE_FULL_SECONDS * 60.0)) + 4)
+	mouse(false)
+	await wait_until(func() -> bool: return not player.is_attacking, 120)
+	await frames(20)
+	observations["session_heavy_stops"] = session.completed_stop_frames.duplicate()
+	observations["session_heavy_sounds"] = feedback.played.duplicate()
+	var stops: Array = session.completed_stop_frames
+	check(not stops.is_empty() and int(stops[stops.size() - 1]) >= session.HEAVY_STOP_FRAMES, "The heavy slash freezes for the longer heavy stop")
+	check(target.hp <= 26, "The heavy slash lands in the real scene")
+	var order: Array = []
+	for sound in ["charge", "charge_ready", "swing_heavy", "hit_heavy"]:
+		order.append(feedback.played.find(sound))
+	check(order[0] >= 0 and order[0] < order[1] and order[1] < order[2] and order[2] < order[3], "Charge, ready, heavy swing and heavy hit sound in order")
+	check(not session.get_viewport().get_camera_2d() or session.get_viewport().get_camera_2d().offset == Vector2.ZERO, "The after-shock returns the camera to rest")
+	# The hospital stays in the tree like the other suites' scenes: freeing it right before quit strands the
+	# audio server's playbacks and reports leaks at exit.
 
 
 func finish() -> void:

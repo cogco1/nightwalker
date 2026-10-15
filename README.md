@@ -26,7 +26,8 @@ Nightwalker/
 │  │  └─ levels/
 │  │     ├─ home_601/   home_601 · home_prop_fx
 │  │     └─ hospital/   underground_hospital · hospital_interactions · hospital_security
-│  ├─ assets/                                       SpriteFrames、刀尖路径、场景底图与 layout.json、字体、立绘
+│  ├─ assets/                                       SpriteFrames、刀尖路径、场景底图与 layout.json、字体、立绘；
+│  │                                                audio/sfx/ 战斗音效（合成占位）
 │  ├─ frames/                                       人物动作帧：<视角>_<方向>_<动作>/00–15.png
 │  ├─ art_metadata/                                 原画、提示词、遮罩、导入与校验记录（.gdignore，不参与导入）
 │  ├─ tests/                                        回归套件（Test-Game 全部运行）
@@ -36,7 +37,8 @@ Nightwalker/
 │  └─ evidence/                                     测试和录制输出（不入库）
 ├─ tools/
 │  ├─ Run-Game.ps1 / Test-Game.ps1 / common.ps1     运行、编辑器、回归
-│  └─ art_qa/                                       动作帧和刀光的 Python 校验、预览合成脚本
+│  ├─ audio/                                        战斗音效合成脚本 gen_combat_sfx.py
+│  └─ art_qa/                                       动作帧和刀光的 Python 校验、预览合成脚本；compose_combat_capture.py 把录屏帧和音效时间线合成带声音的 MP4
 └─ docs/
    ├─ ARCHITECTURE.md                               运行时结构、脚本职责、扩展点
    ├─ 给下一位开发者或AI的接手说明.txt                必须保留的手感和像素约束
@@ -56,7 +58,7 @@ Nightwalker/
 | scene_integration_v14 | 安全屋与医院里的实际玩家、顿帧和改键 |
 | hospital_* (5 组) | 医院交互、环境、实体楼梯、病房布局、门禁与电闸 |
 | contact_refresh_v07 | 高刷新率下的命中停顿 |
-| charged_slash | 点击仍是轻击；按住转蓄力、蓄满松开重斩（3 倍伤害、暴击顿帧）、早松取消、蓄力定身、跳跃和清空输入会打断、突刺和空中不蓄力 |
+| charged_slash | 点击仍是轻击；按住转蓄力、蓄满松开重斩（3 倍伤害、暴击顿帧）、早松取消、蓄力定身、跳跃和清空输入会打断、突刺和空中不蓄力；真实场景里轻击 4 帧、重斩 10 帧顿帧和音效顺序 |
 
 ## 开发约束（摘要）
 

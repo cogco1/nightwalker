@@ -8,7 +8,9 @@ signal critical_hit(target: Node, damage: int, direction: Vector2)
 signal normal_contact_stop(direction: Vector2)
 signal special_started(kind: String, direction: Vector2)
 signal landing_impact(point: Vector2)
+signal charge_started
 signal charge_ready
+signal charge_ended(released: bool)
 
 enum ViewMode { TOP_DOWN, SIDE_VIEW }
 
@@ -572,6 +574,7 @@ func _resolve_hit(target: Node, point: Vector2) -> bool:
 	elif special_kind == "rising_slash" and target.has_method("knock_up"):
 		target.call("knock_up", attack_direction)
 	_spawn_sparks(point)
+	_spawn_impact(point)
 	attack_hit.emit(target)
 	hit_resolved.emit(target, damage, stage_is_critical, special_kind)
 	if stage_is_critical and not _critical_stop_emitted:
@@ -732,6 +735,7 @@ func _begin_charge() -> void:
 	charge_time = 0.0
 	is_running = false
 	_set_manual_frame("attack3_" + facing, CHARGE_POSE_FRAME)
+	charge_started.emit()
 
 
 func _update_charge(delta: float, grounded: bool) -> void:
@@ -765,11 +769,13 @@ func _cancel_charge() -> void:
 	is_charging = false
 	charge_time = 0.0
 	_recovery_left = 2.0 / STAGE_FPS[2]
+	charge_ended.emit(false)
 
 
 func _release_heavy_slash() -> void:
 	is_charging = false
 	charge_time = 0.0
+	charge_ended.emit(true)
 	special_kind = "heavy_slash"
 	_attack_crouched = false
 	attack_direction = _facing_vector()
@@ -798,6 +804,31 @@ func _spawn_dust(point: Vector2, count: int) -> void:
 func _spawn_sparks(point: Vector2) -> void:
 	for index in range(5):
 		_effects.append({"position": point.round(), "velocity": Vector2(-32 + index * 16, -35 + abs(index - 2) * 16), "life": 0.14, "color": Color("f2f8ff") if index % 2 == 0 else Color("8ebce8")})
+
+
+# Impact read in three weights (light, critical, heavy): a slash mark across the target along the swing,
+# rays bursting from the contact and extra sparks. The hit-stop freezes on this frame.
+func _spawn_impact(point: Vector2) -> void:
+	var heavy := special_kind == "heavy_slash"
+	var weight := 2 if heavy else (1 if stage_is_critical else 0)
+	var rays: int = [6, 8, 12][weight]
+	var reach: float = [6.0, 9.0, 15.0][weight]
+	var life: float = [0.09, 0.11, 0.15][weight]
+	for index in range(rays):
+		var ray := Vector2.from_angle(TAU * index / rays + 0.35)
+		_effects.append({"position": (point + ray * 3.0).round(), "velocity": ray * reach / life, "tail": ray * reach * 0.45,
+			"life": life, "color": Color("f2f8ff") if index % 2 == 0 else Color("8ebce8")})
+	var across := Vector2(attack_direction.x, -0.65).normalized() if attack_direction.x != 0.0 else Vector2(0.65, attack_direction.y).normalized()
+	var half: float = [6.0, 9.0, 15.0][weight]
+	for row in range(1 + weight):
+		var offset := Vector2(0, row) if attack_direction.x != 0.0 else Vector2(row, 0)
+		_effects.append({"position": (point + across * half + offset).round(), "velocity": Vector2.ZERO, "tail": across * half * 2.0,
+			"life": life * 1.4, "color": Color("f2f8ff") if row == 0 else Color("8ebce8")})
+	if weight > 0:
+		_spawn_sparks(point + Vector2(0, -3))
+	if heavy:
+		_spawn_sparks(point + Vector2(0, 3))
+		_spawn_dust(global_position + attack_direction * 6.0, 5)
 
 
 func _spawn_airflow(point: Vector2, rising: bool) -> void:

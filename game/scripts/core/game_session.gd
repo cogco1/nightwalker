@@ -3,12 +3,20 @@ extends Node
 
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const MENU = preload("res://scripts/ui/keybindings_menu.gd")
+const COMBAT_FEEDBACK = preload("res://scripts/core/combat_feedback.gd")
+# Normal 4 / critical 6 frames are the source game's guarantees; the charged heavy slash freezes longer,
+# flashes the frozen frame and shakes 2 px, then the camera settles through a short after-shock.
+const HEAVY_STOP_FRAMES := 10
+const HEAVY_FLASH := Color(1.7, 1.7, 1.9)
+const AFTERSHOCK := {"critical": [Vector2(1, 0), Vector2(-1, 0), Vector2.ZERO],
+	"heavy": [Vector2(2, 1), Vector2(-2, -1), Vector2(2, 0), Vector2(-1, 1), Vector2(1, 0), Vector2(-1, 0), Vector2.ZERO]}
 
 signal stop_clock_step
 var settings_open := false
 var keybindings_menu: CanvasLayer
 var hit_stop_active := false
 var completed_stop_frames: Array[int] = []
+var combat_feedback: Node
 var _player: CharacterBody2D
 var _host: Node
 var _overlay: TextureRect
@@ -39,6 +47,9 @@ func _ready() -> void:
 	_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_overlay.hide()
 	_overlay_layer.add_child(_overlay)
+	combat_feedback = COMBAT_FEEDBACK.new()
+	combat_feedback.name = "CombatFeedback"
+	add_child(combat_feedback)
 	bind_player(_host.get("player"))
 
 
@@ -50,6 +61,7 @@ func bind_player(player: CharacterBody2D) -> void:
 		_player.normal_contact_stop.connect(_on_normal_contact)
 	if not _player.critical_hit.is_connected(_on_critical_hit):
 		_player.critical_hit.connect(_on_critical_hit)
+	combat_feedback.bind_player(_player)
 
 
 func _process(delta: float) -> void:
@@ -109,7 +121,8 @@ func _on_normal_contact(direction: Vector2) -> void:
 
 func _on_critical_hit(_target: Node, _damage: int, direction: Vector2) -> void:
 	if not hit_stop_active:
-		_run_hit_stop(direction, 6)
+		var heavy: bool = is_instance_valid(_player) and _player.special_kind == "heavy_slash"
+		_run_hit_stop(direction, HEAVY_STOP_FRAMES if heavy else 6, "heavy" if heavy else "critical")
 
 
 func _display_frame() -> void:
@@ -119,7 +132,7 @@ func _display_frame() -> void:
 		await RenderingServer.frame_post_draw
 
 
-func _run_hit_stop(direction: Vector2, requested: int) -> void:
+func _run_hit_stop(direction: Vector2, requested: int, weight := "") -> void:
 	_token += 1
 	var token := _token
 	hit_stop_active = true
@@ -127,6 +140,8 @@ func _run_hit_stop(direction: Vector2, requested: int) -> void:
 	_saved_pause = get_tree().paused
 	_saved_canvas = get_viewport().canvas_transform
 	var shake := Vector2(signf(direction.x), 0) if direction.x != 0 else Vector2(0, signf(direction.y))
+	if weight == "heavy":
+		shake *= 2.0
 	var shifted := _saved_canvas
 	shifted.origin += shake
 	get_viewport().canvas_transform = shifted
@@ -144,6 +159,7 @@ func _run_hit_stop(direction: Vector2, requested: int) -> void:
 		var snapshot := get_viewport().get_texture().get_image()
 		if snapshot != null and not snapshot.is_empty():
 			_overlay.texture = ImageTexture.create_from_image(snapshot)
+			_overlay.modulate = HEAVY_FLASH if weight == "heavy" else Color.WHITE
 			_overlay.show()
 	# Retain the source game's frame and time guarantees on every refresh rate.
 	while frames < requested or _elapsed + 0.000001 < requested / 60.0:
@@ -151,8 +167,26 @@ func _run_hit_stop(direction: Vector2, requested: int) -> void:
 		if token != _token:
 			return
 		frames += 1
+		if frames == 3:
+			_overlay.modulate = Color.WHITE
 	completed_stop_frames.append(frames)
 	_finish_hit_stop()
+	if AFTERSHOCK.has(weight):
+		_aftershock(AFTERSHOCK[weight], token)
+
+
+func _aftershock(offsets: Array, token: int) -> void:
+	var camera := get_viewport().get_camera_2d()
+	if camera == null:
+		return
+	var rest := camera.offset
+	for offset in offsets:
+		if token != _token or not is_instance_valid(camera):
+			break
+		camera.offset = rest + offset
+		await get_tree().process_frame
+	if is_instance_valid(camera):
+		camera.offset = rest
 
 
 func _finish_hit_stop() -> void:

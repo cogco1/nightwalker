@@ -31,7 +31,8 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 └─ UI CanvasLayer          标题、提示、对话框（pixel_ui.gd 统一字体和立绘）
 ```
 
-- **GameSession**：两个关卡共用。负责 F1/Esc 改键菜单，并监听玩家的 `normal_contact_stop`、`critical_hit` 信号做全屏顿帧（普通 4 帧、至少 0.0667 秒；暴击 6 帧、至少 0.1 秒），顿帧期间整体偏移 1 个原生像素。
+- **GameSession**：两个关卡共用。负责 F1/Esc 改键菜单，并监听玩家的 `normal_contact_stop`、`critical_hit` 信号做全屏顿帧（普通 4 帧、至少 0.0667 秒；暴击 6 帧、至少 0.1 秒），顿帧期间整体偏移 1 个原生像素。蓄力重斩用 `HEAVY_STOP_FRAMES`（10 帧）、偏移 2 像素、冻结画面前 2 帧闪白；暴击和重斩结束后镜头 `offset` 有几帧余震（`AFTERSHOCK`）。
+- **CombatFeedback**（`scripts/core/combat_feedback.gd`）：GameSession 的子节点，`PROCESS_MODE_ALWAYS`，所以顿帧暂停时命中声不被截断。监听玩家的 `attack_started`、`hit_resolved`、`charge_started`、`charge_ready`、`charge_ended` 播挥刀、轻击/暴击/重斩命中、蓄力、蓄满音效；`played` 记录播放顺序供测试和录屏使用。音效是 `tools/audio/gen_combat_sfx.py` 合成的占位 WAV（`assets/audio/sfx/`），同名替换即可换成正式音效。无头模式下只记录不播放。
 - **NightwalkerStoryState**（`scripts/core/story_state.gd`）：由 `hospital_security.gd` 按需挂到 `/root`，存放本次进程内的物品和标记（`grant_item`、`has_item`、`set_flag`、`has_flag`）。没有存档，退出游戏就清空。
 - **Controls**（`scripts/core/controls.gd`）：静态类，持有当前按键方案，读写 `user://keybindings.cfg`，把方案应用到 InputMap。各脚本通过 `CONTROLS.binding_pressed(slot)` 读输入。
 
@@ -44,7 +45,8 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 - 蓄力重斩：一段地面轻击结束时左键仍按着，就进入 `is_charging`（停在 attack3 第 3 帧，原地不动）；`charge_time` 到 `CHARGE_FULL_SECONDS` 发 `charge_ready`；松开时蓄满就以 `special_kind = "heavy_slash"` 从第 4 帧播 attack3（46 fps，前冲 14 像素，判定加长 10、加宽 8，固定暴击、不掷骰），否则取消。离地、`clear_input_buffer()` 都会取消蓄力。
 - 空中：二段跳、空中三连、S 下劈和落地冲击、空中突刺（结束接 `air_idle`，0.30 秒、6 像素/秒缓降）。
 - 刀尖命中区按 `assets/blade_paths.json` 逐帧取刀刃位置，和画面上的钢刃一致。
-- 对外信号：`attack_started`、`attack_hit`、`combo_changed`、`hit_resolved`、`critical_hit`、`normal_contact_stop`、`special_started`、`landing_impact`。
+- 对外信号：`attack_started`、`attack_hit`、`combo_changed`、`hit_resolved`、`critical_hit`、`normal_contact_stop`、`special_started`、`landing_impact`、`charge_started`、`charge_ready`、`charge_ended(released)`。
+- 命中特效分三档（轻、暴击、重斩）：沿挥刀方向的斩痕、放射冲击线、火花；顿帧会冻结在这一帧上。
 
 ## 数据和素材
 
