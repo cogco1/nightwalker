@@ -5,10 +5,19 @@ const CONTROLS = preload("res://scripts/core/controls.gd")
 const INTERACTIONS = preload("res://scripts/levels/hospital/hospital_interactions.gd")
 const SECURITY = preload("res://scripts/levels/hospital/hospital_security.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
+const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 const LAYOUT_PATH := "res://assets/underground_hospital/layout.json"
 const DEFAULT_BACKGROUND := "res://assets/underground_hospital/hospital_native.png"
 const VIEWPORT_SIZE := Vector2i(320, 180)
 const DEFAULT_WORLD_SIZE := Vector2i(640, 360)
+# Slack around the side-view stair landings (native px). The flight is taken with the feet within 3 px of a
+# landing; it counts as entered 2 px above the lower one; a jump leaves it 0.5 px above the upper one; arriving
+# allows float error on the landing line.
+const STAIR_ENTRY_SLACK := 3.0
+const STAIR_ENTERED_RISE := 2.0
+const STAIR_JUMP_CLEARANCE := 0.5
+const UPPER_ARRIVAL_SLACK := 0.1
+const LOWER_ARRIVAL_SLACK := 0.2
 
 var base_layout: Dictionary = {}
 var layout: Dictionary = {}
@@ -30,6 +39,8 @@ var _title: Label
 var _hint: Label
 var _using_stairs := false
 var _stair_entered := false
+# layout.json stairs.side_flight: landing heights, entry and exit x per landing, jump-off span.
+var _flight: Dictionary = {}
 
 
 func _ready() -> void:
@@ -46,6 +57,7 @@ func _ready() -> void:
 	var dimensions: Array = base_layout.get("native_size", [DEFAULT_WORLD_SIZE.x, DEFAULT_WORLD_SIZE.y])
 	world_size = Vector2i(int(dimensions[0]), int(dimensions[1]))
 	floor_id = int(base_layout.get("initial_floor", 1))
+	_flight = base_layout.get("stairs", {}).get("side_flight", {})
 	camera = Camera2D.new()
 	camera.name = "HospitalCamera"
 	camera.zoom = Vector2.ONE
@@ -54,7 +66,7 @@ func _ready() -> void:
 	camera.limit_smoothed = false
 	add_child(camera)
 	camera.make_current()
-	_activate_view(0)
+	activate_view(0)
 	interactions = INTERACTIONS.new()
 	interactions.name = "HospitalInteractions"
 	interactions.call("configure", self, base_layout)
@@ -68,6 +80,7 @@ func _ready() -> void:
 	var session := GAME_SESSION.new()
 	session.name = "GameSession"
 	add_child(session)
+	session.keybindings_closed.connect(func(_saved: bool) -> void: refresh_ui())
 	queue_redraw()
 
 
@@ -75,12 +88,12 @@ func _physics_process(_delta: float) -> void:
 	if is_instance_valid(player):
 		if view_mode == 1:
 			_update_stair_access()
-		shared_room_id = _room_for_position(player.global_position, view_mode)
+		shared_room_id = room_for_position(player.global_position, view_mode)
 		if view_mode == 1 and not stairs_busy:
 			var detected_floor := int(_room_record(shared_room_id).get("floor_id", floor_id))
 			if detected_floor != floor_id:
 				floor_id = detected_floor
-				_refresh_ui()
+				refresh_ui()
 		follow_player()
 		if view_mode == 0:
 			queue_redraw()
@@ -120,7 +133,9 @@ func _configuration(mode: int) -> Dictionary:
 	return configuration
 
 
-func _activate_view(mode: int, room_id := "", forced_position: Variant = null) -> void:
+## Rebuilds the world for a view (0 top-down, 1 side) with a new player: in room_id at its anchor or the
+## position saved when last leaving it, or at forced_position; a blocked spot falls back to start_position().
+func activate_view(mode: int, room_id := "", forced_position: Variant = null) -> void:
 	if is_instance_valid(security):
 		security.call("close_keypad")
 	if is_instance_valid(world):
@@ -152,19 +167,19 @@ func _activate_view(mode: int, room_id := "", forced_position: Variant = null) -
 	world.add_child(background)
 	for item in layout.get("colliders", []):
 		_add_obstacle(item)
-	var spawn_position := _start_position()
+	var spawn_position := start_position()
 	var record := _room_record(room_id)
 	var anchor_key := "top_down_anchor" if mode == 0 else "side_view_anchor"
 	if record.has(anchor_key):
 		var anchor: Array = record[anchor_key]
 		spawn_position = Vector2(anchor[0], anchor[1])
 	var cache_key := "%d:%s" % [mode, room_id]
-	if _saved_positions.has(cache_key) and _position_is_clear(_saved_positions[cache_key], mode):
+	if _saved_positions.has(cache_key) and position_is_clear(_saved_positions[cache_key], mode):
 		spawn_position = _saved_positions[cache_key]
 	if forced_position is Vector2:
 		spawn_position = forced_position
-	if not _position_is_clear(spawn_position, mode):
-		spawn_position = _start_position()
+	if not position_is_clear(spawn_position, mode):
+		spawn_position = start_position()
 	player = PLAYER_SCENE.instantiate()
 	player.name = "Player"
 	player.view_mode = mode
@@ -178,13 +193,13 @@ func _activate_view(mode: int, room_id := "", forced_position: Variant = null) -
 	var session := get_node_or_null("GameSession")
 	if session != null:
 		session.bind_player(player)
-	shared_room_id = _room_for_position(player.global_position, mode)
+	shared_room_id = room_for_position(player.global_position, mode)
 	if is_instance_valid(interactions):
 		interactions.call("on_view_change")
 	if is_instance_valid(security):
 		security.call("refresh_view")
 	follow_player()
-	_refresh_ui()
+	refresh_ui()
 	queue_redraw()
 
 
@@ -220,10 +235,10 @@ func switch_view() -> void:
 		return
 	if is_instance_valid(interactions):
 		interactions.call("close_dialogue")
-	var room_id := _room_for_position(player.global_position, view_mode)
-	if not _using_stairs and _position_is_clear(player.global_position, view_mode):
+	var room_id := room_for_position(player.global_position, view_mode)
+	if not _using_stairs and position_is_clear(player.global_position, view_mode):
 		_saved_positions["%d:%s" % [view_mode, room_id]] = player.global_position
-	_activate_view(1 - view_mode, room_id)
+	activate_view(1 - view_mode, room_id)
 
 
 func reset_view() -> void:
@@ -231,14 +246,14 @@ func reset_view() -> void:
 		return
 	if is_instance_valid(interactions):
 		interactions.call("close_dialogue")
-	player.position = _start_position()
+	player.position = start_position()
 	player.velocity = Vector2.ZERO
 	_finish_stairs()
-	shared_room_id = _room_for_position(player.global_position, view_mode)
+	shared_room_id = room_for_position(player.global_position, view_mode)
 	follow_player()
 
 
-func _start_position() -> Vector2:
+func start_position() -> Vector2:
 	var fallback := [110, 300] if view_mode == 0 else [110, 344]
 	var values: Array = layout.get("player_start", fallback)
 	if view_mode == 1:
@@ -258,7 +273,7 @@ func change_floor(target_floor: int) -> void:
 			return
 		floor_id = target_floor
 		var target_room := String(stair.get("room_ids", {}).get(str(target_floor), ""))
-		_activate_view(0, target_room, Vector2(position_data[0], position_data[1]))
+		activate_view(0, target_room, Vector2(position_data[0], position_data[1]))
 		return
 	# E selects the rear stair plane; AD still performs every movement.
 	_begin_stairs(target_floor == 1)
@@ -274,14 +289,15 @@ func _begin_stairs(descending: bool) -> void:
 	if _using_stairs or not player.is_on_floor() or player.is_attacking:
 		return
 	var point := player.position
-	var allowed := point.x >= 24.0 and point.x <= 36.0 and absf(point.y - 164.0) < 3.0 if descending else point.x >= 150.0 and point.x <= 174.0 and absf(point.y - 286.0) < 3.0
-	if not allowed:
+	var landing := "upper" if descending else "lower"
+	var on_landing := absf(point.y - float(_flight[landing + "_landing_y"])) < STAIR_ENTRY_SLACK
+	if not (on_landing and _within(point.x, _flight[landing + "_entry_x"])):
 		return
 	_using_stairs = true
 	_stair_entered = descending
 	_set_stair_surface("stair_ramp", true)
 	_set_stair_surface("stair_entry", false)
-	_refresh_ui()
+	refresh_ui()
 
 
 func _finish_stairs() -> void:
@@ -289,7 +305,11 @@ func _finish_stairs() -> void:
 	_stair_entered = false
 	_set_stair_surface("stair_entry", true)
 	_set_stair_surface("stair_ramp", false)
-	_refresh_ui()
+	refresh_ui()
+
+
+func _within(value: float, span: Array) -> bool:
+	return value >= float(span[0]) and value <= float(span[1])
 
 
 func _update_stair_access() -> void:
@@ -302,17 +322,19 @@ func _update_stair_access() -> void:
 		elif Input.is_action_just_pressed("crouch"):
 			_begin_stairs(true)
 		return
-	if point.y < 284.0:
+	var upper := float(_flight["upper_landing_y"])
+	var lower := float(_flight["lower_landing_y"])
+	if point.y < lower - STAIR_ENTERED_RISE:
 		_stair_entered = true
 	# Jumping above the upper landing selects that floor before coming down.
-	if not player.is_on_floor() and point.y < 163.5 and player.velocity.y < -0.1 and point.x >= 18.0 and point.x <= 168.0:
+	if not player.is_on_floor() and point.y < upper - STAIR_JUMP_CLEARANCE and player.velocity.y < -0.1 and _within(point.x, _flight["jump_off_x"]):
 		_finish_stairs()
 		return
 	if not player.is_on_floor():
 		return
-	if point.y <= 164.1 and (player.velocity.x < -0.1 or point.x <= 22.0):
+	if point.y <= upper + UPPER_ARRIVAL_SLACK and (player.velocity.x < -0.1 or point.x <= float(_flight["upper_exit_x"])):
 		_finish_stairs()
-	elif point.y >= 285.8 and (_stair_entered or point.x > 178.0):
+	elif point.y >= lower - LOWER_ARRIVAL_SLACK and (_stair_entered or point.x > float(_flight["lower_exit_x"])):
 		_finish_stairs()
 
 
@@ -324,7 +346,8 @@ func follow_player() -> void:
 	camera.force_update_scroll()
 
 
-func _position_is_clear(point: Vector2, mode: int) -> bool:
+## Whether the player's footprint at point stays inside the world and clear of colliders and closed doors.
+func position_is_clear(point: Vector2, mode: int) -> bool:
 	if mode == 0 and is_instance_valid(security) and security.call("is_position_blocked", point, floor_id):
 		return false
 	var size := Vector2(12, 8) if mode == 0 else Vector2(12, 26)
@@ -355,7 +378,8 @@ func _room_record(id: String) -> Dictionary:
 	return {}
 
 
-func _room_for_position(point: Vector2, mode: int) -> String:
+## The room containing point in a view, else the room whose anchor is closest.
+func room_for_position(point: Vector2, mode: int) -> String:
 	var rectangle_key := "top_down_rect" if mode == 0 else "side_view_rect"
 	var anchor_key := "top_down_anchor" if mode == 0 else "side_view_anchor"
 	var closest := ""
@@ -410,31 +434,33 @@ func _create_ui() -> void:
 	canvas.name = "EnvironmentUI"
 	canvas.layer = 20
 	add_child(canvas)
-	var font: FontFile = preload("res://scripts/ui/pixel_ui.gd").font()
-	_title = _label(canvas, font, Vector2(5, 3), 12)
+	_title = PIXEL_UI.label(canvas, Vector2(5, 3), Vector2(310, 16))
 	_title.modulate = Color("9aafb7")
-	_hint = _label(canvas, font, Vector2(5, 162), 12)
+	_hint = PIXEL_UI.label(canvas, Vector2(5, 162), Vector2(310, 16))
 	_hint.modulate = Color("8da3ad")
-	_refresh_ui()
+	refresh_ui()
 
 
-func _refresh_ui() -> void:
+## Floor / view title and the control hint, written from the current key bindings.
+func refresh_ui() -> void:
 	if _title == null:
 		return
 	_hint.visible = not ((is_instance_valid(interactions) and interactions.dialogue_active)
 		or (is_instance_valid(security) and security.keypad_active))
 	_title.text = "地下医院 · %d楼 · %s" % [floor_id, "俯视" if view_mode == 0 else "侧视"]
-	_hint.text = "WASD移动 E交互/楼梯 Tab视角 Caps跑 F7家中" if view_mode == 0 else "AD直走 W上楼 S蹲/下楼 E交互 空格跳 Tab视角"
-	if view_mode == 1 and _using_stairs:
-		_hint.text = "楼梯：A上行 D下行 空格跳 S蹲 Tab视角"
-
-
-func _label(parent: Node, font: Font, location: Vector2, font_size: int) -> Label:
-	var label := Label.new()
-	parent.add_child(label)
-	label.position = location
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.add_theme_font_override("font", font)
-	label.add_theme_font_size_override("font_size", font_size)
-	label.size = Vector2(310, 16)
-	return label
+	var left := CONTROLS.hint_text("move_left")
+	var right := CONTROLS.hint_text("move_right")
+	var interact := CONTROLS.interact_text()
+	var view := CONTROLS.hint_text("switch_view")
+	var jump := CONTROLS.hint_text("jump")
+	var crouch := CONTROLS.hint_text("crouch")
+	if view_mode == 0:
+		# F7 only travels home while no action is bound to it (SceneRoutes).
+		var home := "" if CONTROLS.current.values().has(KEY_F7) else " F7家中"
+		_hint.text = "%s%s%s%s移动 %s交互/楼梯 %s视角 %s跑%s" % [CONTROLS.hint_text("move_up"), left,
+			CONTROLS.hint_text("move_down"), right, interact, view, CONTROLS.hint_text("run"), home]
+	elif _using_stairs:
+		_hint.text = "楼梯：%s上行 %s下行 %s跳 %s蹲 %s视角" % [left, right, jump, crouch, view]
+	else:
+		_hint.text = "%s%s直走 %s上楼 %s蹲/下楼 %s交互 %s跳 %s视角" % [left, right, CONTROLS.hint_text("move_up"),
+			crouch, interact, jump, view]

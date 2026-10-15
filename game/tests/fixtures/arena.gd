@@ -4,6 +4,7 @@ const CONTROLS = preload("res://scripts/core/controls.gd")
 const PLAYER_SCENE = preload("res://scenes/player.tscn")
 const TARGET_SCRIPT = preload("res://tests/fixtures/training_target.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
+const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 # The fixture runs the shipped GameSession (hit-stop, settings menu, combat sounds); the names below forward
 # to it so the suites keep their wording while testing the real code.
 signal hit_stop_started
@@ -60,6 +61,7 @@ func _ready() -> void:
 	session.hit_stop_started.connect(hit_stop_started.emit)
 	session.hit_stop_frame.connect(hit_stop_frame.emit)
 	session.hit_stop_finished.connect(hit_stop_finished.emit)
+	session.keybindings_closed.connect(func(_saved: bool) -> void: _refresh_hud())
 	build_arena(0)
 
 
@@ -164,11 +166,6 @@ func open_keybindings() -> void:
 	session.open_keybindings()
 
 
-func _refresh_ui() -> void:
-	# GameSession calls this after the settings menu closes.
-	_refresh_hud()
-
-
 func _on_attack_hit(target: Node) -> void:
 	hits += 1
 	message = "Target down. %s resets." % CONTROLS.binding_text("reset_arena") if target.get("hp") == 0 else "Hit! 1 damage."
@@ -244,17 +241,12 @@ func _create_hud() -> void:
 	status_label.add_theme_font_override("font", mono)
 
 
+# The lab HUD keeps its small system-font text; the scenes use the 12px pixel font.
 func _label(parent: Node, location: Vector2, size: int) -> Label:
-	var label := Label.new()
-	label.position = location
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.add_theme_font_size_override("font_size", size)
 	var system_font := SystemFont.new()
 	system_font.antialiasing = TextServer.FONT_ANTIALIASING_NONE
 	system_font.font_names = PackedStringArray(["Microsoft YaHei", "Noto Sans CJK SC"])
-	label.add_theme_font_override("font", system_font)
-	parent.add_child(label)
-	return label
+	return PIXEL_UI.label(parent, location, Vector2.ZERO, "", size, false, system_font)
 
 
 func _refresh_hud() -> void:

@@ -1194,6 +1194,24 @@
         164
       ]
     },
+    "side_flight": {
+      "upper_landing_y": 164,
+      "lower_landing_y": 286,
+      "upper_entry_x": [
+        24,
+        36
+      ],
+      "lower_entry_x": [
+        150,
+        174
+      ],
+      "upper_exit_x": 22,
+      "lower_exit_x": 178,
+      "jump_off_x": [
+        18,
+        168
+      ]
+    },
     "side_traversal": "single straight flight,lower-right to upper-left;W/E choosesup,S/E choosesdown;AD freephysics;defaultbothfloorpassagesflat"
   },
   "power_sections": {

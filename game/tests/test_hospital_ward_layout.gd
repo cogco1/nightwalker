@@ -85,7 +85,7 @@ func run() -> void:
 	await frames(6)
 	check(environment.view_mode == 0 and environment.floor_id == 1, "ward regression starts on the first-floor top-down map")
 	await fixture(Vector2(372, 65))
-	check(environment._position_is_clear(environment.player.position, 0), "eastward ward entrance has a clear corridor approach")
+	check(environment.position_is_clear(environment.player.position, 0), "eastward ward entrance has a clear corridor approach")
 	check(await travel(KEY_S, 174, 170), "S continuously enters through the east-side doorway and reaches the bed-foot aisle")
 	check(absf(environment.player.position.x - 372.0) < 0.5, "entrance traversal needs no sideways correction around a bed")
 	check(environment.shared_room_id == "ward", "the east entrance actually reaches the ward room")
@@ -115,11 +115,11 @@ func run() -> void:
 	await fixture(Vector2(268, 170))
 	await push_for(KEY_W, 65)
 	check(environment.player.position.y >= 156.5 and environment.player.position.y <= 159.0, "walking north from the aisle meets the middle bed at its relocated foot")
-	check(environment._position_is_clear(environment.player.position, 0), "the stopped player's foot collider stays outside the middle bed")
+	check(environment.position_is_clear(environment.player.position, 0), "the stopped player's foot collider stays outside the middle bed")
 	observations["middle_bed_foot_stop"] = [environment.player.position.x, environment.player.position.y]
 
 	await fixture(Vector2(269, 164))
-	check(environment._position_is_clear(environment.player.position, 0), "the relocated bed inspection position stands on reachable floor")
+	check(environment.position_is_clear(environment.player.position, 0), "the relocated bed inspection position stands on reachable floor")
 	await frames(5)
 	check(environment.interactions.nearest_id == "ward_bed", "the empty-bed prompt belongs to the middle bed's reachable foot")
 	key(KEY_E, true)

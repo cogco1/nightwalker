@@ -11,6 +11,10 @@ const LABELS := {
 	"attack_mouse": "攻击鼠标键", "heavy_mouse": "重击鼠标键", "switch_view": "切换视角", "reset_arena": "重置位置",
 }
 const MOUSE_BUTTONS := [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_MIDDLE, MOUSE_BUTTON_XBUTTON1, MOUSE_BUTTON_XBUTTON2]
+## E inspects, talks, uses stairs and opens keypads in every scene. It is reserved: no rebindable action may use it.
+const INTERACT_KEY := KEY_E
+# Free keys offered when a saved action has to move (dash off run, any action off E), in this order.
+const SPARE_KEYS := [KEY_SHIFT, KEY_CTRL, KEY_ALT, KEY_F, KEY_Q, KEY_L, KEY_K]
 
 static var settings_path := SETTINGS_PATH
 static var current: Dictionary = {}
@@ -54,29 +58,36 @@ static func _load_saved() -> void:
 			load_notice = "设置文件不完整，已使用默认按键。"
 			return
 		profile[slot] = config.get_value("bindings", slot)
+	var notices: Array[String] = []
 	if profile["dash_modifier"] == profile["run"]:
 		# The dash key used to be a modifier that could share run's key; it is now a press of its own.
-		profile["dash_modifier"] = _free_dash_key(profile)
-		load_notice = "突刺键改成单按触发，已从跑步键移到「%s」。" % binding_text("dash_modifier", profile)
+		profile["dash_modifier"] = _free_key(profile, "dash_modifier")
+		notices.append("突刺键改成单按触发，已从跑步键移到「%s」。" % binding_text("dash_modifier", profile))
+	for slot in SLOTS:
+		# Older menus allowed E; it is now the reserved interaction key.
+		if slot not in MOUSE_SLOTS and profile[slot] == INTERACT_KEY:
+			profile[slot] = _free_key(profile, slot)
+			notices.append("E 键留给交互，「%s」已移到「%s」。" % [LABELS[slot], binding_text(slot, profile)])
 	if profile["heavy_mouse"] == -1:
 		# Saved before the heavy attack existed: right button, or the first mouse button attack leaves free.
 		for button in [MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_MIDDLE, MOUSE_BUTTON_XBUTTON1, MOUSE_BUTTON_XBUTTON2, MOUSE_BUTTON_LEFT]:
 			if button != profile["attack_mouse"]:
 				profile["heavy_mouse"] = button
 				break
-		load_notice = (load_notice + " " if not load_notice.is_empty() else "") + "新增重击，鼠标键为「%s」。" % binding_text("heavy_mouse", profile)
+		notices.append("新增重击，鼠标键为「%s」。" % binding_text("heavy_mouse", profile))
+	load_notice = " ".join(notices)
 	if not validate(profile).is_empty():
 		load_notice = "设置文件无效，已使用默认按键。"
 		return
 	current = profile
 
 
-static func _free_dash_key(profile: Dictionary) -> int:
+static func _free_key(profile: Dictionary, moving_slot: String) -> int:
 	var used: Array = []
 	for slot in SLOTS:
-		if slot != "dash_modifier" and slot not in MOUSE_SLOTS:
+		if slot != moving_slot and slot not in MOUSE_SLOTS:
 			used.append(profile[slot])
-	for code in [KEY_SHIFT, KEY_CTRL, KEY_ALT, KEY_F, KEY_Q, KEY_E, KEY_L, KEY_K]:
+	for code in SPARE_KEYS:
 		if code not in used:
 			return code
 	return KEY_SHIFT
@@ -108,6 +119,8 @@ static func validate(profile: Dictionary) -> String:
 				return "请选择鼠标左键、右键、中键或侧键。"
 		elif code == KEY_ESCAPE or code == KEY_F1:
 			return "Esc 和 F1 保留用于打开 / 关闭改键界面。"
+		elif code == INTERACT_KEY:
+			return "E 保留用于交互（调查、对话、楼梯、密码门）。"
 		elif not _valid_key(code):
 			return "这个按键暂不支持，请换一个键。"
 	if profile["attack_mouse"] == profile["heavy_mouse"]:
@@ -178,6 +191,21 @@ static func binding_pressed(slot: String) -> bool:
 	if slot in MOUSE_SLOTS:
 		return Input.is_mouse_button_pressed(current[slot])
 	return Input.is_physical_key_pressed(current[slot])
+
+
+static func is_interact(event: InputEvent) -> bool:
+	return event is InputEventKey and (event.physical_keycode == INTERACT_KEY or event.keycode == INTERACT_KEY)
+
+
+static func interact_text() -> String:
+	return OS.get_keycode_string(INTERACT_KEY)
+
+
+## Key name for the on-screen scene hints: binding_text, except that Space reads 空格 there.
+static func hint_text(slot: String) -> String:
+	if slot not in MOUSE_SLOTS and int(current[slot]) == KEY_SPACE:
+		return "空格"
+	return binding_text(slot)
 
 
 static func binding_text(slot: String, profile: Dictionary = {}) -> String:

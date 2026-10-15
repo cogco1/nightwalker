@@ -107,6 +107,9 @@ var _dash_phasing := false
 var airflow_count := 0
 var critical_impact_count := 0
 var input_suspended := false
+# freeze() owners by instance id -> halt; the process mode to restore once the last one lets go.
+var _freeze_owners: Dictionary = {}
+var _process_mode_before_freeze := Node.PROCESS_MODE_INHERIT
 var state := State.FREE
 ## Physics ticks since the current move started.
 var move_ticks := 0
@@ -331,6 +334,44 @@ func clear_input_buffer() -> void:
 		_cancel_charge()
 	_intents.clear()
 	_mouse_attack_held = false
+
+
+## Stops the player for a dialogue, a keypad or the settings menu. Each owner holds one freeze and the player
+## resumes when the last owner calls unfreeze(owner). halt also zeroes the velocity at both ends; the settings
+## menu passes false so a jump opened mid-air keeps its arc.
+func freeze(owner: Object, halt := true) -> void:
+	var id := owner.get_instance_id()
+	if _freeze_owners.has(id):
+		return
+	if _freeze_owners.is_empty():
+		_process_mode_before_freeze = process_mode
+	_freeze_owners[id] = halt
+	if halt:
+		velocity = Vector2.ZERO
+	input_suspended = true
+	clear_input_buffer()
+	CONTROLS.release_actions()
+	process_mode = Node.PROCESS_MODE_DISABLED
+
+
+func unfreeze(owner: Object) -> void:
+	var id := owner.get_instance_id()
+	if not _freeze_owners.has(id):
+		return
+	var halt: bool = _freeze_owners[id]
+	_freeze_owners.erase(id)
+	if not _freeze_owners.is_empty():
+		return
+	process_mode = _process_mode_before_freeze
+	if halt:
+		velocity = Vector2.ZERO
+	input_suspended = false
+	clear_input_buffer()
+	CONTROLS.release_actions()
+
+
+func is_frozen() -> bool:
+	return not _freeze_owners.is_empty()
 
 
 func _input(event: InputEvent) -> void:
