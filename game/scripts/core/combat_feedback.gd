@@ -2,6 +2,7 @@ extends Node
 ## Attack sounds for the hero. GameSession owns one per scene and binds the player; it keeps running while
 ## the hit-stop pauses the tree, so an impact sound is never cut by the freeze it causes.
 
+const MOVESET = preload("res://scripts/player/moves_long_blade.gd")
 const SOUNDS := {
 	"swing_light": preload("res://assets/audio/sfx/swing_light.wav"),
 	"swing_heavy": preload("res://assets/audio/sfx/swing_heavy.wav"),
@@ -43,6 +44,13 @@ func bind_player(player: CharacterBody2D) -> void:
 	player.charge_started.connect(play.bind("charge", 1.0))
 	player.charge_ready.connect(play.bind("charge_ready", 1.0))
 	player.charge_ended.connect(func(_released: bool) -> void: _voices["charge"].stop())
+	# Taking a hit: a low heavy impact; a perfect dodge: a high chime.
+	player.attack_received.connect(func(result: int, _attack: Dictionary) -> void:
+		if result == 0:
+			play("hit_heavy", 0.7)
+		elif result == 2:
+			play("charge_ready", 1.4)
+	)
 
 
 func play(sound: String, pitch := 1.0) -> void:
@@ -57,7 +65,8 @@ func play(sound: String, pitch := 1.0) -> void:
 
 
 func _on_move_started(move: StringName) -> void:
-	if move == &"heavy_slash":
-		play("swing_heavy")
+	var row: Dictionary = MOVESET.MOVES.get(move, {})
+	if row.get("swing", &"light") == &"heavy":
+		play("swing_heavy", float(row.get("pitch", 1.0)))
 	else:
-		play("swing_light", SWING_PITCH.get(move, 1.0))
+		play("swing_light", SWING_PITCH.get(move, float(row.get("pitch", 1.0))))

@@ -12,6 +12,7 @@ var spawn_position := Vector2.ZERO
 var knock_count := 0
 var last_knock_velocity := Vector2.ZERO
 var weak_knock_count := 0
+var knock_back_count := 0
 var slash_flash_left := 0.0
 var last_hit_direction := Vector2.RIGHT
 var _death_reaction_left := 0.0
@@ -72,6 +73,15 @@ func receive_hit_reaction(direction: Vector2, strong: bool = false, air_combo: b
 		_air_hold_left = 0.0
 		knock_small(direction)
 	queue_redraw()
+
+
+## Pushes a grounded target about `distance` native px away (ground friction 280 px/s^2 brakes it).
+func knock_back(direction: Vector2, distance: float) -> void:
+	if not side_view or not is_on_floor():
+		return
+	velocity = Vector2(signf(direction.x) * sqrt(2.0 * 280.0 * distance), 0.0)
+	last_knock_velocity = velocity
+	knock_back_count += 1
 
 
 func knock_small(direction: Vector2) -> void:

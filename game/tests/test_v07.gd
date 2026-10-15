@@ -284,11 +284,19 @@ func run_tests() -> void:
 		check(await wait_stage(3), "second strike flows into third, mode " + str(mode))
 		check(arena.player.sprite.animation == "attack3_right", "third strike uses distinct animation, mode " + str(mode))
 		await mouse_tap()
-		check(not arena.player.queued_attack, "third strike refuses fourth buffer, mode " + str(mode))
+		if mode == 0:
+			check(not arena.player.queued_attack, "third strike refuses fourth buffer, mode " + str(mode))
+		else:
+			# The side-view light string goes on to the thrust and the spin (tests/test_rhythm_combat.gd).
+			check(arena.player.queued_attack, "third strike buffers the fourth-hit thrust, mode " + str(mode))
 		await tick(40)
 		check(arena.targets[0].hp == 0 and arena.hits == 3, "three-hit chain hits same target once per strike, mode " + str(mode))
 		check(arena.defeated == 1 and arena.targets[0].body_shape.disabled, "combo defeat disables target collider, mode " + str(mode))
-		check(arena.player.combo_stage == 0 and not arena.player.is_attacking, "three-hit chain ends, mode " + str(mode))
+		for _index in range(60):
+			if not arena.player.is_attacking:
+				break
+			await tick(1)
+		check(arena.player.combo_stage == 0 and not arena.player.is_attacking, "the light string ends, mode " + str(mode))
 	await prepare_target(0)
 	await mouse_tap()
 	check(await wait_attack_frame(14), "first strike reaches late recovery frame")
@@ -773,6 +781,11 @@ func run_feature_tests() -> void:
 	arena.player.position = Vector2(60,160)
 	var endpoint := add_target(Vector2(109,160),6)
 	await tick(3)
+	var dash_starts: Array[int] = [0]
+	arena.player.special_started.connect(func(kind: String, _direction: Vector2) -> void:
+		if kind == "dash_stab":
+			dash_starts[0] += 1
+	)
 	key(KEY_SHIFT,true)
 	key(KEY_D,true)
 	await tick(1)
@@ -780,16 +793,16 @@ func run_feature_tests() -> void:
 	await tick(2)
 	key(KEY_D,false)
 	key(KEY_SHIFT,false)
-	await tick(36)
-	var end_position: Vector2 = arena.player.position
-	await tick(12)
-	check(arena.player.position.distance_to(end_position) < 0.01 and arena.player.special_kind == "", "holding mouse does not repeat dash or snap backward at occupied endpoint")
+	await tick(48)
+	# The click during the dash is the dodge offset: one shadow slash, then the held button coils into the charge.
+	check(dash_starts[0] == 1 and arena.player.position.x >= arena.player.dash_end.x - arena.player.CHARGE_BACKSTEP - 0.01, "holding mouse does not repeat dash or snap backward at occupied endpoint")
+	mouse(false)
+	await tick(4)
 	key(KEY_A,true)
-	await tick(20)
+	await tick(30)
 	key(KEY_A,false)
 	await tick(6)
 	check(arena.player.collision_mask == 3 and arena.player.position.x < endpoint.position.x-12.0, "leaving overlapping enemy safely restores normal collisions")
-	mouse(false)
 	observations["dash_cases"] = dash_cases
 
 func run_contact_tests() -> void:

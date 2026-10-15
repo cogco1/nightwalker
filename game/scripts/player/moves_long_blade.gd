@@ -3,75 +3,163 @@ extends RefCounted
 ## between them. player.gd reads these fields instead of per-stage constants and special_kind string tests;
 ## new moves are added here (tests/test_moveset.gd checks every entry against the frames and blade paths).
 ##
-## Fields (anim, fps and active are required):
-##   stage        combo stage reported through combo_changed / combo_stage (1-3)
+## Fields (anim and fps are required):
+##   stage        combo stage reported through combo_changed / combo_stage (1-5)
 ##   anim         animation prefix; "_<facing>" is appended
 ##   air_anim     prefix used instead when the move starts airborne
 ##   fps          playback rate
 ##   start_frame  first frame shown
-##   active       Vector2i(first, last) frames that hit; last = -1 keeps hitting until the move ends
+##   active       Vector2i(first, last) frames that hit; last = -1 keeps hitting until the move ends; no active = no hit
 ##   side_first   first active frame in side view when it differs from active.x
 ##   box          blade box {length, width, reach, height} in front of the hero, or {rect, forward}
 ##   lunge        {px, from}: forward advance eased over frames from..active.y, on the ground only
 ##   crit         &"none" | &"roll" (CRIT_CHANCE) | &"always"; a critical hit deals CRIT_MULT damage
 ##   stop         impact weight of a normal hit; crit_stop of a critical hit (default &"critical")
+##   dmg_mult     damage multiplier before the critical multiplier (default 1)
 ##   launch       the hit launches the target
+##   knockback    the hit pushes a grounded target this many native px away
 ##   juggle       an airborne hit holds an airborne target in the air
 ##   steer        horizontal input steers the hero while the move plays airborne
 ##   chain        a ground light swing: holding the button after it coils into the charge
 ##   crouched     a crouching attack (lower origin, no lunge, no chain)
 ##   recovery     seconds of return pose; default 2 frames on the ground / 1 in the air at fps
 ##   air          {hold, fall} hang time when started airborne; end_hold after finishing airborne
+##   jump         vertical speed given on the start frame when the move starts on the floor
 ##   special      special_kind name the move reports (tests, HUD, hit_resolved kind)
 ##   pierce       dash: travels DASH_DISTANCE through targets on its first active frame
 ##   dive         dive slash: falls at DIVE_SPEED, holds its last air frame, lands into a short recovery
+##   shockwave    dive landing wave {half_width, launch, crit, crit_stop}: hits grounded targets near the feet
 ##   launcher     rising slash: jumps and spawns rising airflow
 ##   ghosts       frames that leave an afterimage
+##   rehit        frames from which every target can be hit again (multi-hit swings)
+##   arc          {from, to}: code-drawn blade circle swept over the move, degrees from forward, negative is up
+##   end          frame at which the move counts as finished, cutting the rest of the clip
+##   then         segment that follows automatically when this one finishes (multi-part moves)
+##   cancel       frame from which a buffered follow-up starts at once instead of at the end (not the original three)
+##   dash_cancel  frame from which a dash press cuts the move short (light swings: hit, then dodge)
+##   dodge        the evade: a press within DODGE_OFFSET_SECONDS after it starts the dodge-offset follow-up
+##   resumes      dodge offset: counts as the next light hit of the string the dash interrupted
+##   as           counts as this move in the combo graph (its follow-ups and stage)
+##   side_only    side view only; ground / air_only: only started from the combo graph on the floor / in the air
+##   swing        &"light" | &"heavy" swing sound; pitch scales it
 
 const CRIT_CHANCE := 0.30
 const CRIT_MULT := 3
 const SIDE_EXTRA_REACH := 12.0
 const ORIGIN_HEIGHT := 17.0
 const BLADE := {"length": 34.0, "width": 20.0, "reach": 21.0, "height": ORIGIN_HEIGHT}
+const BIG_BLADE := {"length": 44.0, "width": 28.0, "reach": 21.0, "height": ORIGIN_HEIGHT}
+# Spinning swings reach behind the hero as well.
+const SPIN_BOX := {"rect": Rect2(-30, -42, 60, 44), "forward": 6.0}
+const DIVE_BOX := {"rect": Rect2(-13, -24, 26, 42), "forward": 0.0}
 const LIGHT_AIR := {"hold": 0.55, "fall": 6.0}
+# Each part of the aerial spin holds the hero up anew; the last one also hangs on after the spin.
+const SPIN_AIR := {"hold": 0.25, "fall": 6.0}
 
 const MOVES := {
 	&"attack1": {"stage": 1, "anim": "attack1", "air_anim": "air_attack1", "fps": 36.0, "active": Vector2i(6, 9),
 		# The long blade is still behind the shoulder in side-view frame 6; frame 7 crosses forward.
 		"side_first": 7, "box": BLADE, "lunge": {"px": 5.5, "from": 6}, "crit": &"none", "stop": &"light",
-		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR},
+		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR, "dash_cancel": 7},
 	&"attack2": {"stage": 2, "anim": "attack2", "air_anim": "air_attack2", "fps": 40.0, "active": Vector2i(6, 9),
 		"box": BLADE, "lunge": {"px": 5.5, "from": 6}, "crit": &"none", "stop": &"light",
-		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR},
+		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR, "dash_cancel": 6},
 	&"attack3": {"stage": 3, "anim": "attack3", "air_anim": "air_attack3", "fps": 42.0, "active": Vector2i(6, 9),
 		"box": BLADE, "lunge": {"px": 6.8, "from": 6}, "crit": &"roll", "stop": &"light",
-		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR},
+		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR, "dash_cancel": 6},
 	&"crouch_stab": {"stage": 1, "anim": "crouch_stab", "fps": 40.0, "active": Vector2i(6, 9),
 		"box": {"length": 27.0, "width": 16.0, "reach": 17.0, "height": 9.0}, "crit": &"none", "stop": &"light",
 		"juggle": true, "crouched": true},
 	&"rising_slash": {"stage": 1, "anim": "rising_slash", "fps": 40.0, "active": Vector2i(3, 9),
 		"box": {"rect": Rect2(-18, -36, 36, 48), "forward": 19.0}, "crit": &"none", "stop": &"light",
-		"launch": true, "special": "rising_slash", "launcher": true},
+		"launch": true, "special": "rising_slash", "launcher": true, "jump": -280.0},
 	&"dive_slash": {"stage": 1, "anim": "dive_slash", "fps": 40.0, "active": Vector2i(0, -1),
-		"box": {"rect": Rect2(-13, -24, 26, 42), "forward": 0.0}, "crit": &"none", "stop": &"light",
-		"special": "dive_slash", "dive": true},
+		"box": DIVE_BOX, "crit": &"none", "stop": &"light", "special": "dive_slash", "dive": true},
 	&"dash_stab": {"stage": 1, "anim": "dash_stab", "air_anim": "air_dash_stab", "fps": 40.0, "active": Vector2i(6, 9),
 		"crit": &"none", "stop": &"light", "juggle": true, "special": "dash_stab", "pierce": true,
-		"air": {"hold": 0.55, "fall": 6.0, "end_hold": 0.30}},
+		"air": {"hold": 0.55, "fall": 6.0, "end_hold": 0.30}, "dodge": true, "cancel": 10},
 	# The charged slash: released from the charge pose, it plays attack3 from frame 4.
 	&"heavy_slash": {"stage": 3, "anim": "attack3", "fps": 46.0, "start_frame": 4, "active": Vector2i(6, 9),
-		"box": {"length": 44.0, "width": 28.0, "reach": 21.0, "height": ORIGIN_HEIGHT},
-		"lunge": {"px": 32.0, "from": 4}, "crit": &"always", "crit_stop": &"heavy", "recovery": 0.18,
-		"special": "heavy_slash", "ghosts": [5, 7]},
+		"box": BIG_BLADE, "lunge": {"px": 32.0, "from": 4}, "crit": &"always", "crit_stop": &"heavy", "recovery": 0.18,
+		"special": "heavy_slash", "ghosts": [5, 7], "swing": &"heavy"},
+
+	# Light string 4-5 (side view, on the ground): a quick thrust, then a two-part spin with a full blade circle.
+	&"thrust4": {"stage": 4, "anim": "stab", "fps": 48.0, "active": Vector2i(6, 9),
+		"box": {"length": 40.0, "width": 12.0, "reach": 24.0, "height": ORIGIN_HEIGHT}, "lunge": {"px": 10.0, "from": 5},
+		"crit": &"none", "stop": &"light", "cancel": 11, "dash_cancel": 6, "side_only": true, "ground": true, "pitch": 1.15},
+	&"spin5a": {"stage": 5, "anim": "attack2", "fps": 60.0, "start_frame": 2, "active": Vector2i(4, 10), "end": 11,
+		"box": SPIN_BOX, "crit": &"none", "stop": &"light", "ghosts": [6], "arc": {"from": 30.0, "to": -180.0},
+		"then": &"spin5b", "dash_cancel": 4, "side_only": true, "ground": true, "pitch": 1.2},
+	&"spin5b": {"stage": 5, "anim": "attack1", "fps": 60.0, "start_frame": 2, "active": Vector2i(6, 11), "side_first": 7,
+		"box": SPIN_BOX, "crit": &"none", "stop": &"critical", "recovery": 0.14, "ghosts": [8],
+		"arc": {"from": -180.0, "to": -330.0}, "dash_cancel": 7, "side_only": true, "ground": true, "pitch": 1.1},
+
+	# Heavy finishers: right button after light 0-4 (0 = on its own), and H H.
+	&"rush_cleave": {"stage": 2, "anim": "attack3", "fps": 34.0, "start_frame": 2, "active": Vector2i(5, 9),
+		"box": BIG_BLADE, "lunge": {"px": 20.0, "from": 3}, "crit": &"none", "stop": &"critical", "dmg_mult": 2,
+		"knockback": 10.0, "ghosts": [6], "cancel": 11, "recovery": 0.12, "side_only": true, "ground": true,
+		"swing": &"heavy", "pitch": 1.1},
+	&"launch_slash": {"stage": 3, "anim": "rising_slash", "fps": 40.0, "active": Vector2i(3, 9),
+		"box": {"rect": Rect2(-18, -36, 36, 48), "forward": 19.0}, "crit": &"none", "stop": &"light",
+		"launch": true, "launcher": true, "jump": -280.0, "side_only": true, "ground": true, "pitch": 0.95},
+	&"spin_cleave_a": {"stage": 4, "anim": "attack3", "fps": 48.0, "start_frame": 2, "active": Vector2i(5, 9), "rehit": [8],
+		"end": 10, "box": SPIN_BOX, "crit": &"none", "stop": &"light", "ghosts": [6], "arc": {"from": 0.0, "to": -240.0},
+		"then": &"spin_cleave_b", "side_only": true, "ground": true, "swing": &"heavy", "pitch": 1.05},
+	&"spin_cleave_b": {"stage": 4, "anim": "attack2", "fps": 44.0, "start_frame": 3, "active": Vector2i(5, 10),
+		"box": BIG_BLADE, "crit": &"always", "crit_stop": &"critical", "recovery": 0.16, "ghosts": [8],
+		"arc": {"from": -240.0, "to": -400.0}, "side_only": true, "ground": true, "swing": &"heavy"},
+	# Rift slash: a small hop on the dive wind-up, then the dive with a landing shockwave.
+	&"rift_hop": {"stage": 5, "anim": "dive_slash", "fps": 36.0, "end": 6, "jump": -170.0, "then": &"rift_dive",
+		"side_only": true, "ground": true, "pitch": 1.2},
+	&"rift_dive": {"stage": 5, "anim": "dive_slash", "fps": 40.0, "start_frame": 6, "active": Vector2i(6, -1),
+		"box": DIVE_BOX, "crit": &"none", "stop": &"light", "dive": true, "recovery": 0.16,
+		"shockwave": {"half_width": 36.0, "launch": true, "crit": true, "crit_stop": &"critical"},
+		"side_only": true, "swing": &"heavy", "pitch": 0.9},
+
+	# Aerial spin: air_attack1 -> air_attack2 -> air_attack1 at 60 fps, a hit each, one blade circle across the three.
+	# The middle hits stop 2 frames (tick), the last one is a sure critical with the 6-frame stop.
+	&"air_spin_a": {"stage": 4, "anim": "air_attack1", "fps": 60.0, "active": Vector2i(6, 10), "end": 11,
+		"box": SPIN_BOX, "crit": &"none", "stop": &"tick", "juggle": true, "air": SPIN_AIR, "ghosts": [7],
+		"arc": {"from": 40.0, "to": -90.0}, "then": &"air_spin_b", "side_only": true, "air_only": true, "pitch": 1.25},
+	&"air_spin_b": {"stage": 4, "anim": "air_attack2", "fps": 60.0, "start_frame": 2, "active": Vector2i(4, 10), "end": 11,
+		"box": SPIN_BOX, "crit": &"none", "stop": &"tick", "juggle": true, "air": SPIN_AIR, "ghosts": [6],
+		"arc": {"from": -90.0, "to": -210.0}, "then": &"air_spin_c", "side_only": true, "pitch": 1.3},
+	&"air_spin_c": {"stage": 4, "anim": "air_attack1", "fps": 60.0, "start_frame": 2, "active": Vector2i(6, 11),
+		"box": SPIN_BOX, "crit": &"always", "crit_stop": &"critical", "juggle": true,
+		"air": {"hold": 0.25, "fall": 6.0, "end_hold": 0.30}, "ghosts": [8], "arc": {"from": -210.0, "to": -320.0},
+		"side_only": true, "swing": &"heavy", "pitch": 1.1},
+
+	# Perfect-dodge counter (player._start_counter): a sure critical with the heavy freeze, 3x damage.
+	&"counter_slash": {"stage": 3, "anim": "attack3", "air_anim": "air_attack3", "fps": 48.0, "start_frame": 3,
+		"active": Vector2i(5, 9), "box": BIG_BLADE, "crit": &"always", "crit_stop": &"heavy", "ghosts": [4, 6],
+		"recovery": 0.16, "air": LIGHT_AIR, "special": "counter", "side_only": true, "swing": &"heavy", "pitch": 0.9},
+
+	# Dodge offset: right after the dash. The shadow slash is a quicker, longer-reaching attack1 that takes the place
+	# of the next light hit (the string goes on from there); the chase cleave is a rush cleave with a longer lunge.
+	&"shadow_slash": {"stage": 1, "anim": "attack1", "air_anim": "air_attack1", "fps": 52.0, "active": Vector2i(6, 9),
+		"side_first": 7, "box": {"length": 42.0, "width": 20.0, "reach": 25.0, "height": ORIGIN_HEIGHT},
+		"lunge": {"px": 8.0, "from": 4}, "crit": &"none", "stop": &"light", "juggle": true, "steer": true, "chain": true,
+		"air": LIGHT_AIR, "ghosts": [5, 7], "resumes": true, "dash_cancel": 7, "side_only": true, "pitch": 1.15},
+	&"chase_cleave": {"stage": 2, "anim": "attack3", "fps": 40.0, "start_frame": 2, "active": Vector2i(5, 9),
+		"box": BIG_BLADE, "lunge": {"px": 24.0, "from": 3}, "crit": &"none", "stop": &"critical", "dmg_mult": 2,
+		"knockback": 10.0, "ghosts": [4, 6], "cancel": 11, "recovery": 0.12, "as": &"rush_cleave", "side_only": true,
+		"ground": true, "swing": &"heavy", "pitch": 1.2},
 }
 
-## Combo graph: current move (&"" = idle) -> input -> next move.
+## Combo graph: current move (&"" = idle) -> input -> next move, or several candidates in order; the hero takes
+## the first one its situation allows (side_only / ground).
 const STRINGS := {
-	&"": {&"light": &"attack1"},
-	&"attack1": {&"light": &"attack2"},
-	&"attack2": {&"light": &"attack3"},
+	&"": {&"light": &"attack1", &"heavy": [&"rush_cleave", &"air_spin_a"]},
+	&"attack1": {&"light": &"attack2", &"heavy": [&"rush_cleave", &"air_spin_a"]},
+	&"attack2": {&"light": &"attack3", &"heavy": [&"launch_slash", &"air_spin_a"]},
+	&"attack3": {&"light": [&"thrust4", &"air_spin_a"], &"heavy": [&"spin_cleave_a", &"air_spin_a"]},
+	&"thrust4": {&"light": &"spin5a", &"heavy": &"rift_hop"},
+	&"rush_cleave": {&"heavy": &"launch_slash"},
+	&"dash_stab": {&"light": &"shadow_slash", &"heavy": [&"chase_cleave", &"air_spin_a"]},
 }
 
 
-static func next_move(current: StringName, input: StringName) -> StringName:
-	return STRINGS.get(current, {}).get(input, &"")
+## Candidate follow-ups of a move for one input, in order of preference.
+static func next_moves(current: StringName, input: StringName) -> Array:
+	var next: Variant = STRINGS.get(current, {}).get(input, [])
+	return next if next is Array else [next]

@@ -46,13 +46,13 @@ func _ready() -> void:
 	header_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	for index in range(CONTROLS.SLOTS.size()):
 		var slot: String = CONTROLS.SLOTS[index]
-		var x := 10 + floori(index / 6.0) * 156
-		var y := 28 + (index % 6) * 17
-		label(CONTROLS.LABELS[slot], Vector2(x, y), Vector2(82, 15))
-		var button := make_button("", Vector2(x + 83, y), Vector2(61, 15))
+		var x := 10 + floori(index / 7.0) * 156
+		var y := 27 + (index % 7) * 15
+		label(CONTROLS.LABELS[slot], Vector2(x, y), Vector2(82, 14))
+		var button := make_button("", Vector2(x + 83, y), Vector2(61, 14))
 		button.pressed.connect(begin_capture.bind(slot))
 		buttons[slot] = button
-	status = label("", Vector2(10, 131), Vector2(300, 23), 8)
+	status = label("", Vector2(10, 133), Vector2(300, 23), 8)
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	make_button("恢复默认", Vector2(10, 157), Vector2(83, 17)).pressed.connect(restore_defaults)
 	make_button("取消", Vector2(103, 157), Vector2(68, 17)).pressed.connect(cancel)
@@ -109,7 +109,7 @@ func show_status(text: String, error: bool = false) -> void:
 func begin_capture(slot: String) -> void:
 	waiting_slot = slot
 	refresh()
-	show_status("正在修改「%s」：%s；Esc 取消。" % [CONTROLS.LABELS[slot], "点击新鼠标键" if slot == "attack_mouse" else "按下新键"])
+	show_status("正在修改「%s」：%s；Esc 取消。" % [CONTROLS.LABELS[slot], "点击新鼠标键" if slot in CONTROLS.MOUSE_SLOTS else "按下新键"])
 
 
 func _input(event: InputEvent) -> void:
@@ -122,7 +122,7 @@ func _input(event: InputEvent) -> void:
 				waiting_slot = ""
 				refresh()
 				show_status("已取消本次录入。")
-			elif waiting_slot == "attack_mouse":
+			elif waiting_slot in CONTROLS.MOUSE_SLOTS:
 				show_status("这个项目需要点击鼠标键；Esc 取消。", true)
 			else:
 				var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
@@ -131,7 +131,7 @@ func _input(event: InputEvent) -> void:
 				else:
 					capture(code)
 		elif event is InputEventMouseButton and event.pressed:
-			if waiting_slot == "attack_mouse":
+			if waiting_slot in CONTROLS.MOUSE_SLOTS:
 				capture(event.button_index)
 			else:
 				show_status("这个项目需要键盘单键；Esc 取消。", true)
@@ -143,6 +143,10 @@ func _input(event: InputEvent) -> void:
 
 func capture(code: int) -> void:
 	var candidate := draft.duplicate()
+	# Light and heavy swap buttons when one takes the other's.
+	for other in CONTROLS.MOUSE_SLOTS:
+		if waiting_slot in CONTROLS.MOUSE_SLOTS and other != waiting_slot and candidate[other] == code:
+			candidate[other] = candidate[waiting_slot]
 	candidate[waiting_slot] = code
 	var error := CONTROLS.validate(candidate)
 	if not error.is_empty():

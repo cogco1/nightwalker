@@ -15,10 +15,15 @@ signal move_started(move: StringName)
 signal charge_started
 signal charge_ready
 signal charge_ended(released: bool)
+## An enemy attack reached the hero: AttackResult and the attack (see receive_attack).
+signal attack_received(result: int, attack: Dictionary)
+## The perfect-dodge counter blinked behind this enemy and swings.
+signal counter_started(enemy: Node2D)
 
 enum ViewMode { TOP_DOWN, SIDE_VIEW }
 ## One combat state at a time; the old flags below are read-only views of it.
 enum State { FREE, ATTACK, CHARGE, RECOVERY, HURT }
+enum AttackResult { HIT, EVADE, PERFECT }
 
 @export var view_mode: ViewMode = ViewMode.TOP_DOWN
 @export var move_speed := 60.0
@@ -52,6 +57,23 @@ const CHARGE_COIL_PORTION := 0.6
 const CHARGE_BACKSTEP := 3.0
 # One press of the dash key stabs towards the held direction (or facing); a press during an attack waits this long.
 const DASH_BUFFER_SECONDS := 0.15
+# Dodge offset: an attack press this soon after the dash ends gives the offset follow-up, and a dash this soon after a
+# string hit ends keeps that string going.
+const DODGE_OFFSET_SECONDS := 0.25
+# Hit by an enemy: knocked back HURT_KNOCKBACK px over HURT_SLIDE_SECONDS, stunned and blinking red for HURT_SECONDS.
+const HURT_SECONDS := 0.3
+const HURT_SLIDE_SECONDS := 0.25
+const HURT_KNOCKBACK := 20.0
+const HURT_TINT := Color(1.0, 0.3, 0.3)
+# A dash started at most this long before an enemy's hit window opens (or during it) is a perfect dodge.
+const PERFECT_LEAD_SECONDS := 0.2
+# The counter lands the hero this far past the enemy's centre, on its far side.
+const COUNTER_BEHIND := 18.0
+## Attack buttons in the combo graph: left click (light) and right click (heavy).
+const ATTACK_INPUTS: Array[StringName] = [&"light", &"heavy"]
+# Code-drawn blade circle of spinning moves: radius and centre height above the feet, native px.
+const ARC_RADIUS := 20.0
+const ARC_HEIGHT := 20.0
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var body_shape: CollisionShape2D = $BodyShape
@@ -82,6 +104,17 @@ var stage_is_critical := false
 ## Current move id and its data row from MOVESET.MOVES (empty when not attacking).
 var move_id: StringName = &""
 var move: Dictionary = {}
+## The move the current one counts as in the combo graph (itself, its `as`, or the hit a dodge offset resumes).
+var _string_id: StringName = &""
+var _last_string_id: StringName = &""
+var _string_end_time := -INF
+var _offset_from: StringName = &""
+var _offset_until := 0.0
+var _dash_started_at := -INF
+## Set by GameSession during the perfect-dodge slow motion: enemy attacks cannot hit.
+var invulnerable := false
+var _counter_target: Node2D = null
+var _hurt_brake := 0.0
 var dash_start := Vector2.ZERO
 var dash_end := Vector2.ZERO
 var dash_executed := false
@@ -114,7 +147,7 @@ var is_charging: bool:
 var special_kind: String:
 	get: return String(move.get("special", "")) if state == State.ATTACK else ""
 var combo_stage: int:
-	get: return int(move.get("stage", 0)) if state == State.ATTACK else 0
+	get: return int(MOVESET.MOVES.get(_string_id, move).get("stage", 0)) if state == State.ATTACK else 0
 var queued_attack: bool:
 	get: return _intent_stage(&"light") == &"queued"
 var pending_new_attack: bool:
@@ -127,6 +160,8 @@ var _jumps_used := 0
 var _air_hold_left := 0.0
 var charge_time := 0.0
 var _ghost_frame := -1
+var _rehit_frame := -1
+var _arc_angle := NAN
 
 
 func _ready() -> void:
@@ -176,7 +211,9 @@ func _physics_process(delta: float) -> void:
 	if state == State.ATTACK:
 		move_ticks += 1
 	_recovery_left = maxf(0.0, _recovery_left - delta)
-	if state == State.RECOVERY and _recovery_left <= 0.0:
+	if (state == State.RECOVERY or state == State.HURT) and _recovery_left <= 0.0:
+		if state == State.HURT:
+			sprite.modulate = Color.WHITE
 		state = State.FREE
 	_expire_intents()
 	if _intents.has(&"dive"):
@@ -188,11 +225,12 @@ func _physics_process(delta: float) -> void:
 			velocity.y = DIVE_SPEED if move.get("dive", false) else (AIR_FALL_SPEED if _air_hold_left > 0.0 else velocity.y + gravity * delta)
 			_jump_age += delta
 		else:
-			velocity.y = 0.0
+			# A move with a jump keeps its take-off speed when it started between physics steps.
+			velocity.y = float(move.get("jump", 0.0)) if is_attacking and move_ticks <= 1 else 0.0
 			_jumps_used = 0
 		if not is_attacking and not is_charging and _recovery_left <= 0.0:
 			_update_crouch(delta)
-		if Input.is_action_just_pressed("jump") and not is_crouching and _jumps_used < 2 and not move.get("dive", false) and (not was_grounded or not is_attacking):
+		if Input.is_action_just_pressed("jump") and state != State.HURT and not is_crouching and _jumps_used < 2 and not move.get("dive", false) and (not was_grounded or not is_attacking):
 			_jumps_used = 1 if was_grounded else 2
 			_crouch_exiting = false
 			velocity.y = jump_velocity
@@ -206,6 +244,12 @@ func _physics_process(delta: float) -> void:
 		var dash_direction := int(signf(direction.x)) if direction.x != 0.0 else (1 if facing == "right" else -1)
 		if request_dash_stab(dash_direction):
 			_intents.erase(&"dash")
+		elif is_attacking and sprite.frame < int(move.get("dash_cancel", -1)):
+			# The press waits for this swing's dodge window.
+			_intents[&"dash"]["expires"] = combat_time + DASH_BUFFER_SECONDS
+	# During the perfect-dodge slow motion either button is the counter, whatever the hero is doing.
+	if is_instance_valid(_counter_target) and (_intent_stage(&"light") == &"raw" or _intent_stage(&"heavy") == &"raw"):
+		_start_counter()
 	# Taps are processed while attacking too. Holding a button never auto-chains.
 	if _mouse_attack_pending:
 		var special := false
@@ -216,8 +260,18 @@ func _physics_process(delta: float) -> void:
 			request_attack()
 		if _mouse_attack_pending:
 			_intents.erase(&"light")
-	if pending_new_attack and not is_attacking and _recovery_left <= 0.0:
-		begin_attack()
+	if _intent_stage(&"heavy") == &"raw":
+		request_attack(&"heavy")
+		if _intent_stage(&"heavy") == &"raw":
+			_intents.erase(&"heavy")
+	for input in ATTACK_INPUTS:
+		if _intent_stage(input) == &"pending" and not is_attacking and _recovery_left <= 0.0:
+			begin_attack(input)
+	# New moves open a cancel window after their hit frames; some cut their clip short.
+	if is_attacking and sprite.frame >= int(move.get("cancel", 1 << 30)):
+		_chain_queued()
+	if is_attacking and sprite.frame >= int(move.get("end", 1 << 30)):
+		_on_animation_finished()
 	is_running = Input.is_action_pressed("run") and not direction.is_zero_approx() and not is_crouching and not _crouch_exiting and not is_attacking and not is_charging and _recovery_left <= 0.0
 	if is_attacking:
 		var impulse := _attack_lunge_speed() if was_grounded or view_mode == ViewMode.TOP_DOWN else 0.0
@@ -225,6 +279,13 @@ func _physics_process(delta: float) -> void:
 			velocity = attack_direction * impulse
 		else:
 			velocity.x = direction.x * crouch_speed if not was_grounded and move.get("steer", false) else attack_direction.x * impulse
+	elif state == State.HURT:
+		# Knocked back, braking to a stop inside the stun; the hero blinks red.
+		if view_mode == ViewMode.TOP_DOWN:
+			velocity = velocity.move_toward(Vector2.ZERO, _hurt_brake * delta)
+		else:
+			velocity.x = move_toward(velocity.x, 0.0, _hurt_brake * delta)
+		sprite.modulate = HURT_TINT if int(_recovery_left * 30.0) % 2 == 0 else Color.WHITE
 	elif _recovery_left > 0.0 or is_charging:
 		if view_mode == ViewMode.TOP_DOWN:
 			velocity = Vector2.ZERO
@@ -244,6 +305,13 @@ func _physics_process(delta: float) -> void:
 	if is_attacking and sprite.frame in move.get("ghosts", []) and sprite.frame != _ghost_frame:
 		_ghost_frame = sprite.frame
 		fx.ghost(sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame), global_position + sprite.offset, 0.12)
+	if is_attacking and sprite.frame in move.get("rehit", []) and sprite.frame != _rehit_frame:
+		_rehit_frame = sprite.frame
+		hit_targets.clear()
+		_normal_stop_emitted = false
+		_critical_stop_emitted = false
+	if is_attacking and move.has("arc"):
+		_update_arc()
 	_update_sprite_layout()
 	if view_mode == ViewMode.SIDE_VIEW and not was_grounded and is_on_floor():
 		_landing_left = LANDING_SECONDS
@@ -251,7 +319,7 @@ func _physics_process(delta: float) -> void:
 		_jumps_used = 0
 		_air_hold_left = 0.0
 		fx.dust(global_position, 5)
-	if is_attacking and sprite.frame >= _attack_active_start() and (_active_last() < 0 or sprite.frame <= _active_last()):
+	if is_attacking and _in_active_frames():
 		if move.get("pierce", false):
 			if not dash_executed:
 				_perform_dash()
@@ -261,8 +329,11 @@ func _physics_process(delta: float) -> void:
 		if move.get("launcher", false) and airflow_count == 0:
 			_spawn_airflow(global_position, true)
 	if move.get("dive", false) and is_on_floor():
+		var landed := move
+		if landed.has("shockwave"):
+			_shockwave(landed["shockwave"])
 		_on_animation_finished()
-		_set_recovery(LANDING_SECONDS)
+		_set_recovery(float(landed.get("recovery", LANDING_SECONDS)))
 		_set_manual_frame("dive_slash_" + facing, 14)
 		fx.clear_trails()
 		fx.sparks(global_position + Vector2(-8, -1))
@@ -343,6 +414,8 @@ func _input(event: InputEvent) -> void:
 		elif not _mouse_attack_held:
 			_mouse_attack_held = true
 			_press(&"light")
+	if event is InputEventMouseButton and event.pressed and event.is_action("heavy_mouse"):
+		_press(&"heavy")
 	if event is InputEventKey and not event.echo and event.is_action_pressed("dash_modifier"):
 		_press(&"dash", DASH_BUFFER_SECONDS)
 	if view_mode != ViewMode.SIDE_VIEW or not event is InputEventKey or event.echo:
@@ -520,36 +593,77 @@ func _update_sprite_layout() -> void:
 	sprite.offset = -pivot
 
 
-func request_attack() -> bool:
+func request_attack(input: StringName = &"light") -> bool:
 	if not is_attacking:
 		if _recovery_left > 0.0:
 			# A fresh tap during the short return pose starts one new chain after it.
-			_buffer(&"light", &"pending", maxf(ATTACK_BUFFER_SECONDS, _recovery_left + 0.05))
+			_buffer_attack(input, &"pending", maxf(ATTACK_BUFFER_SECONDS, _recovery_left + 0.05))
 			return true
-		return begin_attack()
-	if MOVESET.next_move(move_id, &"light") == &"":
+		return begin_attack(input)
+	if _next_move(_string_id, input) == &"":
 		return false
 	var fps: float = sprite.sprite_frames.get_animation_speed(sprite.animation) * sprite.speed_scale
 	var count := sprite.sprite_frames.get_frame_count(sprite.animation)
 	var remaining := (float(count - sprite.frame) - sprite.frame_progress) / maxf(1.0, fps)
 	# Early double taps are deliberate inputs too, so keep one tap until this hit ends.
-	_buffer(&"light", &"queued", clampf(maxf(ATTACK_BUFFER_SECONDS, remaining + 0.05), ATTACK_BUFFER_SECONDS, 0.55))
+	_buffer_attack(input, &"queued", clampf(maxf(ATTACK_BUFFER_SECONDS, remaining + 0.05), ATTACK_BUFFER_SECONDS, 0.55))
 	return true
 
 
-func begin_attack() -> bool:
+func begin_attack(input: StringName = &"light") -> bool:
 	if is_attacking or _recovery_left > 0.0:
 		return false
+	var first := &""
+	if combat_time < _offset_until:
+		first = _next_move(&"dash_stab", input)
+	if first == &"":
+		first = _next_move(&"", input)
+	if is_crouching:
+		first = &"crouch_stab" if input == &"light" else &""
+	if first == &"":
+		return false
 	attack_direction = _facing_vector()
-	_intents.erase(&"light")
-	_start_move(&"crouch_stab" if is_crouching else MOVESET.next_move(&"", &"light"))
+	_clear_attack_intents()
+	_start_move(first)
 	return true
+
+
+## First follow-up the combo graph allows from here: side_only moves need the side view, ground moves the floor,
+## air_only moves the air.
+func _next_move(current: StringName, input: StringName) -> StringName:
+	var airborne := view_mode == ViewMode.SIDE_VIEW and not is_on_floor()
+	for id in MOVESET.next_moves(current, input):
+		var row: Dictionary = MOVESET.MOVES[id]
+		if row.get("side_only", false) and view_mode != ViewMode.SIDE_VIEW:
+			continue
+		if row.get("ground", false) and airborne or row.get("air_only", false) and not airborne:
+			continue
+		return id
+	return &""
+
+
+## Starts the buffered follow-up (light or heavy) when the combo graph has one from the current move.
+func _chain_queued() -> bool:
+	for input in ATTACK_INPUTS:
+		if _intent_stage(input) == &"queued" and float(_intents[input]["expires"]) > combat_time:
+			var next := _next_move(_string_id, input)
+			if next != &"":
+				_clear_attack_intents()
+				_start_move(next)
+				return true
+	return false
 
 
 # Starts a move from MOVESET.MOVES: state, hang time, critical roll, animation, rate and start frame.
 func _start_move(id: StringName) -> void:
 	move_id = id
 	move = MOVESET.MOVES[id]
+	_string_id = move.get("as", id)
+	if move.get("resumes", false):
+		# Dodge offset: stands in for the next light hit of the string the dash interrupted.
+		var resumed := _next_move(_offset_from, &"light")
+		_string_id = resumed if resumed != &"" else &"attack1"
+	_offset_until = 0.0
 	state = State.ATTACK
 	move_ticks = 0
 	is_running = false
@@ -572,6 +686,20 @@ func _start_move(id: StringName) -> void:
 	_last_blade_frame = -1
 	_previous_blade_tip = Vector2.ZERO
 	_ghost_frame = -1
+	_rehit_frame = -1
+	_arc_angle = NAN
+	if move.has("jump") and view_mode == ViewMode.SIDE_VIEW and is_on_floor():
+		velocity.y = float(move["jump"])
+		_jumps_used = 1
+		_jump_age = 0.0
+		_landing_left = 0.0
+		_crouch_exiting = false
+	if move.get("dive", false):
+		# Dives pass through targets until the hero stands clear of them again.
+		_dash_phasing = true
+		collision_mask = 1
+	if move.get("launcher", false):
+		airflow_count = 0
 	var prefix: String = move["air_anim"] if airborne and move.has("air_anim") else move["anim"]
 	var animation := prefix + "_" + facing
 	# Compatibility keeps the project loadable while new drawn clips are imported.
@@ -618,6 +746,12 @@ func _active_last() -> int:
 	return move.get("active", Vector2i(6, 9)).y
 
 
+func _in_active_frames() -> bool:
+	if not move.has("active"):
+		return false
+	return sprite.frame >= _attack_active_start() and (_active_last() < 0 or sprite.frame <= _active_last())
+
+
 func attack_box() -> Rect2:
 	var box: Dictionary = move.get("box", MOVESET.BLADE)
 	if box.has("rect"):
@@ -659,17 +793,23 @@ func _apply_attack_hits() -> void:
 		_resolve_hit(target, point)
 
 
-func _resolve_hit(target: Node, point: Vector2) -> bool:
-	var damage := attack_damage * (MOVESET.CRIT_MULT if stage_is_critical else 1)
+# row: the move data that hit (the current move, or a part of it such as its landing shockwave).
+func _resolve_hit(target: Node, point: Vector2, row: Dictionary = {}) -> bool:
+	if row.is_empty():
+		row = move
+	var damage := attack_damage * int(row.get("dmg_mult", 1)) * (MOVESET.CRIT_MULT if stage_is_critical else 1)
 	if not target.call("take_damage", damage):
 		return false
 	hit_targets[target.get_instance_id()] = true
 	if target.has_method("receive_hit_reaction"):
-		target.call("receive_hit_reaction", attack_direction, move.get("launch", false), view_mode == ViewMode.SIDE_VIEW and not is_on_floor() and move.get("juggle", false))
-	elif move.get("launch", false) and target.has_method("knock_up"):
+		target.call("receive_hit_reaction", attack_direction, row.get("launch", false), view_mode == ViewMode.SIDE_VIEW and not is_on_floor() and row.get("juggle", false))
+	elif row.get("launch", false) and target.has_method("knock_up"):
 		target.call("knock_up", attack_direction)
+	if row.has("knockback") and target.has_method("knock_back"):
+		target.call("knock_back", attack_direction, float(row["knockback"]))
+	var weight := _impact_weight(row)
 	fx.sparks(point)
-	fx.impact(point, _impact_weight(), attack_direction, global_position)
+	fx.impact(point, weight, attack_direction, global_position)
 	attack_hit.emit(target)
 	hit_resolved.emit(target, damage, stage_is_critical, special_kind)
 	if stage_is_critical and not _critical_stop_emitted:
@@ -678,45 +818,48 @@ func _resolve_hit(target: Node, point: Vector2) -> bool:
 		for axis in [Vector2(4, 0), Vector2(-4, 0), Vector2(0, 4), Vector2(0, -4)]:
 			fx.trail(PLAYER_FX.pixel_line(point, point + axis), Vector2i(0, 1), BLADE_TRAIL_SECONDS)
 		critical_hit.emit(target, damage, attack_direction)
-		impact.emit(_impact_weight(), attack_direction)
+		impact.emit(weight, attack_direction)
 	elif not stage_is_critical and not _normal_stop_emitted:
 		_normal_stop_emitted = true
 		normal_contact_stop.emit(attack_direction)
-		impact.emit(_impact_weight(), attack_direction)
+		impact.emit(weight, attack_direction)
 	return true
 
 
 func request_rising_slash() -> bool:
 	if view_mode != ViewMode.SIDE_VIEW or is_attacking or _recovery_left > 0.0 or is_crouching or not is_on_floor():
 		return false
-	_crouch_exiting = false
-	_jump_age = 0.0
-	_landing_left = 0.0
-	_jumps_used = 1
-	velocity.y = -280.0
+	# The move's jump field lifts the hero.
 	_start_special("rising_slash")
 	return true
 
 
 func request_dive_slash() -> bool:
-	if view_mode != ViewMode.SIDE_VIEW or is_on_floor() or move.get("dive", false):
+	if view_mode != ViewMode.SIDE_VIEW or is_on_floor() or move.get("dive", false) or state == State.HURT:
 		return false
 	_air_hold_left = 0.0
 	velocity.y = DIVE_SPEED
-	_dash_phasing = true
-	collision_mask = 1
 	_start_special("dive_slash")
 	fx.queue_redraw()
 	return true
 
 
 func request_dash_stab(direction: int) -> bool:
-	if view_mode != ViewMode.SIDE_VIEW or is_attacking or _recovery_left > 0.0 or is_crouching:
+	var cancelling := is_attacking and sprite.frame >= int(move.get("dash_cancel", 1 << 30))
+	if view_mode != ViewMode.SIDE_VIEW or (is_attacking and not cancelling) or _recovery_left > 0.0 or is_crouching:
 		return false
 	if direction == 0:
 		return false
+	# The string the dash cuts short (or that just ended) resumes after it.
+	if cancelling:
+		_offset_from = _string_id
+	elif combat_time - _string_end_time <= DODGE_OFFSET_SECONDS:
+		_offset_from = _last_string_id
+	else:
+		_offset_from = &""
 	facing = "right" if direction > 0 else "left"
 	_crouch_exiting = false
+	_dash_started_at = combat_time
 	dash_executed = false
 	dash_start = global_position
 	dash_end = global_position
@@ -726,7 +869,7 @@ func request_dash_stab(direction: int) -> bool:
 
 func _start_special(kind: String) -> void:
 	attack_direction = Vector2.DOWN if kind == "dive_slash" else _facing_vector()
-	_intents.erase(&"light")
+	_clear_attack_intents()
 	airflow_count = 0
 	_start_move(StringName(kind))
 	special_started.emit(kind, attack_direction)
@@ -785,10 +928,10 @@ func _on_animation_finished() -> void:
 	if move.get("dive", false) and not is_on_floor():
 		_set_manual_frame(String(move["anim"]) + "_" + facing, 11)
 		return
-	var next := MOVESET.next_move(move_id, &"light")
-	if queued_attack and attack_buffer_left > 0.0 and next != &"":
-		_intents.erase(&"light")
-		_start_move(next)
+	if move.has("then"):
+		_start_move(move["then"])
+		return
+	if _chain_queued():
 		return
 	var air: Dictionary = move.get("air", {})
 	if air.has("end_hold") and not is_on_floor():
@@ -798,7 +941,12 @@ func _on_animation_finished() -> void:
 	var recovery := float(move["recovery"]) if move.has("recovery") else (1.0 if airborne else 2.0) / float(move["fps"])
 	var coil: bool = _mouse_attack_held and move.get("chain", false) and (view_mode == ViewMode.TOP_DOWN or is_on_floor())
 	stage_is_critical = false
-	_intents.erase(&"light")
+	_clear_attack_intents()
+	if move.get("dodge", false):
+		_offset_until = combat_time + DODGE_OFFSET_SECONDS
+	else:
+		_last_string_id = _string_id
+		_string_end_time = combat_time
 	move_id = &""
 	move = {}
 	_set_recovery(recovery)
@@ -882,6 +1030,17 @@ func _buffer(intent: StringName, stage: StringName, seconds: float) -> void:
 	_intents[intent] = {"tick": combat_tick, "stage": stage, "expires": combat_time + seconds}
 
 
+# A light or heavy follow-up replaces any other buffered one: the latest press wins.
+func _buffer_attack(input: StringName, stage: StringName, seconds: float) -> void:
+	_clear_attack_intents()
+	_buffer(input, stage, seconds)
+
+
+func _clear_attack_intents() -> void:
+	for input in ATTACK_INPUTS:
+		_intents.erase(input)
+
+
 func _intent_stage(intent: StringName) -> StringName:
 	return _intents[intent]["stage"] if _intents.has(intent) else &""
 
@@ -898,6 +1057,107 @@ func _set_recovery(seconds: float) -> void:
 	state = State.RECOVERY if seconds > 0.0 else State.FREE
 
 
+## Body rectangle enemy attacks test against.
+func hurtbox() -> Rect2:
+	var size := (body_shape.shape as RectangleShape2D).size
+	return Rect2(body_shape.global_position - size / 2.0, size)
+
+
+## An enemy attack reaches the hero (scripts/enemies/enemy_attacker.gd). attack: {source, direction (the push),
+## contact (false: the hit window closed without touching the hero), window_age (seconds since the attacker's hit
+## window opened), knockback (px)}. A dash started at most PERFECT_LEAD_SECONDS before the window opened, or inside
+## it, is PERFECT; otherwise a dash's invulnerability or being out of the way is EVADE; else HIT, into HURT.
+func receive_attack(attack: Dictionary) -> int:
+	var result := AttackResult.HIT
+	if invulnerable:
+		result = AttackResult.EVADE
+	elif combat_time - _dash_started_at <= float(attack.get("window_age", 0.0)) + PERFECT_LEAD_SECONDS:
+		result = AttackResult.PERFECT
+	elif not attack.get("contact", true) or (state == State.ATTACK and move.get("dodge", false)):
+		result = AttackResult.EVADE
+	if result == AttackResult.HIT:
+		_take_hit(attack)
+	attack_received.emit(result, attack)
+	return result
+
+
+## GameSession opens the counter on a perfect dodge (the enemy that missed) and closes it when the slow motion ends.
+func open_counter(enemy: Node2D) -> void:
+	_counter_target = enemy
+
+
+func close_counter() -> void:
+	_counter_target = null
+
+
+# Perfect-dodge counter: blinks to the far side of the enemy (the near side if a wall is there) and cuts it with
+# counter_slash, a sure critical with the heavy freeze.
+func _start_counter() -> void:
+	var enemy := _counter_target
+	_counter_target = null
+	_clear_attack_intents()
+	if is_charging:
+		_cancel_charge()
+	var from := global_position
+	var side := 1.0 if from.x <= enemy.global_position.x else -1.0
+	var to := Vector2(enemy.global_position.x + side * COUNTER_BEHIND, from.y)
+	if not _clear_at(to):
+		side = -side
+		to = Vector2(enemy.global_position.x + side * COUNTER_BEHIND, from.y)
+		if not _clear_at(to):
+			to = from
+	fx.ghost(sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame), from + sprite.offset, 0.2)
+	for lane in range(3):
+		var y := -10.0 - lane * 6.0
+		fx.add({"position": to + Vector2(0, y), "velocity": Vector2.ZERO, "tail": (to - from) * (1.0 - lane * 0.25),
+			"life": 0.12, "color": PLAYER_FX.WHITE if lane == 1 else PLAYER_FX.BLUE})
+	global_position = to
+	facing = "left" if side > 0.0 else "right"
+	attack_direction = _facing_vector()
+	_start_move(&"counter_slash")
+	counter_started.emit(enemy)
+
+
+func _clear_at(point: Vector2) -> bool:
+	var shape := RectangleShape2D.new()
+	# Inset, so standing on the floor is not a collision.
+	shape.size = (body_shape.shape as RectangleShape2D).size - Vector2(0.2, 0.2)
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = shape
+	query.transform = Transform2D(0.0, point + body_shape.position)
+	query.collision_mask = 1
+	query.exclude = [get_rid()]
+	return get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
+
+
+# Interrupts the move or charge, knocks the hero back and stuns it (HURT) for HURT_SECONDS.
+func _take_hit(attack: Dictionary) -> void:
+	if is_charging:
+		_cancel_charge()
+	_clear_attack_intents()
+	stage_is_critical = false
+	move_id = &""
+	move = {}
+	_string_id = &""
+	_air_hold_left = 0.0
+	is_running = false
+	state = State.HURT
+	_recovery_left = HURT_SECONDS
+	var push: Vector2 = attack.get("direction", -_facing_vector())
+	var speed := 2.0 * float(attack.get("knockback", HURT_KNOCKBACK)) / HURT_SLIDE_SECONDS
+	_hurt_brake = speed / HURT_SLIDE_SECONDS
+	if view_mode == ViewMode.SIDE_VIEW:
+		velocity.x = signf(push.x) * speed
+		velocity.y = minf(velocity.y, 0.0)
+		_set_manual_frame("jump_" + facing, 13)
+	else:
+		velocity = push.normalized() * speed
+	sprite.modulate = HURT_TINT
+	fx.clear_trails()
+	fx.sparks(global_position + Vector2(0, -15))
+	combo_changed.emit(0)
+
+
 func show_idle() -> void:
 	var animation := "idle_" + facing
 	if sprite.sprite_frames.has_animation(animation):
@@ -906,9 +1166,64 @@ func show_idle() -> void:
 		_set_manual_frame("stab_" + facing, 0)
 
 
-# Hit-stop / impact weight of the current attack stage, from the move data.
-func _impact_weight() -> StringName:
-	return move.get("crit_stop", &"critical") if stage_is_critical else move.get("stop", &"light")
+# Hit-stop / impact weight of the current attack stage, from the move data (or the part of it that hit).
+func _impact_weight(row: Dictionary = {}) -> StringName:
+	if row.is_empty():
+		row = move
+	return row.get("crit_stop", &"critical") if stage_is_critical else row.get("stop", &"light")
+
+
+## Landing wave of a dive move: hits every grounded target within half_width of the feet once more.
+func _shockwave(wave: Dictionary) -> void:
+	hit_targets.clear()
+	_normal_stop_emitted = false
+	_critical_stop_emitted = false
+	stage_is_critical = wave.get("crit", false)
+	var half := float(wave["half_width"])
+	var origin := global_position + Vector2(0, -8)
+	var shape := RectangleShape2D.new()
+	shape.size = Vector2(half * 2.0, 16.0)
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = shape
+	query.transform = Transform2D(0.0, origin)
+	query.collision_mask = 2
+	query.exclude = [get_rid()]
+	var space := get_world_2d().direct_space_state
+	for result in space.intersect_shape(query, maxi(32, get_tree().get_node_count())):
+		var target: Node = result["collider"]
+		if not target.has_method("take_damage") or hit_targets.has(target.get_instance_id()):
+			continue
+		var point: Vector2 = target.call("damage_point")
+		if space.intersect_ray(PhysicsRayQueryParameters2D.create(origin, point, 1)).is_empty():
+			_resolve_hit(target, point, wave)
+	fx.dust(global_position, 8)
+	for side in [-1.0, 1.0]:
+		for lane in range(3):
+			fx.add({"position": global_position + Vector2(side * 6.0, -1.0 - lane * 2.0), "velocity": Vector2(side * (240.0 - lane * 50.0), -lane * 10.0),
+				"tail": Vector2(side * 5.0, 0), "life": 0.15, "color": PLAYER_FX.WHITE if lane == 0 else PLAYER_FX.BLUE})
+
+
+## Code-drawn blade circle of spinning moves: the move's arc {from, to} (degrees from forward, negative is up) is
+## swept with the move's progress as white-core, blue-edge segments through the effects layer.
+func _update_arc() -> void:
+	var arc: Dictionary = move["arc"]
+	var first := int(move.get("start_frame", 0))
+	var last := int(move.get("end", sprite.sprite_frames.get_frame_count(sprite.animation)))
+	var progress := clampf((float(sprite.frame - first) + sprite.frame_progress) / float(maxi(1, last - first)), 0.0, 1.0)
+	var angle := lerpf(float(arc["from"]), float(arc["to"]), progress)
+	if is_nan(_arc_angle):
+		_arc_angle = float(arc["from"])
+	var center := global_position + Vector2(0, -ARC_HEIGHT)
+	var side := 1.0 if attack_direction.x >= 0.0 else -1.0
+	var steps := ceili(absf(angle - _arc_angle) / 15.0)
+	for index in range(steps):
+		var a := deg_to_rad(lerpf(_arc_angle, angle, float(index) / steps))
+		var b := deg_to_rad(lerpf(_arc_angle, angle, float(index + 1) / steps))
+		for ring in [[ARC_RADIUS, PLAYER_FX.WHITE], [ARC_RADIUS + 1.0, PLAYER_FX.BLUE]]:
+			var start: Vector2 = center + Vector2(cos(a) * side, sin(a)) * float(ring[0])
+			var end: Vector2 = center + Vector2(cos(b) * side, sin(b)) * float(ring[0])
+			fx.add({"position": end, "velocity": Vector2.ZERO, "tail": end - start, "life": 0.12, "color": ring[1]})
+	_arc_angle = angle
 
 
 func _spawn_airflow(point: Vector2, rising: bool) -> void:
