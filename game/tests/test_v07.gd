@@ -781,6 +781,11 @@ func run_feature_tests() -> void:
 	arena.player.position = Vector2(60,160)
 	var endpoint := add_target(Vector2(109,160),6)
 	await tick(3)
+	var dash_starts: Array[int] = [0]
+	arena.player.special_started.connect(func(kind: String, _direction: Vector2) -> void:
+		if kind == "dash_stab":
+			dash_starts[0] += 1
+	)
 	key(KEY_SHIFT,true)
 	key(KEY_D,true)
 	await tick(1)
@@ -788,16 +793,16 @@ func run_feature_tests() -> void:
 	await tick(2)
 	key(KEY_D,false)
 	key(KEY_SHIFT,false)
-	await tick(36)
-	var end_position: Vector2 = arena.player.position
-	await tick(12)
-	check(arena.player.position.distance_to(end_position) < 0.01 and arena.player.special_kind == "", "holding mouse does not repeat dash or snap backward at occupied endpoint")
+	await tick(48)
+	# The click during the dash is the dodge offset: one shadow slash, then the held button coils into the charge.
+	check(dash_starts[0] == 1 and arena.player.position.x >= arena.player.dash_end.x - arena.player.CHARGE_BACKSTEP - 0.01, "holding mouse does not repeat dash or snap backward at occupied endpoint")
+	mouse(false)
+	await tick(4)
 	key(KEY_A,true)
-	await tick(20)
+	await tick(30)
 	key(KEY_A,false)
 	await tick(6)
 	check(arena.player.collision_mask == 3 and arena.player.position.x < endpoint.position.x-12.0, "leaving overlapping enemy safely restores normal collisions")
-	mouse(false)
 	observations["dash_cases"] = dash_cases
 
 func run_contact_tests() -> void:

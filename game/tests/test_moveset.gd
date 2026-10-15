@@ -36,6 +36,14 @@ func run() -> void:
 			check(data.has(field), "%s has %s" % [id, field])
 		check(data.has("active") or not data.has("box"), "%s: a move with a hit box has a hit window" % id)
 		check(data.get("swing", &"light") in [&"light", &"heavy"], "%s uses a known swing sound" % id)
+		if data.has("as"):
+			check(MOVESET.MOVES.has(data["as"]), "%s counts as a known move" % id)
+		if data.get("resumes", false):
+			var after_dodge := false
+			for from in MOVESET.STRINGS:
+				if from != &"" and MOVESET.MOVES[from].get("dodge", false) and id in MOVESET.next_moves(from, &"light"):
+					after_dodge = true
+			check(after_dodge, "%s resumes a string, so it follows a dodge" % id)
 		if data.has("then"):
 			check(MOVESET.MOVES.has(data["then"]) and data["then"] != id, "%s: its next segment is another known move" % id)
 		if data.has("arc"):
@@ -90,6 +98,8 @@ func verify_clip(frames: SpriteFrames, clip: String, data: Dictionary, blade_pat
 			check(int(data["lunge"]["from"]) <= active.y, "%s: lunge starts no later than the last active frame" % id)
 		for frame in data.get("rehit", []):
 			check(int(frame) > active.x and (active.y == -1 or int(frame) <= active.y), "%s: rehit frame lies inside the hit window" % id)
+	if data.has("dash_cancel"):
+		check(int(data["dash_cancel"]) >= start and int(data["dash_cancel"]) < count, "%s: dash-cancel frame lies inside the played part of %s" % [id, clip])
 	if data.has("cancel"):
 		check(int(data["cancel"]) > int(data.get("active", Vector2i(start, start)).y) and int(data["cancel"]) < count, "%s: cancel window opens after the hit frames inside %s" % [id, clip])
 	for frame in data.get("ghosts", []):

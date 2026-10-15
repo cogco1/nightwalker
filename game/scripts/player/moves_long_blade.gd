@@ -35,7 +35,11 @@ extends RefCounted
 ##   arc          {from, to}: code-drawn blade circle swept over the move, degrees from forward, negative is up
 ##   end          frame at which the move counts as finished, cutting the rest of the clip
 ##   then         segment that follows automatically when this one finishes (multi-part moves)
-##   cancel       frame from which a buffered follow-up starts at once instead of at the end (new moves only)
+##   cancel       frame from which a buffered follow-up starts at once instead of at the end (not the original three)
+##   dash_cancel  frame from which a dash press cuts the move short (light swings: hit, then dodge)
+##   dodge        the evade: a press within DODGE_OFFSET_SECONDS after it starts the dodge-offset follow-up
+##   resumes      dodge offset: counts as the next light hit of the string the dash interrupted
+##   as           counts as this move in the combo graph (its follow-ups and stage)
 ##   side_only    side view only; ground: only started from the combo graph on the floor
 ##   swing        &"light" | &"heavy" swing sound; pitch scales it
 
@@ -54,13 +58,13 @@ const MOVES := {
 	&"attack1": {"stage": 1, "anim": "attack1", "air_anim": "air_attack1", "fps": 36.0, "active": Vector2i(6, 9),
 		# The long blade is still behind the shoulder in side-view frame 6; frame 7 crosses forward.
 		"side_first": 7, "box": BLADE, "lunge": {"px": 5.5, "from": 6}, "crit": &"none", "stop": &"light",
-		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR},
+		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR, "dash_cancel": 7},
 	&"attack2": {"stage": 2, "anim": "attack2", "air_anim": "air_attack2", "fps": 40.0, "active": Vector2i(6, 9),
 		"box": BLADE, "lunge": {"px": 5.5, "from": 6}, "crit": &"none", "stop": &"light",
-		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR},
+		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR, "dash_cancel": 6},
 	&"attack3": {"stage": 3, "anim": "attack3", "air_anim": "air_attack3", "fps": 42.0, "active": Vector2i(6, 9),
 		"box": BLADE, "lunge": {"px": 6.8, "from": 6}, "crit": &"roll", "stop": &"light",
-		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR},
+		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR, "dash_cancel": 6},
 	&"crouch_stab": {"stage": 1, "anim": "crouch_stab", "fps": 40.0, "active": Vector2i(6, 9),
 		"box": {"length": 27.0, "width": 16.0, "reach": 17.0, "height": 9.0}, "crit": &"none", "stop": &"light",
 		"juggle": true, "crouched": true},
@@ -71,7 +75,7 @@ const MOVES := {
 		"box": DIVE_BOX, "crit": &"none", "stop": &"light", "special": "dive_slash", "dive": true},
 	&"dash_stab": {"stage": 1, "anim": "dash_stab", "air_anim": "air_dash_stab", "fps": 40.0, "active": Vector2i(6, 9),
 		"crit": &"none", "stop": &"light", "juggle": true, "special": "dash_stab", "pierce": true,
-		"air": {"hold": 0.55, "fall": 6.0, "end_hold": 0.30}},
+		"air": {"hold": 0.55, "fall": 6.0, "end_hold": 0.30}, "dodge": true, "cancel": 10},
 	# The charged slash: released from the charge pose, it plays attack3 from frame 4.
 	&"heavy_slash": {"stage": 3, "anim": "attack3", "fps": 46.0, "start_frame": 4, "active": Vector2i(6, 9),
 		"box": BIG_BLADE, "lunge": {"px": 32.0, "from": 4}, "crit": &"always", "crit_stop": &"heavy", "recovery": 0.18,
@@ -80,13 +84,13 @@ const MOVES := {
 	# Light string 4-5 (side view, on the ground): a quick thrust, then a two-part spin with a full blade circle.
 	&"thrust4": {"stage": 4, "anim": "stab", "fps": 48.0, "active": Vector2i(6, 9),
 		"box": {"length": 40.0, "width": 12.0, "reach": 24.0, "height": ORIGIN_HEIGHT}, "lunge": {"px": 10.0, "from": 5},
-		"crit": &"none", "stop": &"light", "cancel": 11, "side_only": true, "ground": true, "pitch": 1.15},
+		"crit": &"none", "stop": &"light", "cancel": 11, "dash_cancel": 6, "side_only": true, "ground": true, "pitch": 1.15},
 	&"spin5a": {"stage": 5, "anim": "attack2", "fps": 60.0, "start_frame": 2, "active": Vector2i(4, 10), "end": 11,
 		"box": SPIN_BOX, "crit": &"none", "stop": &"light", "ghosts": [6], "arc": {"from": 30.0, "to": -180.0},
-		"then": &"spin5b", "side_only": true, "ground": true, "pitch": 1.2},
+		"then": &"spin5b", "dash_cancel": 4, "side_only": true, "ground": true, "pitch": 1.2},
 	&"spin5b": {"stage": 5, "anim": "attack1", "fps": 60.0, "start_frame": 2, "active": Vector2i(6, 11), "side_first": 7,
 		"box": SPIN_BOX, "crit": &"none", "stop": &"critical", "recovery": 0.14, "ghosts": [8],
-		"arc": {"from": -180.0, "to": -330.0}, "side_only": true, "ground": true, "pitch": 1.1},
+		"arc": {"from": -180.0, "to": -330.0}, "dash_cancel": 7, "side_only": true, "ground": true, "pitch": 1.1},
 
 	# Heavy finishers: right button after light 0-4 (0 = on its own), and H H.
 	&"rush_cleave": {"stage": 2, "anim": "attack3", "fps": 34.0, "start_frame": 2, "active": Vector2i(5, 9),
@@ -109,6 +113,17 @@ const MOVES := {
 		"box": DIVE_BOX, "crit": &"none", "stop": &"light", "dive": true, "recovery": 0.16,
 		"shockwave": {"half_width": 36.0, "launch": true, "crit": true, "crit_stop": &"critical"},
 		"side_only": true, "swing": &"heavy", "pitch": 0.9},
+
+	# Dodge offset: right after the dash. The shadow slash is a quicker, longer-reaching attack1 that takes the place
+	# of the next light hit (the string goes on from there); the chase cleave is a rush cleave with a longer lunge.
+	&"shadow_slash": {"stage": 1, "anim": "attack1", "air_anim": "air_attack1", "fps": 52.0, "active": Vector2i(6, 9),
+		"side_first": 7, "box": {"length": 42.0, "width": 20.0, "reach": 25.0, "height": ORIGIN_HEIGHT},
+		"lunge": {"px": 8.0, "from": 4}, "crit": &"none", "stop": &"light", "juggle": true, "steer": true, "chain": true,
+		"air": LIGHT_AIR, "ghosts": [5, 7], "resumes": true, "dash_cancel": 7, "side_only": true, "pitch": 1.15},
+	&"chase_cleave": {"stage": 2, "anim": "attack3", "fps": 40.0, "start_frame": 2, "active": Vector2i(5, 9),
+		"box": BIG_BLADE, "lunge": {"px": 24.0, "from": 3}, "crit": &"none", "stop": &"critical", "dmg_mult": 2,
+		"knockback": 10.0, "ghosts": [4, 6], "cancel": 11, "recovery": 0.12, "as": &"rush_cleave", "side_only": true,
+		"ground": true, "swing": &"heavy", "pitch": 1.2},
 }
 
 ## Combo graph: current move (&"" = idle) -> input -> next move, or several candidates in order; the hero takes
@@ -120,6 +135,7 @@ const STRINGS := {
 	&"attack3": {&"light": &"thrust4", &"heavy": &"spin_cleave_a"},
 	&"thrust4": {&"light": &"spin5a", &"heavy": &"rift_hop"},
 	&"rush_cleave": {&"heavy": &"launch_slash"},
+	&"dash_stab": {&"light": &"shadow_slash", &"heavy": &"chase_cleave"},
 }
 
 

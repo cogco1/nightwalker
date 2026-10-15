@@ -1,9 +1,12 @@
 extends "res://tests/support/isolated_suite.gd"
 ## Light / heavy combo graph (side view): the five-hit light string, heavy finishers after light 1-4, heavy on
 ## its own and H H, cancel windows of the new moves, multi-hit spins with blade arcs, knockback, the rift slash
-## landing wave, and the limits (top-down view, airborne, crouching, latest press wins).
+## landing wave, and the limits (top-down view, airborne, crouching, latest press wins). Dodge offset: light swings
+## cut into the dash after their hit frame, and a press during or just after the dash gives the shadow slash (which
+## resumes the interrupted string) or the chase cleave.
 
 const MAIN = preload("res://tests/fixtures/combat_lab.tscn")
+const MOVESET = preload("res://scripts/player/moves_long_blade.gd")
 const LIGHT := MOUSE_BUTTON_LEFT
 const HEAVY := MOUSE_BUTTON_RIGHT
 var arena: Node2D
@@ -88,6 +91,8 @@ func run() -> void:
 	await verify_finishers()
 	await verify_rift_slash()
 	await verify_latest_press_wins()
+	await verify_dodge_offset()
+	await verify_dash_cancel()
 	await verify_limits()
 	finish()
 
@@ -96,6 +101,8 @@ func run() -> void:
 func stage(at: Vector2, target_at: Vector2, second_at := Vector2(300, 160)) -> void:
 	var player: CharacterBody2D = arena.player
 	await wait_until(func() -> bool: return player.state == player.State.FREE and player.is_on_floor() and not arena.hit_stop_active, 180)
+	# let the dodge-offset windows of the previous case close
+	await frames(int(ceil(player.DODGE_OFFSET_SECONDS * 60.0)) + 2)
 	player.critical_roll_override = 0.99
 	player.position = at
 	player.velocity = Vector2.ZERO
@@ -247,6 +254,102 @@ func verify_latest_press_wins() -> void:
 	await tap(LIGHT)
 	await wait_until(func() -> bool: return player.move_id != &"attack1", 90)
 	check(player.move_id == &"attack2", "a light press after a heavy one takes the follow-up back")
+
+
+func dash() -> void:
+	key(KEY_SHIFT, true)
+	await frames(1)
+	key(KEY_SHIFT, false)
+
+
+func verify_dodge_offset() -> void:
+	var player: CharacterBody2D = arena.player
+	# right after the dash: the shadow slash, a longer attack1 with afterimages, then the string goes on
+	await stage(Vector2(40, 160), Vector2(300, 160))
+	await dash()
+	check(player.move_id == &"dash_stab", "Shift dashes")
+	await wait_until(func() -> bool: return player.state != player.State.ATTACK, 60)
+	await tap(LIGHT)
+	await wait_until(func() -> bool: return player.is_attacking, 10)
+	check(player.move_id == &"shadow_slash" and player.combo_stage == 1, "a click right after the dash gives the shadow slash in place of hit 1")
+	var plain_reach := float(MOVESET.BLADE["length"]) + MOVESET.SIDE_EXTRA_REACH
+	check(is_equal_approx(player.attack_box().size.x - plain_reach, 8.0), "the shadow slash reaches 8 px further than attack1")
+	check(await wait_until(func() -> bool: return not player.fx.afterimages.is_empty(), 20), "the shadow slash leaves afterimages")
+	await tap(LIGHT)
+	check(await wait_until(func() -> bool: return player.move_id == &"attack2", 60), "the string goes on from the shadow slash into hit 2")
+	# the window closes 0.25 s after the dash
+	await stage(Vector2(40, 160), Vector2(300, 160))
+	await dash()
+	await wait_until(func() -> bool: return player.state == player.State.FREE, 60)
+	await frames(18)
+	await tap(LIGHT)
+	check(player.move_id == &"attack1", "a click well after the dash is an ordinary attack1")
+	# a click during the dash comes out at the dash's cancel frame
+	await stage(Vector2(40, 160), Vector2(300, 160))
+	await dash()
+	await frames(3)
+	await tap(LIGHT)
+	check(await wait_until(func() -> bool: return player.move_id == &"shadow_slash", 40), "a click during the dash follows with the shadow slash")
+	check(int(last_frame.get(&"dash_stab", -1)) == 10, "the shadow slash starts on the dash's cancel frame")
+	# right button after the dash: the chase cleave, then H gives the launch slash
+	await stage(Vector2(40, 160), Vector2(300, 160))
+	await dash()
+	await wait_until(func() -> bool: return player.state != player.State.ATTACK, 60)
+	var chase_from := player.position.x
+	await tap(HEAVY)
+	await wait_until(func() -> bool: return player.is_attacking, 10)
+	check(player.move_id == &"chase_cleave", "a right click right after the dash gives the chase cleave")
+	check(arena.session.combat_feedback.played.back() == "swing_heavy", "the chase cleave plays the heavy swing")
+	await tap(HEAVY)
+	check(await wait_until(func() -> bool: return player.move_id == &"launch_slash", 60), "the chase cleave counts as a rush cleave: H follows with the launch slash")
+	check(player.position.x - chase_from >= 20.0, "the chase cleave lunges further")
+	observations["chase_lunge_px"] = snappedf(player.position.x - chase_from, 0.1)
+	# in the air the shadow slash plays the air swing
+	await stage(Vector2(40, 160), Vector2(300, 160))
+	key(KEY_SPACE, true)
+	await frames(2)
+	key(KEY_SPACE, false)
+	await frames(8)
+	await dash()
+	await wait_until(func() -> bool: return player.state != player.State.ATTACK, 60)
+	await tap(LIGHT)
+	await wait_until(func() -> bool: return player.is_attacking, 10)
+	check(player.move_id == &"shadow_slash" and String(player.sprite.animation).begins_with("air_attack1"), "after an air dash the shadow slash uses the air swing")
+	await wait_until(func() -> bool: return player.is_on_floor() and player.state == player.State.FREE, 180)
+
+
+func verify_dash_cancel() -> void:
+	var player: CharacterBody2D = arena.player
+	# L L, Shift: the dash cuts hit 2 after its hit frame, and the shadow slash takes the place of hit 3
+	await stage(Vector2(40, 160), Vector2(300, 160))
+	check(await play_string([LIGHT, LIGHT], [&"attack1", &"attack2"]), "L L plays two hits")
+	await dash()
+	check(await wait_until(func() -> bool: return player.move_id == &"dash_stab", 30), "Shift during hit 2 dashes")
+	var cut := int(last_frame.get(&"attack2", -1))
+	check(cut >= 6 and cut < 15, "the dash cuts hit 2 after its hit frame and before its clip ends")
+	await wait_until(func() -> bool: return player.state != player.State.ATTACK, 60)
+	await tap(LIGHT)
+	await wait_until(func() -> bool: return player.is_attacking, 10)
+	check(player.move_id == &"shadow_slash" and player.combo_stage == 3, "after the dodge the shadow slash counts as hit 3")
+	await tap(LIGHT)
+	check(await wait_until(func() -> bool: return player.move_id == &"thrust4", 60), "the interrupted string goes on to hit 4")
+	observations["dash_cut_attack2_at"] = cut
+	# Shift pressed early in a swing waits for its dodge window
+	await stage(Vector2(40, 160), Vector2(300, 160))
+	await tap(LIGHT)
+	await frames(1)
+	await dash()
+	check(await wait_until(func() -> bool: return player.move_id == &"dash_stab", 40), "an early Shift still dashes")
+	var waited := int(last_frame.get(&"attack1", -1))
+	check(waited >= 7 and waited < 15, "an early Shift waits for hit 1's dodge window")
+	# heavy swings are not cut by the dash
+	await stage(Vector2(40, 160), Vector2(300, 160))
+	await tap(HEAVY)
+	await frames(2)
+	await dash()
+	await wait_until(func() -> bool: return player.state == player.State.FREE, 120)
+	check(moves_seen == [&"rush_cleave"] and int(last_frame.get(&"rush_cleave", -1)) >= 14, "a dash press does not cut the rush cleave")
+	observations["rush_then_shift"] = {"moves": moves_seen.map(func(id: StringName) -> String: return String(id)), "last_frame": last_frame.get(&"rush_cleave", -1)}
 
 
 func verify_limits() -> void:

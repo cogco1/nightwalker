@@ -1,7 +1,7 @@
 extends "res://tests/support/isolated_suite.gd"
 ## Real-GPU capture of the light / heavy combo graph through the shipped GameSession path: hospital side view,
 ## a fixture target in front (and one behind for the rift slash). Strings: L x5, H, H H, L-H, L L-H, L L L-H,
-## L L L L-H. Run windowed:
+## L L L L-H, and the dodge offsets Shift-L-L, L L-Shift-L-L, Shift-H-H. Run windowed:
 ##   godot --path game --fixed-fps 60 --script res://tests/recorders/record_rhythm_combos.gd
 ## Output: res://evidence/rhythm_combos/ (stills, frames/NNNN.png every second physics tick, capture_report.json
 ## with the sound timeline and per-string moves / hits / stops). tools/art_qa/compose_combat_capture.py makes the MP4.
@@ -19,6 +19,9 @@ const STRINGS := [
 	["light2_heavy", [L, L, H], [&"attack1", &"attack2", &"launch_slash"]],
 	["light3_heavy", [L, L, L, H], [&"attack1", &"attack2", &"attack3", &"spin_cleave_a"]],
 	["light4_heavy", [L, L, L, L, H], [&"attack1", &"attack2", &"attack3", &"thrust4", &"rift_hop"]],
+	["dash_light", [KEY_SHIFT, L, L], [&"dash_stab", &"shadow_slash", &"attack2"]],
+	["light2_dash_light", [L, L, KEY_SHIFT, L, L], [&"attack1", &"attack2", &"dash_stab", &"shadow_slash", &"thrust4"]],
+	["dash_heavy", [KEY_SHIFT, H, H], [&"dash_stab", &"chase_cleave", &"launch_slash"]],
 ]
 # A still is taken the first time each of these moves reaches the frame.
 const STILLS := {&"spin5a": 7, &"spin5b": 9, &"rush_cleave": 7, &"launch_slash": 6, &"spin_cleave_b": 7, &"rift_dive": 7}
@@ -49,6 +52,23 @@ func mouse(button: MouseButton, pressed: bool) -> void:
 	event.pressed = pressed
 	Input.parse_input_event(event)
 	Input.flush_buffered_events()
+
+
+func key(code: Key, pressed: bool) -> void:
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.physical_keycode = code
+	event.pressed = pressed
+	Input.parse_input_event(event)
+	Input.flush_buffered_events()
+
+
+# A mouse button, or a key (codes above the mouse range) such as Shift for the dash.
+func press(button: int, pressed: bool) -> void:
+	if button > MOUSE_BUTTON_XBUTTON2:
+		key(button, pressed)
+	else:
+		mouse(button, pressed)
 
 
 func tick(count := 1) -> void:
@@ -132,13 +152,15 @@ func play(entry: Array, base: Vector2) -> void:
 	player.velocity = Vector2.ZERO
 	player.facing = "right"
 	player.show_idle()
-	front.position = base + Vector2(34, 0)
+	# the dash carries the hero 48 px, so the dodge strings put the target past the dash end
+	front.position = base + Vector2(78 if KEY_SHIFT in entry[1] else 34, 0)
 	front.velocity = Vector2.ZERO
 	front.hp = 99
 	# the second target only stands in for the rift slash: it steps in behind the hero once the thrust starts
 	behind.position = base + Vector2(-200, 0)
 	behind.velocity = Vector2.ZERO
 	behind.hp = 99
+	# 24 ticks also let the previous string's dodge-offset window close
 	await tick(24)
 	_moves.clear()
 	_hits.clear()
@@ -146,9 +168,9 @@ func play(entry: Array, base: Vector2) -> void:
 	var buttons: Array = entry[1]
 	var expected: Array = entry[2]
 	for index in range(buttons.size()):
-		mouse(buttons[index], true)
+		press(buttons[index], true)
 		await tick(2)
-		mouse(buttons[index], false)
+		press(buttons[index], false)
 		await wait_for(func() -> bool: return player.move_id == expected[index], 60)
 		if entry[0] == "light4_heavy" and index == 3:
 			behind.position = player.global_position - Vector2(22, 0)

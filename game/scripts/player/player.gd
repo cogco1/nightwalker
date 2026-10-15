@@ -52,6 +52,9 @@ const CHARGE_COIL_PORTION := 0.6
 const CHARGE_BACKSTEP := 3.0
 # One press of the dash key stabs towards the held direction (or facing); a press during an attack waits this long.
 const DASH_BUFFER_SECONDS := 0.15
+# Dodge offset: an attack press this soon after the dash ends gives the offset follow-up, and a dash this soon after a
+# string hit ends keeps that string going.
+const DODGE_OFFSET_SECONDS := 0.25
 ## Attack buttons in the combo graph: left click (light) and right click (heavy).
 const ATTACK_INPUTS: Array[StringName] = [&"light", &"heavy"]
 # Code-drawn blade circle of spinning moves: radius and centre height above the feet, native px.
@@ -87,6 +90,12 @@ var stage_is_critical := false
 ## Current move id and its data row from MOVESET.MOVES (empty when not attacking).
 var move_id: StringName = &""
 var move: Dictionary = {}
+## The move the current one counts as in the combo graph (itself, its `as`, or the hit a dodge offset resumes).
+var _string_id: StringName = &""
+var _last_string_id: StringName = &""
+var _string_end_time := -INF
+var _offset_from: StringName = &""
+var _offset_until := 0.0
 var dash_start := Vector2.ZERO
 var dash_end := Vector2.ZERO
 var dash_executed := false
@@ -116,7 +125,7 @@ var is_charging: bool:
 var special_kind: String:
 	get: return String(move.get("special", "")) if state == State.ATTACK else ""
 var combo_stage: int:
-	get: return int(move.get("stage", 0)) if state == State.ATTACK else 0
+	get: return int(MOVESET.MOVES.get(_string_id, move).get("stage", 0)) if state == State.ATTACK else 0
 var queued_attack: bool:
 	get: return _intent_stage(&"light") == &"queued"
 var pending_new_attack: bool:
@@ -211,6 +220,9 @@ func _physics_process(delta: float) -> void:
 		var dash_direction := int(signf(direction.x)) if direction.x != 0.0 else (1 if facing == "right" else -1)
 		if request_dash_stab(dash_direction):
 			_intents.erase(&"dash")
+		elif is_attacking and sprite.frame < int(move.get("dash_cancel", -1)):
+			# The press waits for this swing's dodge window.
+			_intents[&"dash"]["expires"] = combat_time + DASH_BUFFER_SECONDS
 	# Taps are processed while attacking too. Holding a button never auto-chains.
 	if _mouse_attack_pending:
 		var special := false
@@ -516,7 +528,7 @@ func request_attack(input: StringName = &"light") -> bool:
 			_buffer_attack(input, &"pending", maxf(ATTACK_BUFFER_SECONDS, _recovery_left + 0.05))
 			return true
 		return begin_attack(input)
-	if _next_move(move_id, input) == &"":
+	if _next_move(_string_id, input) == &"":
 		return false
 	var fps: float = sprite.sprite_frames.get_animation_speed(sprite.animation) * sprite.speed_scale
 	var count := sprite.sprite_frames.get_frame_count(sprite.animation)
@@ -529,7 +541,11 @@ func request_attack(input: StringName = &"light") -> bool:
 func begin_attack(input: StringName = &"light") -> bool:
 	if is_attacking or _recovery_left > 0.0:
 		return false
-	var first := _next_move(&"", input)
+	var first := &""
+	if combat_time < _offset_until:
+		first = _next_move(&"dash_stab", input)
+	if first == &"":
+		first = _next_move(&"", input)
 	if is_crouching:
 		first = &"crouch_stab" if input == &"light" else &""
 	if first == &"":
@@ -556,7 +572,7 @@ func _next_move(current: StringName, input: StringName) -> StringName:
 func _chain_queued() -> bool:
 	for input in ATTACK_INPUTS:
 		if _intent_stage(input) == &"queued" and float(_intents[input]["expires"]) > combat_time:
-			var next := _next_move(move_id, input)
+			var next := _next_move(_string_id, input)
 			if next != &"":
 				_clear_attack_intents()
 				_start_move(next)
@@ -568,6 +584,12 @@ func _chain_queued() -> bool:
 func _start_move(id: StringName) -> void:
 	move_id = id
 	move = MOVESET.MOVES[id]
+	_string_id = move.get("as", id)
+	if move.get("resumes", false):
+		# Dodge offset: stands in for the next light hit of the string the dash interrupted.
+		var resumed := _next_move(_offset_from, &"light")
+		_string_id = resumed if resumed != &"" else &"attack1"
+	_offset_until = 0.0
 	state = State.ATTACK
 	move_ticks = 0
 	is_running = false
@@ -749,10 +771,18 @@ func request_dive_slash() -> bool:
 
 
 func request_dash_stab(direction: int) -> bool:
-	if view_mode != ViewMode.SIDE_VIEW or is_attacking or _recovery_left > 0.0 or is_crouching:
+	var cancelling := is_attacking and sprite.frame >= int(move.get("dash_cancel", 1 << 30))
+	if view_mode != ViewMode.SIDE_VIEW or (is_attacking and not cancelling) or _recovery_left > 0.0 or is_crouching:
 		return false
 	if direction == 0:
 		return false
+	# The string the dash cuts short (or that just ended) resumes after it.
+	if cancelling:
+		_offset_from = _string_id
+	elif combat_time - _string_end_time <= DODGE_OFFSET_SECONDS:
+		_offset_from = _last_string_id
+	else:
+		_offset_from = &""
 	facing = "right" if direction > 0 else "left"
 	_crouch_exiting = false
 	dash_executed = false
@@ -837,6 +867,11 @@ func _on_animation_finished() -> void:
 	var coil: bool = _mouse_attack_held and move.get("chain", false) and (view_mode == ViewMode.TOP_DOWN or is_on_floor())
 	stage_is_critical = false
 	_clear_attack_intents()
+	if move.get("dodge", false):
+		_offset_until = combat_time + DODGE_OFFSET_SECONDS
+	else:
+		_last_string_id = _string_id
+		_string_end_time = combat_time
 	move_id = &""
 	move = {}
 	_set_recovery(recovery)
