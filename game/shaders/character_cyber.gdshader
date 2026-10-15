@@ -1,5 +1,5 @@
 shader_type canvas_item;
-// Hero look for every scene: palette swap from an 18 x 3 lookup, light-facing rim pixels,
+// Hero look for every scene: palette swap from an 18 x 4 lookup, light-facing rim pixels,
 // a dark edge on the unlit side, and a small halo around emissive colours (blade, eyepiece).
 // The frames themselves are untouched; set look = 0 to see the original colours.
 
@@ -17,6 +17,10 @@ uniform float glow_strength : hint_range(0.0, 2.0) = 0.8;
 uniform vec3 emission_lift = vec3(1.0);
 uniform float emission_gain = 1.0;
 uniform float body_lift = 1.0;
+// Reflective tape (lookup row 3): dull silver in the dark, flares to the colour of the light that hits it.
+uniform vec4 reflect_base : source_color = vec4(0.38, 0.36, 0.5, 1.0);
+uniform vec4 reflect_color : source_color = vec4(0.85, 0.95, 1.0, 1.0);
+uniform float reflect_strength : hint_range(0.0, 1.0) = 0.15;
 
 const int PALETTE_SIZE = 18;
 const int GLOW_RADIUS = 3;
@@ -87,6 +91,11 @@ void fragment() {
 			colour = mix(colour, shade_edge_color.rgb, unlit * shade_edge_color.a * look);
 			colour = mix(colour, rim_a_color.rgb * emission_lift, strength_a);
 			colour = mix(colour, rim_b_color.rgb * emission_lift, strength_b);
+		}
+		float reflective = index >= 0 ? texelFetch(palette, ivec2(index, 3), 0).a * look : 0.0;
+		if (reflective > 0.1) {
+			vec3 sheen = mix(reflect_base.rgb * body_lift, reflect_color.rgb * emission_lift * emission_gain, reflect_strength);
+			colour = mix(colour, sheen, reflective);
 		}
 		result = vec4(colour, source.a);
 	}

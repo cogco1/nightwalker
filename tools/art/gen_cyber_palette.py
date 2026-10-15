@@ -1,10 +1,11 @@
 """Build the 18-colour hero palette lookup used by game/shaders/character_cyber.gdshader.
 
 Usage: python -I tools/art/gen_cyber_palette.py
-Writes game/assets/fx/cyber_palette.png (18 x 3):
+Writes game/assets/fx/cyber_palette.png (18 x 4):
   row 0  original colour found in game/frames (all 1024 frames use exactly these 18)
   row 1  cyber colour it is swapped to
   row 2  emission: rgb = halo colour, alpha = strength (0 = not emissive)
+  row 3  reflective tape: alpha = how much the colour turns into retro-reflective strip when lit
 """
 from pathlib import Path
 
@@ -37,16 +38,22 @@ PALETTE = [
 ]
 
 
+# Cross-body strap, belt and shoulder straps (#533729) become reflective tape: dull in the dark,
+# flaring in the light that hits them - light = being watched.
+REFLECTIVE = {"533729": 255}
+
+
 def rgb(hex_colour: str) -> tuple[int, int, int]:
     return tuple(int(hex_colour[i:i + 2], 16) for i in (0, 2, 4))
 
 
 def main() -> None:
-    image = Image.new("RGBA", (len(PALETTE), 3), (0, 0, 0, 0))
+    image = Image.new("RGBA", (len(PALETTE), 4), (0, 0, 0, 0))
     for index, (original, cyber, glow, strength) in enumerate(PALETTE):
         image.putpixel((index, 0), rgb(original) + (255,))
         image.putpixel((index, 1), rgb(cyber) + (255,))
         image.putpixel((index, 2), (rgb(glow) if glow else (0, 0, 0)) + (strength,))
+        image.putpixel((index, 3), (255, 255, 255, REFLECTIVE.get(original, 0)))
     out = GAME / "assets" / "fx" / "cyber_palette.png"
     out.parent.mkdir(parents=True, exist_ok=True)
     image.save(out)

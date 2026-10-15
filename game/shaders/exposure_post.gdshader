@@ -12,7 +12,7 @@ uniform vec4 marked_tint : source_color = vec4(1.0, 0.24, 0.43, 1.0);
 
 void fragment() {
 	vec2 px = SCREEN_PIXEL_SIZE;
-	float shift = floor(exposure + 0.35) + marked * step(0.5, fract(TIME * 3.0));
+	float shift = max(floor(exposure + 0.35), marked * step(0.5, fract(TIME * 3.0)));
 	float row_jitter = marked * step(0.97, fract(sin(floor(SCREEN_UV.y / px.y) * 7.13 + floor(TIME * 20.0)) * 43758.5));
 	vec2 uv = SCREEN_UV + vec2(row_jitter * 2.0 * px.x, 0.0);
 	vec3 colour;

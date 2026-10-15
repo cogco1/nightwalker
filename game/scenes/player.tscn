@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1"]
 [ext_resource type="SpriteFrames" path="res://assets/top_down.tres" id="2"]
 [ext_resource type="Material" path="res://assets/fx/character_cyber.tres" id="3"]
+[ext_resource type="Script" path="res://scripts/player/implant_overlay.gd" id="4"]
 
 [sub_resource type="RectangleShape2D" id="FootShape"]
 size = Vector2(12, 8)
@@ -19,6 +20,9 @@ sprite_frames = ExtResource("2")
 animation = &"stab_down"
 centered = false
 offset = Vector2(-24, -42)
+
+[node name="ImplantOverlay" type="Node2D" parent="Sprite"]
+script = ExtResource("4")
 
 [node name="BodyShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)

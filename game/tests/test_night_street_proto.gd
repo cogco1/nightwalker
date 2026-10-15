@@ -90,7 +90,7 @@ func verify_material_everywhere() -> void:
 	check(material != null and material.shader.resource_path == HERO_SHADER, "player.tscn carries the hero shader, so every scene uses it")
 	check(material != null and material.resource_local_to_scene, "Each player instance gets its own hero material")
 	var palette: Texture2D = material.get_shader_parameter("palette") if material != null else null
-	check(palette != null and palette.get_width() == 18 and palette.get_height() == 3, "The hero lookup is 18 x 3")
+	check(palette != null and palette.get_width() == 18 and palette.get_height() == 4, "The hero lookup is 18 x 4")
 	if palette != null:
 		var image := palette.get_image()
 		var found: Array[String] = []
@@ -98,6 +98,11 @@ func verify_material_everywhere() -> void:
 			found.append(image.get_pixel(index, 0).to_html(false))
 		check(found == PALETTE_SOURCE, "Lookup row 0 lists the 18 colours used by the shipped frames")
 		check(is_equal_approx(image.get_pixel(17, 2).a, 1.0) and image.get_pixel(0, 2).a == 0.0, "Blade edge is emissive and the outline is not")
+		check(is_equal_approx(image.get_pixel(PALETTE_SOURCE.find("533729"), 3).a, 1.0) and image.get_pixel(0, 3).a == 0.0, "Only the strap leather is reflective tape")
+	var overlay := player.get_node_or_null("Sprite/ImplantOverlay")
+	check(overlay != null and overlay.get_script().resource_path == "res://scripts/player/implant_overlay.gd", "player.tscn carries the barcode-scar overlay")
+	var anchors: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://assets/fx/implant_anchors.json"))
+	check(anchors is Dictionary and anchors.has("res://frames/side_view_right_idle/00.png") and anchors.size() >= 700, "Forearm anchors cover the side-view idle and most frames")
 	player.free()
 
 
@@ -120,11 +125,16 @@ func verify_exposure(player: CharacterBody2D) -> void:
 	check(street.in_beam, "Standing under the drone puts the player in the beam")
 	check(street.marked and drone.marked, "Full exposure marks the player")
 	check(drone.light_color() == drone.MARKED, "A marked player turns the beam red")
+	var hero_material := player.get_node("Sprite").material as ShaderMaterial
+	check(float(hero_material.get_shader_parameter("reflect_strength")) > 0.9, "Reflective straps flare inside the beam")
+	check(float(player.get_node("Sprite/ImplantOverlay").scanned) == 1.0, "The beam scans the barcode scar")
+	check(street.get_node("StreetUI/ScanReadout") != null and street._scan_label.visible, "The scan readout shows while the beam is on the hero")
 	player.position = Vector2(820, 156)
 	player.velocity = Vector2.ZERO
 	await frames(10)
 	var after_leaving: float = street.exposure
 	check(not street.in_beam and after_leaving < 1.0, "Leaving the beam lowers exposure")
+	check(float(player.get_node("Sprite/ImplantOverlay").scanned) == 0.0 and not street._scan_label.visible, "Out of the beam the scar is no longer scanned")
 	await frames(200)
 	check(not street.marked, "Exposure decays below the unmark threshold and clears the mark")
 	observations["exposure_after_decay"] = snappedf(street.exposure, 0.01)

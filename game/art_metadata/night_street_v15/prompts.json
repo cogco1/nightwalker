@@ -1,0 +1,78 @@
+{
+  "mode": "pending generator choice (local Flux via ComfyUI / Canva generate-image / hand-made fallback)",
+  "asset": "night_street_proto parallax backdrop v15",
+  "source_document": "User_Materials/SK.txt (v07 handoff): Petra New Town, A-district full surveillance, District C weakest coverage, Golden Domain Tower 124 storeys (chapter 2), ID serial = barcode tattoo",
+  "approved_direction": "2026-10-15: Petra rose sandstone + neon (surveillance cyan, black-market magenta, sodium orange); light = being watched",
+  "native_floor_y": 156,
+  "pipeline": "generate canvas at 4x native -> tools/art/pixelize_layer.py palette (shared <=40 colours) -> pixelize_layer.py layer (box downsample, chroma-key alpha, palette map, lone-pixel cleanup, neon split into _emit)",
+  "common_prompt": "Side-view 2D pixel-art parallax background layer for an original neo-noir action game set in 2040 'Petra New Town', a surveillance city built around the ruins of Petra, Jordan. Strict orthographic side elevation: no perspective, no vanishing points, flat horizon. Night, light rain haze. Palette: deep indigo and violet shadows, Petra rose-red sandstone, and neon accents only in surveillance cyan #4ff0ff, black-market magenta #ff3d9a and sodium orange #ff9a3c. Hard square pixels: every design pixel is exactly one uniform 4x4 block of the output; 32-40 flat colours; one-design-pixel window and neon accents; readable clusters, economical detail. No antialiasing, smooth gradients, blur, bloom, painterly or photographic or 3D rendering, no letters or readable text (signs use abstract glyph strokes), no people, no vehicles.",
+  "layers": [
+    {
+      "name": "sky",
+      "native": [
+        320,
+        180
+      ],
+      "canvas": null,
+      "parallax": 0.0,
+      "source": "kept procedural (tools/art/gen_night_street.py sky()): a dithered indigo-to-magenta gradient needs no generator"
+    },
+    {
+      "name": "far_towers",
+      "native": [
+        448,
+        180
+      ],
+      "canvas": [
+        1792,
+        720
+      ],
+      "parallax": 0.15,
+      "key": "00ff00",
+      "prompt": "A-district skyline far away: colossal monolithic megatowers in cold indigo silhouettes with sparse single-pixel cyan and lavender windows, setbacks and antenna crowns with red aircraft lights; one needle-like regime control spire at x=840 of 1792, far taller than everything (tip at y=16), with three glowing cyan rings and a white beacon. Building tops between y=40 and y=320. Nothing below y=624. Solid flat #00ff00 background behind every silhouette."
+    },
+    {
+      "name": "petra",
+      "native": [
+        576,
+        180
+      ],
+      "canvas": [
+        2304,
+        720
+      ],
+      "parallax": 0.4,
+      "key": "00ff00",
+      "prompt": "Mid-ground: a towering rose-red Petra sandstone cliff with swirling horizontal strata and cracks across the full width, jagged top edge between y=120 and y=230. Carved into it at x=820-1340: an Al-Khazneh style rock-cut tomb facade with a lower portico of six columns under a triangular pediment, an upper round tholos between two broken half-pediments and an urn on top, and a dark doorway. 2040 retrofit on the ancient stone: magenta neon tube along the pediment edges, thin cyan neon lines on two columns, surveillance camera boxes with red LEDs, black cables. A second smaller carved tomb front at x=1790 with a sodium lamp over its door, and rock-cut stairs with a cyan strip light at the left. Nothing below y=624. Solid flat #00ff00 sky."
+    },
+    {
+      "name": "district_c",
+      "native": [
+        768,
+        180
+      ],
+      "canvas": [
+        3072,
+        720
+      ],
+      "parallax": 0.7,
+      "key": "00ff00",
+      "prompt": "Near layer, District C: poor, dense 2-5 storey concrete residential blocks of varied widths with small gaps, balconies, AC units, water tanks, antennas and laundry lines, tangled sagging power cables between roofs. Sparse windows lit warm sodium orange, a few magenta or cyan; most windows dark. Vertical neon glyph signboards on some facades. Behind the blocks at x=2200: the 124-storey 'Golden Domain Tower', one tall dark glass tower with a thin gold-lit crown and red aircraft light, rising to y=60. One rooftop billboard showing a large glowing cyan ID barcode. Rooflines between y=400 and y=560. Nothing below y=624. Solid flat #00ff00 sky."
+    },
+    {
+      "name": "street",
+      "native": [
+        960,
+        180
+      ],
+      "canvas": [
+        3840,
+        720
+      ],
+      "parallax": 1.0,
+      "key": "00ff00",
+      "tiles": 2,
+      "prompt": "Street level of District C seen from the road: the back pavement wall and shopfronts at ground level, kerb line exactly at y=624, wet dark asphalt below the kerb to the bottom edge. Props spaced along the street: three tall sodium street lamps (x=480, 1720, 3120), a noodle kiosk with a magenta striped awning and a magenta glyph sign (x=940-1130), a cyan-lit vending machine (x=2240), an ID scanner gate with a glowing cyan barcode panel (x=2760-2890), crates, bins and a low barrier. Keep a clear 160px-high walking band in front of everything; props never block the kerb line. Solid flat #00ff00 above the props."
+    }
+  ]
+}
