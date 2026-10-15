@@ -9,6 +9,7 @@ export_presets.cfg
 
 # Machine-specific Godot path (copy godot-path.example.txt)
 godot-path.txt
+Godot*.exe
 
 # Logs and Python caches
 *.log
