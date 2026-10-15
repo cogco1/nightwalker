@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tests/support/isolated_suite.gd"
 ## Uses the retained combat QA fixture; no training entrance is required in play.
 
 const MAIN = preload("res://tests/fixtures/combat_lab.tscn")

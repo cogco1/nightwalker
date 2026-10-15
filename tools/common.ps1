@@ -27,16 +27,26 @@ function Get-NightwalkerGodot([string]$GodotPath = '') {
 }
 
 # Runs Godot against game/ with hidden window; stdout/stderr go to evidence/logs/<LogName>.log and <LogName>_errors.log.
-function Invoke-NightwalkerGodot([string]$Godot, [string[]]$Arguments, [string]$LogName) {
+# A run that outlives TimeoutSeconds is killed and reported as failed instead of hanging the whole regression.
+function Invoke-NightwalkerGodot([string]$Godot, [string[]]$Arguments, [string]$LogName, [int]$TimeoutSeconds = 300) {
     New-Item -ItemType Directory -Path $NightwalkerLogs -Force | Out-Null
     $out = Join-Path $NightwalkerLogs ($LogName + '.log')
     $err = Join-Path $NightwalkerLogs ($LogName + '_errors.log')
     $allArguments = @('--path', ('"' + $NightwalkerProject + '"')) + $Arguments
-    $process = Start-Process -FilePath $Godot -ArgumentList $allArguments -WorkingDirectory $NightwalkerProject -WindowStyle Hidden -PassThru -Wait -RedirectStandardOutput $out -RedirectStandardError $err
+    $process = Start-Process -FilePath $Godot -ArgumentList $allArguments -WorkingDirectory $NightwalkerProject -WindowStyle Hidden -PassThru -RedirectStandardOutput $out -RedirectStandardError $err
+    # Touch the handle now: without it PowerShell 5.1 reports a null ExitCode for processes started without -Wait.
+    $null = $process.Handle
+    $timedOut = -not $process.WaitForExit($TimeoutSeconds * 1000)
+    if ($timedOut) {
+        Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+        Add-Content -LiteralPath $err -Value ('ERROR: timed out after ' + $TimeoutSeconds + ' s') -Encoding UTF8
+    }
+    $process.WaitForExit()
     $scriptErrors = Select-String -LiteralPath $err -Pattern 'SCRIPT ERROR:|ERROR:' -Quiet
     return [pscustomobject]@{
         ExitCode = $process.ExitCode
-        Failed   = ($process.ExitCode -ne 0) -or $scriptErrors
+        TimedOut = $timedOut
+        Failed   = $timedOut -or ($process.ExitCode -ne 0) -or $scriptErrors
         Output   = [string](Get-Content -LiteralPath $out -Raw -Encoding UTF8)
         Log      = $out
         ErrorLog = $err

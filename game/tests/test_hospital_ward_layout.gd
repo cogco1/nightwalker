@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tests/support/isolated_suite.gd"
 
 const HOSPITAL = preload("res://scenes/underground_hospital.tscn")
 const EXPECTED_CHECKS := 22

@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tests/support/isolated_suite.gd"
 
 const MAIN = preload("res://scenes/main.tscn")
 const CONTROLS = preload("res://scripts/core/controls.gd")

@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tests/support/isolated_suite.gd"
 
 const MAIN = preload("res://tests/fixtures/combat_lab.tscn")
 const TARGET = preload("res://tests/fixtures/training_target.gd")

@@ -135,7 +135,7 @@ func _ready() -> void:
 	sprite.animation_finished.connect(_on_animation_finished)
 	sprite.frame_changed.connect(_update_sprite_layout)
 	sprite.animation_changed.connect(_update_sprite_layout)
-	_show_idle()
+	show_idle()
 	_update_sprite_layout()
 
 
@@ -253,6 +253,11 @@ func _physics_process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	_input(event)
+
+
+## Public entry for input forwarded while the tree is paused (hit-stop): only records button edges.
+func handle_input(event: InputEvent) -> void:
 	_input(event)
 
 
@@ -407,7 +412,7 @@ func _update_animation(direction: Vector2) -> void:
 			return
 	var moving_speed := velocity.length() if view_mode == ViewMode.TOP_DOWN else absf(velocity.x)
 	if direction.is_zero_approx() and moving_speed < 4.0:
-		_show_idle()
+		show_idle()
 	else:
 		_play_loop(("run_" if is_running else "walk_") + facing, true)
 
@@ -830,7 +835,7 @@ func _release_heavy_slash() -> void:
 	special_started.emit("heavy_slash", attack_direction)
 
 
-func _show_idle() -> void:
+func show_idle() -> void:
 	var animation := "idle_" + facing
 	if sprite.sprite_frames.has_animation(animation):
 		_play_loop(animation, false)

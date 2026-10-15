@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tests/support/isolated_suite.gd"
 ## Light / heavy attacks: a tap is the unchanged light chain; holding the attack button after a ground
 ## swing coils into a charge, and releasing it full fires a heavy slash (3x damage, critical hit-stop).
 
@@ -236,7 +236,7 @@ func verify_session_feedback() -> void:
 		return
 	check(feedback.process_mode == Node.PROCESS_MODE_ALWAYS, "Combat sounds keep playing through the hit-stop pause")
 	player.facing = "right"
-	player.call("_show_idle")
+	player.show_idle()
 	var target := TARGET.new()
 	target.side_view = true
 	target.max_hp = 30

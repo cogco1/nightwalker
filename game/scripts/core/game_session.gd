@@ -87,7 +87,7 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 		return
 	if hit_stop_active and is_instance_valid(_player):
-		_player.call("_input", event)
+		_player.handle_input(event)
 
 
 func open_keybindings() -> void:

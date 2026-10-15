@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tests/support/isolated_suite.gd"
 
 const INTERACTIONS = preload("res://scripts/levels/hospital/hospital_interactions.gd")
 
