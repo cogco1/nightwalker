@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tests/support/isolated_suite.gd"
 ## Night-street prototype: hero material everywhere, surveillance exposure, combat and hit-stop on hover
 ## drones, prototype-only controls, and no route into it from the shipped safe house / hospital flow.
 
@@ -157,7 +157,7 @@ func verify_combat(player: CharacterBody2D) -> void:
 	player.position = Vector2(target.global_position.x - 18.0, 156)
 	player.velocity = Vector2.ZERO
 	player.facing = "right"
-	player.call("_show_idle")
+	player.show_idle()
 	await frames(6)
 	var session: Node = street.get_node("GameSession")
 	var hits := [0]

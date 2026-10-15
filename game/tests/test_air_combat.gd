@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tests/support/isolated_suite.gd"
 
 const MAIN = preload("res://tests/fixtures/combat_lab.tscn")
 const TARGET = preload("res://tests/fixtures/training_target.gd")
@@ -236,7 +236,7 @@ func impact_checks() -> void:
 			await tick(1)
 		check(impacts.size() == impact_count + 1 and impacts[-1].is_equal_approx(arena.player.global_position), "landing impact emits once at the actual ground position: " + direction)
 		check(arena.player.sprite.animation == "dive_slash_" + direction and arena.player.sprite.frame == 14, "landing displays the dedicated impact pose: " + direction)
-		check(arena.player._effects.size() >= 12 and arena.player._effects.filter(func(effect: Dictionary) -> bool: return effect.has("tail")).size() == 2, "landing creates dust, sparks and two spreading pixel waves: " + direction)
+		check(arena.player.fx.effects.size() >= 12 and arena.player.fx.effects.filter(func(effect: Dictionary) -> bool: return effect.has("tail")).size() == 2, "landing creates dust, sparks and two spreading pixel waves: " + direction)
 		check(not paused and arena.completed_stop_requests.is_empty(), "empty-floor impact does not add a combat pause: " + direction)
 		await screenshot("impact_" + direction)
 		await tick(2)
@@ -244,7 +244,7 @@ func impact_checks() -> void:
 		await tap(KEY_SPACE)
 		check(arena.player.velocity.y < -190.0 and arena.player._jumps_used == 1, "impact leaves immediate re-jump available after two frames: " + direction)
 		await tick(15)
-		check(impacts.size() == impact_count + 1 and arena.player._effects.filter(func(effect: Dictionary) -> bool: return effect.has("tail")).is_empty(), "impact waves expire and never repeat while airborne: " + direction)
+		check(impacts.size() == impact_count + 1 and arena.player.fx.effects.filter(func(effect: Dictionary) -> bool: return effect.has("tail")).is_empty(), "impact waves expire and never repeat while airborne: " + direction)
 	await reset()
 	await tap(KEY_SPACE)
 	key(KEY_D, true)

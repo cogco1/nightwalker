@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tests/support/isolated_suite.gd"
 ## Real-GPU capture of the night-street prototype: stills plus every second frame of a scripted run
 ## (walk, beam exposure until marked, ground combo on a hover drone, jump, air dash).
 ## Run windowed: godot --path game --script res://tests/recorders/record_night_street_proto.gd

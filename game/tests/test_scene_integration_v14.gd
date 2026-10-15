@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tests/support/isolated_suite.gd"
 
 const MAIN = preload("res://scenes/main.tscn")
 const CONTROLS = preload("res://scripts/core/controls.gd")
@@ -140,7 +140,7 @@ func validate_player(host: Node2D, side: bool, label: String) -> void:
 	check(count_characters(root) == 1 and not has_training_actor(root), label + " has one protagonist with no training targets or NPCs")
 	var session := host.get_node_or_null("GameSession")
 	var stop_signals_connected := session != null
-	for signal_name in ["normal_contact_stop", "critical_hit"]:
+	for signal_name in ["impact"]:
 		var connected := false
 		for connection in player.get_signal_connection_list(signal_name):
 			var callback: Callable = connection["callable"]
@@ -234,10 +234,7 @@ func validate_impact_timing(hospital: Node2D) -> void:
 		return
 	for requested in [4, 6]:
 		var label := "normal" if requested == 4 else "critical"
-		if requested == 4:
-			hospital.player.normal_contact_stop.emit(Vector2.RIGHT)
-		else:
-			hospital.player.critical_hit.emit(null, 3, Vector2.RIGHT)
+		hospital.player.impact.emit(&"light" if requested == 4 else &"critical", Vector2.RIGHT)
 		await frames(2)
 		check(bool(session.get("hit_stop_active")) and paused, "The reusable hospital " + label + " impact produces a real visible-time pause")
 		for _index in range(30):
@@ -247,7 +244,7 @@ func validate_impact_timing(hospital: Node2D) -> void:
 		check(not bool(session.get("hit_stop_active")) and not paused, "The reusable hospital " + label + " impact resumes the scene without the removed arena controller")
 		var completed: Array = session.get("completed_stop_frames")
 		var displayed := int(completed.back()) if not completed.is_empty() else 0
-		var elapsed := float(session.get("_elapsed"))
+		var elapsed := float(session.get("hit_stop_elapsed_seconds"))
 		check(displayed >= int(requested) and elapsed + 0.000001 >= float(requested) / 60.0, "The reusable hospital " + label + " impact preserves its minimum displayed frames and visible duration")
 		observations["impact_" + label] = {"displayed_frames": displayed, "elapsed_seconds": elapsed, "minimum_frames": requested, "minimum_seconds": float(requested) / 60.0}
 

@@ -8,6 +8,10 @@ signal critical_hit(target: Node, damage: int, direction: Vector2)
 signal normal_contact_stop(direction: Vector2)
 signal special_started(kind: String, direction: Vector2)
 signal landing_impact(point: Vector2)
+## Once per attack stage on first contact: light / critical / heavy. GameSession maps it to a hit-stop.
+signal impact(weight: StringName, direction: Vector2)
+## Every attack or special start, with the move id (attack1-3, crouch_stab, air_attack1-3, rising_slash, ...).
+signal move_started(move: StringName)
 signal charge_started
 signal charge_ready
 signal charge_ended(released: bool)
@@ -25,6 +29,7 @@ enum ViewMode { TOP_DOWN, SIDE_VIEW }
 const TOP_FRAMES = preload("res://assets/top_down.tres")
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const SIDE_FRAMES = preload("res://assets/side_view.tres")
+const PLAYER_FX = preload("res://scripts/player/player_fx.gd")
 const ACTIVE_START := 6
 const ACTIVE_END := 9
 const STAGE_FPS := [36.0, 40.0, 42.0]
@@ -34,7 +39,6 @@ const BRAKE_SECONDS := 0.065
 const STAND_SIZE := Vector2(12, 26)
 const CROUCH_SIZE := Vector2(12, 14)
 const BLADE_TRAIL_SECONDS := 0.14
-const MAX_BLADE_PIXELS := 70
 const DASH_DISTANCE := 48.0
 const LANDING_SECONDS := 2.0 / 60.0
 const AIR_HOLD_SECONDS := 0.55
@@ -57,6 +61,8 @@ const DASH_BUFFER_SECONDS := 0.15
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var body_shape: CollisionShape2D = $BodyShape
+## Effects layer (dust, sparks, trails, afterimages); first child, so it draws behind the sprite.
+var fx: Node2D
 
 var facing := "down"
 var is_attacking := false
@@ -78,8 +84,6 @@ var _landing_left := 0.0
 var _dust_timer := 0.0
 var _braking := false
 var _brake_from_speed := 0.0
-var _effects: Array[Dictionary] = []
-var _blade_trails: Array[Dictionary] = []
 var _blade_paths: Dictionary = {}
 var _last_blade_frame := -1
 var _previous_blade_tip := Vector2.ZERO
@@ -97,7 +101,6 @@ var _rng := RandomNumberGenerator.new()
 var _mouse_attack_pending := false
 var _mouse_attack_held := false
 var _dash_phasing := false
-var _afterimages: Array[Dictionary] = []
 var airflow_count := 0
 var critical_impact_count := 0
 var input_suspended := false
@@ -115,6 +118,10 @@ func _ready() -> void:
 	set_process_unhandled_input(true)
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_rng.randomize()
+	fx = PLAYER_FX.new()
+	fx.name = "Fx"
+	add_child(fx)
+	move_child(fx, 0)
 	sprite.centered = false
 	sprite.offset = Vector2(-24, -42)
 	var shape := RectangleShape2D.new()
@@ -135,7 +142,7 @@ func _ready() -> void:
 	sprite.animation_finished.connect(_on_animation_finished)
 	sprite.frame_changed.connect(_update_sprite_layout)
 	sprite.animation_changed.connect(_update_sprite_layout)
-	_show_idle()
+	show_idle()
 	_update_sprite_layout()
 
 
@@ -144,7 +151,7 @@ func _physics_process(delta: float) -> void:
 		_mouse_attack_held = false
 	_try_end_dash_phasing()
 	var was_grounded := is_on_floor()
-	_update_effects(delta)
+	fx.step(delta)
 	_landing_left = maxf(0.0, _landing_left - delta)
 	_air_hold_left = maxf(0.0, _air_hold_left - delta)
 	_recovery_left = maxf(0.0, _recovery_left - delta)
@@ -171,7 +178,7 @@ func _physics_process(delta: float) -> void:
 			_jump_age = 0.0
 			_landing_left = 0.0
 			_air_hold_left = 0.0
-			_spawn_dust(global_position, 3)
+			fx.dust(global_position, 3)
 	if not is_attacking and not is_charging and _recovery_left <= 0.0 and not direction.is_zero_approx():
 		_update_facing(direction)
 	if _dash_buffer_left > 0.0 and not is_charging:
@@ -214,15 +221,14 @@ func _physics_process(delta: float) -> void:
 		sprite.position.x += 1.0 if int(charge_time * 30.0) % 2 == 0 else -1.0
 	if special_kind == "heavy_slash" and sprite.frame in [5, 7] and sprite.frame != _heavy_ghost_frame:
 		_heavy_ghost_frame = sprite.frame
-		_afterimages.append({"texture": sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame),
-			"position": global_position + sprite.offset, "life": 0.12})
+		fx.ghost(sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame), global_position + sprite.offset, 0.12)
 	_update_sprite_layout()
 	if view_mode == ViewMode.SIDE_VIEW and not was_grounded and is_on_floor():
 		_landing_left = LANDING_SECONDS
 		_jump_age = 0.0
 		_jumps_used = 0
 		_air_hold_left = 0.0
-		_spawn_dust(global_position, 5)
+		fx.dust(global_position, 5)
 	if is_attacking and sprite.frame >= _attack_active_start() and (special_kind == "dive_slash" or sprite.frame <= ACTIVE_END):
 		if special_kind == "dash_stab":
 			if not dash_executed:
@@ -236,23 +242,28 @@ func _physics_process(delta: float) -> void:
 		_on_animation_finished()
 		_recovery_left = LANDING_SECONDS
 		_set_manual_frame("dive_slash_" + facing, 14)
-		_blade_trails.clear()
-		_spawn_sparks(global_position + Vector2(-8, -1))
-		_spawn_sparks(global_position + Vector2(8, -1))
-		_effects.append({"position": global_position + Vector2(-8, -1), "velocity": Vector2(-100, -4), "tail": Vector2(-4, 0), "life": 0.14, "color": Color("8ebce8")})
-		_effects.append({"position": global_position + Vector2(8, -1), "velocity": Vector2(100, -4), "tail": Vector2(4, 0), "life": 0.14, "color": Color("f2f8ff")})
+		fx.clear_trails()
+		fx.sparks(global_position + Vector2(-8, -1))
+		fx.sparks(global_position + Vector2(8, -1))
+		fx.add({"position": global_position + Vector2(-8, -1), "velocity": Vector2(-100, -4), "tail": Vector2(-4, 0), "life": 0.14, "color": PLAYER_FX.BLUE})
+		fx.add({"position": global_position + Vector2(8, -1), "velocity": Vector2(100, -4), "tail": Vector2(4, 0), "life": 0.14, "color": PLAYER_FX.WHITE})
 		landing_impact.emit(global_position)
 	if is_running and (view_mode == ViewMode.TOP_DOWN or is_on_floor()):
 		_dust_timer -= delta
 		if _dust_timer <= 0.0:
-			_spawn_dust(global_position - _facing_vector() * 5.0, 2)
+			fx.dust(global_position - _facing_vector() * 5.0, 2)
 			_dust_timer = 0.09
 	else:
 		_dust_timer = 0.0
-	queue_redraw()
+	fx.queue_redraw()
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	_input(event)
+
+
+## Public entry for input forwarded while the tree is paused (hit-stop): only records button edges.
+func handle_input(event: InputEvent) -> void:
 	_input(event)
 
 
@@ -407,7 +418,7 @@ func _update_animation(direction: Vector2) -> void:
 			return
 	var moving_speed := velocity.length() if view_mode == ViewMode.TOP_DOWN else absf(velocity.x)
 	if direction.is_zero_approx() and moving_speed < 4.0:
-		_show_idle()
+		show_idle()
 	else:
 		_play_loop(("run_" if is_running else "walk_") + facing, true)
 
@@ -510,6 +521,7 @@ func _start_attack_stage(stage: int) -> void:
 	sprite.play(animation)
 	combo_changed.emit(stage)
 	attack_started.emit()
+	move_started.emit(StringName(special_kind) if special_kind != "" else StringName(animation.trim_suffix("_" + facing)))
 
 
 func _attack_lunge_speed() -> float:
@@ -595,19 +607,21 @@ func _resolve_hit(target: Node, point: Vector2) -> bool:
 		target.call("receive_hit_reaction", attack_direction, special_kind == "rising_slash", view_mode == ViewMode.SIDE_VIEW and not is_on_floor() and special_kind in ["", "dash_stab"])
 	elif special_kind == "rising_slash" and target.has_method("knock_up"):
 		target.call("knock_up", attack_direction)
-	_spawn_sparks(point)
-	_spawn_impact(point)
+	fx.sparks(point)
+	fx.impact(point, _impact_weight(), attack_direction, global_position)
 	attack_hit.emit(target)
 	hit_resolved.emit(target, damage, stage_is_critical, special_kind)
 	if stage_is_critical and not _critical_stop_emitted:
 		_critical_stop_emitted = true
 		critical_impact_count += 1
 		for axis in [Vector2(4, 0), Vector2(-4, 0), Vector2(0, 4), Vector2(0, -4)]:
-			_blade_trails.append({"pixels": _pixel_line(point, point + axis), "edge": Vector2i(0, 1), "life": BLADE_TRAIL_SECONDS})
+			fx.trail(PLAYER_FX.pixel_line(point, point + axis), Vector2i(0, 1), BLADE_TRAIL_SECONDS)
 		critical_hit.emit(target, damage, attack_direction)
+		impact.emit(_impact_weight(), attack_direction)
 	elif not stage_is_critical and not _normal_stop_emitted:
 		_normal_stop_emitted = true
 		normal_contact_stop.emit(attack_direction)
+		impact.emit(_impact_weight(), attack_direction)
 	return true
 
 
@@ -631,7 +645,7 @@ func request_dive_slash() -> bool:
 	_dash_phasing = true
 	collision_mask = 1
 	_start_special("dive_slash")
-	queue_redraw()
+	fx.queue_redraw()
 	return true
 
 
@@ -675,12 +689,12 @@ func _perform_dash() -> void:
 	dash_executed = true
 	dash_start = global_position
 	var texture := sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
-	_afterimages.append({"texture": texture, "position": dash_start + sprite.offset, "life": 0.12})
+	fx.ghost(texture, dash_start + sprite.offset, 0.12)
 	_dash_phasing = true
 	collision_mask = 1
 	move_and_collide(attack_direction * DASH_DISTANCE, false, 0.001)
 	dash_end = global_position
-	_afterimages.append({"texture": texture, "position": dash_start.lerp(dash_end, 0.5) + sprite.offset, "life": 0.09})
+	fx.ghost(texture, dash_start.lerp(dash_end, 0.5) + sprite.offset, 0.09)
 	_spawn_airflow(dash_start, false)
 	sprite.position = global_position.round() - global_position
 	var start := dash_start + Vector2(0, -17)
@@ -757,7 +771,7 @@ func _begin_charge() -> void:
 	charge_time = 0.0
 	is_running = false
 	_set_manual_frame("attack3_" + facing, 0)
-	_spawn_dust(global_position, 4)
+	fx.dust(global_position, 4)
 	charge_started.emit()
 
 
@@ -783,22 +797,17 @@ func _update_charge(delta: float, grounded: bool) -> void:
 		var tick := int(charge_time * 20.0) != int((charge_time - delta) * 20.0)
 		if tick:
 			# Light rises off the body while the charge builds.
-			var mote := global_position + Vector2(_rng.randf_range(-7.0, 7.0), -_rng.randf_range(3.0, 24.0))
-			_effects.append({"position": mote.round(), "velocity": Vector2(0, -34), "life": 0.22,
-				"color": Color("f2f8ff") if was_full else Color("8ebce8")})
+			fx.mote(global_position, was_full)
 		if not was_full and charge_time >= CHARGE_FULL_SECONDS:
-			_spawn_sparks(tip)
-			_spawn_dust(global_position, 6)
+			fx.sparks(tip)
+			fx.dust(global_position, 6)
 			charge_ready.emit()
 		elif was_full and int(charge_time * 10.0) != int((charge_time - delta) * 10.0):
 			# Full: a blinking white star on the tip says "release now".
-			for offset in [Vector2.ZERO, Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
-				_effects.append({"position": tip + offset, "velocity": Vector2.ZERO, "life": 0.05, "color": Color("f2f8ff")})
+			fx.star(tip)
 		elif not was_full and tick:
 			# Coiling: light gathers onto the blade from a ring that tightens as the charge fills.
-			var radius := lerpf(14.0, 4.0, charge_time / CHARGE_FULL_SECONDS)
-			var start := tip + Vector2.from_angle(charge_time * 11.0) * radius
-			_effects.append({"position": start.round(), "velocity": (tip - start) / 0.1, "life": 0.1, "color": Color("8ebce8")})
+			fx.gather(tip, lerpf(14.0, 4.0, charge_time / CHARGE_FULL_SECONDS), charge_time * 11.0)
 		return
 	if charge_time >= CHARGE_FULL_SECONDS:
 		_release_heavy_slash()
@@ -830,7 +839,7 @@ func _release_heavy_slash() -> void:
 	special_started.emit("heavy_slash", attack_direction)
 
 
-func _show_idle() -> void:
+func show_idle() -> void:
 	var animation := "idle_" + facing
 	if sprite.sprite_frames.has_animation(animation):
 		_play_loop(animation, false)
@@ -838,48 +847,16 @@ func _show_idle() -> void:
 		_set_manual_frame("stab_" + facing, 0)
 
 
-func _spawn_dust(point: Vector2, count: int) -> void:
-	for index in range(count):
-		_effects.append({"position": point.round() + Vector2(index * 2 - count, -1), "velocity": Vector2((index - count / 2.0) * 9.0, -10.0 - index * 2.0), "life": 0.18, "color": Color("82717c")})
-
-
-func _spawn_sparks(point: Vector2) -> void:
-	for index in range(5):
-		_effects.append({"position": point.round(), "velocity": Vector2(-32 + index * 16, -35 + abs(index - 2) * 16), "life": 0.14, "color": Color("f2f8ff") if index % 2 == 0 else Color("8ebce8")})
-
-
-# Impact read in three weights (light, critical, heavy): a slash mark across the target along the swing,
-# rays bursting from the contact and extra sparks. The hit-stop freezes on this frame.
-func _spawn_impact(point: Vector2) -> void:
-	var heavy := special_kind == "heavy_slash"
-	var weight := 2 if heavy else (1 if stage_is_critical else 0)
-	var rays: int = [6, 8, 12][weight]
-	var reach: float = [6.0, 9.0, 15.0][weight]
-	var life: float = [0.09, 0.11, 0.15][weight]
-	for index in range(rays):
-		var ray := Vector2.from_angle(TAU * index / rays + 0.35)
-		_effects.append({"position": (point + ray * 3.0).round(), "velocity": ray * reach / life, "tail": ray * reach * 0.45,
-			"life": life, "color": Color("f2f8ff") if index % 2 == 0 else Color("8ebce8")})
-	var across := Vector2(attack_direction.x, -0.65).normalized() if attack_direction.x != 0.0 else Vector2(0.65, attack_direction.y).normalized()
-	var half: float = [6.0, 9.0, 15.0][weight]
-	for row in range(1 + weight):
-		var offset := Vector2(0, row) if attack_direction.x != 0.0 else Vector2(row, 0)
-		_effects.append({"position": (point + across * half + offset).round(), "velocity": Vector2.ZERO, "tail": across * half * 2.0,
-			"life": life * 1.4, "color": Color("f2f8ff") if row == 0 else Color("8ebce8")})
-	if weight > 0:
-		_spawn_sparks(point + Vector2(0, -3))
-	if heavy:
-		_spawn_sparks(point + Vector2(0, 3))
-		_spawn_dust(global_position + attack_direction * 6.0, 5)
+# Hit-stop / impact weight of the current attack stage.
+func _impact_weight() -> StringName:
+	if special_kind == "heavy_slash":
+		return &"heavy"
+	return &"critical" if stage_is_critical else &"light"
 
 
 func _spawn_airflow(point: Vector2, rising: bool) -> void:
 	airflow_count += 3
-	for index in range(3):
-		var location := point + Vector2(-attack_direction.x * (5 + index * 3), -7 - index * 8)
-		var drift := Vector2(attack_direction.x * 8, -50) if rising else Vector2(-attack_direction.x * 30, 0)
-		var tail := Vector2(attack_direction.x * 2, 5) if rising else attack_direction * 8.0
-		_effects.append({"position": location.round(), "velocity": drift, "tail": tail, "life": 0.14, "color": Color("8ebce8")})
+	fx.airflow(point, attack_direction, rising)
 
 
 func _load_blade_paths() -> void:
@@ -934,80 +911,6 @@ func _update_blade_trail() -> void:
 		previous = _blade_tip_for_frame(_attack_active_start() - 1) if _blade_paths.has(String(sprite.animation)) else tip - attack_direction * 4.0
 	var direction := tip - previous
 	var edge := Vector2i(0, 1) if absf(direction.x) >= absf(direction.y) else Vector2i(1, 0)
-	_blade_trails.append({"pixels": _pixel_line(previous, tip), "edge": edge, "life": BLADE_TRAIL_SECONDS})
+	fx.trail(PLAYER_FX.pixel_line(previous, tip), edge, BLADE_TRAIL_SECONDS)
 	_previous_blade_tip = tip
 	_last_blade_frame = sprite.frame
-
-
-func _pixel_line(start: Vector2, end: Vector2) -> Array[Vector2i]:
-	# Integer Bresenham segments keep a thin blade path on the native pixel grid.
-	var pixels: Array[Vector2i] = []
-	var a := Vector2i(start.round())
-	var b := Vector2i(end.round())
-	var dx := absi(b.x - a.x)
-	var sx := 1 if a.x < b.x else -1
-	var dy := -absi(b.y - a.y)
-	var sy := 1 if a.y < b.y else -1
-	var error := dx + dy
-	while true:
-		pixels.append(a)
-		if a == b:
-			break
-		var twice := 2 * error
-		if twice >= dy:
-			error += dy
-			a.x += sx
-		if twice <= dx:
-			error += dx
-			a.y += sy
-	return pixels
-
-
-func _update_effects(delta: float) -> void:
-	for index in range(_afterimages.size() - 1, -1, -1):
-		_afterimages[index]["life"] = float(_afterimages[index]["life"]) - delta
-		if float(_afterimages[index]["life"]) <= 0.0:
-			_afterimages.remove_at(index)
-	for index in range(_effects.size() - 1, -1, -1):
-		var effect := _effects[index]
-		effect["life"] = float(effect["life"]) - delta
-		if float(effect["life"]) <= 0.0:
-			_effects.remove_at(index)
-		else:
-			effect["position"] = Vector2(effect["position"]) + Vector2(effect["velocity"]) * delta
-	for index in range(_blade_trails.size() - 1, -1, -1):
-		_blade_trails[index]["life"] = float(_blade_trails[index]["life"]) - delta
-		if float(_blade_trails[index]["life"]) <= 0.0:
-			_blade_trails.remove_at(index)
-
-
-func _blade_effect_pixels() -> Dictionary:
-	var pixels: Dictionary = {}
-	# Prefer the newest white core and limit the sweep to a crisp, readable footprint.
-	for index in range(_blade_trails.size() - 1, -1, -1):
-		var trail := _blade_trails[index]
-		var core := Color("f2f8ff") if float(trail["life"]) > 0.085 else Color("8ebce8")
-		var edge: Vector2i = trail.get("edge", Vector2i(0, 1))
-		for pixel in trail["pixels"]:
-			var point: Vector2i = pixel
-			if not pixels.has(point) and pixels.size() < MAX_BLADE_PIXELS:
-				pixels[point] = core
-			var outside := point + edge
-			if not pixels.has(outside) and pixels.size() < MAX_BLADE_PIXELS:
-				pixels[outside] = Color("8ebce8")
-	return pixels
-
-
-func _draw() -> void:
-	for ghost in _afterimages:
-		draw_texture(ghost["texture"], Vector2(ghost["position"]).round() - global_position, Color(0.55, 0.75, 0.95, 0.30))
-	for effect in _effects:
-		var point := Vector2(effect["position"]).round() - global_position
-		if effect.has("tail"):
-			for pixel in _pixel_line(Vector2(effect["position"]), Vector2(effect["position"]) - Vector2(effect["tail"])):
-				draw_rect(Rect2(Vector2(pixel) - global_position, Vector2.ONE), effect["color"])
-		else:
-			draw_rect(Rect2(point, Vector2.ONE), effect["color"])
-	var blade_pixels := _blade_effect_pixels()
-	for pixel in blade_pixels:
-		draw_rect(Rect2(Vector2(pixel) - global_position, Vector2.ONE), blade_pixels[pixel])

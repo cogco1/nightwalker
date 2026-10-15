@@ -53,7 +53,7 @@ func _ready() -> void:
 	player.z_index = 2
 	world.add_child(player)
 	player.facing = String(layout.get("facing", "up"))
-	player.call("_show_idle")
+	player.show_idle()
 	var camera := Camera2D.new()
 	camera.name = "HomeCamera"
 	camera.position = Vector2(160, 90)
@@ -240,7 +240,7 @@ func reset_home() -> void:
 	player.position = Vector2(spawn[0], spawn[1])
 	player.velocity = Vector2.ZERO
 	player.facing = String(layout.get("facing", "up"))
-	player.call("_show_idle")
+	player.show_idle()
 
 
 func _create_ui() -> void:

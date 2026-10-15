@@ -13,7 +13,8 @@ const SOUNDS := {
 }
 const VOLUME_DB := {"swing_light": -9.0, "swing_heavy": -5.0, "hit_light": -6.0, "hit_critical": -3.0,
 	"hit_heavy": 0.0, "charge": -12.0, "charge_ready": -8.0}
-const STAGE_PITCH := [1.0, 1.07, 0.93]
+const SWING_PITCH := {&"attack1": 1.0, &"attack2": 1.07, &"attack3": 0.93, &"air_attack2": 1.07, &"air_attack3": 0.93}
+const HIT_SOUND := {&"light": "hit_light", &"critical": "hit_critical", &"heavy": "hit_heavy"}
 
 ## Every sound started, oldest first, so tests and capture logs can check the timeline.
 var played: Array[String] = []
@@ -36,8 +37,9 @@ func bind_player(player: CharacterBody2D) -> void:
 	if _player == player or not is_instance_valid(player):
 		return
 	_player = player
-	player.attack_started.connect(_on_attack_started)
-	player.hit_resolved.connect(_on_hit_resolved)
+	# Only the player's announcements decide the sound; nothing reads its internal state.
+	player.move_started.connect(_on_move_started)
+	player.impact.connect(func(weight: StringName, _direction: Vector2) -> void: play(HIT_SOUND.get(weight, "hit_light"), randf_range(0.95, 1.05) if weight == &"light" else 1.0))
 	player.charge_started.connect(play.bind("charge", 1.0))
 	player.charge_ready.connect(play.bind("charge_ready", 1.0))
 	player.charge_ended.connect(func(_released: bool) -> void: _voices["charge"].stop())
@@ -54,17 +56,8 @@ func play(sound: String, pitch := 1.0) -> void:
 	voice.play()
 
 
-func _on_attack_started() -> void:
-	if _player.special_kind == "heavy_slash":
+func _on_move_started(move: StringName) -> void:
+	if move == &"heavy_slash":
 		play("swing_heavy")
 	else:
-		play("swing_light", STAGE_PITCH[clampi(_player.combo_stage - 1, 0, 2)])
-
-
-func _on_hit_resolved(_target: Node, _damage: int, critical: bool, kind: String) -> void:
-	if kind == "heavy_slash":
-		play("hit_heavy")
-	elif critical:
-		play("hit_critical")
-	else:
-		play("hit_light", randf_range(0.95, 1.05))
+		play("swing_light", SWING_PITCH.get(move, 1.0))

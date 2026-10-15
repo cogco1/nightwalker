@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tests/support/isolated_suite.gd"
 ## Final visual proof uses playable scenes, never the combat laboratory fixture.
 
 const HOME = preload("res://scenes/home_601.tscn")
@@ -93,7 +93,7 @@ func air_chain(direction: int) -> void:
 	hospital.player.position = Vector2(250 if direction > 0 else 350, 286)
 	hospital.player.velocity = Vector2.ZERO
 	hospital.player.facing = facing
-	hospital.player.call("_show_idle")
+	hospital.player.show_idle()
 	await tick(8)
 	assert(hospital.player.is_on_floor())
 	recording = "air_dash_" + facing
@@ -150,7 +150,7 @@ func record() -> void:
 	current_scene = home
 	await tick(16)
 	home.player.facing = "down"
-	home.player.call("_show_idle")
+	home.player.show_idle()
 	await tick(4)
 	await picture("home_player_top_down")
 	root.remove_child(home)
@@ -162,7 +162,7 @@ func record() -> void:
 	await tick(16)
 	hospital.player.position = Vector2(269, 174)
 	hospital.player.facing = "down"
-	hospital.player.call("_show_idle")
+	hospital.player.show_idle()
 	hospital.call("follow_player")
 	await tick(6)
 	await picture("hospital_player_top_down")
@@ -170,7 +170,7 @@ func record() -> void:
 	await tick(16)
 	hospital.player.position = Vector2(250, 286)
 	hospital.player.facing = "right"
-	hospital.player.call("_show_idle")
+	hospital.player.show_idle()
 	await tick(8)
 	await picture("hospital_player_side_view")
 	await air_chain(1)

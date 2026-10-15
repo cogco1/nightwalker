@@ -1,4 +1,4 @@
-extends SceneTree
+extends "res://tests/support/isolated_suite.gd"
 ## Real-GPU capture of light vs heavy attacks through the shipped GameSession path (hit-stop, heavy flash,
 ## after-shock, combat sounds): hospital side view with one fixture target dropped next to the hero.
 ## Run windowed:
@@ -73,7 +73,7 @@ func run() -> void:
 	feedback = hospital.get_node("GameSession/CombatFeedback")
 	var player: CharacterBody2D = hospital.player
 	player.facing = "right"
-	player.call("_show_idle")
+	player.show_idle()
 	player.critical_roll_override = 0.99
 	var target := TARGET.new()
 	target.side_view = true

@@ -17,7 +17,8 @@ $suites = @(
     @{ Name = 'hospital_physical_stairs'; Script = 'test_hospital_physical_stairs' },
     @{ Name = 'hospital_ward_layout';     Script = 'test_hospital_ward_layout' },
     @{ Name = 'hospital_security';        Script = 'test_hospital_security' },
-    @{ Name = 'contact_refresh_v07';      Script = 'test_contact_refresh_v07' },
+    # Fps: physics/process rate passed as --fixed-fps (default 60); contact_refresh is the high-refresh case.
+    @{ Name = 'contact_refresh_v07';      Script = 'test_contact_refresh_v07'; Fps = 144 },
     @{ Name = 'charged_slash';            Script = 'test_charged_slash' },
     @{ Name = 'night_street_proto';       Script = 'test_night_street_proto' }
 )
@@ -25,9 +26,10 @@ $suites = @(
 $failed = @()
 $total = 0
 foreach ($suite in $suites) {
-    $arguments = @('--headless', '--fixed-fps', '60', '--script', ('res://tests/' + $suite.Script + '.gd'))
+    $fps = if ($suite.Fps) { $suite.Fps } else { 60 }
+    $arguments = @('--headless', '--fixed-fps', [string]$fps, '--script', ('res://tests/' + $suite.Script + '.gd'))
     if ($suite.Extra) { $arguments += $suite.Extra }
-    $result = Invoke-NightwalkerGodot $godot $arguments $suite.Name
+    $result = Invoke-NightwalkerGodot $godot $arguments $suite.Name 300
     $checks = 0
     if ($result.Output -match '"checks":\s*(\d+)') { $checks = [int]$Matches[1] }
     elseif ($result.Output -match 'checks:\s*(\d+)/\d+') { $checks = [int]$Matches[1] }
