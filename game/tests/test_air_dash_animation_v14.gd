@@ -82,11 +82,9 @@ func target_at(point: Vector2, health := 30) -> CharacterBody2D:
 
 
 func dash_input(direction: int) -> void:
-	key(KEY_SHIFT, true)
 	key(KEY_D if direction > 0 else KEY_A, true)
-	await attack()
+	await tap(KEY_SHIFT)
 	key(KEY_D if direction > 0 else KEY_A, false)
-	key(KEY_SHIFT, false)
 
 
 func wait_stage(stage: int, limit := 70) -> bool:

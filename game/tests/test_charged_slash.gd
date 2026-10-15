@@ -117,11 +117,15 @@ func verify_charge_and_heavy(mode: int) -> void:
 	var target: Node = arena.targets[0]
 	var hp_before: int = target.hp
 	check(await hold_into_charge(player), label + ": holding after the swing coils into a charge")
-	var animation_prefix := "attack3_"
-	check(String(player.sprite.animation).begins_with(animation_prefix) and player.sprite.frame == player.CHARGE_POSE_FRAME, label + ": the charge holds the attack3 wind-up pose")
+	check(String(player.sprite.animation).begins_with("attack3_") and player.sprite.frame <= 1, label + ": the charge starts at the beginning of the attack3 wind-up")
+	var coil_start: Vector2 = player.global_position
 	var hp_after_light: int = target.hp
 	await frames(int(ceil(player.CHARGE_FULL_SECONDS * 60.0)) + 4)
 	check(player.is_charging and player.charge_time >= player.CHARGE_FULL_SECONDS, label + ": the charge fills while held")
+	check(player.sprite.frame == player.CHARGE_POSE_FRAME, label + ": a full charge holds the attack3 wind-up pose")
+	var backstep: float = (coil_start - player.global_position).dot(player.call("_facing_vector"))
+	observations[label + "_backstep"] = snappedf(backstep, 0.1)
+	check(backstep > 1.5 and backstep < 4.5, label + ": coiling settles back about three pixels")
 	check(ready[0] == 1, label + ": charge_ready fires once when full")
 	var rolls_before: int = player.critical_rolls
 	var criticals_before: int = arena.critical_events
@@ -137,6 +141,7 @@ func verify_charge_and_heavy(mode: int) -> void:
 	observations[label + "_heavy_damage"] = hp_after_light - target.hp
 	observations[label + "_light_damage"] = hp_before - hp_after_light
 	observations[label + "_heavy_lunge"] = snappedf(player.global_position.distance_to(before_release), 0.1)
+	check(player.global_position.distance_to(before_release) >= 24.0, label + ": the heavy slash lunges well past a light swing")
 	check(hp_after_light - target.hp == 3, label + ": the heavy slash deals three times the light damage")
 	check(arena.critical_events == criticals_before + 1, label + ": the heavy hit raises one critical event")
 	var stops: Array = arena.completed_stop_requests
@@ -160,6 +165,7 @@ func verify_early_release_cancels() -> void:
 func verify_charge_locks_and_jump_cancels() -> void:
 	var player := await setup(1, Vector2(60, 160), Vector2(300, 160))
 	check(await hold_into_charge(player), "Lock case reaches the charge")
+	await wait_until(func() -> bool: return player.charge_time >= player.CHARGE_FULL_SECONDS, 90)
 	var x_coiled: float = player.global_position.x
 	key(KEY_A, true)
 	await frames(12)
@@ -193,7 +199,7 @@ func verify_specials_and_air_never_coil() -> void:
 	await frames(2)
 	key(KEY_D, false)
 	key(KEY_SHIFT, false)
-	check(player.special_kind == "dash_stab", "Shift+D+press still dash-stabs")
+	check(player.special_kind == "dash_stab", "Shift with D held dash-stabs even with the mouse held")
 	await wait_until(func() -> bool: return not player.is_attacking, 90)
 	await frames(10)
 	check(not player.is_charging, "Holding through a dash stab does not coil")

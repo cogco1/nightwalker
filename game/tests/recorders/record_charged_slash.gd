@@ -31,6 +31,15 @@ func mouse(pressed: bool) -> void:
 	Input.flush_buffered_events()
 
 
+func key(code: Key, pressed: bool) -> void:
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.physical_keycode = code
+	event.pressed = pressed
+	Input.parse_input_event(event)
+	Input.flush_buffered_events()
+
+
 func tick(count := 1) -> void:
 	for _index in range(count):
 		await physics_frame
@@ -88,7 +97,7 @@ func run() -> void:
 		await tick()
 	report["hp_after_light"] = target.hp
 	await tick(24)
-	player.position = target.global_position - Vector2(46, 0)
+	player.position = target.global_position - Vector2(56, 0)
 	await tick(10)
 	# heavy: hold through the swing into the charge, wait until full, release
 	mouse(true)
@@ -96,7 +105,9 @@ func run() -> void:
 		if player.is_charging:
 			break
 		await tick()
-	await tick(12)
+	await tick(8)
+	await still("coiling")
+	await tick(4)
 	await still("charging")
 	for _index in range(60):
 		if player.charge_time >= player.CHARGE_FULL_SECONDS:
@@ -105,6 +116,11 @@ func run() -> void:
 	await tick(5)
 	await still("charge_full")
 	mouse(false)
+	for _index in range(20):
+		if player.sprite.frame >= 5:
+			break
+		await tick()
+	await still("heavy_lunge")
 	for _index in range(30):
 		if hospital.get_node("GameSession").hit_stop_active:
 			break
@@ -117,6 +133,28 @@ func run() -> void:
 		await tick()
 	await tick(36)
 	report["hp_after_heavy"] = target.hp
+	# dash: one Shift press with D held, no click; it pierces the target
+	player.position = target.global_position - Vector2(40, 0)
+	await tick(20)
+	var dash_from: float = player.global_position.x
+	key(KEY_D, true)
+	key(KEY_SHIFT, true)
+	await tick()
+	key(KEY_SHIFT, false)
+	for _index in range(30):
+		if player.dash_executed:
+			break
+		await tick()
+	key(KEY_D, false)
+	await still("shift_dash")
+	for _index in range(60):
+		if not player.is_attacking:
+			break
+		await tick()
+	await tick(30)
+	report["dash_distance"] = player.dash_end.x - player.dash_start.x
+	report["dash_started_from"] = dash_from
+	report["hp_after_dash"] = target.hp
 	report["frames"] = frame_number
 	report["fps"] = 30
 	report["stops"] = hospital.get_node("GameSession").completed_stop_frames

@@ -289,14 +289,12 @@ func validate_air_dash(hospital: Node2D, direction: int) -> void:
 	check(player._jumps_used == 1 and player.velocity.y < 0.0, "Hospital " + side + " first jump uses the received controller")
 	await tap(KEY_SPACE)
 	check(player._jumps_used == 2 and player.velocity.y < 0.0, "Hospital " + side + " allows the original fresh-input double jump")
-	key(KEY_SHIFT, true)
 	key(KEY_D if direction > 0 else KEY_A, true)
-	mouse(true)
+	key(KEY_SHIFT, true)
 	await frames(2)
-	mouse(false)
-	key(KEY_D if direction > 0 else KEY_A, false)
 	key(KEY_SHIFT, false)
-	check(player.special_kind == "dash_stab" and player.sprite.animation == new_animation, "Hospital " + side + " airborne Shift-direction-click plays its independent dash animation")
+	key(KEY_D if direction > 0 else KEY_A, false)
+	check(player.special_kind == "dash_stab" and player.sprite.animation == new_animation, "Hospital " + side + " airborne Shift press plays its independent dash animation")
 	for _index in range(80):
 		if player.special_kind.is_empty():
 			break

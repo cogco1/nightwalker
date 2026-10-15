@@ -88,6 +88,7 @@ func custom_profile() -> Dictionary:
 	result["move_left"] = KEY_LEFT
 	result["move_right"] = KEY_RIGHT
 	result["run"] = KEY_SHIFT
+	result["dash_modifier"] = KEY_L
 	result["jump"] = KEY_I
 	result["crouch"] = KEY_C
 	result["rising_modifier"] = KEY_U
@@ -238,7 +239,24 @@ func run_tests() -> void:
 	old_config.save(TEST_PATH)
 	CONTROLS.current.clear()
 	CONTROLS.install()
-	check(CONTROLS.current == custom_profile(), "old saved profiles retain every surviving binding and gain Shift dash")
+	var migrated := custom_profile()
+	migrated["dash_modifier"] = KEY_CTRL
+	check(CONTROLS.current == migrated, "old saved profiles retain every surviving binding and get a dash key off the run key")
+	check(not CONTROLS.load_notice.is_empty(), "the moved dash key is reported to the player")
+	var shared := ConfigFile.new()
+	shared.set_value("bindings", "version", 3)
+	for slot in CONTROLS.SLOTS:
+		shared.set_value("bindings", slot, custom_profile()[slot])
+	shared.set_value("bindings", "dash_modifier", KEY_SHIFT)
+	shared.save(TEST_PATH)
+	CONTROLS.current.clear()
+	CONTROLS.install()
+	check(CONTROLS.current == migrated, "a saved profile that shared run and dash keeps its bindings and moves only the dash")
+	var clash := custom_profile()
+	clash["dash_modifier"] = clash["run"]
+	check(not CONTROLS.validate(clash).is_empty(), "the dash key can no longer share the run key")
+	# The reload stage expects the custom profile on disk.
+	check(CONTROLS.save_bindings(custom_profile()).is_empty(), "the custom profile is saved again for the reload stage")
 	check(InputMap.action_get_events("attack").size() == 1 and not CONTROLS.current.has("attack_keyboard"), "old saved J attack is discarded during migration")
 	finish("keybindings_report.json")
 
@@ -295,22 +313,18 @@ func gameplay_checks() -> void:
 	key(KEY_U, false)
 	mouse(MOUSE_BUTTON_RIGHT, false)
 	await fixture(1)
-	key(KEY_SHIFT, true)
 	key(KEY_RIGHT, true)
-	await tick(2)
-	check(not arena.player.is_attacking, "rebound dash modifier plus direction does not attack without a click")
-	mouse(MOUSE_BUTTON_RIGHT, true)
-	await tick(2)
-	check(arena.player.special_kind == "dash_stab", "rebound modifier plus direction plus fresh mouse triggers piercing dash")
-	mouse(MOUSE_BUTTON_RIGHT, false)
+	await tap(KEY_SHIFT)
+	check(not arena.player.is_attacking, "Shift is the rebound run key and no longer dashes")
+	await tap(KEY_L)
+	check(arena.player.special_kind == "dash_stab" and arena.player.attack_direction.x > 0.0, "the rebound dash key with a held direction triggers the piercing dash")
+	key(KEY_RIGHT, false)
 	await fixture(1)
 	await tap(KEY_I)
-	key(KEY_SHIFT, true)
 	key(KEY_RIGHT, true)
-	mouse(MOUSE_BUTTON_RIGHT, true)
-	await tick(2)
-	check(arena.player.special_kind == "dash_stab" and not arena.player.is_on_floor(), "rebound direction, modifier and mouse also trigger airborne dash")
-	mouse(MOUSE_BUTTON_RIGHT, false)
+	await tap(KEY_L)
+	check(arena.player.special_kind == "dash_stab" and not arena.player.is_on_floor(), "the rebound dash key also triggers the airborne dash")
+	key(KEY_RIGHT, false)
 	await fixture(1)
 	arena.player.position.x = 80
 	await tap(KEY_R)
