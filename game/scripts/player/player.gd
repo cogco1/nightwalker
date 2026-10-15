@@ -628,13 +628,15 @@ func begin_attack(input: StringName = &"light") -> bool:
 	return true
 
 
-## First follow-up the combo graph allows from here: side_only moves need the side view, ground moves the floor.
+## First follow-up the combo graph allows from here: side_only moves need the side view, ground moves the floor,
+## air_only moves the air.
 func _next_move(current: StringName, input: StringName) -> StringName:
+	var airborne := view_mode == ViewMode.SIDE_VIEW and not is_on_floor()
 	for id in MOVESET.next_moves(current, input):
 		var row: Dictionary = MOVESET.MOVES[id]
 		if row.get("side_only", false) and view_mode != ViewMode.SIDE_VIEW:
 			continue
-		if row.get("ground", false) and view_mode == ViewMode.SIDE_VIEW and not is_on_floor():
+		if row.get("ground", false) and airborne or row.get("air_only", false) and not airborne:
 			continue
 		return id
 	return &""

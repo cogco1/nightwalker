@@ -40,7 +40,7 @@ extends RefCounted
 ##   dodge        the evade: a press within DODGE_OFFSET_SECONDS after it starts the dodge-offset follow-up
 ##   resumes      dodge offset: counts as the next light hit of the string the dash interrupted
 ##   as           counts as this move in the combo graph (its follow-ups and stage)
-##   side_only    side view only; ground: only started from the combo graph on the floor
+##   side_only    side view only; ground / air_only: only started from the combo graph on the floor / in the air
 ##   swing        &"light" | &"heavy" swing sound; pitch scales it
 
 const CRIT_CHANCE := 0.30
@@ -53,6 +53,8 @@ const BIG_BLADE := {"length": 44.0, "width": 28.0, "reach": 21.0, "height": ORIG
 const SPIN_BOX := {"rect": Rect2(-30, -42, 60, 44), "forward": 6.0}
 const DIVE_BOX := {"rect": Rect2(-13, -24, 26, 42), "forward": 0.0}
 const LIGHT_AIR := {"hold": 0.55, "fall": 6.0}
+# Each part of the aerial spin holds the hero up anew; the last one also hangs on after the spin.
+const SPIN_AIR := {"hold": 0.25, "fall": 6.0}
 
 const MOVES := {
 	&"attack1": {"stage": 1, "anim": "attack1", "air_anim": "air_attack1", "fps": 36.0, "active": Vector2i(6, 9),
@@ -114,6 +116,19 @@ const MOVES := {
 		"shockwave": {"half_width": 36.0, "launch": true, "crit": true, "crit_stop": &"critical"},
 		"side_only": true, "swing": &"heavy", "pitch": 0.9},
 
+	# Aerial spin: air_attack1 -> air_attack2 -> air_attack1 at 60 fps, a hit each, one blade circle across the three.
+	# The middle hits stop 2 frames (tick), the last one is a sure critical with the 6-frame stop.
+	&"air_spin_a": {"stage": 4, "anim": "air_attack1", "fps": 60.0, "active": Vector2i(6, 10), "end": 11,
+		"box": SPIN_BOX, "crit": &"none", "stop": &"tick", "juggle": true, "air": SPIN_AIR, "ghosts": [7],
+		"arc": {"from": 40.0, "to": -90.0}, "then": &"air_spin_b", "side_only": true, "air_only": true, "pitch": 1.25},
+	&"air_spin_b": {"stage": 4, "anim": "air_attack2", "fps": 60.0, "start_frame": 2, "active": Vector2i(4, 10), "end": 11,
+		"box": SPIN_BOX, "crit": &"none", "stop": &"tick", "juggle": true, "air": SPIN_AIR, "ghosts": [6],
+		"arc": {"from": -90.0, "to": -210.0}, "then": &"air_spin_c", "side_only": true, "pitch": 1.3},
+	&"air_spin_c": {"stage": 4, "anim": "air_attack1", "fps": 60.0, "start_frame": 2, "active": Vector2i(6, 11),
+		"box": SPIN_BOX, "crit": &"always", "crit_stop": &"critical", "juggle": true,
+		"air": {"hold": 0.25, "fall": 6.0, "end_hold": 0.30}, "ghosts": [8], "arc": {"from": -210.0, "to": -320.0},
+		"side_only": true, "swing": &"heavy", "pitch": 1.1},
+
 	# Perfect-dodge counter (player._start_counter): a sure critical with the heavy freeze, 3x damage.
 	&"counter_slash": {"stage": 3, "anim": "attack3", "air_anim": "air_attack3", "fps": 48.0, "start_frame": 3,
 		"active": Vector2i(5, 9), "box": BIG_BLADE, "crit": &"always", "crit_stop": &"heavy", "ghosts": [4, 6],
@@ -134,13 +149,13 @@ const MOVES := {
 ## Combo graph: current move (&"" = idle) -> input -> next move, or several candidates in order; the hero takes
 ## the first one its situation allows (side_only / ground).
 const STRINGS := {
-	&"": {&"light": &"attack1", &"heavy": &"rush_cleave"},
-	&"attack1": {&"light": &"attack2", &"heavy": &"rush_cleave"},
-	&"attack2": {&"light": &"attack3", &"heavy": &"launch_slash"},
-	&"attack3": {&"light": &"thrust4", &"heavy": &"spin_cleave_a"},
+	&"": {&"light": &"attack1", &"heavy": [&"rush_cleave", &"air_spin_a"]},
+	&"attack1": {&"light": &"attack2", &"heavy": [&"rush_cleave", &"air_spin_a"]},
+	&"attack2": {&"light": &"attack3", &"heavy": [&"launch_slash", &"air_spin_a"]},
+	&"attack3": {&"light": [&"thrust4", &"air_spin_a"], &"heavy": [&"spin_cleave_a", &"air_spin_a"]},
 	&"thrust4": {&"light": &"spin5a", &"heavy": &"rift_hop"},
 	&"rush_cleave": {&"heavy": &"launch_slash"},
-	&"dash_stab": {&"light": &"shadow_slash", &"heavy": &"chase_cleave"},
+	&"dash_stab": {&"light": &"shadow_slash", &"heavy": [&"chase_cleave", &"air_spin_a"]},
 }
 
 

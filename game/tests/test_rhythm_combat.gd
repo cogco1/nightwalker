@@ -3,7 +3,8 @@ extends "res://tests/support/isolated_suite.gd"
 ## its own and H H, cancel windows of the new moves, multi-hit spins with blade arcs, knockback, the rift slash
 ## landing wave, and the limits (top-down view, airborne, crouching, latest press wins). Dodge offset: light swings
 ## cut into the dash after their hit frame, and a press during or just after the dash gives the shadow slash (which
-## resumes the interrupted string) or the chase cleave.
+## resumes the interrupted string) or the chase cleave. Aerial spin: right click in the air, or a fourth click after
+## the air string; three hits (2, 2 and 6 frame stops), about 0.6 s up, then the dive can follow.
 
 const MAIN = preload("res://tests/fixtures/combat_lab.tscn")
 const MOVESET = preload("res://scripts/player/moves_long_blade.gd")
@@ -93,6 +94,7 @@ func run() -> void:
 	await verify_latest_press_wins()
 	await verify_dodge_offset()
 	await verify_dash_cancel()
+	await verify_air_spin()
 	await verify_limits()
 	finish()
 
@@ -352,6 +354,61 @@ func verify_dash_cancel() -> void:
 	observations["rush_then_shift"] = {"moves": moves_seen.map(func(id: StringName) -> String: return String(id)), "last_frame": last_frame.get(&"rush_cleave", -1)}
 
 
+func jump() -> void:
+	key(KEY_SPACE, true)
+	await frames(2)
+	key(KEY_SPACE, false)
+
+
+func verify_air_spin() -> void:
+	var player: CharacterBody2D = arena.player
+	# right click in the air, next to a hovering drone whose attack is switched off
+	await stage(Vector2(60, 160), Vector2(300, 160))
+	var bag: CharacterBody2D = arena.add_attacker(Vector2(300, 100))
+	bag.attacker.set_physics_process(false)
+	bag.max_hp = 30
+	bag.hp = 30
+	await jump()
+	await frames(10)
+	bag.position = player.position + Vector2(16, -14)
+	await tap(HEAVY)
+	check(player.move_id == &"air_spin_a", "a right click in the air starts the aerial spin")
+	var start_y := player.position.y
+	var lowest := start_y
+	var ticks := 0
+	while player.move_id in [&"air_spin_a", &"air_spin_b", &"air_spin_c"] and ticks < 90:
+		lowest = maxf(lowest, player.position.y)
+		ticks += 1
+		await frames(1)
+	check(moves_seen.slice(-3) == [&"air_spin_a", &"air_spin_b", &"air_spin_c"], "the aerial spin plays its three parts")
+	var spin := hits_by([&"air_spin_a", &"air_spin_b", &"air_spin_c"])
+	check(spin.size() == 3 and not spin[0]["critical"] and not spin[1]["critical"] and spin[2]["critical"], "the aerial spin hits three times, the last one critical")
+	check(arena.completed_stop_requests.slice(-3) == [2, 2, 6], "the middle spin hits stop 2 frames, the last one 6")
+	check(ticks >= 30 and ticks <= 46, "the spin keeps the hero up for about 0.6 s")
+	check(lowest - start_y <= 6.0, "the spin holds the hero in the air")
+	check(arc_pixels >= 8, "the aerial spin draws a blade circle")
+	check(not player.is_on_floor() and player._air_hold_left > 0.0, "the hero hangs on after the spin")
+	key(KEY_S, true)
+	await frames(1)
+	key(KEY_S, false)
+	check(player.special_kind == "dive_slash", "the dive slash follows the spin")
+	observations["air_spin"] = {"ticks": ticks, "drop_px": snappedf(lowest - start_y, 0.1), "stops": arena.completed_stop_requests.duplicate()}
+	await wait_until(func() -> bool: return player.is_on_floor() and player.state == player.State.FREE, 180)
+	# a fourth click after the air string: the aerial spin, never the ground thrust
+	await stage(Vector2(60, 160), Vector2(300, 160))
+	await jump()
+	await frames(6)
+	check(await play_string([LIGHT, LIGHT, LIGHT, LIGHT], [&"attack1", &"attack2", &"attack3", &"air_spin_a"]), "a fourth click after the air string starts the aerial spin")
+	check(&"thrust4" not in moves_seen, "the air string never continues into the ground thrust")
+	await wait_until(func() -> bool: return player.is_on_floor() and player.state == player.State.FREE, 180)
+	arena.attackers.erase(bag)
+	bag.queue_free()
+	# on the floor the right click is still the rush cleave
+	await stage(Vector2(60, 160), Vector2(300, 160))
+	await tap(HEAVY)
+	check(player.move_id == &"rush_cleave", "on the floor a right click is still the rush cleave")
+
+
 func verify_limits() -> void:
 	var player: CharacterBody2D = arena.player
 	# crouching: the right button does nothing
@@ -363,20 +420,6 @@ func verify_limits() -> void:
 	check(player.is_crouching and not player.is_attacking, "a right click while crouching does nothing")
 	key(KEY_S, false)
 	await frames(12)
-	# airborne: the light string still ends at three and the right button has no air move yet
-	await stage(Vector2(40, 160), Vector2(80, 160))
-	key(KEY_SPACE, true)
-	await frames(2)
-	key(KEY_SPACE, false)
-	await frames(6)
-	await tap(HEAVY)
-	await frames(2)
-	check(not player.is_attacking, "a right click in the air does nothing yet")
-	check(await play_string([LIGHT, LIGHT, LIGHT], [&"attack1", &"attack2", &"attack3"]), "the air string plays three hits")
-	await tap(LIGHT)
-	await wait_until(func() -> bool: return player.move_id != &"attack3", 90)
-	check(player.move_id != &"thrust4", "the airborne string does not continue into the ground thrust")
-	await wait_until(func() -> bool: return player.is_on_floor() and player.state == player.State.FREE, 180)
 	# top-down: no heavy, and the light string stops at three
 	arena.build_arena(0)
 	await frames(6)

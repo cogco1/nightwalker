@@ -9,6 +9,8 @@ const PLAYER = preload("res://scripts/player/player.gd")
 # Impact weight -> displayed frames held (and at least frames/60 s), shake in native px, flash of the frozen
 # frame, and the camera after-shock once it resumes. light 4 / critical 6 are the source game's guarantees.
 const STOPS := {
+	# The middle hits of the aerial spin: a short tick that keeps the spin flowing.
+	&"tick": {"frames": 2, "shake": 0},
 	&"light": {"frames": 4, "shake": 1},
 	&"critical": {"frames": 6, "shake": 1, "aftershock": [Vector2(1, 0), Vector2(-1, 0), Vector2.ZERO]},
 	&"heavy": {"frames": 10, "shake": 2, "flash": Color(1.7, 1.7, 1.9),
