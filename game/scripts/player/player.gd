@@ -30,9 +30,7 @@ const TOP_FRAMES = preload("res://assets/top_down.tres")
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const SIDE_FRAMES = preload("res://assets/side_view.tres")
 const PLAYER_FX = preload("res://scripts/player/player_fx.gd")
-const ACTIVE_START := 6
-const ACTIVE_END := 9
-const STAGE_FPS := [36.0, 40.0, 42.0]
+const MOVESET = preload("res://scripts/player/moves_long_blade.gd")
 const ATTACK_BUFFER_SECONDS := 0.22
 const ACCEL_SECONDS := 0.075
 const BRAKE_SECONDS := 0.065
@@ -41,21 +39,15 @@ const CROUCH_SIZE := Vector2(12, 14)
 const BLADE_TRAIL_SECONDS := 0.14
 const DASH_DISTANCE := 48.0
 const LANDING_SECONDS := 2.0 / 60.0
-const AIR_HOLD_SECONDS := 0.55
-const AIR_DASH_HOLD_SECONDS := 0.30
 const AIR_FALL_SPEED := 6.0
 const DIVE_SPEED := 360.0
-# Holding the attack button after a ground swing coils into a charge; releasing it full fires a heavy slash
-# on the attack3 frames that always resolves as a critical (3x damage, critical hit-stop).
+# Holding the attack button after a ground swing coils into a charge; releasing it full fires the heavy_slash
+# move (moves_long_blade.gd), which always resolves as a critical.
 const CHARGE_POSE_FRAME := 3
 const CHARGE_FULL_SECONDS := 0.55
 # The first part of the charge coils attack3 frames 0..CHARGE_POSE_FRAME and steps back a little.
 const CHARGE_COIL_PORTION := 0.6
 const CHARGE_BACKSTEP := 3.0
-const HEAVY_FPS := 46.0
-const HEAVY_LUNGE := 32.0
-const HEAVY_LUNGE_START := 4
-const HEAVY_RECOVERY_SECONDS := 0.18
 # One press of the dash key stabs towards the held direction (or facing); a press during an attack waits this long.
 const DASH_BUFFER_SECONDS := 0.15
 
@@ -75,7 +67,6 @@ var pending_new_attack := false
 var attack_buffer_left := 0.0
 var hit_targets: Dictionary = {}
 var attack_direction := Vector2.DOWN
-var _attack_crouched := false
 var _recovery_left := 0.0
 var _crouch_exiting := false
 var _crouch_frame := 0.0
@@ -92,6 +83,9 @@ var critical_rolls := 0
 var last_critical_roll := 1.0
 var stage_is_critical := false
 var special_kind := ""
+## Current move id and its data row from MOVESET.MOVES (empty when not attacking).
+var move_id: StringName = &""
+var move: Dictionary = {}
 var dash_start := Vector2.ZERO
 var dash_end := Vector2.ZERO
 var dash_executed := false
@@ -108,7 +102,7 @@ var _jumps_used := 0
 var _air_hold_left := 0.0
 var is_charging := false
 var charge_time := 0.0
-var _heavy_ghost_frame := -1
+var _ghost_frame := -1
 var _dash_buffer_left := 0.0
 
 
@@ -164,14 +158,14 @@ func _physics_process(delta: float) -> void:
 	var direction := _movement_input()
 	if view_mode == ViewMode.SIDE_VIEW:
 		if not was_grounded:
-			velocity.y = DIVE_SPEED if special_kind == "dive_slash" else (AIR_FALL_SPEED if _air_hold_left > 0.0 else velocity.y + gravity * delta)
+			velocity.y = DIVE_SPEED if move.get("dive", false) else (AIR_FALL_SPEED if _air_hold_left > 0.0 else velocity.y + gravity * delta)
 			_jump_age += delta
 		else:
 			velocity.y = 0.0
 			_jumps_used = 0
 		if not is_attacking and not is_charging and _recovery_left <= 0.0:
 			_update_crouch(delta)
-		if Input.is_action_just_pressed("jump") and not is_crouching and _jumps_used < 2 and special_kind != "dive_slash" and (not was_grounded or not is_attacking):
+		if Input.is_action_just_pressed("jump") and not is_crouching and _jumps_used < 2 and not move.get("dive", false) and (not was_grounded or not is_attacking):
 			_jumps_used = 1 if was_grounded else 2
 			_crouch_exiting = false
 			velocity.y = jump_velocity
@@ -202,7 +196,7 @@ func _physics_process(delta: float) -> void:
 		if view_mode == ViewMode.TOP_DOWN:
 			velocity = attack_direction * impulse
 		else:
-			velocity.x = direction.x * crouch_speed if not was_grounded and special_kind == "" else attack_direction.x * impulse
+			velocity.x = direction.x * crouch_speed if not was_grounded and move.get("steer", false) else attack_direction.x * impulse
 	elif _recovery_left > 0.0 or is_charging:
 		if view_mode == ViewMode.TOP_DOWN:
 			velocity = Vector2.ZERO
@@ -219,8 +213,8 @@ func _physics_process(delta: float) -> void:
 	sprite.position = global_position.round() - global_position
 	if is_charging and charge_time >= CHARGE_FULL_SECONDS:
 		sprite.position.x += 1.0 if int(charge_time * 30.0) % 2 == 0 else -1.0
-	if special_kind == "heavy_slash" and sprite.frame in [5, 7] and sprite.frame != _heavy_ghost_frame:
-		_heavy_ghost_frame = sprite.frame
+	if is_attacking and sprite.frame in move.get("ghosts", []) and sprite.frame != _ghost_frame:
+		_ghost_frame = sprite.frame
 		fx.ghost(sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame), global_position + sprite.offset, 0.12)
 	_update_sprite_layout()
 	if view_mode == ViewMode.SIDE_VIEW and not was_grounded and is_on_floor():
@@ -229,16 +223,16 @@ func _physics_process(delta: float) -> void:
 		_jumps_used = 0
 		_air_hold_left = 0.0
 		fx.dust(global_position, 5)
-	if is_attacking and sprite.frame >= _attack_active_start() and (special_kind == "dive_slash" or sprite.frame <= ACTIVE_END):
-		if special_kind == "dash_stab":
+	if is_attacking and sprite.frame >= _attack_active_start() and (_active_last() < 0 or sprite.frame <= _active_last()):
+		if move.get("pierce", false):
 			if not dash_executed:
 				_perform_dash()
 		else:
 			_apply_attack_hits()
 		_update_blade_trail()
-		if special_kind == "rising_slash" and airflow_count == 0:
+		if move.get("launcher", false) and airflow_count == 0:
 			_spawn_airflow(global_position, true)
-	if special_kind == "dive_slash" and is_on_floor():
+	if move.get("dive", false) and is_on_floor():
 		_on_animation_finished()
 		_recovery_left = LANDING_SECONDS
 		_set_manual_frame("dive_slash_" + facing, 14)
@@ -468,7 +462,7 @@ func request_attack() -> bool:
 			attack_buffer_left = maxf(ATTACK_BUFFER_SECONDS, _recovery_left + 0.05)
 			return true
 		return begin_attack()
-	if _attack_crouched or special_kind != "" or combo_stage >= 3:
+	if MOVESET.next_move(move_id, &"light") == &"":
 		return false
 	queued_attack = true
 	var fps: float = sprite.sprite_frames.get_animation_speed(sprite.animation) * sprite.speed_scale
@@ -482,93 +476,100 @@ func request_attack() -> bool:
 func begin_attack() -> bool:
 	if is_attacking or _recovery_left > 0.0:
 		return false
-	_attack_crouched = is_crouching
 	special_kind = ""
 	attack_direction = _facing_vector()
 	queued_attack = false
 	pending_new_attack = false
 	attack_buffer_left = 0.0
-	_start_attack_stage(1)
+	_start_move(&"crouch_stab" if is_crouching else MOVESET.next_move(&"", &"light"))
 	return true
 
 
-func _start_attack_stage(stage: int) -> void:
-	combo_stage = stage
+# Starts a move from MOVESET.MOVES: state, hang time, critical roll, animation, rate and start frame.
+func _start_move(id: StringName) -> void:
+	move_id = id
+	move = MOVESET.MOVES[id]
+	special_kind = move.get("special", "")
+	combo_stage = int(move.get("stage", 1))
 	is_attacking = true
 	is_running = false
-	var aerial := view_mode == ViewMode.SIDE_VIEW and not is_on_floor() and special_kind == ""
-	if aerial:
-		_air_hold_left = AIR_HOLD_SECONDS
-		velocity.y = AIR_FALL_SPEED
+	var airborne := view_mode == ViewMode.SIDE_VIEW and not is_on_floor()
+	var air: Dictionary = move.get("air", {})
+	if airborne and air.has("hold"):
+		_air_hold_left = air["hold"]
+		velocity.y = air["fall"]
 	hit_targets.clear()
 	stage_is_critical = false
 	_critical_stop_emitted = false
 	_normal_stop_emitted = false
-	if stage == 3 and not _attack_crouched and special_kind == "":
-		critical_rolls += 1
-		last_critical_roll = critical_roll_override if critical_roll_override >= 0.0 else _rng.randf()
-		stage_is_critical = last_critical_roll < 0.30
+	match move.get("crit", &"none"):
+		&"roll":
+			critical_rolls += 1
+			last_critical_roll = critical_roll_override if critical_roll_override >= 0.0 else _rng.randf()
+			stage_is_critical = last_critical_roll < MOVESET.CRIT_CHANCE
+		&"always":
+			stage_is_critical = true
 	_last_blade_frame = -1
 	_previous_blade_tip = Vector2.ZERO
-	var animation := "crouch_stab_" + facing if _attack_crouched else "attack%d_%s" % [stage, facing]
-	if aerial:
-		animation = "air_attack%d_%s" % [stage, facing]
+	_ghost_frame = -1
+	var prefix: String = move["air_anim"] if airborne and move.has("air_anim") else move["anim"]
+	var animation := prefix + "_" + facing
 	# Compatibility keeps the project loadable while new drawn clips are imported.
 	if not sprite.sprite_frames.has_animation(animation):
-		animation = ("crouch_stab_" if _attack_crouched else "stab_") + facing
+		animation = "stab_" + facing
 	sprite.stop()
-	sprite.speed_scale = (40.0 if _attack_crouched else STAGE_FPS[stage - 1]) / sprite.sprite_frames.get_animation_speed(animation)
+	sprite.speed_scale = float(move["fps"]) / sprite.sprite_frames.get_animation_speed(animation)
 	sprite.play(animation)
-	combo_changed.emit(stage)
+	if move.has("start_frame"):
+		sprite.set_frame_and_progress(int(move["start_frame"]), 0.0)
+	combo_changed.emit(combo_stage)
 	attack_started.emit()
-	move_started.emit(StringName(special_kind) if special_kind != "" else StringName(animation.trim_suffix("_" + facing)))
+	move_started.emit(move_id)
 
 
 func _attack_lunge_speed() -> float:
-	var heavy := special_kind == "heavy_slash"
-	var first := HEAVY_LUNGE_START if heavy else ACTIVE_START
-	if _attack_crouched or (special_kind != "" and not heavy) or sprite.frame < first or sprite.frame > ACTIVE_END:
+	var lunge: Dictionary = move.get("lunge", {})
+	if lunge.is_empty():
 		return 0.0
-	var window := float(ACTIVE_END - first + 1)
+	var first := int(lunge["from"])
+	var last := _active_last()
+	if sprite.frame < first or sprite.frame > last:
+		return 0.0
+	var window := float(last - first + 1)
 	var phase := (float(sprite.frame - first) + sprite.frame_progress) / window
-	var duration: float = window / (HEAVY_FPS if heavy else STAGE_FPS[combo_stage - 1])
-	var distance := HEAVY_LUNGE if heavy else (6.8 if combo_stage == 3 else 5.5)
-	# The wider drawn swing advances a few native pixels, easing in and out safely.
-	return sin(phase * PI) * distance * PI / (2.0 * duration)
+	var duration := window / float(move["fps"])
+	# The drawn swing advances a few native pixels, easing in and out safely.
+	return sin(phase * PI) * float(lunge["px"]) * PI / (2.0 * duration)
 
 
 func attack_origin() -> Vector2:
-	var height := 4.0 if view_mode == ViewMode.TOP_DOWN else (9.0 if _attack_crouched else 17.0)
+	var height := 4.0 if view_mode == ViewMode.TOP_DOWN else float(move.get("box", MOVESET.BLADE).get("height", MOVESET.ORIGIN_HEIGHT))
 	return global_position + Vector2(0, -height)
 
 
 func _attack_active_start() -> int:
-	if special_kind == "dive_slash":
-		return 0
-	if special_kind == "rising_slash":
-		return 3
-	if view_mode == ViewMode.SIDE_VIEW and special_kind == "" and not _attack_crouched and combo_stage == 1:
-		# The long blade is still behind the shoulder in frame 6; frame 7 crosses forward.
-		return 7
-	return ACTIVE_START
+	if view_mode == ViewMode.SIDE_VIEW and move.has("side_first"):
+		return int(move["side_first"])
+	return move.get("active", Vector2i(6, 9)).x
+
+
+## Last frame that hits; negative keeps hitting until the move ends.
+func _active_last() -> int:
+	return move.get("active", Vector2i(6, 9)).y
 
 
 func attack_box() -> Rect2:
-	if special_kind == "dive_slash":
-		return Rect2(global_position + Vector2(-13, -24), Vector2(26, 42))
-	if special_kind == "rising_slash":
-		return Rect2(global_position + attack_direction * 19.0 + Vector2(-18, -36), Vector2(36, 48))
-	var length := 27.0 if _attack_crouched else 34.0
-	var width := 16.0 if _attack_crouched else 20.0
-	if special_kind == "heavy_slash":
-		length += 10.0
-		width += 8.0
-	var extra_reach := 12.0 if view_mode == ViewMode.SIDE_VIEW else 0.0
-	length += extra_reach
+	var box: Dictionary = move.get("box", MOVESET.BLADE)
+	if box.has("rect"):
+		var rectangle: Rect2 = box["rect"]
+		return Rect2(global_position + attack_direction * float(box.get("forward", 0.0)) + rectangle.position, rectangle.size)
+	var extra_reach := MOVESET.SIDE_EXTRA_REACH if view_mode == ViewMode.SIDE_VIEW else 0.0
+	var length := float(box["length"]) + extra_reach
+	var width := float(box["width"])
 	var size := Vector2(length, width)
 	if view_mode == ViewMode.TOP_DOWN and attack_direction.x == 0.0:
 		size = Vector2(width, length)
-	var center := attack_origin() + attack_direction * ((17.0 if _attack_crouched else 21.0) + extra_reach / 2.0)
+	var center := attack_origin() + attack_direction * (float(box["reach"]) + extra_reach / 2.0)
 	return Rect2(center - size / 2.0, size)
 
 
@@ -599,13 +600,13 @@ func _apply_attack_hits() -> void:
 
 
 func _resolve_hit(target: Node, point: Vector2) -> bool:
-	var damage := attack_damage * (3 if stage_is_critical else 1)
+	var damage := attack_damage * (MOVESET.CRIT_MULT if stage_is_critical else 1)
 	if not target.call("take_damage", damage):
 		return false
 	hit_targets[target.get_instance_id()] = true
 	if target.has_method("receive_hit_reaction"):
-		target.call("receive_hit_reaction", attack_direction, special_kind == "rising_slash", view_mode == ViewMode.SIDE_VIEW and not is_on_floor() and special_kind in ["", "dash_stab"])
-	elif special_kind == "rising_slash" and target.has_method("knock_up"):
+		target.call("receive_hit_reaction", attack_direction, move.get("launch", false), view_mode == ViewMode.SIDE_VIEW and not is_on_floor() and move.get("juggle", false))
+	elif move.get("launch", false) and target.has_method("knock_up"):
 		target.call("knock_up", attack_direction)
 	fx.sparks(point)
 	fx.impact(point, _impact_weight(), attack_direction, global_position)
@@ -638,7 +639,7 @@ func request_rising_slash() -> bool:
 
 
 func request_dive_slash() -> bool:
-	if view_mode != ViewMode.SIDE_VIEW or is_on_floor() or special_kind == "dive_slash":
+	if view_mode != ViewMode.SIDE_VIEW or is_on_floor() or move.get("dive", false):
 		return false
 	_air_hold_left = 0.0
 	velocity.y = DIVE_SPEED
@@ -659,29 +660,17 @@ func request_dash_stab(direction: int) -> bool:
 	dash_executed = false
 	dash_start = global_position
 	dash_end = global_position
-	if not is_on_floor():
-		_air_hold_left = AIR_HOLD_SECONDS
-		velocity.y = AIR_FALL_SPEED
 	_start_special("dash_stab")
 	return true
 
 
 func _start_special(kind: String) -> void:
-	special_kind = kind
-	_attack_crouched = false
 	attack_direction = Vector2.DOWN if kind == "dive_slash" else _facing_vector()
 	queued_attack = false
 	pending_new_attack = false
 	attack_buffer_left = 0.0
 	airflow_count = 0
-	_start_attack_stage(1)
-	var animation := kind + "_" + facing
-	if kind == "dash_stab" and not is_on_floor():
-		animation = "air_dash_stab_" + facing
-	if sprite.sprite_frames.has_animation(animation):
-		sprite.stop()
-		sprite.speed_scale = 40.0 / sprite.sprite_frames.get_animation_speed(animation)
-		sprite.play(animation)
+	_start_move(StringName(kind))
 	special_started.emit(kind, attack_direction)
 
 
@@ -735,30 +724,32 @@ func _try_end_dash_phasing() -> void:
 func _on_animation_finished() -> void:
 	if not is_attacking:
 		return
-	if special_kind == "dive_slash" and not is_on_floor():
-		_set_manual_frame("dive_slash_" + facing, 11)
+	if move.get("dive", false) and not is_on_floor():
+		_set_manual_frame(String(move["anim"]) + "_" + facing, 11)
 		return
-	if queued_attack and attack_buffer_left > 0.0 and combo_stage < 3 and not _attack_crouched and special_kind == "":
+	var next := MOVESET.next_move(move_id, &"light")
+	if queued_attack and attack_buffer_left > 0.0 and next != &"":
 		queued_attack = false
 		attack_buffer_left = 0.0
-		_start_attack_stage(combo_stage + 1)
+		_start_move(next)
 		return
-	if special_kind == "dash_stab" and not is_on_floor():
-		_air_hold_left = AIR_DASH_HOLD_SECONDS
-		velocity.y = AIR_FALL_SPEED
-	var finished_fps: float = 40.0 if _attack_crouched or special_kind != "" else STAGE_FPS[combo_stage - 1]
-	var heavy_finished := special_kind == "heavy_slash"
-	var coil := _mouse_attack_held and special_kind == "" and not _attack_crouched and (view_mode == ViewMode.TOP_DOWN or is_on_floor())
+	var air: Dictionary = move.get("air", {})
+	if air.has("end_hold") and not is_on_floor():
+		_air_hold_left = air["end_hold"]
+		velocity.y = air["fall"]
+	var airborne := view_mode == ViewMode.SIDE_VIEW and not is_on_floor()
+	var recovery := float(move["recovery"]) if move.has("recovery") else (1.0 if airborne else 2.0) / float(move["fps"])
+	var coil: bool = _mouse_attack_held and move.get("chain", false) and (view_mode == ViewMode.TOP_DOWN or is_on_floor())
 	is_attacking = false
 	stage_is_critical = false
 	combo_stage = 0
 	queued_attack = false
 	pending_new_attack = false
 	attack_buffer_left = 0.0
-	_recovery_left = (1.0 if view_mode == ViewMode.SIDE_VIEW and not is_on_floor() else 2.0) / finished_fps
-	if heavy_finished:
-		_recovery_left = HEAVY_RECOVERY_SECONDS
+	_recovery_left = recovery
 	special_kind = ""
+	move_id = &""
+	move = {}
 	sprite.pause()
 	combo_changed.emit(0)
 	if coil:
@@ -818,7 +809,7 @@ func _update_charge(delta: float, grounded: bool) -> void:
 func _cancel_charge() -> void:
 	is_charging = false
 	charge_time = 0.0
-	_recovery_left = 2.0 / STAGE_FPS[2]
+	_recovery_left = 2.0 / float(MOVESET.MOVES[&"attack3"]["fps"])
 	charge_ended.emit(false)
 
 
@@ -826,15 +817,9 @@ func _release_heavy_slash() -> void:
 	is_charging = false
 	charge_time = 0.0
 	charge_ended.emit(true)
-	special_kind = "heavy_slash"
-	_heavy_ghost_frame = -1
-	_attack_crouched = false
 	attack_direction = _facing_vector()
 	airflow_count = 0
-	_start_attack_stage(3)
-	stage_is_critical = true
-	sprite.speed_scale = HEAVY_FPS / sprite.sprite_frames.get_animation_speed(sprite.animation)
-	sprite.set_frame_and_progress(CHARGE_POSE_FRAME + 1, 0.0)
+	_start_move(&"heavy_slash")
 	_spawn_airflow(global_position, false)
 	special_started.emit("heavy_slash", attack_direction)
 
@@ -847,11 +832,9 @@ func show_idle() -> void:
 		_set_manual_frame("stab_" + facing, 0)
 
 
-# Hit-stop / impact weight of the current attack stage.
+# Hit-stop / impact weight of the current attack stage, from the move data.
 func _impact_weight() -> StringName:
-	if special_kind == "heavy_slash":
-		return &"heavy"
-	return &"critical" if stage_is_critical else &"light"
+	return move.get("crit_stop", &"critical") if stage_is_critical else move.get("stop", &"light")
 
 
 func _spawn_airflow(point: Vector2, rising: bool) -> void:
@@ -886,7 +869,7 @@ func _blade_tip_for_frame(frame: int) -> Vector2:
 	var step := clampi(frame - _attack_active_start(), 0, 3)
 	var forward := 12.0
 	var lateral := 0.0
-	if _attack_crouched:
+	if move.get("crouched", false):
 		forward = [12.0, 17.0, 23.0, 28.0][step]
 		lateral = [1.0, 0.0, -1.0, 0.0][step]
 	elif combo_stage == 3:
