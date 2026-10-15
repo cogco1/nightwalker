@@ -274,7 +274,7 @@ func _create_ui() -> void:
 	var font: FontFile = PIXEL_UI.font()
 	var title := _label(canvas, font, Vector2(5, 3), "C区 · 夜街（原型）")
 	title.modulate = Color("c9b8e8")
-	var hint := _label(canvas, font, Vector2(5, 162), "AD走 空格跳 左键斩 Shift+AD突刺 F9原色 R重置")
+	var hint := _label(canvas, font, Vector2(5, 162), "AD走 左键斩 长按重斩 Shift+AD突刺 F9原色 R重置")
 	hint.modulate = Color("9d8fc0")
 	_status = _label(canvas, font, Vector2(206, 16), "")
 	_status.size = Vector2(110, 16)

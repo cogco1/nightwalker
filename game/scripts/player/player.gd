@@ -8,6 +8,9 @@ signal critical_hit(target: Node, damage: int, direction: Vector2)
 signal normal_contact_stop(direction: Vector2)
 signal special_started(kind: String, direction: Vector2)
 signal landing_impact(point: Vector2)
+signal charge_started
+signal charge_ready
+signal charge_ended(released: bool)
 
 enum ViewMode { TOP_DOWN, SIDE_VIEW }
 
@@ -38,6 +41,13 @@ const AIR_HOLD_SECONDS := 0.55
 const AIR_DASH_HOLD_SECONDS := 0.30
 const AIR_FALL_SPEED := 6.0
 const DIVE_SPEED := 360.0
+# Holding the attack button after a ground swing coils into a charge; releasing it full fires a heavy slash
+# on the attack3 frames that always resolves as a critical (3x damage, critical hit-stop).
+const CHARGE_POSE_FRAME := 3
+const CHARGE_FULL_SECONDS := 0.55
+const HEAVY_FPS := 46.0
+const HEAVY_LUNGE := 14.0
+const HEAVY_RECOVERY_SECONDS := 0.18
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var body_shape: CollisionShape2D = $BodyShape
@@ -87,6 +97,8 @@ var critical_impact_count := 0
 var input_suspended := false
 var _jumps_used := 0
 var _air_hold_left := 0.0
+var is_charging := false
+var charge_time := 0.0
 
 
 func _ready() -> void:
@@ -141,7 +153,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.y = 0.0
 			_jumps_used = 0
-		if not is_attacking and _recovery_left <= 0.0:
+		if not is_attacking and not is_charging and _recovery_left <= 0.0:
 			_update_crouch(delta)
 		if Input.is_action_just_pressed("jump") and not is_crouching and _jumps_used < 2 and special_kind != "dive_slash" and (not was_grounded or not is_attacking):
 			_jumps_used = 1 if was_grounded else 2
@@ -151,7 +163,7 @@ func _physics_process(delta: float) -> void:
 			_landing_left = 0.0
 			_air_hold_left = 0.0
 			_spawn_dust(global_position, 3)
-	if not is_attacking and _recovery_left <= 0.0 and not direction.is_zero_approx():
+	if not is_attacking and not is_charging and _recovery_left <= 0.0 and not direction.is_zero_approx():
 		_update_facing(direction)
 	# Taps are processed while attacking too. Holding a button never auto-chains.
 	if _mouse_attack_pending:
@@ -166,18 +178,20 @@ func _physics_process(delta: float) -> void:
 		_mouse_attack_pending = false
 	if pending_new_attack and not is_attacking and _recovery_left <= 0.0:
 		begin_attack()
-	is_running = Input.is_action_pressed("run") and not direction.is_zero_approx() and not is_crouching and not _crouch_exiting and not is_attacking and _recovery_left <= 0.0
+	is_running = Input.is_action_pressed("run") and not direction.is_zero_approx() and not is_crouching and not _crouch_exiting and not is_attacking and not is_charging and _recovery_left <= 0.0
 	if is_attacking:
 		var impulse := _attack_lunge_speed() if was_grounded or view_mode == ViewMode.TOP_DOWN else 0.0
 		if view_mode == ViewMode.TOP_DOWN:
 			velocity = attack_direction * impulse
 		else:
 			velocity.x = direction.x * crouch_speed if not was_grounded and special_kind == "" else attack_direction.x * impulse
-	elif _recovery_left > 0.0:
+	elif _recovery_left > 0.0 or is_charging:
 		if view_mode == ViewMode.TOP_DOWN:
 			velocity = Vector2.ZERO
 		else:
 			velocity.x = 0.0
+		if is_charging:
+			_update_charge(delta, was_grounded)
 	else:
 		var speed := crouch_speed if is_crouching or _crouch_exiting else (run_speed if is_running else move_speed)
 		_update_move_velocity(direction, speed, delta)
@@ -226,6 +240,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func clear_input_buffer() -> void:
+	if is_charging:
+		_cancel_charge()
 	_mouse_attack_pending = false
 	_mouse_attack_held = false
 	queued_attack = false
@@ -477,11 +493,12 @@ func _start_attack_stage(stage: int) -> void:
 
 
 func _attack_lunge_speed() -> float:
-	if _attack_crouched or special_kind != "" or sprite.frame < ACTIVE_START or sprite.frame > ACTIVE_END:
+	var heavy := special_kind == "heavy_slash"
+	if _attack_crouched or (special_kind != "" and not heavy) or sprite.frame < ACTIVE_START or sprite.frame > ACTIVE_END:
 		return 0.0
 	var phase := (float(sprite.frame - ACTIVE_START) + sprite.frame_progress) / float(ACTIVE_END - ACTIVE_START + 1)
-	var duration: float = float(ACTIVE_END - ACTIVE_START + 1) / STAGE_FPS[combo_stage - 1]
-	var distance := 6.8 if combo_stage == 3 else 5.5
+	var duration: float = float(ACTIVE_END - ACTIVE_START + 1) / (HEAVY_FPS if heavy else STAGE_FPS[combo_stage - 1])
+	var distance := HEAVY_LUNGE if heavy else (6.8 if combo_stage == 3 else 5.5)
 	# The wider drawn swing advances a few native pixels, easing in and out safely.
 	return sin(phase * PI) * distance * PI / (2.0 * duration)
 
@@ -509,6 +526,9 @@ func attack_box() -> Rect2:
 		return Rect2(global_position + attack_direction * 19.0 + Vector2(-18, -36), Vector2(36, 48))
 	var length := 27.0 if _attack_crouched else 34.0
 	var width := 16.0 if _attack_crouched else 20.0
+	if special_kind == "heavy_slash":
+		length += 10.0
+		width += 8.0
 	var extra_reach := 12.0 if view_mode == ViewMode.SIDE_VIEW else 0.0
 	length += extra_reach
 	var size := Vector2(length, width)
@@ -554,6 +574,7 @@ func _resolve_hit(target: Node, point: Vector2) -> bool:
 	elif special_kind == "rising_slash" and target.has_method("knock_up"):
 		target.call("knock_up", attack_direction)
 	_spawn_sparks(point)
+	_spawn_impact(point)
 	attack_hit.emit(target)
 	hit_resolved.emit(target, damage, stage_is_critical, special_kind)
 	if stage_is_critical and not _critical_stop_emitted:
@@ -690,6 +711,8 @@ func _on_animation_finished() -> void:
 		_air_hold_left = AIR_DASH_HOLD_SECONDS
 		velocity.y = AIR_FALL_SPEED
 	var finished_fps: float = 40.0 if _attack_crouched or special_kind != "" else STAGE_FPS[combo_stage - 1]
+	var heavy_finished := special_kind == "heavy_slash"
+	var coil := _mouse_attack_held and special_kind == "" and not _attack_crouched and (view_mode == ViewMode.TOP_DOWN or is_on_floor())
 	is_attacking = false
 	stage_is_critical = false
 	combo_stage = 0
@@ -697,9 +720,72 @@ func _on_animation_finished() -> void:
 	pending_new_attack = false
 	attack_buffer_left = 0.0
 	_recovery_left = (1.0 if view_mode == ViewMode.SIDE_VIEW and not is_on_floor() else 2.0) / finished_fps
+	if heavy_finished:
+		_recovery_left = HEAVY_RECOVERY_SECONDS
 	special_kind = ""
 	sprite.pause()
 	combo_changed.emit(0)
+	if coil:
+		_recovery_left = 0.0
+		_begin_charge()
+
+
+func _begin_charge() -> void:
+	is_charging = true
+	charge_time = 0.0
+	is_running = false
+	_set_manual_frame("attack3_" + facing, CHARGE_POSE_FRAME)
+	charge_started.emit()
+
+
+func _update_charge(delta: float, grounded: bool) -> void:
+	if view_mode == ViewMode.SIDE_VIEW and not grounded:
+		_cancel_charge()
+		return
+	if _mouse_attack_held:
+		var was_full := charge_time >= CHARGE_FULL_SECONDS
+		charge_time += delta
+		var tip := _blade_tip_for_frame(CHARGE_POSE_FRAME)
+		if not was_full and charge_time >= CHARGE_FULL_SECONDS:
+			_spawn_sparks(tip)
+			charge_ready.emit()
+		elif was_full and int(charge_time * 10.0) != int((charge_time - delta) * 10.0):
+			# Full: a blinking white star on the tip says "release now".
+			for offset in [Vector2.ZERO, Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
+				_effects.append({"position": tip + offset, "velocity": Vector2.ZERO, "life": 0.05, "color": Color("f2f8ff")})
+		elif not was_full and int(charge_time * 20.0) != int((charge_time - delta) * 20.0):
+			# Coiling: light gathers onto the blade from a ring that tightens as the charge fills.
+			var radius := lerpf(14.0, 4.0, charge_time / CHARGE_FULL_SECONDS)
+			var start := tip + Vector2.from_angle(charge_time * 11.0) * radius
+			_effects.append({"position": start.round(), "velocity": (tip - start) / 0.1, "life": 0.1, "color": Color("8ebce8")})
+		return
+	if charge_time >= CHARGE_FULL_SECONDS:
+		_release_heavy_slash()
+	else:
+		_cancel_charge()
+
+
+func _cancel_charge() -> void:
+	is_charging = false
+	charge_time = 0.0
+	_recovery_left = 2.0 / STAGE_FPS[2]
+	charge_ended.emit(false)
+
+
+func _release_heavy_slash() -> void:
+	is_charging = false
+	charge_time = 0.0
+	charge_ended.emit(true)
+	special_kind = "heavy_slash"
+	_attack_crouched = false
+	attack_direction = _facing_vector()
+	airflow_count = 0
+	_start_attack_stage(3)
+	stage_is_critical = true
+	sprite.speed_scale = HEAVY_FPS / sprite.sprite_frames.get_animation_speed(sprite.animation)
+	sprite.set_frame_and_progress(CHARGE_POSE_FRAME + 1, 0.0)
+	_spawn_airflow(global_position, false)
+	special_started.emit("heavy_slash", attack_direction)
 
 
 func _show_idle() -> void:
@@ -718,6 +804,31 @@ func _spawn_dust(point: Vector2, count: int) -> void:
 func _spawn_sparks(point: Vector2) -> void:
 	for index in range(5):
 		_effects.append({"position": point.round(), "velocity": Vector2(-32 + index * 16, -35 + abs(index - 2) * 16), "life": 0.14, "color": Color("f2f8ff") if index % 2 == 0 else Color("8ebce8")})
+
+
+# Impact read in three weights (light, critical, heavy): a slash mark across the target along the swing,
+# rays bursting from the contact and extra sparks. The hit-stop freezes on this frame.
+func _spawn_impact(point: Vector2) -> void:
+	var heavy := special_kind == "heavy_slash"
+	var weight := 2 if heavy else (1 if stage_is_critical else 0)
+	var rays: int = [6, 8, 12][weight]
+	var reach: float = [6.0, 9.0, 15.0][weight]
+	var life: float = [0.09, 0.11, 0.15][weight]
+	for index in range(rays):
+		var ray := Vector2.from_angle(TAU * index / rays + 0.35)
+		_effects.append({"position": (point + ray * 3.0).round(), "velocity": ray * reach / life, "tail": ray * reach * 0.45,
+			"life": life, "color": Color("f2f8ff") if index % 2 == 0 else Color("8ebce8")})
+	var across := Vector2(attack_direction.x, -0.65).normalized() if attack_direction.x != 0.0 else Vector2(0.65, attack_direction.y).normalized()
+	var half: float = [6.0, 9.0, 15.0][weight]
+	for row in range(1 + weight):
+		var offset := Vector2(0, row) if attack_direction.x != 0.0 else Vector2(row, 0)
+		_effects.append({"position": (point + across * half + offset).round(), "velocity": Vector2.ZERO, "tail": across * half * 2.0,
+			"life": life * 1.4, "color": Color("f2f8ff") if row == 0 else Color("8ebce8")})
+	if weight > 0:
+		_spawn_sparks(point + Vector2(0, -3))
+	if heavy:
+		_spawn_sparks(point + Vector2(0, 3))
+		_spawn_dust(global_position + attack_direction * 6.0, 5)
 
 
 func _spawn_airflow(point: Vector2, rising: bool) -> void:
