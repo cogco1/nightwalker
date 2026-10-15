@@ -17,6 +17,8 @@ signal charge_ready
 signal charge_ended(released: bool)
 
 enum ViewMode { TOP_DOWN, SIDE_VIEW }
+## One combat state at a time; the old flags below are read-only views of it.
+enum State { FREE, ATTACK, CHARGE, RECOVERY, HURT }
 
 @export var view_mode: ViewMode = ViewMode.TOP_DOWN
 @export var move_speed := 60.0
@@ -57,14 +59,9 @@ const DASH_BUFFER_SECONDS := 0.15
 var fx: Node2D
 
 var facing := "down"
-var is_attacking := false
 var is_crouching := false
 var is_running := false
 var idle_bob_y := 0
-var combo_stage := 0
-var queued_attack := false
-var pending_new_attack := false
-var attack_buffer_left := 0.0
 var hit_targets: Dictionary = {}
 var attack_direction := Vector2.DOWN
 var _recovery_left := 0.0
@@ -82,7 +79,6 @@ var critical_roll_override := -1.0
 var critical_rolls := 0
 var last_critical_roll := 1.0
 var stage_is_critical := false
-var special_kind := ""
 ## Current move id and its data row from MOVESET.MOVES (empty when not attacking).
 var move_id: StringName = &""
 var move: Dictionary = {}
@@ -92,18 +88,42 @@ var dash_executed := false
 var _critical_stop_emitted := false
 var _normal_stop_emitted := false
 var _rng := RandomNumberGenerator.new()
-var _mouse_attack_pending := false
 var _mouse_attack_held := false
 var _dash_phasing := false
 var airflow_count := 0
 var critical_impact_count := 0
 var input_suspended := false
+var state := State.FREE
+## Physics ticks since the current move started.
+var move_ticks := 0
+## Combat clock: advances only in this player's physics step, so a hit-stop (paused tree) freezes it.
+var combat_tick := 0
+var combat_time := 0.0
+## Button intents: name -> {tick, stage, expires}. A press is recorded as stage &"raw" and handled on the next
+## physics tick: a light press becomes a &"queued" follow-up, a &"pending" new chain after the return pose,
+## an attack, or is dropped; dash presses live DASH_BUFFER_SECONDS; a dive press runs on the next tick.
+var _intents: Dictionary = {}
+
+var is_attacking: bool:
+	get: return state == State.ATTACK
+var is_charging: bool:
+	get: return state == State.CHARGE
+var special_kind: String:
+	get: return String(move.get("special", "")) if state == State.ATTACK else ""
+var combo_stage: int:
+	get: return int(move.get("stage", 0)) if state == State.ATTACK else 0
+var queued_attack: bool:
+	get: return _intent_stage(&"light") == &"queued"
+var pending_new_attack: bool:
+	get: return _intent_stage(&"light") == &"pending"
+var attack_buffer_left: float:
+	get: return maxf(0.0, float(_intents[&"light"]["expires"]) - combat_time) if _intent_stage(&"light") in [&"queued", &"pending"] else 0.0
+var _mouse_attack_pending: bool:
+	get: return _intent_stage(&"light") == &"raw"
 var _jumps_used := 0
 var _air_hold_left := 0.0
-var is_charging := false
 var charge_time := 0.0
 var _ghost_frame := -1
-var _dash_buffer_left := 0.0
 
 
 func _ready() -> void:
@@ -148,13 +168,17 @@ func _physics_process(delta: float) -> void:
 	fx.step(delta)
 	_landing_left = maxf(0.0, _landing_left - delta)
 	_air_hold_left = maxf(0.0, _air_hold_left - delta)
+	combat_tick += 1
+	combat_time += delta
+	if state == State.ATTACK:
+		move_ticks += 1
 	_recovery_left = maxf(0.0, _recovery_left - delta)
-	_dash_buffer_left = maxf(0.0, _dash_buffer_left - delta)
-	if queued_attack or pending_new_attack:
-		attack_buffer_left = maxf(0.0, attack_buffer_left - delta)
-		if attack_buffer_left <= 0.0:
-			queued_attack = false
-			pending_new_attack = false
+	if state == State.RECOVERY and _recovery_left <= 0.0:
+		state = State.FREE
+	_expire_intents()
+	if _intents.has(&"dive"):
+		_intents.erase(&"dive")
+		request_dive_slash()
 	var direction := _movement_input()
 	if view_mode == ViewMode.SIDE_VIEW:
 		if not was_grounded:
@@ -175,10 +199,10 @@ func _physics_process(delta: float) -> void:
 			fx.dust(global_position, 3)
 	if not is_attacking and not is_charging and _recovery_left <= 0.0 and not direction.is_zero_approx():
 		_update_facing(direction)
-	if _dash_buffer_left > 0.0 and not is_charging:
+	if _intents.has(&"dash") and not is_charging:
 		var dash_direction := int(signf(direction.x)) if direction.x != 0.0 else (1 if facing == "right" else -1)
 		if request_dash_stab(dash_direction):
-			_dash_buffer_left = 0.0
+			_intents.erase(&"dash")
 	# Taps are processed while attacking too. Holding a button never auto-chains.
 	if _mouse_attack_pending:
 		var special := false
@@ -187,7 +211,8 @@ func _physics_process(delta: float) -> void:
 				special = request_rising_slash()
 		if not special:
 			request_attack()
-		_mouse_attack_pending = false
+		if _mouse_attack_pending:
+			_intents.erase(&"light")
 	if pending_new_attack and not is_attacking and _recovery_left <= 0.0:
 		begin_attack()
 	is_running = Input.is_action_pressed("run") and not direction.is_zero_approx() and not is_crouching and not _crouch_exiting and not is_attacking and not is_charging and _recovery_left <= 0.0
@@ -234,7 +259,7 @@ func _physics_process(delta: float) -> void:
 			_spawn_airflow(global_position, true)
 	if move.get("dive", false) and is_on_floor():
 		_on_animation_finished()
-		_recovery_left = LANDING_SECONDS
+		_set_recovery(LANDING_SECONDS)
 		_set_manual_frame("dive_slash_" + facing, 14)
 		fx.clear_trails()
 		fx.sparks(global_position + Vector2(-8, -1))
@@ -264,12 +289,8 @@ func handle_input(event: InputEvent) -> void:
 func clear_input_buffer() -> void:
 	if is_charging:
 		_cancel_charge()
-	_dash_buffer_left = 0.0
-	_mouse_attack_pending = false
+	_intents.clear()
 	_mouse_attack_held = false
-	queued_attack = false
-	pending_new_attack = false
-	attack_buffer_left = 0.0
 
 
 func _input(event: InputEvent) -> void:
@@ -280,13 +301,17 @@ func _input(event: InputEvent) -> void:
 			_mouse_attack_held = false
 		elif not _mouse_attack_held:
 			_mouse_attack_held = true
-			_mouse_attack_pending = true
+			_press(&"light")
 	if event is InputEventKey and not event.echo and event.is_action_pressed("dash_modifier"):
-		_dash_buffer_left = DASH_BUFFER_SECONDS
+		_press(&"dash", DASH_BUFFER_SECONDS)
 	if view_mode != ViewMode.SIDE_VIEW or not event is InputEventKey or event.echo:
 		return
 	if event.is_action_pressed("crouch"):
-		request_dive_slash()
+		if get_tree().paused:
+			# Forwarded during the hit-stop: recorded only, so the frozen frame never changes; acts after it.
+			_press(&"dive")
+		else:
+			request_dive_slash()
 
 
 func _update_move_velocity(direction: Vector2, speed: float, delta: float) -> void:
@@ -458,29 +483,24 @@ func request_attack() -> bool:
 	if not is_attacking:
 		if _recovery_left > 0.0:
 			# A fresh tap during the short return pose starts one new chain after it.
-			pending_new_attack = true
-			attack_buffer_left = maxf(ATTACK_BUFFER_SECONDS, _recovery_left + 0.05)
+			_buffer(&"light", &"pending", maxf(ATTACK_BUFFER_SECONDS, _recovery_left + 0.05))
 			return true
 		return begin_attack()
 	if MOVESET.next_move(move_id, &"light") == &"":
 		return false
-	queued_attack = true
 	var fps: float = sprite.sprite_frames.get_animation_speed(sprite.animation) * sprite.speed_scale
 	var count := sprite.sprite_frames.get_frame_count(sprite.animation)
 	var remaining := (float(count - sprite.frame) - sprite.frame_progress) / maxf(1.0, fps)
 	# Early double taps are deliberate inputs too, so keep one tap until this hit ends.
-	attack_buffer_left = clampf(maxf(ATTACK_BUFFER_SECONDS, remaining + 0.05), ATTACK_BUFFER_SECONDS, 0.55)
+	_buffer(&"light", &"queued", clampf(maxf(ATTACK_BUFFER_SECONDS, remaining + 0.05), ATTACK_BUFFER_SECONDS, 0.55))
 	return true
 
 
 func begin_attack() -> bool:
 	if is_attacking or _recovery_left > 0.0:
 		return false
-	special_kind = ""
 	attack_direction = _facing_vector()
-	queued_attack = false
-	pending_new_attack = false
-	attack_buffer_left = 0.0
+	_intents.erase(&"light")
 	_start_move(&"crouch_stab" if is_crouching else MOVESET.next_move(&"", &"light"))
 	return true
 
@@ -489,9 +509,8 @@ func begin_attack() -> bool:
 func _start_move(id: StringName) -> void:
 	move_id = id
 	move = MOVESET.MOVES[id]
-	special_kind = move.get("special", "")
-	combo_stage = int(move.get("stage", 1))
-	is_attacking = true
+	state = State.ATTACK
+	move_ticks = 0
 	is_running = false
 	var airborne := view_mode == ViewMode.SIDE_VIEW and not is_on_floor()
 	var air: Dictionary = move.get("air", {})
@@ -666,9 +685,7 @@ func request_dash_stab(direction: int) -> bool:
 
 func _start_special(kind: String) -> void:
 	attack_direction = Vector2.DOWN if kind == "dive_slash" else _facing_vector()
-	queued_attack = false
-	pending_new_attack = false
-	attack_buffer_left = 0.0
+	_intents.erase(&"light")
 	airflow_count = 0
 	_start_move(StringName(kind))
 	special_started.emit(kind, attack_direction)
@@ -729,8 +746,7 @@ func _on_animation_finished() -> void:
 		return
 	var next := MOVESET.next_move(move_id, &"light")
 	if queued_attack and attack_buffer_left > 0.0 and next != &"":
-		queued_attack = false
-		attack_buffer_left = 0.0
+		_intents.erase(&"light")
 		_start_move(next)
 		return
 	var air: Dictionary = move.get("air", {})
@@ -740,25 +756,20 @@ func _on_animation_finished() -> void:
 	var airborne := view_mode == ViewMode.SIDE_VIEW and not is_on_floor()
 	var recovery := float(move["recovery"]) if move.has("recovery") else (1.0 if airborne else 2.0) / float(move["fps"])
 	var coil: bool = _mouse_attack_held and move.get("chain", false) and (view_mode == ViewMode.TOP_DOWN or is_on_floor())
-	is_attacking = false
 	stage_is_critical = false
-	combo_stage = 0
-	queued_attack = false
-	pending_new_attack = false
-	attack_buffer_left = 0.0
-	_recovery_left = recovery
-	special_kind = ""
+	_intents.erase(&"light")
 	move_id = &""
 	move = {}
+	_set_recovery(recovery)
 	sprite.pause()
 	combo_changed.emit(0)
 	if coil:
-		_recovery_left = 0.0
+		_set_recovery(0.0)
 		_begin_charge()
 
 
 func _begin_charge() -> void:
-	is_charging = true
+	state = State.CHARGE
 	charge_time = 0.0
 	is_running = false
 	_set_manual_frame("attack3_" + facing, 0)
@@ -807,14 +818,12 @@ func _update_charge(delta: float, grounded: bool) -> void:
 
 
 func _cancel_charge() -> void:
-	is_charging = false
 	charge_time = 0.0
-	_recovery_left = 2.0 / float(MOVESET.MOVES[&"attack3"]["fps"])
+	_set_recovery(2.0 / float(MOVESET.MOVES[&"attack3"]["fps"]))
 	charge_ended.emit(false)
 
 
 func _release_heavy_slash() -> void:
-	is_charging = false
 	charge_time = 0.0
 	charge_ended.emit(true)
 	attack_direction = _facing_vector()
@@ -822,6 +831,30 @@ func _release_heavy_slash() -> void:
 	_start_move(&"heavy_slash")
 	_spawn_airflow(global_position, false)
 	special_started.emit("heavy_slash", attack_direction)
+
+
+func _press(intent: StringName, seconds := INF) -> void:
+	_intents[intent] = {"tick": combat_tick, "stage": &"raw", "expires": combat_time + seconds}
+
+
+func _buffer(intent: StringName, stage: StringName, seconds: float) -> void:
+	_intents[intent] = {"tick": combat_tick, "stage": stage, "expires": combat_time + seconds}
+
+
+func _intent_stage(intent: StringName) -> StringName:
+	return _intents[intent]["stage"] if _intents.has(intent) else &""
+
+
+func _expire_intents() -> void:
+	for intent in _intents.keys():
+		if combat_time >= float(_intents[intent]["expires"]):
+			_intents.erase(intent)
+
+
+## Return pose (or none): RECOVERY until the timer runs out in the physics step.
+func _set_recovery(seconds: float) -> void:
+	_recovery_left = seconds
+	state = State.RECOVERY if seconds > 0.0 else State.FREE
 
 
 func show_idle() -> void:

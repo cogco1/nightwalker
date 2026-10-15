@@ -20,7 +20,8 @@ $suites = @(
     # Fps: physics/process rate passed as --fixed-fps (default 60); contact_refresh is the high-refresh case.
     @{ Name = 'contact_refresh_v07';      Script = 'test_contact_refresh_v07'; Fps = 144 },
     @{ Name = 'charged_slash';            Script = 'test_charged_slash' },
-    @{ Name = 'moveset';                  Script = 'test_moveset' }
+    @{ Name = 'moveset';                  Script = 'test_moveset' },
+    @{ Name = 'combat_state';             Script = 'test_combat_state' }
 )
 
 $failed = @()
