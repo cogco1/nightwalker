@@ -271,15 +271,13 @@ func _create_ui() -> void:
 	canvas.name = "StreetUI"
 	canvas.layer = 31
 	add_child(canvas)
-	var font: FontFile = PIXEL_UI.font()
-	var title := _label(canvas, font, Vector2(5, 3), "C区 · 夜街（原型）")
+	var title := PIXEL_UI.label(canvas, Vector2(5, 3), Vector2(310, 16), "C区 · 夜街（原型）")
 	title.modulate = Color("c9b8e8")
-	var hint := _label(canvas, font, Vector2(5, 162), "AD走 左键斩 长按重斩 Shift突刺 F9原色 R重置")
+	var hint := PIXEL_UI.label(canvas, Vector2(5, 162), Vector2(310, 16), "AD走 左键斩 长按重斩 Shift突刺 F9原色 R重置")
 	hint.modulate = Color("9d8fc0")
-	_status = _label(canvas, font, Vector2(206, 16), "")
-	_status.size = Vector2(110, 16)
+	_status = PIXEL_UI.label(canvas, Vector2(206, 16), Vector2(110, 16))
 	_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	var meter_label := _label(canvas, font, Vector2(236, 1), "暴露")
+	var meter_label := PIXEL_UI.label(canvas, Vector2(236, 1), Vector2(310, 16), "暴露")
 	meter_label.modulate = Color("9ff6ff")
 	_hud = Node2D.new()
 	_hud.name = "ExposureMeter"
@@ -290,21 +288,8 @@ func _create_ui() -> void:
 	_scan.name = "ScanReadout"
 	canvas.add_child(_scan)
 	_scan.draw.connect(_draw_scan)
-	_scan_label = _label(canvas, font, Vector2.ZERO, "")
-	_scan_label.size = Vector2(72, 16)
+	_scan_label = PIXEL_UI.label(canvas, Vector2.ZERO, Vector2(72, 16))
 	_scan_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-
-
-func _label(parent: Node, font: Font, location: Vector2, text: String) -> Label:
-	var label := Label.new()
-	parent.add_child(label)
-	label.position = location
-	label.size = Vector2(310, 16)
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.add_theme_font_override("font", font)
-	label.add_theme_font_size_override("font_size", 12)
-	label.text = text
-	return label
 
 
 func _physics_process(delta: float) -> void:
