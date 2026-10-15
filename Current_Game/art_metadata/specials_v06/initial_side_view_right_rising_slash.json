@@ -1,0 +1,26 @@
+{
+  "action": "rising_slash",
+  "native_frame": [
+    80,
+    80
+  ],
+  "pivot": [
+    40,
+    68
+  ],
+  "body": "SIDE RIGHT jumping RISING SLASH/launcher 16 chronological frames. 0 quiet waist-level guard matching reference;1-3 bend both knees and coil knife beside lead knee;4-5 push off, tuck one knee, coil lowerarm;6-9 swing SINGLE dagger forcefully from low front knee UP into overhead arc, front gloved hand raised above hood by6-10nativepixels, oppositearm stays empty, torso/hood stay same dimensions, narrow adult body extends rather than grows;10-12 airborne followthrough with coat tails trailing DOWN, elbow raised and dagger upward;13-15 controlled lowering knife back to readyguard with knees preparing landing. ONE uniform waist/root registration in everycell: local waist around native52, neutralfoot68, airbornefeet tuck relative to that same waist, do NOT translate the whole figure upward in cells since Godot moves the actor. Exaggerate ARM ARC/tuckedlegs/cloth motion, preserve exact hood and torso anatomy. Knife arc clear but no light effects drawn (engine adds them). Raised blade stays insidecell with8nativepixels empty safety margin.",
+  "prompt": "Use case: stylized-concept. Production transparent LOW-RES PIXEL animation atlas for existing Nightwalker Godot game. Input Image1 is the EXACT approved 28-native-pixel character enlarged by nearest neighbor; authoritative pixel density/proportions/colors. Image2 is supporting outfit identity ONLY, not target detail density. Preserve the current player's identity exactly: worn knee-length slateblue/charcoal trenchcoat, hood up, asymmetrical two small hem tears, warm brown lining, rustbrown thin waist tie, black gloves/slim trousers/boots. Face hidden in dark hood, ONLY ONE TO THREE tiny mutedskin pixels, nohair/facial expression/white lapels. ONE short steel DAGGER in foreground rightglovedhand,7nativepixels long,2pixels wide at base,tapers to ONE PIXEL tip, simple tinyblackhilt; otherhand EMPTY. Never duplicate knife, nevergun/rectangularblade orlongsword. Neutral bodyheight28nativepixels INCLUDINGHOOD, hood7 high/profile6wide, profiletorso5wide; same hood/torso/limb lengths across all16poses. Knee bends and lean change posture, NEVER body scale.\nExactly 4 rows x 4 columns (=16) evenlyspaced full-body sprites, chronological lefttoright thentopdown. Cell 80x80 nativepixels, foot/root [40,68] at neutral, source shown integer-nearest enlarged. Keep SAME atlas/cell grid with transparent margins and nooverflow. Allcharacters SIDE PROFILE FACINGRIGHT, neverfront/back. SIDE RIGHT jumping RISING SLASH/launcher 16 chronological frames. 0 quiet waist-level guard matching reference;1-3 bend both knees and coil knife beside lead knee;4-5 push off, tuck one knee, coil lowerarm;6-9 swing SINGLE dagger forcefully from low front knee UP into overhead arc, front gloved hand raised above hood by6-10nativepixels, oppositearm stays empty, torso/hood stay same dimensions, narrow adult body extends rather than grows;10-12 airborne followthrough with coat tails trailing DOWN, elbow raised and dagger upward;13-15 controlled lowering knife back to readyguard with knees preparing landing. ONE uniform waist/root registration in everycell: local waist around native52, neutralfoot68, airbornefeet tuck relative to that same waist, do NOT translate the whole figure upward in cells since Godot moves the actor. Exaggerate ARM ARC/tuckedlegs/cloth motion, preserve exact hood and torso anatomy. Knife arc clear but no light effects drawn (engine adds them). Raised blade stays insidecell with8nativepixels empty safety margin.\nOne consistent native square pixelgrid, chunky small flat colorblocks, maximum18opaque colors matching Image1. Plain TRUE TRANSPARENT BACKGROUND across allcells; don'tcopy dark/black referencebackdrops. NO antialias/gradients/shadingnoise/halo/blur/glow/ghostfigures/gridlines/text/labels/shadows/enemies/scenery. Effects will be drawn by game so only ONE player+ONE dagger in EACH cell. Draw each changingpose coherently, clean silhouette. Canvas padding may be larger but anatomy/pixel blocks exactlyImage1, don'tfit bodytofillcell.",
+  "name": "side_view_right_rising_slash",
+  "view": "side_view",
+  "direction": "right",
+  "frame_count": 16,
+  "columns": 4,
+  "rows": 4,
+  "new_character": "hooded_worn_trenchcoat",
+  "generator": "built-in image_gen",
+  "referenced_image_paths": [
+    "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_reference.png",
+    "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_raw_identity_reference.png"
+  ],
+  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-e8947cc4-ed97-4c2c-8bee-7b207b988821.png"
+}

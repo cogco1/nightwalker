@@ -1,0 +1,154 @@
+{
+  "palette": [
+    "11141a",
+    "20242b",
+    "303842",
+    "414b58",
+    "566170",
+    "6b7480",
+    "8a8a85",
+    "33251f",
+    "533729",
+    "76513a",
+    "a07a5b",
+    "c5a18a",
+    "e1b999",
+    "5a6268",
+    "8e999f",
+    "bbc2c3",
+    "e5e8e0",
+    "75695a"
+  ],
+  "standing_height": 28,
+  "native_frame": [
+    48,
+    48
+  ],
+  "pivot": [
+    24,
+    42
+  ],
+  "views": {
+    "top_down_down": {
+      "raw_cell": [
+        0,
+        0,
+        512,
+        1024
+      ],
+      "raw_body_bbox": [
+        99,
+        102,
+        443,
+        930
+      ],
+      "standing_scale": 0.033816425120772944,
+      "sampling_phase": [
+        -0.4,
+        -0.2
+      ],
+      "raw_body_axis_x": 288.0,
+      "native_bbox": [
+        17,
+        14,
+        29,
+        42
+      ],
+      "hood_reference_bbox": [
+        20,
+        14,
+        27,
+        21
+      ],
+      "face_pixels": 1,
+      "face_coordinates": [
+        [
+          23,
+          17
+        ]
+      ],
+      "native_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v06\\canonical_master\\top_down_down.png",
+      "reference_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v06\\hooded_top_down_down_reference.png",
+      "native_hash": "9cc8cc615f85d22e4bdb3ac73f5095cc3046183807b3e3a95c7b8e6932200975"
+    },
+    "side_view_right": {
+      "raw_cell": [
+        512,
+        0,
+        1024,
+        1024
+      ],
+      "raw_body_bbox": [
+        131,
+        103,
+        355,
+        932
+      ],
+      "standing_scale": 0.033775633293124246,
+      "sampling_phase": [
+        0,
+        0.4
+      ],
+      "raw_body_axis_x": 255.0,
+      "native_bbox": [
+        20,
+        14,
+        27,
+        42
+      ],
+      "hood_reference_bbox": [
+        21,
+        14,
+        27,
+        21
+      ],
+      "face_pixels": 1,
+      "face_coordinates": [
+        [
+          25,
+          18
+        ]
+      ],
+      "native_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v06\\canonical_master\\side_view_right.png",
+      "reference_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v06\\hooded_side_view_right_reference.png",
+      "native_hash": "baefc9ca147e5b48c3eaf87b7747e70b05be9aeb8d7e2cf209b11bb47d705a10"
+    },
+    "top_down_up": {
+      "raw_cell": [
+        1024,
+        0,
+        1536,
+        1024
+      ],
+      "raw_body_bbox": [
+        69,
+        102,
+        413,
+        932
+      ],
+      "standing_scale": 0.033734939759036145,
+      "sampling_phase": [
+        -0.4,
+        0
+      ],
+      "raw_body_axis_x": 223.0,
+      "native_bbox": [
+        18,
+        14,
+        30,
+        42
+      ],
+      "hood_reference_bbox": [
+        20,
+        14,
+        27,
+        21
+      ],
+      "face_pixels": 0,
+      "face_coordinates": [],
+      "native_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v06\\canonical_master\\top_down_up.png",
+      "reference_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v06\\hooded_top_down_up_reference.png",
+      "native_hash": "ef690921d47d1ecc4c25da4879e8c29e97c34d9c447b64089e98502f152899c1"
+    }
+  }
+}

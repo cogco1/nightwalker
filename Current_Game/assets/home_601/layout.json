@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "scene": "home_601",
+  "native_size": [
+    320,
+    180
+  ],
+  "bounds": [
+    26,
+    56,
+    268,
+    96
+  ],
+  "spawn": [
+    110,
+    104
+  ],
+  "facing": "up",
+  "background": "res://assets/home_601/home_601_native.png",
+  "collider_mode": "full_visible_prop_bounds",
+  "colliders": [
+    {
+      "id": "north_wall",
+      "rect": [
+        -100,
+        -100,
+        520,
+        156
+      ]
+    },
+    {
+      "id": "south_wall",
+      "rect": [
+        -100,
+        152,
+        520,
+        100
+      ]
+    },
+    {
+      "id": "west_wall",
+      "rect": [
+        -100,
+        56,
+        126,
+        96
+      ]
+    },
+    {
+      "id": "east_wall",
+      "rect": [
+        294,
+        56,
+        120,
+        96
+      ]
+    },
+    {
+      "id": "partition_north",
+      "rect": [
+        205,
+        12,
+        8,
+        88
+      ]
+    },
+    {
+      "id": "partition_south",
+      "rect": [
+        205,
+        124,
+        8,
+        40
+      ]
+    },
+    {
+      "id": "computer",
+      "rect": [
+        36,
+        40,
+        48,
+        39
+      ]
+    },
+    {
+      "id": "computer_bin",
+      "rect": [
+        85,
+        59,
+        6,
+        14
+      ]
+    },
+    {
+      "id": "television",
+      "rect": [
+        164,
+        40,
+        36,
+        30
+      ]
+    },
+    {
+      "id": "sofa",
+      "rect": [
+        123,
+        101,
+        64,
+        26
+      ]
+    },
+    {
+      "id": "coffee_table",
+      "rect": [
+        140,
+        82,
+        32,
+        16
+      ]
+    },
+    {
+      "id": "fridge",
+      "rect": [
+        22,
+        94,
+        22,
+        48
+      ]
+    },
+    {
+      "id": "kitchen_counter",
+      "rect": [
+        45,
+        116,
+        43,
+        26
+      ]
+    },
+    {
+      "id": "bed",
+      "rect": [
+        246,
+        51,
+        33,
+        60
+      ]
+    },
+    {
+      "id": "nightstand",
+      "rect": [
+        229,
+        54,
+        14,
+        22
+      ]
+    },
+    {
+      "id": "wardrobe",
+      "rect": [
+        286,
+        49,
+        14,
+        66
+      ]
+    },
+    {
+      "id": "basket",
+      "rect": [
+        286,
+        114,
+        14,
+        16
+      ]
+    },
+    {
+      "id": "dumbbells",
+      "rect": [
+        251,
+        126,
+        22,
+        13
+      ]
+    }
+  ],
+  "interactions": [
+    {
+      "id": "frame",
+      "name": "空相框",
+      "anchor": [
+        158,
+        66
+      ],
+      "radius": 21,
+      "lines": [
+        "相框里什么都没有。"
+      ]
+    },
+    {
+      "id": "television",
+      "name": "电视",
+      "anchor": [
+        180,
+        82
+      ],
+      "radius": 22,
+      "lines": [
+        "电视：2040年7月19日晚，佩特拉新城C区又发生一起疑似SK杀人事件。",
+        "C区居民高呼加强监控力度，政客们……",
+        "我到底做了些什么……"
+      ]
+    },
+    {
+      "id": "computer",
+      "name": "电脑",
+      "anchor": [
+        60,
+        89
+      ],
+      "radius": 22,
+      "lines": [
+        "乔伦：科伯恩，男，27岁。",
+        "C区费列罗诊所主治医师，8:00—14:30在岗。",
+        "我不知道为什么要去处理这些。但这是我唯一不让自己饿死的办法。",
+        "暗网购物：装备、食物、饮品、生活用品。"
+      ]
+    },
+    {
+      "id": "bed",
+      "name": "床",
+      "anchor": [
+        263,
+        121
+      ],
+      "radius": 18,
+      "lines": [
+        "床单有些凌乱。昨夜的事情，又记不清了。"
+      ]
+    },
+    {
+      "id": "fridge",
+      "name": "冰箱",
+      "anchor": [
+        54,
+        108
+      ],
+      "radius": 22,
+      "lines": [
+        "冷气很弱。里面剩下一瓶伏特加。"
+      ]
+    },
+    {
+      "id": "dumbbells",
+      "name": "哑铃",
+      "anchor": [
+        242,
+        136
+      ],
+      "radius": 18,
+      "lines": [
+        "用旧的哑铃。每天都摆在同一个地方。"
+      ]
+    },
+    {
+      "id": "door",
+      "name": "房门",
+      "anchor": [
+        127,
+        66
+      ],
+      "radius": 20,
+      "lines": [
+        "601。门外是C区的老楼走廊。"
+      ]
+    }
+  ],
+  "source_notes": "SK firsthome:day12:00,C district oldbuilding601,topdown,onebedroomliving,dimanti-surveillance,emptyentryframe,TVPCbedfridgedumbbells. Flavor lines adapt setting; no shop/quest/economy state is implied.",
+  "world_size": [
+    320,
+    180
+  ],
+  "camera_zoom": 1,
+  "background_scale": 1,
+  "presentation": "Coldhome on exact original character1:1pixelgrid;short downwardcones",
+  "fx": {
+    "tv_screen": [
+      89,
+      24,
+      8,
+      5
+    ],
+    "pc_screen": [
+      26,
+      22,
+      7,
+      4
+    ],
+    "frame_crop": [
+      75,
+      11,
+      11,
+      11
+    ],
+    "bed_crop": [
+      123,
+      34,
+      17,
+      20
+    ],
+    "dumbbells_crop": [
+      124,
+      61,
+      15,
+      10
+    ],
+    "door_latch": [
+      69,
+      24,
+      1,
+      2
+    ],
+    "fridge_native_body": [
+      11,
+      47,
+      11,
+      24
+    ]
+  },
+  "fx_design_size": [
+    160,
+    90
+  ],
+  "light_cones": {
+    "direction": [
+      0,
+      1
+    ],
+    "length_native": 40,
+    "width_growth": 0.23
+  }
+}

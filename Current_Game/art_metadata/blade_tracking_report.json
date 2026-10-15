@@ -1,0 +1,2642 @@
+{
+  "side_view_right_crouch_stab": {
+    "native_frame": [
+      48,
+      48
+    ],
+    "pivot": [
+      24,
+      42
+    ],
+    "whole_clip_tip_span": [
+      27,
+      6
+    ],
+    "active_tip_span": [
+      6,
+      4
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      }
+    ]
+  },
+  "side_view_left_crouch_stab": {
+    "native_frame": [
+      48,
+      48
+    ],
+    "pivot": [
+      24,
+      42
+    ],
+    "whole_clip_tip_span": [
+      27,
+      6
+    ],
+    "active_tip_span": [
+      6,
+      4
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      }
+    ]
+  },
+  "side_view_right_attack1": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      26,
+      26
+    ],
+    "active_tip_span": [
+      4,
+      2
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "low",
+        "steel_pixels": 8,
+        "hand_distance": 12
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      }
+    ]
+  },
+  "side_view_right_attack2": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      41,
+      30
+    ],
+    "active_tip_span": [
+      29,
+      8
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 3,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 3,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 11,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      }
+    ]
+  },
+  "side_view_right_attack3": {
+    "native_frame": [
+      80,
+      64
+    ],
+    "pivot": [
+      40,
+      52
+    ],
+    "whole_clip_tip_span": [
+      36,
+      12
+    ],
+    "active_tip_span": [
+      8,
+      8
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 2,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 2,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 1,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      }
+    ]
+  },
+  "top_down_down_attack1": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      20,
+      30
+    ],
+    "active_tip_span": [
+      15,
+      23
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 11,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 3.16
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.41
+      }
+    ]
+  },
+  "top_down_down_attack2": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      36,
+      30
+    ],
+    "active_tip_span": [
+      34,
+      7
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 2.83
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 2,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 13,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 12,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 12,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 13,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.83
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.0
+      }
+    ]
+  },
+  "top_down_down_attack3": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      10,
+      11
+    ],
+    "active_tip_span": [
+      1,
+      5
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 11,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 11,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 11,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 11,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 2.24
+      }
+    ]
+  },
+  "top_down_up_attack1": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      27,
+      33
+    ],
+    "active_tip_span": [
+      14,
+      28
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "low",
+        "steel_pixels": 5,
+        "hand_distance": 14.76
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 11,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 1,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.0
+      }
+    ]
+  },
+  "top_down_up_attack2": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      24,
+      30
+    ],
+    "active_tip_span": [
+      20,
+      2
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 3.16
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "low",
+        "steel_pixels": 6,
+        "hand_distance": 4.12
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "low",
+        "steel_pixels": 3,
+        "hand_distance": 4.47
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 2.83
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.83
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      }
+    ]
+  },
+  "top_down_up_attack3": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      28,
+      17
+    ],
+    "active_tip_span": [
+      8,
+      13
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "low",
+        "steel_pixels": 2,
+        "hand_distance": 7.81
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 2,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 3.16
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.83
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.83
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 2.83
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.83
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.41
+      }
+    ]
+  },
+  "side_view_left_attack1": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      26,
+      26
+    ],
+    "active_tip_span": [
+      4,
+      2
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "low",
+        "steel_pixels": 8,
+        "hand_distance": 12
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      }
+    ]
+  },
+  "side_view_left_attack2": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      41,
+      30
+    ],
+    "active_tip_span": [
+      29,
+      8
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 3,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 3,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 11,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      }
+    ]
+  },
+  "side_view_left_attack3": {
+    "native_frame": [
+      80,
+      64
+    ],
+    "pivot": [
+      40,
+      52
+    ],
+    "whole_clip_tip_span": [
+      36,
+      12
+    ],
+    "active_tip_span": [
+      8,
+      8
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 2,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 2,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 1,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      }
+    ]
+  },
+  "top_down_right_attack1": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      26,
+      26
+    ],
+    "active_tip_span": [
+      4,
+      2
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "low",
+        "steel_pixels": 8,
+        "hand_distance": 12
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      }
+    ]
+  },
+  "top_down_left_attack1": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      26,
+      26
+    ],
+    "active_tip_span": [
+      4,
+      2
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "low",
+        "steel_pixels": 8,
+        "hand_distance": 12
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      }
+    ]
+  },
+  "top_down_right_attack2": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      41,
+      30
+    ],
+    "active_tip_span": [
+      29,
+      8
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 3,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 3,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 11,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      }
+    ]
+  },
+  "top_down_left_attack2": {
+    "native_frame": [
+      64,
+      64
+    ],
+    "pivot": [
+      32,
+      52
+    ],
+    "whole_clip_tip_span": [
+      41,
+      30
+    ],
+    "active_tip_span": [
+      29,
+      8
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 3,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 3,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 9,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 11,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      }
+    ]
+  },
+  "top_down_right_attack3": {
+    "native_frame": [
+      80,
+      64
+    ],
+    "pivot": [
+      40,
+      52
+    ],
+    "whole_clip_tip_span": [
+      36,
+      12
+    ],
+    "active_tip_span": [
+      8,
+      8
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 2,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 2,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 1,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      }
+    ]
+  },
+  "top_down_left_attack3": {
+    "native_frame": [
+      80,
+      64
+    ],
+    "pivot": [
+      40,
+      52
+    ],
+    "whole_clip_tip_span": [
+      36,
+      12
+    ],
+    "active_tip_span": [
+      8,
+      8
+    ],
+    "frames": [
+      {
+        "frame": 0,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 1,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 10,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 2,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 3,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 4,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 5,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 8,
+        "hand_distance": 1.0
+      },
+      {
+        "frame": 6,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 6,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 7,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 2,
+        "hand_distance": 3.0
+      },
+      {
+        "frame": 8,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 7,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 9,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 2,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 10,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 1,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 11,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 12,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 2.0
+      },
+      {
+        "frame": 13,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 5,
+        "hand_distance": 1.41
+      },
+      {
+        "frame": 14,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 2.24
+      },
+      {
+        "frame": 15,
+        "method": "native steel component near hand",
+        "confidence": "high",
+        "steel_pixels": 4,
+        "hand_distance": 1.41
+      }
+    ]
+  }
+}

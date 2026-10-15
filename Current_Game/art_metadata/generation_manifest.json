@@ -1,0 +1,730 @@
+{
+  "generator": "built-in image_gen",
+  "version": "v05",
+  "date": "2026-10-14",
+  "redesign": "worn hooded trenchcoat, face mostly hidden",
+  "jobs": [
+	{
+	  "view": "side_view",
+	  "direction": "right",
+	  "action": "attack1",
+	  "name": "side_view_right_attack1",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		64,
+		64
+	  ],
+	  "pivot": [
+		32,
+		52
+	  ],
+	  "reference_name": "hooded_side_view_right_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nEXACT SIDE PROFILE facingRIGHT, nose/hoodbrim/chest/knife forwardaxis pointsRIGHT. Do NOT show front/back.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 64x64 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(32,52); neutralhoodtop24; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nCOMBO1 BIG DIAGONAL DOWNWARD SLASH,16frames.0-2 originalneutralguard;3-5 lift dagger above/behind hood with clear highwindup;6-9 swing in a large35nativepixel diagonal arc from highback through highfront to lowforward; rotate shoulder andhips, fully extended elbow and braced lead step6pixels, same7pixelhood/limbthickness, no bodyenlargement.10-12 low followthrough;13-15 FINISH IN LOW CROSSBODY GUARD with dagger near lead knee, notneutralidle. This guard is where next reverse/upwardslash starts. ONE dagger, sleeve/torso samewidth asreference.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-3989f471-7bfe-4b82-b2db-903aaa018913.png"
+	},
+	{
+	  "view": "side_view",
+	  "direction": "right",
+	  "action": "attack2",
+	  "name": "side_view_right_attack2",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		64,
+		64
+	  ],
+	  "pivot": [
+		32,
+		52
+	  ],
+	  "reference_name": "hooded_side_view_right_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-acab6073-422f-4102-90b9-b5bef9c2528a.png",
+        "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_raw_identity_reference.png"
+	  ],
+	  "prompt": "Use case: stylized-concept, PIXEL sprite WEAPON SHAPE EDIT ONLY. Image1 is the exact16-frame side-facing hoodedworncoat reverse slash atlas. Image2 shows the correct short pointed steel DAGGER. Preserve EVERY body/hood/face/coat/arm/leg pose, exact cellplacement/pixelgrid/colors/transparency, full16framesfourrowsfourcolumns, no scalechange.\nReplace ONLY the RECTANGULAR white-and-black gun-like object in the extended rightgloved hand with the proper SHORT POINTED TRIANGULAR STEEL DAGGER. Keep the samewristposition/orientation/length. Steelblade7nativepixelslong,2nativepixelswideatbase, TAPERS sharplytoONEPIXEL POINT atfarend; tinyblackhilt1-2pixels, simpleglove gripsit, no bulkyblackmetalbox/receiver/barrel/trigger/guardshapedlikegun. Each extendedblade is a visibly silver METAL WEDGE/TRIANGLE, not a straightwhitebar inblackrectangle. In attack2 last row13/14/15 and in attack3 rows1-3extendedframes, ensure obvious sharp pointedknifetip. Alsocheckother16cells forsamepointedsingleknife. ONE blade perfigure, otherhandemptyblackglove.\nAbsolutely NO other model/pose/anatomy/color/detail changes. Same hood7/body28native density, slender adultgloves/trenchcoat/boots. Transparentbackground no blackbackdrop/halo/noisyoutlines/AA/blur/glow/grid/text/shadow.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-9d541bb1-1d02-47e0-9654-1edc74273b65.png",
+	  "original_prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is the SAME VIEW concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nEXACT SIDE PROFILE facingRIGHT throughout, nofront/back face.\n\nEXACT4x4 chronological16frameatlas,64x64nativecells enlargedNN, foot/root32,52, neutralheight28/hood7 and shoulder/torso actualwidth fromImage1. Allsprites/knifeinsidecell. Image3 is ONE exact LOWGUARD at endoffirstslash: begin with this posture in0-2, do notchangebody/hoodsize tofillcell. Largerarmarc/stepONLY changespose.\n\nCOMBO2 BIG REVERSE/BACKHAND RISING SLASH,16frames.0-2 begin EXACT preceding firstslash finalLOWCROSSBODYGUARD;3-5 coil from lowblade position at lead knee;6-9 reverse the firstarc, swing the blade UP in a broad35nativepixel arc across the front to above/opposite hood, opposite hip/shoulder twist, extended elbow, widelegs WITHOUT increasing bodyanatomy.10-12 control highfollowthrough;13-15 FINISH waist-level THRUSTREADYGUARD beside the rustwaisttie, NOTneutralidle. Hood7 and torso matchfirstattack EXACTLY; lower crouchedguard is a POSE and mustnot be stretched tostanding28px. No largehead/shoulders/longerarms thanfirststage.\n\nKnife stays ONLY in the SAME anatomical foreground rightglovedarm throughout. Other hand is emptyBLACKGLOVE inEVERYframe; neverleave extra steel from earlierposes. All16figures contain exactlyONE7pixeldagger, no ghostdoubleknife. End13-15 with waistTHRUSTREADYguard, notidle. The crouchedstance is naturallyshorter, notnormalized tostanding28. Sharppixelgrid/transparentbackground.",
+	  "corrected_from_generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-acab6073-422f-4102-90b9-b5bef9c2528a.png",
+	  "correction_reason": "Replace gun-like rectangular steel bar with one short tapered triangular dagger, preserving all body poses."
+	},
+	{
+	  "view": "side_view",
+	  "direction": "right",
+	  "action": "attack3",
+	  "name": "side_view_right_attack3",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		80,
+		64
+	  ],
+	  "pivot": [
+		40,
+		52
+	  ],
+	  "reference_name": "hooded_side_view_right_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-3f4f1c51-2a38-475b-8a10-fdabf6bbf1b8.png",
+        "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_raw_identity_reference.png"
+	  ],
+	  "prompt": "Use case: stylized-concept, PIXEL sprite WEAPON SHAPE EDIT ONLY. Image1 is the exact16-frame side-facing hoodedworncoat final thrust atlas. Image2 shows the correct short pointed steel DAGGER. Preserve EVERY body/hood/face/coat/arm/leg pose, exact cellplacement/pixelgrid/colors/transparency, full16framesfourrowsfourcolumns, no scalechange.\nReplace ONLY the RECTANGULAR white-and-black gun-like object in the extended rightgloved hand with the proper SHORT POINTED TRIANGULAR STEEL DAGGER. Keep the samewristposition/orientation/length. Steelblade7nativepixelslong,2nativepixelswideatbase, TAPERS sharplytoONEPIXEL POINT atfarend; tinyblackhilt1-2pixels, simpleglove gripsit, no bulkyblackmetalbox/receiver/barrel/trigger/guardshapedlikegun. Each extendedblade is a visibly silver METAL WEDGE/TRIANGLE, not a straightwhitebar inblackrectangle. In attack2 last row13/14/15 and in attack3 rows1-3extendedframes, ensure obvious sharp pointedknifetip. Alsocheckother16cells forsamepointedsingleknife. ONE blade perfigure, otherhandemptyblackglove.\nAbsolutely NO other model/pose/anatomy/color/detail changes. Same hood7/body28native density, slender adultgloves/trenchcoat/boots. Transparentbackground no blackbackdrop/halo/noisyoutlines/AA/blur/glow/grid/text/shadow.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-d933cfd9-8e4d-4da0-85ad-39db48e5eeb5.png",
+	  "original_prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is the SAME VIEW identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nEXACT SIDE PROFILE facingRIGHT through allframes. This 80x64cellonlyadds transparenthorizontalpadding; hood/head/shoulder/torso MUST be sameas first/secondslash.\n\nEXACT4columns4rows sixteenchronological completefigures in equal80x64NATIVE cells enlargedNN. Root-foot(40,52), neutralhoodtop24; largeremptycanvasneverbodyenlargement. Allbody/knifeinsidesafe1pixelmargins.\n\nCOMBO3 FINISHING FORWARD THRUST,16frames.0-2 begin EXACT previous secondslash finalWAISTGUARD;3-5 coil rearleg and daggerbesidewaist;6-9 fullyextend knife arm directlyTOWARD FACINGDIRECTION, bigtorsolean35-45degrees and leadfootstep6-8pixels, shoulders/hips drive forward, longestreadable reach, ONE7pixel pointeddagger. Samehood7, shoulder/torso/limbwidth asfirstslash; no swollenbody/gianthead/extended anatomy; movement comes frompose andstep.10-12 retractsmoothly;13-15 returncanonicalneutralidle. Reference posture appearsbefore andafterbut keep EXACTsame scale throughout.\n\nImage3 preceding end is an ALREADY FORWARD-EXTENDED KNIFE ARM, not waistguard.0-1 keep thatexactguard;2-5 retract knife smoothlytowardwaist andcoilhips, preparing renewed thrust;6-9 FULLY EXTEND singleknife armRIGHT again with forwardtorsolean and longleadstep. Knife steeltriangleTIPpointsRIGHT, glovedhandx63..67, pointedsteeltipx73..77, rootx40. Same7pixelhood and torso/limbwidth, no bodyresize.10-12 recover13-15exactneutralidle. Steelknife is shortpointed TRIANGLE7px, NEVERrectangulargun/pistol/bar, no trigger.\n\nImage3 is authoritative INITIAL pose only. Preserve SAME7pixelhood/shoulder/torso actualgeometry from Image1, crouchedkneesdoNOTmean scaledupstandingheight. ONE dagger total in same anatomical rightglovedarm, otherhandemptyblackglove. Trulytransparentbackground, no labeledgrid/noeffects/AA/blur/halo. NO exposedhair/whitelapel oldcharacter.",
+	  "corrected_from_generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-3f4f1c51-2a38-475b-8a10-fdabf6bbf1b8.png",
+	  "correction_reason": "Replace gun-like rectangular steel bar with one short tapered triangular dagger, preserving all body poses."
+	},
+	{
+	  "view": "side_view",
+	  "direction": "right",
+	  "action": "crouch",
+	  "name": "side_view_right_crouch",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_side_view_right_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nEXACT SIDE PROFILE facingRIGHT, nose/hoodbrim/chest/knife forwardaxis pointsRIGHT. Do NOT show front/back.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nSIDE CROUCH DOWN / HOLD / STAND UP,16frames.0 originalneutralstand;1-6 progressively bendknees andlowerpelvis, leanhood/torsoforward, gloveddagger heldclose, coatfolds/tails settle;7-9 deepstablecrouchedhold, compressedlegpose about14nativepixels highINCLUDINGsame7pixelhood;10-15 standupsmoothly, endingoriginalneutral. BOTH BOOTS stay atsamebaseline42. Fullbodysize/hood/torso neverrescale. Onlyjoints bend. Knee-length coatfolds away fromground, no disappearinglegs orwizardrobe. Source14pxcrouch is NOT toberescaled28.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-41a62a53-7316-4a64-a07a-8d963155c6f5.png"
+	},
+	{
+	  "view": "side_view",
+	  "direction": "right",
+	  "action": "crouch_stab",
+	  "name": "side_view_right_crouch_stab",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_side_view_right_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nEXACT SIDE PROFILE facingRIGHT, nose/hoodbrim/chest/knife forwardaxis pointsRIGHT. Do NOT show front/back.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nSIDE CROUCH STAB,16frames. Wholeclip stays in sameDEEP crouchedpose as crouchholdframe7, bootsplantat42, same7pixelhood andactualbodyanatomy, legs folded heightabout14.0-4 lowdaggerguard;5coil;6-9 horizontal arm and7pixeldaggerextend directlytowardRIGHT at kneelevel, shoulderturn/coatflutter slight, no standingup;10-15 retracttodeepcrouchguard. Fullycontained, no enlargement orheadchange. ONE dagger, notgun.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-f6becd14-139e-4d63-b3a3-8bd5b6e89493.png"
+	},
+	{
+	  "view": "side_view",
+	  "direction": "right",
+	  "action": "idle",
+	  "name": "side_view_right_idle",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_side_view_right_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nEXACT SIDE PROFILE facingRIGHT, nose/hoodbrim/chest/knife forwardaxis pointsRIGHT. Do NOT show front/back.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nIDLE/BREATHING, 16-frame slow seamless loop. Use previous approved style of subtle drawn breath: slight shoulder/uppercoat rise/fall by ONE native pixel and tiny frayed hem flutter. Feet and ROOT stationary, do not move whole figure up/down. HOOD and the 2-3 visible FACE PIXELS stay pixel-for-pixel identical at the same location. No facial expression change. Arms/dagger mostly still, no stepping. Frames0-3 neutral;4-7 tiny uppercoat inhalation;8-11 breathe out;12-15 recoverneutral. Frame15 matches frame0 for seam. Same hood7 and body28 asreference.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-ce6f77f7-bc83-4c26-998f-017d93c45e30.png"
+	},
+	{
+	  "view": "side_view",
+	  "direction": "right",
+	  "action": "jump",
+	  "name": "side_view_right_jump",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_side_view_right_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nEXACT SIDE PROFILE facingRIGHT, nose/hoodbrim/chest/knife forwardaxis pointsRIGHT. Do NOT show front/back.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nSIDE JUMP,16frames for enginephysics phases.0 neutral,1-2 compress knees preload (hood andlimbs unchangedsize);3-6 spring/uplift with legs tuck and coat catchesair;7-8 apex small compacttuck;9-12 descend, extend legs ready toland, coat rises slightly withairdrag;13-14 knees absorb LANDING withbothboots touching baseline;15 exactneutralreference. Poseanimation in-place: ENGINE handles worldverticaljump, do not paint additional large entirefiguremovement withinatlas. Keep darkboots alignedy42 at takeoff/landing0/1/2/13/14/15; aerial limbsarticulate coherently, rootfixed. No source bodyresizing tofit bentknees.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-71cb088a-0725-4342-ac63-12cdd59a8352.png"
+	},
+	{
+	  "view": "side_view",
+	  "direction": "right",
+	  "action": "run",
+	  "name": "side_view_right_run",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_side_view_right_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nEXACT SIDE PROFILE facingRIGHT, nose/hoodbrim/chest/knife forwardaxis pointsRIGHT. Do NOT show front/back.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nFAST LOW RUN, 16-frame seamless sprint cycle inspired by Katana ZERO movement. Torso leans forward35-45degrees, head/hood leads, body low from knee bend and hinge at hips, long readable leg extension and snappy push-off. Preserve actual hood7/head/torso/limb sizes, never squish/scale body smaller, no bigmuscles. Dagger held low along forearm, coat tails trail with delayed whip and frayed hem flutter, still knee-length. Both arms and both legs animate coherently. Root fixed, footplant baseline. Frame15 wraps frame0 smoothly. Do not draw an upright slow walk.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-8b574785-a9a6-4b55-8dd2-0e2ec3aa3160.png"
+	},
+	{
+	  "view": "side_view",
+	  "direction": "right",
+	  "action": "stab",
+	  "name": "side_view_right_stab",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_side_view_right_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nEXACT SIDE PROFILE facingRIGHT, nose/hoodbrim/chest/knife forwardaxis pointsRIGHT. Do NOT show front/back.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nSINGLE DAGGER STAB, 16 frames, sameanatomy.0-3 neutral daggerlowguard;4-5 coil arm near waist;6-9 extend knife hand AND DAGGER directly TOWARD FACING DIRECTION;10-12 retract;13-15 returnreferenceidle. A clear forceful short stab with arm extension and small braced step, no enlarged torso/hood, no gunpunch. Actual daggerblade orientation follows facing direction.\n\nRIGHT stab: handandknife extendRIGHT, knife tipnearx44, baselinefeet42.\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-db0712e9-5c3d-4018-b05e-bc39b30314af.png"
+	},
+	{
+	  "view": "side_view",
+	  "direction": "right",
+	  "action": "walk",
+	  "name": "side_view_right_walk",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_side_view_right_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-59203369-9ff4-43df-b2fe-6d9a661c31c8.png",
+        "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_reference.png"
+	  ],
+	  "prompt": "Use case: stylized-concept, PIXEL sprite-sheet correction. Image1 is a 4x4 sixteen-frame walking atlas. Image2 is the same approved character at the correct native size.\nEDIT ONLY WEAPON CONSISTENCY, preserve the exact same sixteen walking poses, hood/face/coat/limb anatomy, pixelgrid, colorpalette, worncoat details, cellpositions and transparentbackground. Do not alter scale, body proportions, phase, outfit or posture.\nThere must be ONE short silver pointed DAGGER TOTAL per figure throughout the walk. The SAME anatomical foreground RIGHT GLOVED ARM nearest the camera carries it throughout the whole stride; it may swing forward and back naturally, but do not transfer it to the far arm. The OTHER/FAR hand is an EMPTY BLACK GLOVE, with absolutely no white/gray steel sticking out.\nIn row1 column1 (frame00), row4 columns3 and4 (frames14 and15), two silver daggers are currently visible: REMOVE THE EXTRA dagger from the far hand and restore empty transparent pixels or the correct black empty glove. Keep a single dagger in foreground hand. Check all other cells for the same single-hand continuity. No duplicate blade, no spare knife, no glowing white glove/finger, no gun.\nAll sixteen original complete figures stay intact, 4columns4rows in chronological order. Same hood7nativepixels and 28nativepixelstandingbody density as Image2, facehiddenexcepttinyfewpixels, same shoulders andtorso. Sharpflatlowrespixels, no blur/antialias/new detail/extra limbs/labels/grid/glow/shadows. Keep genuine transparent empty background.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-d95d5607-fcc6-4de1-a4bf-e92c66dd5d36.png",
+	  "original_prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nEXACT SIDE PROFILE facingRIGHT, nose/hoodbrim/chest/knife forwardaxis pointsRIGHT. Do NOT show front/back.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nWALK, 16 chronological frames of a smooth complete seamless stride cycle. Moderate confident stride, opposite arm/leg swing, heel contact -> weighttransfer -> passing -> toeoff -> opposite heel contact. Coat tails follow with small delayed flutter. Hood7, shoulders/torso constant; no costume or expression change. Root stays centered and feet baseline fixed; intentional pelvis vertical movement <=1nativepixel, sourceframe phase samplinggridconsistent. Frame15 smoothly wraps frame0, no pause/duplicate large pose.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "corrected_from_generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-59203369-9ff4-43df-b2fe-6d9a661c31c8.png",
+	  "correction_reason": "Remove duplicated dagger; only the foreground gloved arm carries one blade."
+	},
+	{
+	  "view": "top_down",
+	  "direction": "down",
+	  "action": "attack1",
+	  "name": "top_down_down_attack1",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		64,
+		64
+	  ],
+	  "pivot": [
+		32,
+		52
+	  ],
+	  "reference_name": "hooded_top_down_down_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-8b286035-4ea4-40aa-9ecb-b2fcd9de990a.png",
+        "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_down_reference.png"
+	  ],
+	  "prompt": "Use case: stylized-concept, pixel sprite-sheet edit. Image1 is the NEW hooded worn-trenchcoat FRONT/DOWN attack1 atlas, Image2 canonical native character. Correct ONLY duplicated weapon and preserve all16 poses, hood/face/coat proportions, pixelgrid, wornmaterial, glovedhands, cellpositions/transparentbackground. In zero-based frame5 (ROW2 COLUMN2) and any other duplicate, ONE figure must wield exactly ONE silver pointed short DAGGER: retain the real swinging knife in the foreground right gloved hand, REMOVE the extra blade from the other hand. Other hand stays EMPTY BLACK GLOVE, no white steel/no glowing fingers. Do NOT change camera: FRONT DOWN towardviewer, do not convert toside/back. Keep single physical dagger following the same anatomical arm throughout slash, no detached blade remnants from earlierposes. Fourcolumns/fourrows, all16figures fullcontained, same original size and poses. No resized/anatomicallylarger head/torso, no shadows/AA/blur/glow/text/grid. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-a72f8599-abb6-4b94-84cb-4ab6c253d6bd.png",
+	  "original_prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nOVERHEAD FRONT view facingDOWN towardviewer/screenBOTTOM. Fronthoodopening/coatfrontvisible; torso/shoudersviewedfromabove, NEVER turninto sideprofile. Stabs extendDOWN thepicture into lowerforeground, pointbelowhand/body, NOT right/upperright.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 64x64 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(32,52); neutralhoodtop24; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nCOMBO1 BIG DIAGONAL DOWNWARD SLASH,16frames.0-2 originalneutralguard;3-5 lift dagger above/behind hood with clear highwindup;6-9 swing in a large35nativepixel diagonal arc from highback through highfront to lowforward; rotate shoulder andhips, fully extended elbow and braced lead step6pixels, same7pixelhood/limbthickness, no bodyenlargement.10-12 low followthrough;13-15 FINISH IN LOW CROSSBODY GUARD with dagger near lead knee, notneutralidle. This guard is where next reverse/upwardslash starts. ONE dagger, sleeve/torso samewidth asreference.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "corrected_from_generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-8b286035-4ea4-40aa-9ecb-b2fcd9de990a.png",
+	  "correction_reason": "Removed duplicated blade from frame5 and checked one dagger throughout."
+	},
+	{
+	  "view": "top_down",
+	  "direction": "down",
+	  "action": "attack2",
+	  "name": "top_down_down_attack2",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		64,
+		64
+	  ],
+	  "pivot": [
+		32,
+		52
+	  ],
+	  "reference_name": "hooded_top_down_down_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_down_reference.png",
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_down_raw_identity_reference.png",
+        "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_down_attack1_raw_guard_reference.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is the SAME VIEW concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nOVERHEAD FRONT facingDOWN towardviewer, NEVERrotateinto side/back. Visiblefaceonlyfewfixedpixels.\n\nEXACT4x4 chronological16frameatlas,64x64nativecells enlargedNN, foot/root32,52, neutralheight28/hood7 and shoulder/torso actualwidth fromImage1. Allsprites/knifeinsidecell. Image3 is ONE exact LOWGUARD at endoffirstslash: begin with this posture in0-2, do notchangebody/hoodsize tofillcell. Largerarmarc/stepONLY changespose.\n\nCOMBO2 BIG REVERSE/BACKHAND RISING SLASH,16frames.0-2 begin EXACT preceding firstslash finalLOWCROSSBODYGUARD;3-5 coil from lowblade position at lead knee;6-9 reverse the firstarc, swing the blade UP in a broad35nativepixel arc across the front to above/opposite hood, opposite hip/shoulder twist, extended elbow, widelegs WITHOUT increasing bodyanatomy.10-12 control highfollowthrough;13-15 FINISH waist-level THRUSTREADYGUARD beside the rustwaisttie, NOTneutralidle. Hood7 and torso matchfirstattack EXACTLY; lower crouchedguard is a POSE and mustnot be stretched tostanding28px. No largehead/shoulders/longerarms thanfirststage.\n\nKnife stays ONLY in the SAME anatomical foreground rightglovedarm throughout. Other hand is emptyBLACKGLOVE inEVERYframe; neverleave extra steel from earlierposes. All16figures contain exactlyONE7pixeldagger, no ghostdoubleknife. End13-15 with waistTHRUSTREADYguard, notidle. The crouchedstance is naturallyshorter, notnormalized tostanding28. Sharppixelgrid/transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-d2ed1240-e703-4fbf-8d68-b3c801da17e6.png"
+	},
+	{
+	  "view": "top_down",
+	  "direction": "down",
+	  "action": "attack3",
+	  "name": "top_down_down_attack3",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		64,
+		64
+	  ],
+	  "pivot": [
+		32,
+		52
+	  ],
+	  "reference_name": "hooded_top_down_down_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_down_reference.png",
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_down_raw_identity_reference.png",
+        "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_down_attack2_raw_guard_reference.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is the SAME VIEW identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nOVERHEAD FRONT view facingDOWN/viewer/SCREEN BOTTOM; neverturnintoside/back.\n\nEXACT4columns4rows sixteenchronological completefigures in equal64x64NATIVE cells enlargedNN. Root-foot(32,52), neutralhoodtop24; largeremptycanvasneverbodyenlargement. Allbody/knifeinsidesafe1pixelmargins.\n\nCOMBO3 FINISHING FORWARD THRUST,16frames.0-2 begin EXACT previous secondslash finalWAISTGUARD;3-5 coil rearleg and daggerbesidewaist;6-9 fullyextend knife arm directlyTOWARD FACINGDIRECTION, bigtorsolean35-45degrees and leadfootstep6-8pixels, shoulders/hips drive forward, longestreadable reach, ONE7pixel pointeddagger. Samehood7, shoulder/torso/limbwidth asfirstslash; no swollenbody/gianthead/extended anatomy; movement comes frompose andstep.10-12 retractsmoothly;13-15 returncanonicalneutralidle. Reference posture appearsbefore andafterbut keep EXACTsame scale throughout.\n\nCRITICAL FACING: DOWN FINISHER, reaching forearm comes DOWN the FRONT of torso into LOWER foreground. Tip is BELOW hand and body, NEVER toRIGHT/UPPERRIGHT. Image3 precedingguard is chest-level daggerpointDOWN;0-2 holdthisexactposture,3-5drawarmtowardwaist+coil,6-9 lean shoulder/torso TOWARDVIEWER and extendhand DOWN y47->50->52->53, steeltrianglepointDOWN y55->58->60->61 (root32,52). Bothknees/boots brace, hand/knife advance belowbelt/knees near/belowleadboot. Axiswithin15degrees ofscreenDOWN; no sideways punch. Hood/bodyanatomy exactlysame as firstslash, facefewpixelscoldhidden.10-12retract13-15neutralidle. The dagger is 7pxpointedtriangle, ONLYone.\n\nImage3 is authoritative INITIAL pose only. Preserve SAME7pixelhood/shoulder/torso actualgeometry from Image1, crouchedkneesdoNOTmean scaledupstandingheight. ONE dagger total in same anatomical rightglovedarm, otherhandemptyblackglove. Trulytransparentbackground, no labeledgrid/noeffects/AA/blur/halo. NO exposedhair/whitelapel oldcharacter.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-66ac4196-f140-48ba-8b6f-8d932a8afaed.png"
+	},
+	{
+	  "view": "top_down",
+	  "direction": "down",
+	  "action": "idle",
+	  "name": "top_down_down_idle",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_top_down_down_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_down_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nOVERHEAD FRONT view facingDOWN towardviewer/screenBOTTOM. Fronthoodopening/coatfrontvisible; torso/shoudersviewedfromabove, NEVER turninto sideprofile. Stabs extendDOWN thepicture into lowerforeground, pointbelowhand/body, NOT right/upperright.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nIDLE/BREATHING, 16-frame slow seamless loop. Use previous approved style of subtle drawn breath: slight shoulder/uppercoat rise/fall by ONE native pixel and tiny frayed hem flutter. Feet and ROOT stationary, do not move whole figure up/down. HOOD and the 2-3 visible FACE PIXELS stay pixel-for-pixel identical at the same location. No facial expression change. Arms/dagger mostly still, no stepping. Frames0-3 neutral;4-7 tiny uppercoat inhalation;8-11 breathe out;12-15 recoverneutral. Frame15 matches frame0 for seam. Same hood7 and body28 asreference.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-a28f5e74-b599-45ad-b782-0a95ac8439f6.png"
+	},
+	{
+	  "view": "top_down",
+	  "direction": "down",
+	  "action": "run",
+	  "name": "top_down_down_run",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_top_down_down_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_down_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nOVERHEAD FRONT view facingDOWN towardviewer/screenBOTTOM. Fronthoodopening/coatfrontvisible; torso/shoudersviewedfromabove, NEVER turninto sideprofile. Stabs extendDOWN thepicture into lowerforeground, pointbelowhand/body, NOT right/upperright.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nFAST LOW RUN, 16-frame seamless sprint cycle inspired by Katana ZERO movement. Torso leans forward35-45degrees, head/hood leads, body low from knee bend and hinge at hips, long readable leg extension and snappy push-off. Preserve actual hood7/head/torso/limb sizes, never squish/scale body smaller, no bigmuscles. Dagger held low along forearm, coat tails trail with delayed whip and frayed hem flutter, still knee-length. Both arms and both legs animate coherently. Root fixed, footplant baseline. Frame15 wraps frame0 smoothly. Do not draw an upright slow walk.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-c487f886-96cb-4b0a-8bf1-42af2944a71e.png"
+	},
+	{
+	  "view": "top_down",
+	  "direction": "down",
+	  "action": "stab",
+	  "name": "top_down_down_stab",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_top_down_down_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_down_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nOVERHEAD FRONT view facingDOWN towardviewer/screenBOTTOM. Fronthoodopening/coatfrontvisible; torso/shoudersviewedfromabove, NEVER turninto sideprofile. Stabs extendDOWN thepicture into lowerforeground, pointbelowhand/body, NOT right/upperright.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nSINGLE DAGGER STAB, 16 frames, sameanatomy.0-3 neutral daggerlowguard;4-5 coil arm near waist;6-9 extend knife hand AND DAGGER directly TOWARD FACING DIRECTION;10-12 retract;13-15 returnreferenceidle. A clear forceful short stab with arm extension and small braced step, no enlarged torso/hood, no gunpunch. Actual daggerblade orientation follows facing direction.\n\nDOWN stab: hand projects toward lowerforeground, steeltriangle pointsDOWN and tip extendsnear/belowboots, insidecell y45max; never upperright.\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-f5b58b10-1e98-4636-b828-02aae813b1c0.png"
+	},
+	{
+	  "view": "top_down",
+	  "direction": "down",
+	  "action": "walk",
+	  "name": "top_down_down_walk",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_top_down_down_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_down_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nOVERHEAD FRONT view facingDOWN towardviewer/screenBOTTOM. Fronthoodopening/coatfrontvisible; torso/shoudersviewedfromabove, NEVER turninto sideprofile. Stabs extendDOWN thepicture into lowerforeground, pointbelowhand/body, NOT right/upperright.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nWALK, 16 chronological frames of a smooth complete seamless stride cycle. Moderate confident stride, opposite arm/leg swing, heel contact -> weighttransfer -> passing -> toeoff -> opposite heel contact. Coat tails follow with small delayed flutter. Hood7, shoulders/torso constant; no costume or expression change. Root stays centered and feet baseline fixed; intentional pelvis vertical movement <=1nativepixel, sourceframe phase samplinggridconsistent. Frame15 smoothly wraps frame0, no pause/duplicate large pose.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-9118b1ba-db8a-4c6e-87eb-33edd29c4893.png"
+	},
+	{
+	  "view": "top_down",
+	  "direction": "up",
+	  "action": "attack1",
+	  "name": "top_down_up_attack1",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		64,
+		64
+	  ],
+	  "pivot": [
+		32,
+		52
+	  ],
+	  "reference_name": "hooded_top_down_up_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 0,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_up_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-1dada67e-b8e7-41fa-9db5-7bb7d8490ccb.png"
+	  ],
+	  "prompt": "Use case: stylized-concept, production LOW-RES PIXEL GAME SPRITES. Draw a NEW corrected BACK-FACING UP ATTACK1 from these BACK-ONLY references. Image1 is exact native back character enlargedNN, Image2 contains ONLY its calm BACK idle poses. Preserve same worn slateblue/charcoal knee-length HOODED TRENCHCOAT, frayedhem/two tears/dustyedges, brownbacklining/rustwaisttie, slimblacklegs/boots, BLACKGLOVES and ONE small7pixeldagger. Bodyneutral28nativepixels includinghood; hoodEXACT7high about7wide; shoulder/torso sizefixed fromImage1. Larger canvas neverlargerbody.\nCRITICAL: EVERY ONE of16frames is BACK VIEW, facing UP/screenTOP/awayfromviewer. Only the BACK OF CLOSED HOOD and backcoat shoulder flap visible. ZERO face, ZERO skin-colored facepixel, ZERO hoodopening, ZERO frontlapels, ZERO nose. Do not turn head/body toside orfront at anypoint. Show BOTH arms andbackfeet frombehind. NO face visible evenwhenleaning orraisingarm.\n4columns4rows sixteencomplete chronological full-body poses, equal64x64 nativecells enlargedNN, foot/root(32,52), neutralhoodtop24, allknife/arms stayinsidecell. Sameuniformpixelgrid/18flatopaque colors, noAA/finedetail/blur/glow/noise/text/labels/grid/checkerboard/shadows/blackbackground. Trulytransparentemptybackground.\nBIG DOWNWARD/DIAGONAL SLASH IN THE UP-FACING DIRECTION, view FROMBEHIND.0-2 calmbackguard;3-5 rightglovedarm lifts the SINGLE knife above the rightshoulder beside hoodback;6-9 entire samearm swings in a broadarc OVER/IN FRONT of character TOWARD SCREEN TOP, backshoulderturns withinbackview and legsbrace, coatback/tails whip. No arm onfar side holds a spareknife.10-12 downward diagonal followthrough on rightside;13-15 settle LOWCROSSBODYGUARD with ONE dagger near rightknee, preparingrisingreturnslash. KEEPBACKCAMERA throughout, notfront. Hood7bodypartwidths unchanged during torso/hippose changes, slenderadultnotchibi/bulky. All16 hoodfaces are completelyhidden becauseweonlyseetheback. Darkgloves, no exposed hands. Single steel dagger perframe, notdoubleknife, notgun. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-ee008980-ca3c-49e7-b756-9ca27402041d.png",
+	  "original_prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nOVERHEAD BACK view facingUP/screenTOP/awayfromviewer. Onlyhoodback/backcoat visible, NOFACE inanyframe. Stabs extendUP thepicture, notsideways.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 64x64 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(32,52); neutralhoodtop24; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nCOMBO1 BIG DIAGONAL DOWNWARD SLASH,16frames.0-2 originalneutralguard;3-5 lift dagger above/behind hood with clear highwindup;6-9 swing in a large35nativepixel diagonal arc from highback through highfront to lowforward; rotate shoulder andhips, fully extended elbow and braced lead step6pixels, same7pixelhood/limbthickness, no bodyenlargement.10-12 low followthrough;13-15 FINISH IN LOW CROSSBODY GUARD with dagger near lead knee, notneutralidle. This guard is where next reverse/upwardslash starts. ONE dagger, sleeve/torso samewidth asreference.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "corrected_from_generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-e1ca24f1-a312-4f99-964f-d5f2d35fdcba.png",
+	  "generation_guard_frame": 13,
+	  "correction_reason": "Regenerated strictly from back-only references; no face/hood opening/profile turns."
+	},
+	{
+	  "view": "top_down",
+	  "direction": "up",
+	  "action": "attack2",
+	  "name": "top_down_up_attack2",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		64,
+		64
+	  ],
+	  "pivot": [
+		32,
+		52
+	  ],
+	  "reference_name": "hooded_top_down_up_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 0,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_up_reference.png",
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_up_raw_identity_reference.png",
+        "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_up_attack1_raw_guard_reference.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is the SAME VIEW identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nSTRICT ONLY BACK VIEW facingUP/screenTOP, ZERO face/skin/nose/frontlapels/hoodopening, no turntorevealface at ANY frame. Image1/2/3ALL BACK, retain backhood/backcoat shoulder flap through entireaction.\n\nEXACT4columns4rows sixteenchronological completefigures in equal64x64NATIVE cells enlargedNN. Root-foot(32,52), neutralhoodtop24; largeremptycanvasneverbodyenlargement. Allbody/knifeinsidesafe1pixelmargins.\n\nCOMBO2 BIG REVERSE/BACKHAND RISING SLASH,16frames.0-2 begin EXACT preceding firstslash finalLOWCROSSBODYGUARD;3-5 coil from lowblade position at lead knee;6-9 reverse the firstarc, swing the blade UP in a broad35nativepixel arc across the front to above/opposite hood, opposite hip/shoulder twist, extended elbow, widelegs WITHOUT increasing bodyanatomy.10-12 control highfollowthrough;13-15 FINISH waist-level THRUSTREADYGUARD beside the rustwaisttie, NOTneutralidle. Hood7 and torso matchfirstattack EXACTLY; lower crouchedguard is a POSE and mustnot be stretched tostanding28px. No largehead/shoulders/longerarms thanfirststage.\n\nImage3 is a BACK lowextended dagger guard fromfirstslash; load rightarm near knee thenrise, one physicaldagger onlyinrightglovedhand. Foreground of character is the UPPER picture; reach towardUP withbackshoulderturn, never frontcamera. End13-15 dagger pulledtowaist beside rusttie, preparethrust.\n\nImage3 is authoritative INITIAL pose only. Preserve SAME7pixelhood/shoulder/torso actualgeometry from Image1, crouchedkneesdoNOTmean scaledupstandingheight. ONE dagger total in same anatomical rightglovedarm, otherhandemptyblackglove. Trulytransparentbackground, no labeledgrid/noeffects/AA/blur/halo. NO exposedhair/whitelapel oldcharacter.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-4c20f854-6424-4126-bbde-0e167b6d12a3.png"
+	},
+	{
+	  "view": "top_down",
+	  "direction": "up",
+	  "action": "attack3",
+	  "name": "top_down_up_attack3",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		64,
+		64
+	  ],
+	  "pivot": [
+		32,
+		52
+	  ],
+	  "reference_name": "hooded_top_down_up_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 0,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_up_reference.png",
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_up_raw_identity_reference.png",
+        "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_up_attack2_raw_guard_reference.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL GAME SPRITES. Create final UP-FACING THRUST from these THREE BACK-ONLY references. Same worn charcoal/slateblue HOODED KNEE-LENGTH TRENCHCOAT, dusty raggedhem/two tears/brownlining/rustwaisttie, slimblacklegs/boots/DARKGLOVES. Head/hood7nativepixels, neutralfullbody28, shoulder/torso/limbsize EXACT Image1, no chibi/bulky/enlargedbody. Canvaspadding doesNOTresize actor.\nEVERY frame STRICTLY BACK VIEW facingUP/SCREENTOP/AWAYFROMVIEWER, ONLY closedhoodback andbackcoatshoulderflap. ZERO face/nose/skinfacialpixel/frontlapels/hoodopening/sideprofile inANY frame, evenwhileleaning. Image3 is the actual preceding waistguard with rightglovedhandknife atwaist.\nEXACT4columns4rows,16chronological fullbodyfigures, equal64x64NATIVEcells uniformlyNNenlarged. Rootfeet(32,52), neutralhoodtop24; head/hood/torso actualdimensionsneverchange betweenframe1and16. One pointed7pixeldagger, ONLY rightglovedhand onSCREEN RIGHT carriesblade, leftgloveemptythroughout.\n0-2 start EXACTImage3waistguard.3-5 drawknife back/cockrightelbow besidewaist, rearlegbraces, bodycoil.6-9 FORCEFUL FORWARD THRUST TOWARD SCREEN TOP, notrightside: lean shouldersandhood FORWARD/UP in depth, extendrightknife forearm straightUP infrontofhood/back, wristmoves(y28->24->20->18), sharp triangularsteelTIPpointsUP(y21->17->13->11), xabout34..38; knife tip ABOVE handandhood, no sideslash. LegslongstepTOWARDSUP, backcoat/tails pullwithforwardmotion, hipsdrive, sameanatomy/hood7. Deepforwardposecannotbe scaledupstanding28.10-12 smoothlydrawhandback,13-16returnexactreferencecalmbackidle.\nDagger is a smallsilver TRIANGULAR TAPERED BLADE, wide2pixelsatbase narrower1pixelpoint, blackhilt1px, nevergun/pistol/rectangularbar/trigger/secondknife. Preservewearpattern/outfit throughall16frames. Atmost18flatopaquecolors, uniformchunkypixels/noAA/smoothshading/noise/glow/finedetail/labels/grid/blackbackground/shadows. TrueTRANSPARENTbackground. No visiblehair/whitecollaroldplayer.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-8bbb05dc-1cc0-4d3e-9204-4142dd0c993c.png"
+	},
+	{
+	  "view": "top_down",
+	  "direction": "up",
+	  "action": "idle",
+	  "name": "top_down_up_idle",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_top_down_up_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 0,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-1dada67e-b8e7-41fa-9db5-7bb7d8490ccb.png",
+        "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_up_raw_identity_reference.png"
+	  ],
+	  "prompt": "Use case: stylized-concept, pixel spritesheet WEAPON correction. Image1 is sixteen original BACK-FACING UP IDLE BREATHING poses. Image2 is the SAME character BACK view with correct knife hand.\nEDIT ONLY DAGGER HAND CONSISTENCY. Keep every original body/hood/coat/leg/arm pose, exact cellpositions/size/pixelgrid/materials/colors, same fourcolumnsfourrows and all16completefigures. No newbodydetail, no resizing, no change in motion or camera. Fullytransparentbackground.\nBecause the camera sees the BACK, the character's anatomical RIGHT GLOVED HAND appears on the RIGHT side of the picture. In EVERY ONE of16cells the SAME RIGHT arm must carry exactly ONE short pointed silversteel DAGGER, just like Image2. The LEFT-hand side gloved hand is EMPTY BLACK and unarmed in everycell. The dagger must never jump from left hand to right hand between poses. Where Image1 mistakenly puts a silverblade in LEFT side hand, remove that extra/incorrect blade and show ONE small same-length pointed DAGGER attached to the RIGHT-side black glove. Keep natural forward/backarm swing but maintain anatomical right-hand ownership. If knife already in right hand, retain it. Never two knives. No white glove/finger, no rectangular gun.\nBACK CAMERA UNCHANGED: ZERO face, ZERO skin or hoodopening, only the closed backhood and coatback shoulderflap; don't exposefrontlapels/nose inanyframe. Same worn slateblue/charcoal knee-lengthtrenchcoat/brownlining/rustwaisttie/slimblackboots/gloves, neutralbody28 andhood7nativepixels. Preserve all original pixels except the minimal weapon/black empty glove corrections. No blur/AA/noisyoutlines/glow/labels/grid/checkerboard/shadows. True transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-1dc5a6a8-cfb0-47d2-82e0-200ad9e00a90.png",
+	  "original_prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nOVERHEAD BACK view facingUP/screenTOP/awayfromviewer. Onlyhoodback/backcoat visible, NOFACE inanyframe. Stabs extendUP thepicture, notsideways.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nIDLE/BREATHING, 16-frame slow seamless loop. Use previous approved style of subtle drawn breath: slight shoulder/uppercoat rise/fall by ONE native pixel and tiny frayed hem flutter. Feet and ROOT stationary, do not move whole figure up/down. HOOD and the 2-3 visible FACE PIXELS stay pixel-for-pixel identical at the same location. No facial expression change. Arms/dagger mostly still, no stepping. Frames0-3 neutral;4-7 tiny uppercoat inhalation;8-11 breathe out;12-15 recoverneutral. Frame15 matches frame0 for seam. Same hood7 and body28 asreference.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "corrected_from_generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-1dada67e-b8e7-41fa-9db5-7bb7d8490ccb.png",
+	  "correction_reason": "Keep one dagger in the same anatomical right hand in back-facing idle/walk."
+	},
+	{
+	  "view": "top_down",
+	  "direction": "up",
+	  "action": "run",
+	  "name": "top_down_up_run",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_top_down_up_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_up_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nOVERHEAD BACK view facingUP/screenTOP/awayfromviewer. Onlyhoodback/backcoat visible, NOFACE inanyframe. Stabs extendUP thepicture, notsideways.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nFAST LOW RUN, 16-frame seamless sprint cycle inspired by Katana ZERO movement. Torso leans forward35-45degrees, head/hood leads, body low from knee bend and hinge at hips, long readable leg extension and snappy push-off. Preserve actual hood7/head/torso/limb sizes, never squish/scale body smaller, no bigmuscles. Dagger held low along forearm, coat tails trail with delayed whip and frayed hem flutter, still knee-length. Both arms and both legs animate coherently. Root fixed, footplant baseline. Frame15 wraps frame0 smoothly. Do not draw an upright slow walk.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-75434ab0-bd0a-4d51-93c5-57975bfc2675.png"
+	},
+	{
+	  "view": "top_down",
+	  "direction": "up",
+	  "action": "stab",
+	  "name": "top_down_up_stab",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_top_down_up_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 3,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_up_reference.png",
+        "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png"
+	  ],
+	  "prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nOVERHEAD BACK view facingUP/screenTOP/awayfromviewer. Onlyhoodback/backcoat visible, NOFACE inanyframe. Stabs extendUP thepicture, notsideways.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nSINGLE DAGGER STAB, 16 frames, sameanatomy.0-3 neutral daggerlowguard;4-5 coil arm near waist;6-9 extend knife hand AND DAGGER directly TOWARD FACING DIRECTION;10-12 retract;13-15 returnreferenceidle. A clear forceful short stab with arm extension and small braced step, no enlarged torso/hood, no gunpunch. Actual daggerblade orientation follows facing direction.\n\nUP stab: reachinghand+knife extendtowardTOP, blade tipABOVEhood at y8..12, staysBACKview.\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-6df2bf1a-1f33-4228-a5e8-1ae912880f8d.png"
+	},
+	{
+	  "view": "top_down",
+	  "direction": "up",
+	  "action": "walk",
+	  "name": "top_down_up_walk",
+	  "frame_count": 16,
+	  "columns": 4,
+	  "rows": 4,
+	  "native_frame": [
+		48,
+		48
+	  ],
+	  "pivot": [
+		24,
+		42
+	  ],
+	  "reference_name": "hooded_top_down_up_reference.png",
+	  "standing_body_height": 28,
+	  "hood_height": 7,
+	  "face_visible_pixels_max": 0,
+	  "generator": "built-in image_gen",
+	  "new_character": "hooded_worn_trenchcoat",
+	  "referenced_image_paths": [
+		"C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-e8e52069-5505-40b7-8cd9-d8a63f00d88a.png",
+        "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_top_down_up_raw_identity_reference.png"
+	  ],
+	  "prompt": "Use case: stylized-concept, pixel spritesheet WEAPON correction. Image1 is sixteen original BACK-FACING UP WALKING poses. Image2 is the SAME character BACK view with correct knife hand.\nEDIT ONLY DAGGER HAND CONSISTENCY. Keep every original body/hood/coat/leg/arm pose, exact cellpositions/size/pixelgrid/materials/colors, same fourcolumnsfourrows and all16completefigures. No newbodydetail, no resizing, no change in motion or camera. Fullytransparentbackground.\nBecause the camera sees the BACK, the character's anatomical RIGHT GLOVED HAND appears on the RIGHT side of the picture. In EVERY ONE of16cells the SAME RIGHT arm must carry exactly ONE short pointed silversteel DAGGER, just like Image2. The LEFT-hand side gloved hand is EMPTY BLACK and unarmed in everycell. The dagger must never jump from left hand to right hand between poses. Where Image1 mistakenly puts a silverblade in LEFT side hand, remove that extra/incorrect blade and show ONE small same-length pointed DAGGER attached to the RIGHT-side black glove. Keep natural forward/backarm swing but maintain anatomical right-hand ownership. If knife already in right hand, retain it. Never two knives. No white glove/finger, no rectangular gun.\nBACK CAMERA UNCHANGED: ZERO face, ZERO skin or hoodopening, only the closed backhood and coatback shoulderflap; don't exposefrontlapels/nose inanyframe. Same worn slateblue/charcoal knee-lengthtrenchcoat/brownlining/rustwaisttie/slimblackboots/gloves, neutralbody28 andhood7nativepixels. Preserve all original pixels except the minimal weapon/black empty glove corrections. No blur/AA/noisyoutlines/glow/labels/grid/checkerboard/shadows. True transparentbackground.",
+	  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-4a247c36-e0c8-4c17-a0d4-a84d04dbc3e4.png",
+	  "original_prompt": "Use case: stylized-concept. Production TRUE LOW-RES PIXEL sprite animation for Nightwalker. Image1 is the EXACT approved canonical character enlarged NEAREST, the authoritative ANATOMY and PIXEL SCALE reference. Image2 is its three-view concept identity only.\nNEW PLAYER: worn KNEE-LENGTH slate-blue/charcoal TRENCH COAT, HOOD UP, asymmetrical frayed hem with two small tears, few dusty worn edge pixels, warm dark-brown lining through tear, dark rust-brown waist tie; slim black trousers/boots, DARK GLOVES, ONE short pointed silver steel DAGGER about7 nativepixels long. Hood shadow hides face except TWO OR THREE tiny muted bone/skin pixels TOTAL. No visible hair, no facial detail, no white lapel, no smile/blink/mouth movement. Same cold hidden face and same outfit/materials in every frame.\nSTRICT body proportions and pixel scale LOCKED TO IMAGE1: neutral fullbody INCLUDING HOOD28 nativepixels tall, HOOD7 pixels high and width8front/back or6profile; shoulders8front/back, profile torso5. The head/hood and torso NEVER inflate in attacks, even in crouched guard. Bending knees, leaning body and extending arms changes pose, NEVER rescales anatomy. Keep hood same nativepixel dimensions across all16 poses. Slender adult, notchibi/bulky. Exactly one uniform nativepixelgrid. Atmost18flatopaque colors, no antialias/smoothshading/gradients/glow/noise/finehighdetail. Use chunky small blocks; source display is integer-nearest enlarged. All empty background TRANSPARENT, no black backdrop/halo/checkerboard/grid/text/labels/scenery/shadow/enemies/effects. Gloves hide handskin, ONLY face may use skin/bone pixels. Knife is a clear short triangle, NOT a gun.\nKeep coat length knee-length and ragged identity identical; subtle inertia of coat tails should follow movement. Legs separate/readable, coat never hides entire legs or becomes a wizardrobe/cape. No giant muscles or longer limbs in laterattackstages.\n\nOVERHEAD BACK view facingUP/screenTOP/awayfromviewer. Onlyhoodback/backcoat visible, NOFACE inanyframe. Stabs extendUP thepicture, notsideways.\n\nSHEET: EXACT4columns by4rows =16 complete chronological fullbodyfigures in equal 48x48 NATIVE cells, uniformlyenlarged withNN. Root-footpivot(24,42); neutralhoodtop14; standingbody28 but hood7same inEVERYpose. Thelargercellonlyadds transparentspace, neverenlarges character. Alllimbs/knife insideowncell, no labels/grid. Chronological lefttoright/topbottom, no missing/mergedframes.\n\nWALK, 16 chronological frames of a smooth complete seamless stride cycle. Moderate confident stride, opposite arm/leg swing, heel contact -> weighttransfer -> passing -> toeoff -> opposite heel contact. Coat tails follow with small delayed flutter. Hood7, shoulders/torso constant; no costume or expression change. Root stays centered and feet baseline fixed; intentional pelvis vertical movement <=1nativepixel, sourceframe phase samplinggridconsistent. Frame15 smoothly wraps frame0, no pause/duplicate large pose.\n\n\n\nEveryframe MUST have the SAME7pixelhood and same shoulder/torso anatomy as Image1. Bent crouch/guard is not a change inbody size. No inherited exposed-hair white-lapel character. Transparentbackground.",
+	  "corrected_from_generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-e8e52069-5505-40b7-8cd9-d8a63f00d88a.png",
+	  "correction_reason": "Keep one dagger in the same anatomical right hand in back-facing idle/walk."
+	}
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "constant_scale": 0.11764705882352941,
+  "sampling_phase": [
+    0,
+    0
+  ],
+  "measurement_source": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-21fa29b3-4af6-4597-a6a9-f1b8adcf3630.png",
+  "body_frame0_bbox": [
+    143,
+    36,
+    263,
+    274
+  ],
+  "body_frame0_height": 238,
+  "body_native_reference_height": 28,
+  "hood_frame0_slate_component_bbox": [
+    186,
+    40,
+    233,
+    92
+  ],
+  "expected_native_slate_cap_wh": [
+    5.529411764705882,
+    6.117647058823529
+  ],
+  "basis": "Standing source0 boots-to-crown checked against approved side idle28px and hood7px; constant scale preserves crouch/lean and limb lengths; cap measurements independently exclude arms/mask",
+  "hood_boxes": {
+    "8": [
+      177,
+      68,
+      223,
+      122
+    ],
+    "9": [
+      168,
+      68,
+      211,
+      122
+    ]
+  },
+  "hood_box_notes": "Frames8/9 slate hood touches raised sleeve; manually measured cap region guides waist search and metrics, never changes sprite pixels."
+}

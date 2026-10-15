@@ -1,0 +1,25 @@
+{
+  "generator": "built-in image_gen",
+  "name": "hooded_trenchcoat_three_view_master",
+  "date": "2026-10-14",
+  "generated_path": "C:/Users/31459/.codex/generated_images/01a13585-e7c6-7633-9b84-d80f33782b30/exec-ca09bec9-ee9b-4b1c-bd25-315f40d48a33.png",
+  "columns": 3,
+  "rows": 1,
+  "views": [
+    "top_down_down",
+    "side_view_right",
+    "top_down_up"
+  ],
+  "native_frame": [
+    48,
+    48
+  ],
+  "pivot": [
+    24,
+    42
+  ],
+  "standing_height": 28,
+  "hood_height": 7,
+  "face_pixels": 3,
+  "prompt": "Use case: stylized-concept. Create a NEW original low-resolution pixel-art player for the indie action game Nightwalker.\nCharacter design: a slender adult urban drifter in a WORN KNEE-LENGTH TRENCH COAT with the HOOD UP. No visible hair. Hood interior is nearly black and hides the entire face except TWO OR THREE tiny muted bone/skin pixels under the brim, with an unchanged cold unreadable expression. No eyes/mouth detailing. Worn dark slate-blue/charcoal coat, asymmetrical frayed hem with two small ragged tears, a few dusty faded edge pixels, dark warm-brown lining visible through a tear, dark rust-brown waist tie, slim black trousers and boots, dark gloves. One small pointed steel dagger, not a sword or firearm, lowered in a relaxed neutral guard. Coat should feel aged and practical, not a clean superhero cape, shiny armor, poncho, or wizard robe. Legs remain clearly visible below the knee-length hem.\nTrue coarse game pixel art, in the visual density of Katana ZERO sprites. STRICT NATIVE ANATOMY: full standing height INCLUDING HOOD =28 native pixels, hood=7 pixels high; front hood width6, profile hood width5; front shoulders8 pixels wide, profile torso5 pixels wide, slim coat torso; tiny face opening only2-3 native pixels TOTAL. Do not make a large cute head. Consistent adult anatomy across every view. Max18 solid flat colors, no smooth shading/AA, no outlines made of noisy tiny pixels, no gradients/blur/glow, no high-detail textures. All pixels equal square sizes. Keep sharp chunky clusters.\nDeliver a clean THREE-VIEW neutral turnaround, three equal cells side by side, same scale/height/feet baseline: LEFT front-facing DOWN toward viewer with shoulder line seen slightly from above, CENTER exact side profile facing RIGHT, RIGHT back-facing UP with hood back and no face visible. Full body and dagger fully contained in each cell with broad transparent margins. Identical hood/coat/tie/gloves/boots/dagger design in all views. Native cell48x48, root-foot pivot24,42, top of hood near14; display uniformly enlarged using nearest-neighbor only. No captions, words, labels, dividing lines, grid, checkerboard, vignette, shadows, ground, enemies, scenery, or atmospheric glow. Fully transparent empty background, fully opaque solid character pixels.\nEmphasize the battered trench coat and deep hood shadow, a little warm rust/brown contrasting the desaturated blue coat, silver knife. Calm neutral pose, not hunched standing; silhouette slender and compact. This is an entirely redesigned playable character, not the previous exposed-hair/lapel outfit."
+}

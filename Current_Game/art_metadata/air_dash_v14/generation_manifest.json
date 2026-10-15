@@ -1,0 +1,671 @@
+{
+  "animation": "air_dash_stab",
+  "mode": "built-in image_gen",
+  "prompt_file": "prompt.txt",
+  "source_file": "air_dash_stab_source.png",
+  "source_original": "C:\\Users\\31459\\.codex\\generated_images\\01a13f30-752d-7b42-8e9d-15319dd2e6c9\\exec-058018c0-7e7a-4239-a7fc-ea97c0e25513.png",
+  "source_sha256": "4c5ec8233162572f4b3deb369aa1642d3d9669b1fbd1d741eb9aa151bd3fad20",
+  "targeted_frame9_edit": {
+    "source_file": "air_dash_stab_frame9_edit_source.png",
+    "source_original": "C:\\Users\\31459\\.codex\\generated_images\\01a13f30-752d-7b42-8e9d-15319dd2e6c9\\exec-6a8a5e8b-dcfc-4833-a889-212d3e0ebb91.png",
+    "sha256": "1a47691308ac8cab01d4a9731987e184be751ea14d8fd0ae9f19e229187f189a",
+    "prompt_file": "frame9_edit_prompt.txt",
+    "used_cells": [
+      9
+    ],
+    "other_15_frames": "Only original source cells used; edited sheet changes outside cell9 discarded."
+  },
+  "references": [
+    "air_idle_registered_reference.png",
+    "hero_air_identity_reference.png",
+    "motion_scale_reference.png"
+  ],
+  "source_size": [
+    1355,
+    1161
+  ],
+  "source_grid": [
+    4,
+    4
+  ],
+  "source_cell": [
+    338.75,
+    290.25
+  ],
+  "frames_per_direction": 16,
+  "directions": [
+    "right",
+    "left"
+  ],
+  "native_frame": [
+    112,
+    96
+  ],
+  "pivot": [
+    56,
+    84
+  ],
+  "uniform_sampling_scale_all_frames": 0.18,
+  "source_anchor_all_frames": [
+    180,
+    277
+  ],
+  "registration": "one uniform sampling transform for all 16 frames; no per-frame body resize or posture edit",
+  "mirroring": "left = horizontal flip plus 1 pixel right; x_left=112-x_right, preserving pivot56",
+  "blade_detection": "rightmost on-sprite steel palette indices14/15/16; relative to foot(56,84)",
+  "animation_fps": 40,
+  "loop": false,
+  "active_frames": [
+    6,
+    7,
+    8,
+    9
+  ],
+  "palette": [
+    "11141a",
+    "20242b",
+    "303842",
+    "414b58",
+    "566170",
+    "6b7480",
+    "8a8a85",
+    "33251f",
+    "533729",
+    "76513a",
+    "a07a5b",
+    "c5a18a",
+    "e1b999",
+    "5a6268",
+    "8e999f",
+    "bbc2c3",
+    "e5e8e0",
+    "75695a"
+  ],
+  "metrics_right": [
+    {
+      "frame": 0,
+      "opaque_bbox": [
+        42,
+        56,
+        73,
+        83
+      ],
+      "body_bbox_without_steel": [
+        42,
+        56,
+        73,
+        83
+      ],
+      "body_height": 27,
+      "steel_tip_native": [
+        70,
+        75
+      ],
+      "steel_tip_relative": [
+        14,
+        -9
+      ],
+      "opaque_colors": 13
+    },
+    {
+      "frame": 1,
+      "opaque_bbox": [
+        41,
+        59,
+        72,
+        83
+      ],
+      "body_bbox_without_steel": [
+        41,
+        59,
+        72,
+        83
+      ],
+      "body_height": 24,
+      "steel_tip_native": [
+        69,
+        76
+      ],
+      "steel_tip_relative": [
+        13,
+        -8
+      ],
+      "opaque_colors": 13
+    },
+    {
+      "frame": 2,
+      "opaque_bbox": [
+        41,
+        60,
+        72,
+        82
+      ],
+      "body_bbox_without_steel": [
+        41,
+        60,
+        72,
+        82
+      ],
+      "body_height": 22,
+      "steel_tip_native": [
+        69,
+        75
+      ],
+      "steel_tip_relative": [
+        13,
+        -9
+      ],
+      "opaque_colors": 12
+    },
+    {
+      "frame": 3,
+      "opaque_bbox": [
+        39,
+        59,
+        71,
+        82
+      ],
+      "body_bbox_without_steel": [
+        39,
+        59,
+        71,
+        82
+      ],
+      "body_height": 23,
+      "steel_tip_native": [
+        67,
+        74
+      ],
+      "steel_tip_relative": [
+        11,
+        -10
+      ],
+      "opaque_colors": 11
+    },
+    {
+      "frame": 4,
+      "opaque_bbox": [
+        39,
+        61,
+        74,
+        82
+      ],
+      "body_bbox_without_steel": [
+        39,
+        61,
+        74,
+        82
+      ],
+      "body_height": 21,
+      "steel_tip_native": [
+        71,
+        75
+      ],
+      "steel_tip_relative": [
+        15,
+        -9
+      ],
+      "opaque_colors": 14
+    },
+    {
+      "frame": 5,
+      "opaque_bbox": [
+        38,
+        61,
+        79,
+        82
+      ],
+      "body_bbox_without_steel": [
+        38,
+        61,
+        79,
+        82
+      ],
+      "body_height": 21,
+      "steel_tip_native": [
+        75,
+        73
+      ],
+      "steel_tip_relative": [
+        19,
+        -11
+      ],
+      "opaque_colors": 13
+    },
+    {
+      "frame": 6,
+      "opaque_bbox": [
+        33,
+        61,
+        83,
+        81
+      ],
+      "body_bbox_without_steel": [
+        33,
+        61,
+        83,
+        81
+      ],
+      "body_height": 20,
+      "steel_tip_native": [
+        80,
+        67
+      ],
+      "steel_tip_relative": [
+        24,
+        -17
+      ],
+      "opaque_colors": 13
+    },
+    {
+      "frame": 7,
+      "opaque_bbox": [
+        31,
+        61,
+        82,
+        80
+      ],
+      "body_bbox_without_steel": [
+        31,
+        61,
+        82,
+        80
+      ],
+      "body_height": 19,
+      "steel_tip_native": [
+        79,
+        67
+      ],
+      "steel_tip_relative": [
+        23,
+        -17
+      ],
+      "opaque_colors": 13
+    },
+    {
+      "frame": 8,
+      "opaque_bbox": [
+        32,
+        58,
+        81,
+        80
+      ],
+      "body_bbox_without_steel": [
+        32,
+        58,
+        81,
+        80
+      ],
+      "body_height": 22,
+      "steel_tip_native": [
+        75,
+        65
+      ],
+      "steel_tip_relative": [
+        19,
+        -19
+      ],
+      "opaque_colors": 12
+    },
+    {
+      "frame": 9,
+      "opaque_bbox": [
+        32,
+        58,
+        81,
+        79
+      ],
+      "body_bbox_without_steel": [
+        32,
+        58,
+        81,
+        79
+      ],
+      "body_height": 21,
+      "steel_tip_native": [
+        76,
+        65
+      ],
+      "steel_tip_relative": [
+        20,
+        -19
+      ],
+      "opaque_colors": 11
+    },
+    {
+      "frame": 10,
+      "opaque_bbox": [
+        39,
+        57,
+        74,
+        80
+      ],
+      "body_bbox_without_steel": [
+        39,
+        57,
+        74,
+        80
+      ],
+      "body_height": 23,
+      "steel_tip_native": [
+        71,
+        71
+      ],
+      "steel_tip_relative": [
+        15,
+        -13
+      ],
+      "opaque_colors": 14
+    },
+    {
+      "frame": 11,
+      "opaque_bbox": [
+        40,
+        56,
+        71,
+        80
+      ],
+      "body_bbox_without_steel": [
+        40,
+        56,
+        71,
+        80
+      ],
+      "body_height": 24,
+      "steel_tip_native": [
+        67,
+        72
+      ],
+      "steel_tip_relative": [
+        11,
+        -12
+      ],
+      "opaque_colors": 12
+    },
+    {
+      "frame": 12,
+      "opaque_bbox": [
+        40,
+        55,
+        72,
+        79
+      ],
+      "body_bbox_without_steel": [
+        40,
+        55,
+        72,
+        79
+      ],
+      "body_height": 24,
+      "steel_tip_native": [
+        69,
+        72
+      ],
+      "steel_tip_relative": [
+        13,
+        -12
+      ],
+      "opaque_colors": 12
+    },
+    {
+      "frame": 13,
+      "opaque_bbox": [
+        40,
+        56,
+        73,
+        79
+      ],
+      "body_bbox_without_steel": [
+        40,
+        56,
+        73,
+        79
+      ],
+      "body_height": 23,
+      "steel_tip_native": [
+        70,
+        72
+      ],
+      "steel_tip_relative": [
+        14,
+        -12
+      ],
+      "opaque_colors": 13
+    },
+    {
+      "frame": 14,
+      "opaque_bbox": [
+        40,
+        55,
+        73,
+        79
+      ],
+      "body_bbox_without_steel": [
+        40,
+        55,
+        73,
+        79
+      ],
+      "body_height": 24,
+      "steel_tip_native": [
+        71,
+        72
+      ],
+      "steel_tip_relative": [
+        15,
+        -12
+      ],
+      "opaque_colors": 11
+    },
+    {
+      "frame": 15,
+      "opaque_bbox": [
+        42,
+        54,
+        72,
+        79
+      ],
+      "body_bbox_without_steel": [
+        42,
+        54,
+        72,
+        79
+      ],
+      "body_height": 25,
+      "steel_tip_native": [
+        70,
+        71
+      ],
+      "steel_tip_relative": [
+        14,
+        -13
+      ],
+      "opaque_colors": 14
+    }
+  ],
+  "paths": {
+    "air_dash_stab_right": [
+      [
+        14,
+        -9
+      ],
+      [
+        13,
+        -8
+      ],
+      [
+        13,
+        -9
+      ],
+      [
+        11,
+        -10
+      ],
+      [
+        15,
+        -9
+      ],
+      [
+        19,
+        -11
+      ],
+      [
+        24,
+        -17
+      ],
+      [
+        23,
+        -17
+      ],
+      [
+        19,
+        -19
+      ],
+      [
+        20,
+        -19
+      ],
+      [
+        15,
+        -13
+      ],
+      [
+        11,
+        -12
+      ],
+      [
+        13,
+        -12
+      ],
+      [
+        14,
+        -12
+      ],
+      [
+        15,
+        -12
+      ],
+      [
+        14,
+        -13
+      ]
+    ],
+    "air_dash_stab_left": [
+      [
+        -14,
+        -9
+      ],
+      [
+        -13,
+        -8
+      ],
+      [
+        -13,
+        -9
+      ],
+      [
+        -11,
+        -10
+      ],
+      [
+        -15,
+        -9
+      ],
+      [
+        -19,
+        -11
+      ],
+      [
+        -24,
+        -17
+      ],
+      [
+        -23,
+        -17
+      ],
+      [
+        -19,
+        -19
+      ],
+      [
+        -20,
+        -19
+      ],
+      [
+        -15,
+        -13
+      ],
+      [
+        -11,
+        -12
+      ],
+      [
+        -13,
+        -12
+      ],
+      [
+        -14,
+        -12
+      ],
+      [
+        -15,
+        -12
+      ],
+      [
+        -14,
+        -13
+      ]
+    ]
+  },
+  "frame_sha256": {
+    "frames/side_view_right_air_dash_stab/00.png": "e32cbbff4a464cdc03295fdf987ad3bd28d5b982865abe2ad960f6bc9c90cb06",
+    "frames/side_view_right_air_dash_stab/01.png": "4728d4db05f67dec380bdce1d7af5feae30c28bcd063748f247646a46bf3e7c1",
+    "frames/side_view_right_air_dash_stab/02.png": "99f873f36e33192e7cc158ae6441edc5ad7e36101bf231a4921aa8e63fbb5b87",
+    "frames/side_view_right_air_dash_stab/03.png": "4d8116faa164c4193878e8f70a122a8de523822c97047d083090fc98bfea7a95",
+    "frames/side_view_right_air_dash_stab/04.png": "77c3c54e92d737630a5d22229d0b09b1af96b5274ea65abbb7904b01ec51f533",
+    "frames/side_view_right_air_dash_stab/05.png": "c4a241c5ff03a1776bd3d2eadd0d89fb4f6d61f12e07648722d4108427296176",
+    "frames/side_view_right_air_dash_stab/06.png": "e677504bad33b675be338edd4e2fa64e259ed2cbf99da61c224eb08ea007eede",
+    "frames/side_view_right_air_dash_stab/07.png": "c2e6e9caed358fc0e6cf50ca6cf79587b3859ec3244f24ac32b3ec3450612a68",
+    "frames/side_view_right_air_dash_stab/08.png": "fbe7bdc69e33cacdfd031d76ce0667cf0de72ec57cb9f77d94f464891c01bd8e",
+    "frames/side_view_right_air_dash_stab/09.png": "cf6a45c82c8f97dc4b6253851e417ee2c487c5e17470401cea205e23e30e96c0",
+    "frames/side_view_right_air_dash_stab/10.png": "e94e2c752f013c82f0cd2d61ca6dbfb26e7ff69b37792b02614f0538cb15d2ba",
+    "frames/side_view_right_air_dash_stab/11.png": "9a3099dcf0d1a9c9a0e6b6f8d88d7cb10448922a2541d7bf4f504884d2125931",
+    "frames/side_view_right_air_dash_stab/12.png": "d4ccbf71986339ace25e97a9afaaf74132968369067680dd8e0be76a0998ec45",
+    "frames/side_view_right_air_dash_stab/13.png": "43814396f4833e3b6a7d731b178cba6efb9d04eaaa354655d7523ff03309e2c9",
+    "frames/side_view_right_air_dash_stab/14.png": "0eaeeda5684048159fccabc8b984c420fe157a3e1c146139c2a4dcb6fb2c40d7",
+    "frames/side_view_right_air_dash_stab/15.png": "6c5d51119df6bea7ef45aea774e7d235f80fe49d245bac505d4a792af1e1ae50",
+    "frames/side_view_left_air_dash_stab/00.png": "a0388eba3a44901e5910db5338dc3a3b433529c3b5673d29773aaa484c199d56",
+    "frames/side_view_left_air_dash_stab/01.png": "a9196d4b716351d0cb6f078ecd72f14f8833b456a520817d8303d0c06dfc1f88",
+    "frames/side_view_left_air_dash_stab/02.png": "5c35fa464b7ebe3df46d46ce06401fe711afae4bd33be970d0d51890441679d2",
+    "frames/side_view_left_air_dash_stab/03.png": "3aad41997b0a3931649adc8857629154c76d86dfa16d49fac449efdb42b4d835",
+    "frames/side_view_left_air_dash_stab/04.png": "eb75e5fbf4aad2c80b2ca6388a7249b08a02ea29f6b7935435c218a65031be57",
+    "frames/side_view_left_air_dash_stab/05.png": "781a515c735cc0db7dfca460d02e6ebdaeeb54bd8889612e7935fd00758cf061",
+    "frames/side_view_left_air_dash_stab/06.png": "96df1743595d127d3ef8ef255c8875bd3e751937394a818a0b479909236346bb",
+    "frames/side_view_left_air_dash_stab/07.png": "243ad1e59ebd38b34785264d46441124d413fbd2a3e85496a0fc2457cedd8180",
+    "frames/side_view_left_air_dash_stab/08.png": "53885bcec393473994257368b28ccc4b3fbadb10c8bb98d9cc9911ac16acb2cd",
+    "frames/side_view_left_air_dash_stab/09.png": "50effa87b70a92adc19372ed9e908c51293702d902448cd52453310f8558d8a7",
+    "frames/side_view_left_air_dash_stab/10.png": "dd7fd456611affa53f9b6e3e76d304505f0bd4c0e3edd1572f4c0d7afec1236e",
+    "frames/side_view_left_air_dash_stab/11.png": "66ef2e545a7facff41db554b5c514cd3254808a3dc01a1ca9e3cf3f557a8209b",
+    "frames/side_view_left_air_dash_stab/12.png": "620427151aa0124e7fce6d6b2df5c36ff4e37a7e7bc702826ce63e98930f0590",
+    "frames/side_view_left_air_dash_stab/13.png": "417f1ab213987f21c132ddd3686b755a82f59cce2977d51751080093a9bf06b5",
+    "frames/side_view_left_air_dash_stab/14.png": "f04c5c38134cbf885d931c9bc504ea4ead7b43ea76547bdf37579191a911c014",
+    "frames/side_view_left_air_dash_stab/15.png": "624911562566eb038557417b67055599021687ca5aa144ee63c885f6b5a96a88"
+  },
+  "preservation": {
+    "original_frames": 992,
+    "existing_blade_paths_unchanged": true,
+    "old_resource_definitions": "byte-preserved; only header load_steps changed and new resources/animation blocks inserted"
+  },
+  "body_rendering": {
+    "runtime_scale": [
+      1,
+      1
+    ],
+    "texture_filter": "nearest",
+    "runtime_offset": [
+      -56,
+      -84
+    ],
+    "fx": "Existing runtime lightblade/wind effects remain separate; no detached bright particles baked into sprite."
+  }
+}

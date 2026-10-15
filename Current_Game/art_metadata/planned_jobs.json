@@ -1,0 +1,514 @@
+{
+  "version": "v05",
+  "redesign": "worn hooded trenchcoat, face mostly hidden",
+  "generator": "built-in image_gen",
+  "source_jobs": 24,
+  "export_clips": 48,
+  "playback_frames": 768,
+  "jobs": [
+    {
+      "view": "side_view",
+      "direction": "right",
+      "action": "idle",
+      "name": "side_view_right_idle",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_side_view_right_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "side_view",
+      "direction": "right",
+      "action": "walk",
+      "name": "side_view_right_walk",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_side_view_right_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "side_view",
+      "direction": "right",
+      "action": "run",
+      "name": "side_view_right_run",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_side_view_right_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "side_view",
+      "direction": "right",
+      "action": "stab",
+      "name": "side_view_right_stab",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_side_view_right_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "side_view",
+      "direction": "right",
+      "action": "attack1",
+      "name": "side_view_right_attack1",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        52
+      ],
+      "reference_name": "hooded_side_view_right_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "side_view",
+      "direction": "right",
+      "action": "attack2",
+      "name": "side_view_right_attack2",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        52
+      ],
+      "reference_name": "hooded_side_view_right_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "side_view",
+      "direction": "right",
+      "action": "attack3",
+      "name": "side_view_right_attack3",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        80,
+        64
+      ],
+      "pivot": [
+        40,
+        52
+      ],
+      "reference_name": "hooded_side_view_right_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "side_view",
+      "direction": "right",
+      "action": "jump",
+      "name": "side_view_right_jump",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_side_view_right_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "side_view",
+      "direction": "right",
+      "action": "crouch",
+      "name": "side_view_right_crouch",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_side_view_right_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "side_view",
+      "direction": "right",
+      "action": "crouch_stab",
+      "name": "side_view_right_crouch_stab",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_side_view_right_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "down",
+      "action": "idle",
+      "name": "top_down_down_idle",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_top_down_down_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "down",
+      "action": "walk",
+      "name": "top_down_down_walk",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_top_down_down_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "down",
+      "action": "run",
+      "name": "top_down_down_run",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_top_down_down_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "down",
+      "action": "stab",
+      "name": "top_down_down_stab",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_top_down_down_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "down",
+      "action": "attack1",
+      "name": "top_down_down_attack1",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        52
+      ],
+      "reference_name": "hooded_top_down_down_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "down",
+      "action": "attack2",
+      "name": "top_down_down_attack2",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        52
+      ],
+      "reference_name": "hooded_top_down_down_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "down",
+      "action": "attack3",
+      "name": "top_down_down_attack3",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        52
+      ],
+      "reference_name": "hooded_top_down_down_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "up",
+      "action": "idle",
+      "name": "top_down_up_idle",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_top_down_up_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "up",
+      "action": "walk",
+      "name": "top_down_up_walk",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_top_down_up_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "up",
+      "action": "run",
+      "name": "top_down_up_run",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_top_down_up_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "up",
+      "action": "stab",
+      "name": "top_down_up_stab",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        48,
+        48
+      ],
+      "pivot": [
+        24,
+        42
+      ],
+      "reference_name": "hooded_top_down_up_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "up",
+      "action": "attack1",
+      "name": "top_down_up_attack1",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        52
+      ],
+      "reference_name": "hooded_top_down_up_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "up",
+      "action": "attack2",
+      "name": "top_down_up_attack2",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        52
+      ],
+      "reference_name": "hooded_top_down_up_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    },
+    {
+      "view": "top_down",
+      "direction": "up",
+      "action": "attack3",
+      "name": "top_down_up_attack3",
+      "frame_count": 16,
+      "columns": 4,
+      "rows": 4,
+      "native_frame": [
+        64,
+        64
+      ],
+      "pivot": [
+        32,
+        52
+      ],
+      "reference_name": "hooded_top_down_up_reference.png",
+      "standing_body_height": 28,
+      "hood_height": 7,
+      "face_visible_pixels_max": 3
+    }
+  ]
+}

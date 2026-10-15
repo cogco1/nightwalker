@@ -1,0 +1,64 @@
+﻿请接手《夜行者》Godot 4工程，沿本转接包中的v14基线继续开发。
+这是一份历史状态和开发约束说明，不代表用户指定了新的开发任务；后续以用户最新要求为准。
+
+【项目位置与运行】
+解压后项目：转接包根目录/Current_Game/project.godot。
+本次实际开发目录：E:\CodexWorkspace\MaidCompanion\Nightwalker_Preproduction\integration_v14\outputs\Current_Game。
+本机已验证引擎：D:\浏览器下载\Godot_v4.7.2-stable_win64.exe\Godot_v4.7.2-stable_win64.exe。
+换机器请将根目录godot-path.txt改成新机器路径，不要照抄上述本机绝对路径。
+引擎实际版本：4.7.2.stable.official.ed1daf0bf；兼容性渲染。
+先修改godot-path.txt，再运行Run-Demo.cmd、Open-Editor.cmd、Test-Game.cmd。
+
+【先读这些文件】
+project.godot；scenes/main.tscn、home_601.tscn、underground_hospital.tscn、player.tscn；
+scripts/player.gd、controls.gd、game_session.gd、scene_routes.gd、home_601.gd、underground_hospital.gd；
+scripts/hospital_security.gd、story_state.gd、pixel_ui.gd；
+assets/side_view.tres、top_down.tres、blade_paths.json；操作说明.txt、本版更新.txt、tests现有回归。
+正式scripts中已无arena.gd和training_target.gd；历史战斗环境在tests/fixtures，不要改回主场景。
+
+【当前成果】
+1. 用户提供v10人物完全替代旧人物，融合601安全屋和地下医院；主入口为安全屋。
+2. E家门进入医院、E医院办公室出口回家；F7可快捷往返；F6训练场入口已移除。
+3. 医院同一建筑有俯视/侧视，Tab切换；俯视按当前楼层显示，侧视楼梯保留实体行走。
+4. 新增air_dash_stab_right和air_dash_stab_left，各16帧，40fps，收腿前倾、风衣后扬、持刀前冲。
+5. 空中突刺结束接air_idle，之后可接空中三连击和S下劈。地面突刺继续使用原动作。
+6. 原992张动画PNG保持原字节，新增32张，共64动作/1024帧；player.gd只增加两行动画分支。
+不要用修改前备份中的旧安全屋/医院人物或控制器覆盖当前v14人物，它们只用于历史参考和回退。
+7. 共享GameSession把原按键设置、正常命中4帧/至少0.0667秒、暴击6帧/至少0.1秒停顿和震动接入实际场景。
+8. 对话和密码界面会暂停玩家并清空残留输入；场景切换、关闭界面恢复操作；改键重置有效。
+
+【必须保留】
+320×180逻辑世界，最近邻整数放大，整数像素绘制，玩家scale=1，身体约28原生像素。
+原始人物配色、长刀白蓝刀光、固定足点。新动作112×96画布，足点(56,84)，收腿靠姿态绘制。
+刀尖轨迹与实际钢刃一致，复用命中、贯穿、碰撞恢复和特效；不要通过缩放人物实现动作。
+Shift+A/D+新一次左键点击进行地面或空中突刺，水平贯穿48原生像素。
+突刺不消耗或恢复跳跃次数；空中突刺后0.30秒、6像素/秒缓降；命中空中敌人同步短暂缓降。
+保留二段跳、上挑、空中三连、S下劈和落地冲击、第三刀30%三倍暴击及原有命中顿帧。
+松开Shift或方向键后新点击左键衔接空中三连，S可直接下劈。
+按键设置继续使用原user://配置路径；F7若已绑定玩家动作，不抢转场。
+reset_arena是历史动作名称，目前含义为重置位置，请保留动作名以兼容已有改键配置。
+已确认的对话UI为80%大小、12px清晰字体、48×64左侧立绘，UI窗口分辨率合成，不要直接降低文字分辨率。
+尽量复用逻辑，保持player.gd简洁，不引入重复状态、重复代码或无必要运行时循环。
+
+【医院解谜及后续接口】
+仅俯视下存在密码门和钥匙电闸；三扇门密码均1010，输入失败可重试，成功开门后可通行。
+电闸需要breaker_key；不消耗钥匙；当前不放NPC，也不随意把钥匙塞进地图。
+剧情物品节点：/root/NightwalkerStoryState；方法grant_item、has_item、set_flag、has_flag。
+可用grant_item("breaker_key")连接未来的NPC对话奖励。
+门锁、物品、开关电源状态跨安全屋/医院切换保留，但只在当前进程会话内有效；持久化存档未实现。
+未来NPC、对话谜题和后续场景安排由用户另行指定，不要擅自补写或放置NPC。
+
+【原画及测试入口】
+新增原画通过内置image_gen制作，原始生成图、提示词、参考、导入脚本、刀尖校验都在art_metadata/air_dash_v14。
+医院门禁素材来源和许可证等随包保留；请勿只保留导出帧而删除原画。
+修改前先另存备份，再检查引擎版本和导入：
+  & '<Godot路径>' --version
+  & '<Godot路径>' --headless --editor --path '<解压目录>\Current_Game' --import --quit
+完整验证（PowerShell）：
+  & '<解压目录>\Current_Game\Test-Game.ps1' -GodotPath '<Godot路径>'
+本次原始v10独立基线717项通过；v14共有11组1277项通过。
+新增tests/test_air_dash_animation_v14.gd和test_scene_integration_v14.gd覆盖双向新动作及实际场景集成。
+医院楼梯、分层、交互、床位布局和门禁均有现有回归。实际画面证据在evidence/integrated_v14。
+测试使用tests/fixtures中的历史战斗环境，正式游戏不创建训练目标；不要为了删训练场而删掉回归夹具。
+按键测试须使用独立settings_path，避免覆盖用户真实user://keybindings.cfg配置。
+每次交付记录实际执行结果，完成后启动可玩窗口，并交付修改后的源码素材和修改前备份。

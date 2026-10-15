@@ -1,0 +1,622 @@
+[gd_resource type="SpriteFrames" load_steps=449 format=3]
+
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/00.png" id="top_down_down_attack1_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/01.png" id="top_down_down_attack1_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/02.png" id="top_down_down_attack1_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/03.png" id="top_down_down_attack1_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/04.png" id="top_down_down_attack1_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/05.png" id="top_down_down_attack1_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/06.png" id="top_down_down_attack1_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/07.png" id="top_down_down_attack1_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/08.png" id="top_down_down_attack1_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/09.png" id="top_down_down_attack1_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/10.png" id="top_down_down_attack1_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/11.png" id="top_down_down_attack1_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/12.png" id="top_down_down_attack1_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/13.png" id="top_down_down_attack1_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/14.png" id="top_down_down_attack1_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack1/15.png" id="top_down_down_attack1_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/00.png" id="top_down_down_attack2_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/01.png" id="top_down_down_attack2_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/02.png" id="top_down_down_attack2_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/03.png" id="top_down_down_attack2_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/04.png" id="top_down_down_attack2_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/05.png" id="top_down_down_attack2_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/06.png" id="top_down_down_attack2_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/07.png" id="top_down_down_attack2_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/08.png" id="top_down_down_attack2_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/09.png" id="top_down_down_attack2_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/10.png" id="top_down_down_attack2_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/11.png" id="top_down_down_attack2_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/12.png" id="top_down_down_attack2_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/13.png" id="top_down_down_attack2_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/14.png" id="top_down_down_attack2_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack2/15.png" id="top_down_down_attack2_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/00.png" id="top_down_down_attack3_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/01.png" id="top_down_down_attack3_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/02.png" id="top_down_down_attack3_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/03.png" id="top_down_down_attack3_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/04.png" id="top_down_down_attack3_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/05.png" id="top_down_down_attack3_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/06.png" id="top_down_down_attack3_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/07.png" id="top_down_down_attack3_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/08.png" id="top_down_down_attack3_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/09.png" id="top_down_down_attack3_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/10.png" id="top_down_down_attack3_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/11.png" id="top_down_down_attack3_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/12.png" id="top_down_down_attack3_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/13.png" id="top_down_down_attack3_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/14.png" id="top_down_down_attack3_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_attack3/15.png" id="top_down_down_attack3_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/00.png" id="top_down_down_idle_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/01.png" id="top_down_down_idle_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/02.png" id="top_down_down_idle_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/03.png" id="top_down_down_idle_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/04.png" id="top_down_down_idle_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/05.png" id="top_down_down_idle_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/06.png" id="top_down_down_idle_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/07.png" id="top_down_down_idle_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/08.png" id="top_down_down_idle_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/09.png" id="top_down_down_idle_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/10.png" id="top_down_down_idle_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/11.png" id="top_down_down_idle_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/12.png" id="top_down_down_idle_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/13.png" id="top_down_down_idle_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/14.png" id="top_down_down_idle_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_idle/15.png" id="top_down_down_idle_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/00.png" id="top_down_down_run_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/01.png" id="top_down_down_run_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/02.png" id="top_down_down_run_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/03.png" id="top_down_down_run_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/04.png" id="top_down_down_run_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/05.png" id="top_down_down_run_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/06.png" id="top_down_down_run_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/07.png" id="top_down_down_run_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/08.png" id="top_down_down_run_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/09.png" id="top_down_down_run_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/10.png" id="top_down_down_run_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/11.png" id="top_down_down_run_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/12.png" id="top_down_down_run_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/13.png" id="top_down_down_run_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/14.png" id="top_down_down_run_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_run/15.png" id="top_down_down_run_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/00.png" id="top_down_down_stab_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/01.png" id="top_down_down_stab_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/02.png" id="top_down_down_stab_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/03.png" id="top_down_down_stab_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/04.png" id="top_down_down_stab_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/05.png" id="top_down_down_stab_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/06.png" id="top_down_down_stab_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/07.png" id="top_down_down_stab_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/08.png" id="top_down_down_stab_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/09.png" id="top_down_down_stab_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/10.png" id="top_down_down_stab_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/11.png" id="top_down_down_stab_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/12.png" id="top_down_down_stab_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/13.png" id="top_down_down_stab_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/14.png" id="top_down_down_stab_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_stab/15.png" id="top_down_down_stab_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/00.png" id="top_down_down_walk_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/01.png" id="top_down_down_walk_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/02.png" id="top_down_down_walk_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/03.png" id="top_down_down_walk_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/04.png" id="top_down_down_walk_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/05.png" id="top_down_down_walk_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/06.png" id="top_down_down_walk_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/07.png" id="top_down_down_walk_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/08.png" id="top_down_down_walk_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/09.png" id="top_down_down_walk_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/10.png" id="top_down_down_walk_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/11.png" id="top_down_down_walk_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/12.png" id="top_down_down_walk_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/13.png" id="top_down_down_walk_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/14.png" id="top_down_down_walk_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_down_walk/15.png" id="top_down_down_walk_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/00.png" id="top_down_left_attack1_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/01.png" id="top_down_left_attack1_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/02.png" id="top_down_left_attack1_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/03.png" id="top_down_left_attack1_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/04.png" id="top_down_left_attack1_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/05.png" id="top_down_left_attack1_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/06.png" id="top_down_left_attack1_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/07.png" id="top_down_left_attack1_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/08.png" id="top_down_left_attack1_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/09.png" id="top_down_left_attack1_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/10.png" id="top_down_left_attack1_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/11.png" id="top_down_left_attack1_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/12.png" id="top_down_left_attack1_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/13.png" id="top_down_left_attack1_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/14.png" id="top_down_left_attack1_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack1/15.png" id="top_down_left_attack1_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/00.png" id="top_down_left_attack2_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/01.png" id="top_down_left_attack2_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/02.png" id="top_down_left_attack2_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/03.png" id="top_down_left_attack2_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/04.png" id="top_down_left_attack2_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/05.png" id="top_down_left_attack2_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/06.png" id="top_down_left_attack2_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/07.png" id="top_down_left_attack2_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/08.png" id="top_down_left_attack2_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/09.png" id="top_down_left_attack2_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/10.png" id="top_down_left_attack2_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/11.png" id="top_down_left_attack2_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/12.png" id="top_down_left_attack2_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/13.png" id="top_down_left_attack2_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/14.png" id="top_down_left_attack2_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack2/15.png" id="top_down_left_attack2_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/00.png" id="top_down_left_attack3_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/01.png" id="top_down_left_attack3_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/02.png" id="top_down_left_attack3_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/03.png" id="top_down_left_attack3_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/04.png" id="top_down_left_attack3_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/05.png" id="top_down_left_attack3_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/06.png" id="top_down_left_attack3_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/07.png" id="top_down_left_attack3_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/08.png" id="top_down_left_attack3_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/09.png" id="top_down_left_attack3_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/10.png" id="top_down_left_attack3_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/11.png" id="top_down_left_attack3_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/12.png" id="top_down_left_attack3_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/13.png" id="top_down_left_attack3_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/14.png" id="top_down_left_attack3_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_attack3/15.png" id="top_down_left_attack3_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/00.png" id="top_down_left_idle_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/01.png" id="top_down_left_idle_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/02.png" id="top_down_left_idle_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/03.png" id="top_down_left_idle_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/04.png" id="top_down_left_idle_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/05.png" id="top_down_left_idle_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/06.png" id="top_down_left_idle_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/07.png" id="top_down_left_idle_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/08.png" id="top_down_left_idle_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/09.png" id="top_down_left_idle_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/10.png" id="top_down_left_idle_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/11.png" id="top_down_left_idle_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/12.png" id="top_down_left_idle_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/13.png" id="top_down_left_idle_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/14.png" id="top_down_left_idle_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_idle/15.png" id="top_down_left_idle_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/00.png" id="top_down_left_run_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/01.png" id="top_down_left_run_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/02.png" id="top_down_left_run_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/03.png" id="top_down_left_run_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/04.png" id="top_down_left_run_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/05.png" id="top_down_left_run_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/06.png" id="top_down_left_run_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/07.png" id="top_down_left_run_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/08.png" id="top_down_left_run_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/09.png" id="top_down_left_run_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/10.png" id="top_down_left_run_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/11.png" id="top_down_left_run_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/12.png" id="top_down_left_run_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/13.png" id="top_down_left_run_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/14.png" id="top_down_left_run_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_run/15.png" id="top_down_left_run_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/00.png" id="top_down_left_stab_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/01.png" id="top_down_left_stab_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/02.png" id="top_down_left_stab_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/03.png" id="top_down_left_stab_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/04.png" id="top_down_left_stab_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/05.png" id="top_down_left_stab_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/06.png" id="top_down_left_stab_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/07.png" id="top_down_left_stab_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/08.png" id="top_down_left_stab_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/09.png" id="top_down_left_stab_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/10.png" id="top_down_left_stab_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/11.png" id="top_down_left_stab_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/12.png" id="top_down_left_stab_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/13.png" id="top_down_left_stab_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/14.png" id="top_down_left_stab_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_stab/15.png" id="top_down_left_stab_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/00.png" id="top_down_left_walk_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/01.png" id="top_down_left_walk_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/02.png" id="top_down_left_walk_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/03.png" id="top_down_left_walk_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/04.png" id="top_down_left_walk_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/05.png" id="top_down_left_walk_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/06.png" id="top_down_left_walk_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/07.png" id="top_down_left_walk_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/08.png" id="top_down_left_walk_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/09.png" id="top_down_left_walk_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/10.png" id="top_down_left_walk_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/11.png" id="top_down_left_walk_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/12.png" id="top_down_left_walk_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/13.png" id="top_down_left_walk_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/14.png" id="top_down_left_walk_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_left_walk/15.png" id="top_down_left_walk_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/00.png" id="top_down_right_attack1_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/01.png" id="top_down_right_attack1_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/02.png" id="top_down_right_attack1_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/03.png" id="top_down_right_attack1_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/04.png" id="top_down_right_attack1_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/05.png" id="top_down_right_attack1_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/06.png" id="top_down_right_attack1_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/07.png" id="top_down_right_attack1_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/08.png" id="top_down_right_attack1_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/09.png" id="top_down_right_attack1_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/10.png" id="top_down_right_attack1_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/11.png" id="top_down_right_attack1_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/12.png" id="top_down_right_attack1_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/13.png" id="top_down_right_attack1_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/14.png" id="top_down_right_attack1_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack1/15.png" id="top_down_right_attack1_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/00.png" id="top_down_right_attack2_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/01.png" id="top_down_right_attack2_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/02.png" id="top_down_right_attack2_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/03.png" id="top_down_right_attack2_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/04.png" id="top_down_right_attack2_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/05.png" id="top_down_right_attack2_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/06.png" id="top_down_right_attack2_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/07.png" id="top_down_right_attack2_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/08.png" id="top_down_right_attack2_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/09.png" id="top_down_right_attack2_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/10.png" id="top_down_right_attack2_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/11.png" id="top_down_right_attack2_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/12.png" id="top_down_right_attack2_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/13.png" id="top_down_right_attack2_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/14.png" id="top_down_right_attack2_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack2/15.png" id="top_down_right_attack2_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/00.png" id="top_down_right_attack3_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/01.png" id="top_down_right_attack3_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/02.png" id="top_down_right_attack3_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/03.png" id="top_down_right_attack3_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/04.png" id="top_down_right_attack3_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/05.png" id="top_down_right_attack3_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/06.png" id="top_down_right_attack3_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/07.png" id="top_down_right_attack3_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/08.png" id="top_down_right_attack3_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/09.png" id="top_down_right_attack3_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/10.png" id="top_down_right_attack3_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/11.png" id="top_down_right_attack3_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/12.png" id="top_down_right_attack3_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/13.png" id="top_down_right_attack3_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/14.png" id="top_down_right_attack3_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_attack3/15.png" id="top_down_right_attack3_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/00.png" id="top_down_right_idle_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/01.png" id="top_down_right_idle_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/02.png" id="top_down_right_idle_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/03.png" id="top_down_right_idle_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/04.png" id="top_down_right_idle_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/05.png" id="top_down_right_idle_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/06.png" id="top_down_right_idle_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/07.png" id="top_down_right_idle_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/08.png" id="top_down_right_idle_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/09.png" id="top_down_right_idle_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/10.png" id="top_down_right_idle_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/11.png" id="top_down_right_idle_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/12.png" id="top_down_right_idle_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/13.png" id="top_down_right_idle_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/14.png" id="top_down_right_idle_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_idle/15.png" id="top_down_right_idle_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/00.png" id="top_down_right_run_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/01.png" id="top_down_right_run_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/02.png" id="top_down_right_run_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/03.png" id="top_down_right_run_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/04.png" id="top_down_right_run_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/05.png" id="top_down_right_run_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/06.png" id="top_down_right_run_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/07.png" id="top_down_right_run_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/08.png" id="top_down_right_run_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/09.png" id="top_down_right_run_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/10.png" id="top_down_right_run_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/11.png" id="top_down_right_run_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/12.png" id="top_down_right_run_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/13.png" id="top_down_right_run_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/14.png" id="top_down_right_run_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_run/15.png" id="top_down_right_run_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/00.png" id="top_down_right_stab_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/01.png" id="top_down_right_stab_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/02.png" id="top_down_right_stab_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/03.png" id="top_down_right_stab_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/04.png" id="top_down_right_stab_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/05.png" id="top_down_right_stab_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/06.png" id="top_down_right_stab_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/07.png" id="top_down_right_stab_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/08.png" id="top_down_right_stab_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/09.png" id="top_down_right_stab_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/10.png" id="top_down_right_stab_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/11.png" id="top_down_right_stab_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/12.png" id="top_down_right_stab_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/13.png" id="top_down_right_stab_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/14.png" id="top_down_right_stab_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_stab/15.png" id="top_down_right_stab_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/00.png" id="top_down_right_walk_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/01.png" id="top_down_right_walk_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/02.png" id="top_down_right_walk_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/03.png" id="top_down_right_walk_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/04.png" id="top_down_right_walk_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/05.png" id="top_down_right_walk_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/06.png" id="top_down_right_walk_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/07.png" id="top_down_right_walk_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/08.png" id="top_down_right_walk_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/09.png" id="top_down_right_walk_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/10.png" id="top_down_right_walk_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/11.png" id="top_down_right_walk_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/12.png" id="top_down_right_walk_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/13.png" id="top_down_right_walk_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/14.png" id="top_down_right_walk_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_right_walk/15.png" id="top_down_right_walk_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/00.png" id="top_down_up_attack1_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/01.png" id="top_down_up_attack1_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/02.png" id="top_down_up_attack1_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/03.png" id="top_down_up_attack1_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/04.png" id="top_down_up_attack1_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/05.png" id="top_down_up_attack1_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/06.png" id="top_down_up_attack1_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/07.png" id="top_down_up_attack1_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/08.png" id="top_down_up_attack1_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/09.png" id="top_down_up_attack1_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/10.png" id="top_down_up_attack1_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/11.png" id="top_down_up_attack1_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/12.png" id="top_down_up_attack1_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/13.png" id="top_down_up_attack1_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/14.png" id="top_down_up_attack1_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack1/15.png" id="top_down_up_attack1_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/00.png" id="top_down_up_attack2_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/01.png" id="top_down_up_attack2_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/02.png" id="top_down_up_attack2_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/03.png" id="top_down_up_attack2_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/04.png" id="top_down_up_attack2_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/05.png" id="top_down_up_attack2_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/06.png" id="top_down_up_attack2_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/07.png" id="top_down_up_attack2_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/08.png" id="top_down_up_attack2_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/09.png" id="top_down_up_attack2_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/10.png" id="top_down_up_attack2_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/11.png" id="top_down_up_attack2_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/12.png" id="top_down_up_attack2_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/13.png" id="top_down_up_attack2_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/14.png" id="top_down_up_attack2_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack2/15.png" id="top_down_up_attack2_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/00.png" id="top_down_up_attack3_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/01.png" id="top_down_up_attack3_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/02.png" id="top_down_up_attack3_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/03.png" id="top_down_up_attack3_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/04.png" id="top_down_up_attack3_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/05.png" id="top_down_up_attack3_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/06.png" id="top_down_up_attack3_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/07.png" id="top_down_up_attack3_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/08.png" id="top_down_up_attack3_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/09.png" id="top_down_up_attack3_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/10.png" id="top_down_up_attack3_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/11.png" id="top_down_up_attack3_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/12.png" id="top_down_up_attack3_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/13.png" id="top_down_up_attack3_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/14.png" id="top_down_up_attack3_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_attack3/15.png" id="top_down_up_attack3_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/00.png" id="top_down_up_idle_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/01.png" id="top_down_up_idle_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/02.png" id="top_down_up_idle_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/03.png" id="top_down_up_idle_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/04.png" id="top_down_up_idle_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/05.png" id="top_down_up_idle_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/06.png" id="top_down_up_idle_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/07.png" id="top_down_up_idle_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/08.png" id="top_down_up_idle_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/09.png" id="top_down_up_idle_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/10.png" id="top_down_up_idle_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/11.png" id="top_down_up_idle_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/12.png" id="top_down_up_idle_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/13.png" id="top_down_up_idle_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/14.png" id="top_down_up_idle_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_idle/15.png" id="top_down_up_idle_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/00.png" id="top_down_up_run_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/01.png" id="top_down_up_run_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/02.png" id="top_down_up_run_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/03.png" id="top_down_up_run_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/04.png" id="top_down_up_run_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/05.png" id="top_down_up_run_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/06.png" id="top_down_up_run_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/07.png" id="top_down_up_run_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/08.png" id="top_down_up_run_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/09.png" id="top_down_up_run_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/10.png" id="top_down_up_run_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/11.png" id="top_down_up_run_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/12.png" id="top_down_up_run_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/13.png" id="top_down_up_run_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/14.png" id="top_down_up_run_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_run/15.png" id="top_down_up_run_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/00.png" id="top_down_up_stab_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/01.png" id="top_down_up_stab_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/02.png" id="top_down_up_stab_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/03.png" id="top_down_up_stab_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/04.png" id="top_down_up_stab_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/05.png" id="top_down_up_stab_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/06.png" id="top_down_up_stab_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/07.png" id="top_down_up_stab_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/08.png" id="top_down_up_stab_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/09.png" id="top_down_up_stab_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/10.png" id="top_down_up_stab_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/11.png" id="top_down_up_stab_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/12.png" id="top_down_up_stab_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/13.png" id="top_down_up_stab_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/14.png" id="top_down_up_stab_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_stab/15.png" id="top_down_up_stab_15"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/00.png" id="top_down_up_walk_0"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/01.png" id="top_down_up_walk_1"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/02.png" id="top_down_up_walk_2"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/03.png" id="top_down_up_walk_3"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/04.png" id="top_down_up_walk_4"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/05.png" id="top_down_up_walk_5"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/06.png" id="top_down_up_walk_6"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/07.png" id="top_down_up_walk_7"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/08.png" id="top_down_up_walk_8"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/09.png" id="top_down_up_walk_9"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/10.png" id="top_down_up_walk_10"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/11.png" id="top_down_up_walk_11"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/12.png" id="top_down_up_walk_12"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/13.png" id="top_down_up_walk_13"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/14.png" id="top_down_up_walk_14"]
+[ext_resource type="Texture2D" path="res://frames/top_down_up_walk/15.png" id="top_down_up_walk_15"]
+
+[resource]
+animations = [
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_down_attack1_0")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_1")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_2")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_3")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_4")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_5")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_6")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_7")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_8")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_9")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_10")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_11")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_12")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_13")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_14")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack1_15")}],
+"loop":false,
+"name":&"attack1_down",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_down_attack2_0")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_1")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_2")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_3")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_4")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_5")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_6")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_7")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_8")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_9")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_10")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_11")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_12")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_13")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_14")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack2_15")}],
+"loop":false,
+"name":&"attack2_down",
+"speed":44.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_down_attack3_0")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_1")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_2")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_3")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_4")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_5")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_6")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_7")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_8")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_9")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_10")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_11")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_12")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_13")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_14")}, {"duration":1.0,"texture":ExtResource("top_down_down_attack3_15")}],
+"loop":false,
+"name":&"attack3_down",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_down_idle_0")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_1")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_2")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_3")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_4")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_5")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_6")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_7")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_8")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_9")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_10")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_11")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_12")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_13")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_14")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_15")}],
+"loop":true,
+"name":&"idle_down",
+"speed":8.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_down_run_0")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_1")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_2")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_3")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_4")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_5")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_6")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_7")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_8")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_9")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_10")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_11")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_12")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_13")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_14")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_15")}],
+"loop":true,
+"name":&"run_down",
+"speed":32.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_down_stab_0")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_1")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_2")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_3")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_4")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_5")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_6")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_7")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_8")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_9")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_10")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_11")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_12")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_13")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_14")}, {"duration":1.0,"texture":ExtResource("top_down_down_stab_15")}],
+"loop":false,
+"name":&"stab_down",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_down_walk_0")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_1")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_2")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_3")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_4")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_5")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_6")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_7")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_8")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_9")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_10")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_11")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_12")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_13")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_14")}, {"duration":1.0,"texture":ExtResource("top_down_down_walk_15")}],
+"loop":true,
+"name":&"walk_down",
+"speed":20.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_left_attack1_0")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_1")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_2")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_3")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_4")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_5")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_6")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_7")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_8")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_9")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_10")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_11")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_12")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_13")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_14")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack1_15")}],
+"loop":false,
+"name":&"attack1_left",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_left_attack2_0")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_1")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_2")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_3")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_4")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_5")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_6")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_7")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_8")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_9")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_10")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_11")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_12")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_13")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_14")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack2_15")}],
+"loop":false,
+"name":&"attack2_left",
+"speed":44.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_left_attack3_0")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_1")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_2")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_3")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_4")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_5")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_6")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_7")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_8")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_9")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_10")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_11")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_12")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_13")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_14")}, {"duration":1.0,"texture":ExtResource("top_down_left_attack3_15")}],
+"loop":false,
+"name":&"attack3_left",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_left_idle_0")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_1")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_2")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_3")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_4")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_5")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_6")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_7")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_8")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_9")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_10")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_11")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_12")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_13")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_14")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_15")}],
+"loop":true,
+"name":&"idle_left",
+"speed":8.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_left_run_0")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_1")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_2")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_3")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_4")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_5")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_6")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_7")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_8")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_9")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_10")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_11")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_12")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_13")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_14")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_15")}],
+"loop":true,
+"name":&"run_left",
+"speed":32.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_left_stab_0")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_1")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_2")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_3")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_4")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_5")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_6")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_7")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_8")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_9")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_10")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_11")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_12")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_13")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_14")}, {"duration":1.0,"texture":ExtResource("top_down_left_stab_15")}],
+"loop":false,
+"name":&"stab_left",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_left_walk_0")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_1")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_2")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_3")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_4")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_5")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_6")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_7")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_8")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_9")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_10")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_11")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_12")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_13")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_14")}, {"duration":1.0,"texture":ExtResource("top_down_left_walk_15")}],
+"loop":true,
+"name":&"walk_left",
+"speed":20.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_right_attack1_0")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_1")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_2")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_3")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_4")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_5")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_6")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_7")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_8")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_9")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_10")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_11")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_12")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_13")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_14")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack1_15")}],
+"loop":false,
+"name":&"attack1_right",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_right_attack2_0")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_1")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_2")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_3")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_4")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_5")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_6")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_7")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_8")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_9")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_10")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_11")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_12")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_13")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_14")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack2_15")}],
+"loop":false,
+"name":&"attack2_right",
+"speed":44.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_right_attack3_0")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_1")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_2")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_3")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_4")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_5")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_6")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_7")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_8")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_9")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_10")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_11")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_12")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_13")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_14")}, {"duration":1.0,"texture":ExtResource("top_down_right_attack3_15")}],
+"loop":false,
+"name":&"attack3_right",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_right_idle_0")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_1")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_2")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_3")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_4")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_5")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_6")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_7")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_8")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_9")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_10")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_11")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_12")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_13")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_14")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_15")}],
+"loop":true,
+"name":&"idle_right",
+"speed":8.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_right_run_0")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_1")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_2")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_3")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_4")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_5")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_6")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_7")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_8")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_9")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_10")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_11")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_12")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_13")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_14")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_15")}],
+"loop":true,
+"name":&"run_right",
+"speed":32.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_right_stab_0")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_1")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_2")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_3")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_4")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_5")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_6")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_7")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_8")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_9")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_10")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_11")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_12")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_13")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_14")}, {"duration":1.0,"texture":ExtResource("top_down_right_stab_15")}],
+"loop":false,
+"name":&"stab_right",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_right_walk_0")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_1")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_2")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_3")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_4")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_5")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_6")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_7")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_8")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_9")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_10")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_11")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_12")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_13")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_14")}, {"duration":1.0,"texture":ExtResource("top_down_right_walk_15")}],
+"loop":true,
+"name":&"walk_right",
+"speed":20.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_up_attack1_0")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_1")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_2")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_3")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_4")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_5")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_6")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_7")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_8")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_9")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_10")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_11")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_12")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_13")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_14")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack1_15")}],
+"loop":false,
+"name":&"attack1_up",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_up_attack2_0")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_1")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_2")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_3")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_4")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_5")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_6")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_7")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_8")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_9")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_10")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_11")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_12")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_13")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_14")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack2_15")}],
+"loop":false,
+"name":&"attack2_up",
+"speed":44.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_up_attack3_0")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_1")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_2")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_3")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_4")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_5")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_6")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_7")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_8")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_9")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_10")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_11")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_12")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_13")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_14")}, {"duration":1.0,"texture":ExtResource("top_down_up_attack3_15")}],
+"loop":false,
+"name":&"attack3_up",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_up_idle_0")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_1")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_2")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_3")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_4")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_5")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_6")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_7")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_8")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_9")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_10")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_11")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_12")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_13")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_14")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_15")}],
+"loop":true,
+"name":&"idle_up",
+"speed":8.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_up_run_0")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_1")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_2")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_3")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_4")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_5")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_6")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_7")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_8")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_9")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_10")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_11")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_12")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_13")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_14")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_15")}],
+"loop":true,
+"name":&"run_up",
+"speed":32.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_up_stab_0")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_1")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_2")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_3")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_4")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_5")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_6")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_7")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_8")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_9")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_10")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_11")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_12")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_13")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_14")}, {"duration":1.0,"texture":ExtResource("top_down_up_stab_15")}],
+"loop":false,
+"name":&"stab_up",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("top_down_up_walk_0")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_1")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_2")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_3")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_4")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_5")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_6")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_7")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_8")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_9")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_10")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_11")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_12")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_13")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_14")}, {"duration":1.0,"texture":ExtResource("top_down_up_walk_15")}],
+"loop":true,
+"name":&"walk_up",
+"speed":20.0
+}
+]

@@ -1,0 +1,535 @@
+[gd_resource type="SpriteFrames" load_steps=385 format=3]
+
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/00.png" id="side_view_left_attack1_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/01.png" id="side_view_left_attack1_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/02.png" id="side_view_left_attack1_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/03.png" id="side_view_left_attack1_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/04.png" id="side_view_left_attack1_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/05.png" id="side_view_left_attack1_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/06.png" id="side_view_left_attack1_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/07.png" id="side_view_left_attack1_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/08.png" id="side_view_left_attack1_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/09.png" id="side_view_left_attack1_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/10.png" id="side_view_left_attack1_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/11.png" id="side_view_left_attack1_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/12.png" id="side_view_left_attack1_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/13.png" id="side_view_left_attack1_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/14.png" id="side_view_left_attack1_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack1/15.png" id="side_view_left_attack1_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/00.png" id="side_view_left_attack2_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/01.png" id="side_view_left_attack2_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/02.png" id="side_view_left_attack2_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/03.png" id="side_view_left_attack2_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/04.png" id="side_view_left_attack2_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/05.png" id="side_view_left_attack2_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/06.png" id="side_view_left_attack2_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/07.png" id="side_view_left_attack2_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/08.png" id="side_view_left_attack2_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/09.png" id="side_view_left_attack2_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/10.png" id="side_view_left_attack2_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/11.png" id="side_view_left_attack2_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/12.png" id="side_view_left_attack2_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/13.png" id="side_view_left_attack2_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/14.png" id="side_view_left_attack2_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack2/15.png" id="side_view_left_attack2_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/00.png" id="side_view_left_attack3_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/01.png" id="side_view_left_attack3_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/02.png" id="side_view_left_attack3_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/03.png" id="side_view_left_attack3_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/04.png" id="side_view_left_attack3_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/05.png" id="side_view_left_attack3_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/06.png" id="side_view_left_attack3_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/07.png" id="side_view_left_attack3_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/08.png" id="side_view_left_attack3_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/09.png" id="side_view_left_attack3_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/10.png" id="side_view_left_attack3_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/11.png" id="side_view_left_attack3_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/12.png" id="side_view_left_attack3_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/13.png" id="side_view_left_attack3_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/14.png" id="side_view_left_attack3_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_attack3/15.png" id="side_view_left_attack3_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/00.png" id="side_view_left_crouch_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/01.png" id="side_view_left_crouch_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/02.png" id="side_view_left_crouch_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/03.png" id="side_view_left_crouch_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/04.png" id="side_view_left_crouch_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/05.png" id="side_view_left_crouch_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/06.png" id="side_view_left_crouch_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/07.png" id="side_view_left_crouch_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/08.png" id="side_view_left_crouch_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/09.png" id="side_view_left_crouch_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/10.png" id="side_view_left_crouch_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/11.png" id="side_view_left_crouch_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/12.png" id="side_view_left_crouch_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/13.png" id="side_view_left_crouch_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/14.png" id="side_view_left_crouch_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch/15.png" id="side_view_left_crouch_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/00.png" id="side_view_left_crouch_stab_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/01.png" id="side_view_left_crouch_stab_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/02.png" id="side_view_left_crouch_stab_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/03.png" id="side_view_left_crouch_stab_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/04.png" id="side_view_left_crouch_stab_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/05.png" id="side_view_left_crouch_stab_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/06.png" id="side_view_left_crouch_stab_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/07.png" id="side_view_left_crouch_stab_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/08.png" id="side_view_left_crouch_stab_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/09.png" id="side_view_left_crouch_stab_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/10.png" id="side_view_left_crouch_stab_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/11.png" id="side_view_left_crouch_stab_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/12.png" id="side_view_left_crouch_stab_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/13.png" id="side_view_left_crouch_stab_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/14.png" id="side_view_left_crouch_stab_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_crouch_stab/15.png" id="side_view_left_crouch_stab_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/00.png" id="side_view_left_idle_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/01.png" id="side_view_left_idle_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/02.png" id="side_view_left_idle_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/03.png" id="side_view_left_idle_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/04.png" id="side_view_left_idle_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/05.png" id="side_view_left_idle_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/06.png" id="side_view_left_idle_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/07.png" id="side_view_left_idle_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/08.png" id="side_view_left_idle_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/09.png" id="side_view_left_idle_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/10.png" id="side_view_left_idle_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/11.png" id="side_view_left_idle_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/12.png" id="side_view_left_idle_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/13.png" id="side_view_left_idle_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/14.png" id="side_view_left_idle_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_idle/15.png" id="side_view_left_idle_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/00.png" id="side_view_left_jump_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/01.png" id="side_view_left_jump_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/02.png" id="side_view_left_jump_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/03.png" id="side_view_left_jump_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/04.png" id="side_view_left_jump_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/05.png" id="side_view_left_jump_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/06.png" id="side_view_left_jump_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/07.png" id="side_view_left_jump_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/08.png" id="side_view_left_jump_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/09.png" id="side_view_left_jump_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/10.png" id="side_view_left_jump_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/11.png" id="side_view_left_jump_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/12.png" id="side_view_left_jump_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/13.png" id="side_view_left_jump_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/14.png" id="side_view_left_jump_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_jump/15.png" id="side_view_left_jump_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/00.png" id="side_view_left_run_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/01.png" id="side_view_left_run_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/02.png" id="side_view_left_run_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/03.png" id="side_view_left_run_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/04.png" id="side_view_left_run_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/05.png" id="side_view_left_run_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/06.png" id="side_view_left_run_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/07.png" id="side_view_left_run_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/08.png" id="side_view_left_run_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/09.png" id="side_view_left_run_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/10.png" id="side_view_left_run_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/11.png" id="side_view_left_run_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/12.png" id="side_view_left_run_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/13.png" id="side_view_left_run_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/14.png" id="side_view_left_run_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_run/15.png" id="side_view_left_run_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/00.png" id="side_view_left_stab_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/01.png" id="side_view_left_stab_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/02.png" id="side_view_left_stab_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/03.png" id="side_view_left_stab_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/04.png" id="side_view_left_stab_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/05.png" id="side_view_left_stab_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/06.png" id="side_view_left_stab_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/07.png" id="side_view_left_stab_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/08.png" id="side_view_left_stab_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/09.png" id="side_view_left_stab_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/10.png" id="side_view_left_stab_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/11.png" id="side_view_left_stab_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/12.png" id="side_view_left_stab_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/13.png" id="side_view_left_stab_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/14.png" id="side_view_left_stab_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_stab/15.png" id="side_view_left_stab_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/00.png" id="side_view_left_walk_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/01.png" id="side_view_left_walk_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/02.png" id="side_view_left_walk_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/03.png" id="side_view_left_walk_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/04.png" id="side_view_left_walk_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/05.png" id="side_view_left_walk_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/06.png" id="side_view_left_walk_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/07.png" id="side_view_left_walk_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/08.png" id="side_view_left_walk_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/09.png" id="side_view_left_walk_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/10.png" id="side_view_left_walk_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/11.png" id="side_view_left_walk_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/12.png" id="side_view_left_walk_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/13.png" id="side_view_left_walk_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/14.png" id="side_view_left_walk_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_walk/15.png" id="side_view_left_walk_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/00.png" id="side_view_right_attack1_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/01.png" id="side_view_right_attack1_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/02.png" id="side_view_right_attack1_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/03.png" id="side_view_right_attack1_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/04.png" id="side_view_right_attack1_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/05.png" id="side_view_right_attack1_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/06.png" id="side_view_right_attack1_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/07.png" id="side_view_right_attack1_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/08.png" id="side_view_right_attack1_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/09.png" id="side_view_right_attack1_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/10.png" id="side_view_right_attack1_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/11.png" id="side_view_right_attack1_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/12.png" id="side_view_right_attack1_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/13.png" id="side_view_right_attack1_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/14.png" id="side_view_right_attack1_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack1/15.png" id="side_view_right_attack1_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/00.png" id="side_view_right_attack2_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/01.png" id="side_view_right_attack2_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/02.png" id="side_view_right_attack2_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/03.png" id="side_view_right_attack2_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/04.png" id="side_view_right_attack2_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/05.png" id="side_view_right_attack2_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/06.png" id="side_view_right_attack2_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/07.png" id="side_view_right_attack2_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/08.png" id="side_view_right_attack2_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/09.png" id="side_view_right_attack2_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/10.png" id="side_view_right_attack2_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/11.png" id="side_view_right_attack2_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/12.png" id="side_view_right_attack2_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/13.png" id="side_view_right_attack2_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/14.png" id="side_view_right_attack2_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack2/15.png" id="side_view_right_attack2_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/00.png" id="side_view_right_attack3_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/01.png" id="side_view_right_attack3_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/02.png" id="side_view_right_attack3_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/03.png" id="side_view_right_attack3_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/04.png" id="side_view_right_attack3_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/05.png" id="side_view_right_attack3_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/06.png" id="side_view_right_attack3_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/07.png" id="side_view_right_attack3_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/08.png" id="side_view_right_attack3_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/09.png" id="side_view_right_attack3_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/10.png" id="side_view_right_attack3_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/11.png" id="side_view_right_attack3_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/12.png" id="side_view_right_attack3_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/13.png" id="side_view_right_attack3_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/14.png" id="side_view_right_attack3_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_attack3/15.png" id="side_view_right_attack3_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/00.png" id="side_view_right_crouch_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/01.png" id="side_view_right_crouch_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/02.png" id="side_view_right_crouch_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/03.png" id="side_view_right_crouch_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/04.png" id="side_view_right_crouch_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/05.png" id="side_view_right_crouch_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/06.png" id="side_view_right_crouch_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/07.png" id="side_view_right_crouch_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/08.png" id="side_view_right_crouch_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/09.png" id="side_view_right_crouch_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/10.png" id="side_view_right_crouch_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/11.png" id="side_view_right_crouch_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/12.png" id="side_view_right_crouch_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/13.png" id="side_view_right_crouch_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/14.png" id="side_view_right_crouch_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch/15.png" id="side_view_right_crouch_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/00.png" id="side_view_right_crouch_stab_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/01.png" id="side_view_right_crouch_stab_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/02.png" id="side_view_right_crouch_stab_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/03.png" id="side_view_right_crouch_stab_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/04.png" id="side_view_right_crouch_stab_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/05.png" id="side_view_right_crouch_stab_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/06.png" id="side_view_right_crouch_stab_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/07.png" id="side_view_right_crouch_stab_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/08.png" id="side_view_right_crouch_stab_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/09.png" id="side_view_right_crouch_stab_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/10.png" id="side_view_right_crouch_stab_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/11.png" id="side_view_right_crouch_stab_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/12.png" id="side_view_right_crouch_stab_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/13.png" id="side_view_right_crouch_stab_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/14.png" id="side_view_right_crouch_stab_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_crouch_stab/15.png" id="side_view_right_crouch_stab_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/00.png" id="side_view_right_idle_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/01.png" id="side_view_right_idle_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/02.png" id="side_view_right_idle_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/03.png" id="side_view_right_idle_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/04.png" id="side_view_right_idle_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/05.png" id="side_view_right_idle_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/06.png" id="side_view_right_idle_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/07.png" id="side_view_right_idle_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/08.png" id="side_view_right_idle_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/09.png" id="side_view_right_idle_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/10.png" id="side_view_right_idle_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/11.png" id="side_view_right_idle_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/12.png" id="side_view_right_idle_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/13.png" id="side_view_right_idle_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/14.png" id="side_view_right_idle_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_idle/15.png" id="side_view_right_idle_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/00.png" id="side_view_right_jump_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/01.png" id="side_view_right_jump_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/02.png" id="side_view_right_jump_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/03.png" id="side_view_right_jump_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/04.png" id="side_view_right_jump_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/05.png" id="side_view_right_jump_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/06.png" id="side_view_right_jump_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/07.png" id="side_view_right_jump_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/08.png" id="side_view_right_jump_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/09.png" id="side_view_right_jump_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/10.png" id="side_view_right_jump_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/11.png" id="side_view_right_jump_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/12.png" id="side_view_right_jump_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/13.png" id="side_view_right_jump_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/14.png" id="side_view_right_jump_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_jump/15.png" id="side_view_right_jump_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/00.png" id="side_view_right_run_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/01.png" id="side_view_right_run_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/02.png" id="side_view_right_run_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/03.png" id="side_view_right_run_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/04.png" id="side_view_right_run_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/05.png" id="side_view_right_run_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/06.png" id="side_view_right_run_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/07.png" id="side_view_right_run_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/08.png" id="side_view_right_run_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/09.png" id="side_view_right_run_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/10.png" id="side_view_right_run_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/11.png" id="side_view_right_run_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/12.png" id="side_view_right_run_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/13.png" id="side_view_right_run_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/14.png" id="side_view_right_run_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_run/15.png" id="side_view_right_run_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/00.png" id="side_view_right_stab_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/01.png" id="side_view_right_stab_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/02.png" id="side_view_right_stab_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/03.png" id="side_view_right_stab_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/04.png" id="side_view_right_stab_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/05.png" id="side_view_right_stab_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/06.png" id="side_view_right_stab_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/07.png" id="side_view_right_stab_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/08.png" id="side_view_right_stab_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/09.png" id="side_view_right_stab_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/10.png" id="side_view_right_stab_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/11.png" id="side_view_right_stab_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/12.png" id="side_view_right_stab_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/13.png" id="side_view_right_stab_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/14.png" id="side_view_right_stab_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_stab/15.png" id="side_view_right_stab_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/00.png" id="side_view_right_walk_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/01.png" id="side_view_right_walk_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/02.png" id="side_view_right_walk_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/03.png" id="side_view_right_walk_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/04.png" id="side_view_right_walk_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/05.png" id="side_view_right_walk_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/06.png" id="side_view_right_walk_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/07.png" id="side_view_right_walk_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/08.png" id="side_view_right_walk_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/09.png" id="side_view_right_walk_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/10.png" id="side_view_right_walk_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/11.png" id="side_view_right_walk_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/12.png" id="side_view_right_walk_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/13.png" id="side_view_right_walk_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/14.png" id="side_view_right_walk_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_walk/15.png" id="side_view_right_walk_15"]
+
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/00.png" id="side_view_left_dash_stab_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/01.png" id="side_view_left_dash_stab_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/02.png" id="side_view_left_dash_stab_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/03.png" id="side_view_left_dash_stab_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/04.png" id="side_view_left_dash_stab_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/05.png" id="side_view_left_dash_stab_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/06.png" id="side_view_left_dash_stab_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/07.png" id="side_view_left_dash_stab_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/08.png" id="side_view_left_dash_stab_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/09.png" id="side_view_left_dash_stab_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/10.png" id="side_view_left_dash_stab_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/11.png" id="side_view_left_dash_stab_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/12.png" id="side_view_left_dash_stab_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/13.png" id="side_view_left_dash_stab_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/14.png" id="side_view_left_dash_stab_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_dash_stab/15.png" id="side_view_left_dash_stab_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/00.png" id="side_view_left_rising_slash_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/01.png" id="side_view_left_rising_slash_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/02.png" id="side_view_left_rising_slash_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/03.png" id="side_view_left_rising_slash_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/04.png" id="side_view_left_rising_slash_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/05.png" id="side_view_left_rising_slash_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/06.png" id="side_view_left_rising_slash_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/07.png" id="side_view_left_rising_slash_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/08.png" id="side_view_left_rising_slash_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/09.png" id="side_view_left_rising_slash_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/10.png" id="side_view_left_rising_slash_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/11.png" id="side_view_left_rising_slash_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/12.png" id="side_view_left_rising_slash_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/13.png" id="side_view_left_rising_slash_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/14.png" id="side_view_left_rising_slash_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_left_rising_slash/15.png" id="side_view_left_rising_slash_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/00.png" id="side_view_right_dash_stab_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/01.png" id="side_view_right_dash_stab_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/02.png" id="side_view_right_dash_stab_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/03.png" id="side_view_right_dash_stab_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/04.png" id="side_view_right_dash_stab_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/05.png" id="side_view_right_dash_stab_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/06.png" id="side_view_right_dash_stab_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/07.png" id="side_view_right_dash_stab_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/08.png" id="side_view_right_dash_stab_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/09.png" id="side_view_right_dash_stab_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/10.png" id="side_view_right_dash_stab_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/11.png" id="side_view_right_dash_stab_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/12.png" id="side_view_right_dash_stab_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/13.png" id="side_view_right_dash_stab_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/14.png" id="side_view_right_dash_stab_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_dash_stab/15.png" id="side_view_right_dash_stab_15"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/00.png" id="side_view_right_rising_slash_0"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/01.png" id="side_view_right_rising_slash_1"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/02.png" id="side_view_right_rising_slash_2"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/03.png" id="side_view_right_rising_slash_3"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/04.png" id="side_view_right_rising_slash_4"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/05.png" id="side_view_right_rising_slash_5"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/06.png" id="side_view_right_rising_slash_6"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/07.png" id="side_view_right_rising_slash_7"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/08.png" id="side_view_right_rising_slash_8"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/09.png" id="side_view_right_rising_slash_9"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/10.png" id="side_view_right_rising_slash_10"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/11.png" id="side_view_right_rising_slash_11"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/12.png" id="side_view_right_rising_slash_12"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/13.png" id="side_view_right_rising_slash_13"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/14.png" id="side_view_right_rising_slash_14"]
+[ext_resource type="Texture2D" path="res://frames/side_view_right_rising_slash/15.png" id="side_view_right_rising_slash_15"]
+
+[resource]
+animations = [
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_left_attack1_0")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_1")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_2")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_3")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_4")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_5")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_6")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_7")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_8")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_9")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_10")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_11")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_12")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_13")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_14")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack1_15")}],
+"loop":false,
+"name":&"attack1_left",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_left_attack2_0")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_1")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_2")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_3")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_4")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_5")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_6")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_7")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_8")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_9")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_10")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_11")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_12")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_13")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_14")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack2_15")}],
+"loop":false,
+"name":&"attack2_left",
+"speed":44.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_left_attack3_0")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_1")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_2")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_3")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_4")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_5")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_6")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_7")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_8")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_9")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_10")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_11")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_12")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_13")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_14")}, {"duration":1.0,"texture":ExtResource("side_view_left_attack3_15")}],
+"loop":false,
+"name":&"attack3_left",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_left_crouch_0")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_1")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_2")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_3")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_4")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_5")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_6")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_7")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_8")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_9")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_10")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_11")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_12")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_13")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_14")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_15")}],
+"loop":false,
+"name":&"crouch_left",
+"speed":30.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_0")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_1")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_2")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_3")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_4")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_5")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_6")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_7")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_8")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_9")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_10")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_11")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_12")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_13")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_14")}, {"duration":1.0,"texture":ExtResource("side_view_left_crouch_stab_15")}],
+"loop":false,
+"name":&"crouch_stab_left",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_left_idle_0")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_1")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_2")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_3")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_4")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_5")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_6")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_7")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_8")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_9")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_10")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_11")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_12")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_13")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_14")}, {"duration":1.0,"texture":ExtResource("side_view_left_idle_15")}],
+"loop":true,
+"name":&"idle_left",
+"speed":8.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_left_jump_0")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_1")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_2")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_3")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_4")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_5")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_6")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_7")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_8")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_9")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_10")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_11")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_12")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_13")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_14")}, {"duration":1.0,"texture":ExtResource("side_view_left_jump_15")}],
+"loop":false,
+"name":&"jump_left",
+"speed":24.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_left_run_0")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_1")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_2")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_3")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_4")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_5")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_6")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_7")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_8")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_9")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_10")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_11")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_12")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_13")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_14")}, {"duration":1.0,"texture":ExtResource("side_view_left_run_15")}],
+"loop":true,
+"name":&"run_left",
+"speed":32.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_left_stab_0")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_1")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_2")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_3")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_4")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_5")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_6")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_7")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_8")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_9")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_10")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_11")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_12")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_13")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_14")}, {"duration":1.0,"texture":ExtResource("side_view_left_stab_15")}],
+"loop":false,
+"name":&"stab_left",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_left_walk_0")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_1")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_2")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_3")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_4")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_5")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_6")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_7")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_8")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_9")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_10")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_11")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_12")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_13")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_14")}, {"duration":1.0,"texture":ExtResource("side_view_left_walk_15")}],
+"loop":true,
+"name":&"walk_left",
+"speed":20.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_right_attack1_0")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_1")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_2")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_3")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_4")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_5")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_6")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_7")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_8")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_9")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_10")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_11")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_12")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_13")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_14")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack1_15")}],
+"loop":false,
+"name":&"attack1_right",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_right_attack2_0")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_1")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_2")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_3")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_4")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_5")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_6")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_7")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_8")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_9")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_10")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_11")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_12")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_13")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_14")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack2_15")}],
+"loop":false,
+"name":&"attack2_right",
+"speed":44.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_right_attack3_0")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_1")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_2")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_3")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_4")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_5")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_6")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_7")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_8")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_9")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_10")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_11")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_12")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_13")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_14")}, {"duration":1.0,"texture":ExtResource("side_view_right_attack3_15")}],
+"loop":false,
+"name":&"attack3_right",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_right_crouch_0")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_1")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_2")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_3")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_4")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_5")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_6")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_7")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_8")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_9")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_10")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_11")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_12")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_13")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_14")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_15")}],
+"loop":false,
+"name":&"crouch_right",
+"speed":30.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_0")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_1")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_2")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_3")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_4")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_5")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_6")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_7")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_8")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_9")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_10")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_11")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_12")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_13")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_14")}, {"duration":1.0,"texture":ExtResource("side_view_right_crouch_stab_15")}],
+"loop":false,
+"name":&"crouch_stab_right",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_right_idle_0")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_1")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_2")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_3")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_4")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_5")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_6")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_7")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_8")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_9")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_10")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_11")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_12")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_13")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_14")}, {"duration":1.0,"texture":ExtResource("side_view_right_idle_15")}],
+"loop":true,
+"name":&"idle_right",
+"speed":8.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_right_jump_0")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_1")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_2")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_3")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_4")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_5")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_6")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_7")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_8")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_9")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_10")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_11")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_12")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_13")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_14")}, {"duration":1.0,"texture":ExtResource("side_view_right_jump_15")}],
+"loop":false,
+"name":&"jump_right",
+"speed":24.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_right_run_0")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_1")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_2")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_3")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_4")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_5")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_6")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_7")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_8")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_9")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_10")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_11")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_12")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_13")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_14")}, {"duration":1.0,"texture":ExtResource("side_view_right_run_15")}],
+"loop":true,
+"name":&"run_right",
+"speed":32.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_right_stab_0")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_1")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_2")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_3")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_4")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_5")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_6")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_7")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_8")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_9")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_10")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_11")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_12")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_13")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_14")}, {"duration":1.0,"texture":ExtResource("side_view_right_stab_15")}],
+"loop":false,
+"name":&"stab_right",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_right_walk_0")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_1")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_2")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_3")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_4")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_5")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_6")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_7")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_8")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_9")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_10")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_11")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_12")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_13")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_14")}, {"duration":1.0,"texture":ExtResource("side_view_right_walk_15")}],
+"loop":true,
+"name":&"walk_right",
+"speed":20.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_0")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_1")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_2")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_3")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_4")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_5")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_6")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_7")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_8")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_9")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_10")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_11")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_12")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_13")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_14")}, {"duration":1.0,"texture":ExtResource("side_view_left_dash_stab_15")}],
+"loop":false,
+"name":&"dash_stab_left",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_0")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_1")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_2")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_3")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_4")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_5")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_6")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_7")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_8")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_9")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_10")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_11")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_12")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_13")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_14")}, {"duration":1.0,"texture":ExtResource("side_view_left_rising_slash_15")}],
+"loop":false,
+"name":&"rising_slash_left",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_0")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_1")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_2")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_3")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_4")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_5")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_6")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_7")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_8")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_9")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_10")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_11")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_12")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_13")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_14")}, {"duration":1.0,"texture":ExtResource("side_view_right_dash_stab_15")}],
+"loop":false,
+"name":&"dash_stab_right",
+"speed":40.0
+},
+{
+"frames":[{"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_0")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_1")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_2")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_3")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_4")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_5")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_6")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_7")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_8")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_9")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_10")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_11")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_12")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_13")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_14")}, {"duration":1.0,"texture":ExtResource("side_view_right_rising_slash_15")}],
+"loop":false,
+"name":&"rising_slash_right",
+"speed":40.0
+}
+]

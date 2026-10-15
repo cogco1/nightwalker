@@ -1,0 +1,233 @@
+{
+  "mode": "built-in image_gen",
+  "revision": "v11.1_top_down_short_walls",
+  "request": "俯视角的墙做短一点，避免人物黏在墙上",
+  "native_size": [
+    640,
+    224
+  ],
+  "viewport": [
+    320,
+    180
+  ],
+  "technical_processing": "Nearest-neighbor registration to640x224; preserve existing39-color palette, no dithering. No changes to character or side-view art.",
+  "prompts": [
+    {
+      "floor": 1,
+      "intent": "precise-object-edit",
+      "input": "hospital_floor_1_source_before_short_walls.png",
+      "selected": "hospital_floor_1_source.png",
+      "prompt": "Use case: precise-object-edit.\nAsset type: production pixel-art top-down hospital FIRST FLOOR background.\nImage1 is the EDIT TARGET, preserve its exact floor-plan registration, aspect ratio and object locations. Make only the architectural wall-height correction requested below.\nPRIMARY CHANGE: The existing wall fronts are much too tall and make a walking character appear stuck onto a vertical wall. Redraw this as a clear overhead / shallow three-quarter RPG interior with LOW CUTAWAY WALLS. Visible vertical wall faces should be only8-10 native pixels tall instead of the existing40-50px-tall facades. Keep small raised wall caps, but replace the removed tall wall-face area with unmistakable HORIZONTAL FLOOR: square worn floor tiles seen from above, seams in both directions, restrained pixel contact shadows at the wall bases. Walls must read as short partitions, floors must clearly read as flat walkable ground. Do not make this a side-view elevation.\n640x224 NATIVE registration (scale output uniformly): north outer wall has a cap near y28..34 and short face ENDING y44; corridor x24..616,y44..82 must become CLEAR FLOOR, not a vertical wall. Room divider remains at y82..92 with short face extending only to y100. Three room floors SOUTH of it start at y100, containing the existing staircase, beds, cabinets and laboratory props. Do not turn these room floors into vertical panels. West/east room partitions remain at x130..140 and x392..404, aligned to the same room openings. Preserve the three existing corridor-to-room open doorways around x62..90,253..285,523..553. Preserve floor-plan footprint x20..620,y28..190. Keep all props / bed rectangles in their current registered positions and sizes. Wall-mounted fixtures can be compacted into the short wall band; keep indicators and pipes economical. Do not draw broad vertical wall tiles across the corridor or behind the beds.\nINVARIANTS: same FIRST FLOOR, small map, stairwell at left, three EMPTY beds in middle, cold storage/lab at right, cold cyan lamps, limited navy/steel/gray palette, dark oppressive mood. No door beside the left staircase (that door was removed). No second floor visible. Do not move or scale beds, cabinets, stairs or room openings; no expansion, new props, characters, NPCs, text or UI.\nPIXELS: keep coarse uniform native-pixel clusters matching the reference; native640x224, nearest-neighbor look, hard square edges, economical39-color palette, no gradients/bloom/blur, no high-resolution illustration detail. Deliver one complete edited floor background, not a comparison, diagram or collage."
+    },
+    {
+      "floor": 2,
+      "intent": "precise-object-edit",
+      "input": "hospital_floor_2_source_before_short_walls.png",
+      "selected": "hospital_floor_2_source.png",
+      "prompt": "Use case: precise-object-edit.\nAsset type: production pixel-art top-down hospital SECOND FLOOR background.\nImage1 is the EDIT TARGET. Preserve exact canvas aspect ratio, floor-plan registration and furniture locations. Change wall heights only.\nPRIMARY CHANGE: redraw every tall vertical wall facade as a LOW CUTAWAY WALL with visible face only8-10 native pixels tall. The existing high wall areas make a walking hero look stuck onto a wall. Replace the removed tall face area with CLEAR HORIZONTAL FLOOR seen from overhead: worn square tiles with seams in BOTH directions and small pixel contact shadows. Floor must read as flat walkable ground, not a frontal tiled wall. Show an overhead/shallow three-quarter RPG hospital. Small raised wall caps may remain. Do not change to side view or isometric.\nNative640x224 REGISTRATION: north outer wall cap near y28..34, short face ENDS y43; clear flat floor starts at y43. Internal left/right partitions stay x191..203 and410..422. Rooms occupy x20..620,y26..144. Their south/front wall caps remain y135..145 with a short face ending y153; corridor x24..616,y153..192 must be unmistakable FLOOR, not a broad upright wall. Door openings remain near x86..126,283..316,486..518. Keep bottom corridor and overall outline in their existing positions. Compact wall-mounted pipes, vents and lights into the short wall bands; do not fill floor with wall panels.\nINVARIANTS: exactly the same three rooms: left reception with staircase, seats and desk/computer; middle treatment room with EMPTY operating table and medical monitors; right physician office with desk/computer and files. Keep EVERY desk, chair, table, cabinet, stair and door opening at the same registered positions and sizes. Same cold, oppressive underground hospital palette and restrained cyan screen pixels, navy/steel/gray, no warm or cozy decoration. No expansion or room changes; no additional objects, people, NPCs, UI or text; no downstairs rooms visible.\nPIXELS: same coarse uniform native640x224 pixel grid, hard square edges, native-pixel clusters,39-color economical palette, no smooth rendering, blur, gradients, bloom, painterly or high-resolution microdetail. Deliver ONE complete edited floor background, not a comparison sheet or diagram.",
+      "refinement_prompt": "Use case: precise-object-edit. Image1 is the edit target: second-floor low-wall pixel hospital.\nMake one further localized correction: REMOVE the long black horizontal BASEBOARD STRIPE running behind the waiting chairs, treatment equipment and office cabinets, roughly at native y72..77 across the three rooms. This stripe incorrectly still makes the area above it read as a40px-tall wall. After the change, the narrow top wall itself should end at nativey43, and the entire y43..134 area of the three rooms must read as one continuous HORIZONTAL FLOOR of square worn tiles. Continue those floor tile seams consistently in BOTH directions behind and between every piece of furniture. Preserve furniture silhouettes and positions; wall-mounted details can remain as compact overhead infrastructure, but do not retain a tall wall surface or any room-wide wallbase stripe far from the top edge.\nAlso keep the THREE DOORWAYS across the rooms' front wall visibly open with flat floor passing through, around native x86..126,x283..316,x486..518 at y135..145. Low wall caps terminate at the sides of these openings. Do not draw metal sill, wall strip or riser across the openings: continuous floor.\nKeep EVERYTHING ELSE identical: same canvas/native640x224 registration, furniture/props sizes and locations, left stairs, cold palette, square coarse pixels, bottom corridor already floor, short wall caps, dark hospital mood, no characters or UI. Do not redraw into a different floor plan."
+    }
+  ],
+  "palette_rgb": [
+    [
+      1,
+      2,
+      8
+    ],
+    [
+      2,
+      5,
+      13
+    ],
+    [
+      4,
+      8,
+      17
+    ],
+    [
+      6,
+      11,
+      19
+    ],
+    [
+      7,
+      11,
+      19
+    ],
+    [
+      7,
+      12,
+      19
+    ],
+    [
+      8,
+      12,
+      20
+    ],
+    [
+      8,
+      14,
+      22
+    ],
+    [
+      11,
+      17,
+      25
+    ],
+    [
+      12,
+      20,
+      29
+    ],
+    [
+      14,
+      23,
+      31
+    ],
+    [
+      16,
+      24,
+      33
+    ],
+    [
+      17,
+      26,
+      34
+    ],
+    [
+      18,
+      29,
+      38
+    ],
+    [
+      19,
+      27,
+      36
+    ],
+    [
+      21,
+      30,
+      39
+    ],
+    [
+      22,
+      32,
+      41
+    ],
+    [
+      23,
+      35,
+      44
+    ],
+    [
+      25,
+      35,
+      45
+    ],
+    [
+      26,
+      38,
+      47
+    ],
+    [
+      29,
+      40,
+      49
+    ],
+    [
+      30,
+      42,
+      51
+    ],
+    [
+      30,
+      47,
+      57
+    ],
+    [
+      32,
+      43,
+      53
+    ],
+    [
+      34,
+      47,
+      57
+    ],
+    [
+      37,
+      51,
+      62
+    ],
+    [
+      43,
+      57,
+      70
+    ],
+    [
+      46,
+      63,
+      76
+    ],
+    [
+      52,
+      66,
+      81
+    ],
+    [
+      54,
+      98,
+      111
+    ],
+    [
+      58,
+      77,
+      91
+    ],
+    [
+      67,
+      100,
+      113
+    ],
+    [
+      68,
+      116,
+      129
+    ],
+    [
+      73,
+      13,
+      21
+    ],
+    [
+      81,
+      107,
+      121
+    ],
+    [
+      84,
+      173,
+      187
+    ],
+    [
+      109,
+      13,
+      17
+    ],
+    [
+      117,
+      28,
+      29
+    ],
+    [
+      143,
+      50,
+      49
+    ]
+  ],
+  "runtime_sha256": {
+    "hospital_floor_1_native.png": "1bf9d9912e261d7f786d808d2e123baeef756336fb3391978d83bed098730e82",
+    "hospital_floor_2_native.png": "8535758efbc90d55575be0eb2cef081b67fa19e60abaca67c2b92a3c54fb4d48"
+  },
+  "collision_review": "Existing wall bases now match the short wall faces. Preserved north44/43,divider82..92/135..145 and six doorway gaps; no loss of usable floor."
+}

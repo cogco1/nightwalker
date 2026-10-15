@@ -1,0 +1,131 @@
+{
+  "jobs": [
+    {
+      "name": "dive_slash",
+      "source_path": "dive_slash_source.png",
+      "generator": "built-in image_gen",
+      "prompt": "Use case: precise-object-edit. Edit the provided exact 4x4 /16-frame Nightwalker downward-sword animation atlas. Change ONLY the SWORD STEEL COLOR in every frame. Keep all existing hood, face, torso, coat, arms, knees, boots, poses, alignment, size, frame positions, transparent background and weapon geometry unchanged. The vertical blade in frames6-12 is currently too dark with a broad charcoal outline. Make it clearly readable: a continuous FLAT PALE SILVER steel core #bbc2c3 with one near-white edge #e5e8e0, at least8displaypixels wide in this displayed sprite atlas, subtly tapered at the tip. No dark inner stripe, no thick black weapon outline, no double blade, no glow or extra light bars. The blade remains thin relative to this same SMALL character, about20nativepixels long, held by the exact same hand, pointing straight DOWN below both tucked boots in plunge frames. Preserve same genuine transparent canvas and exact16cells. Do not alter character pixels or redraw/resize the body. No labels, cell lines, checkerboard, background, new objects or new limbs. Native pixel-game palette and crisp blocks, no antialiasing.",
+      "native_cell": [
+        80,
+        80
+      ],
+      "foot_pivot": [
+        40,
+        68
+      ],
+      "frame_count": 16,
+      "uniform_sampling_scale": 0.18,
+      "source_pivot": [
+        160,
+        272
+      ],
+      "target_sample_pivot": [
+        40,
+        68
+      ],
+      "initial_prompt": "Use case: identity-preserve. Edit target: the attached exact 16-frame 4x4 sprite atlas of the approved Nightwalker hooded worn charcoal trenchcoat swordsman facing RIGHT. Produce the NEW DOWNWARD DIVE SLASH animation, still precisely 4 columns x 4 rows, 16 chronological frames read left to right then top to bottom. Preserve this same character, tiny hidden face, hood width/height, lean torso/limbs, brown ragged coat lining, one slender silver-gray long sword. CRITICAL scale/layout: 1280x1280 transparent atlas, cells320x320. Underlying native cell80x80 is shown at4x NEAREST (each native pixel is exactly a 4x4 square). Character's standing anatomy equivalent28 native pixels /112 display pixels, hood7 native /28 display pixels. No enlargement, no detailed face, no thicker weapon, no changed pixel size. Fixed virtual foot pivot native(40,68) / displayed(160,272) in each cell, same anatomical scale through all frames; do not move the whole sprite through the sheet as if falling.\nReplace the upward attack poses with a TRUE DOWNWARD SWORD SWING: frame0-1 tight airborne preparation with knees bent, blade already poised diagonally down-forward; frame2-5 the gloved hand sweeps the longblade from diagonally forward-down toward straight down BELOW THE BODY; frame6-12 clearly plunging pose, arm forward and DOWN, sword blade steel points straight DOWN with tip below the boots, coat tails stream UP, both knees tucked; frame13-15 compact landing follow-through with lowered sword, knees flexed but feet still registered. Blade must not be horizontal or pointing up in the plunge phase. Exactly one sword attached continuously to the hand. Shoulder/elbow/wrist anatomy drives the visible sweep, not merely a vertical light bar or rotated whole character. Sword20 native pixels long, thin1-2px, no glow/trails baked in. Preserve sparse 18-color flat palette and blocky pixel edges from source. Cell boundaries invisible, full sword and coat within every cell. Genuine transparent background and transparent gutters. No ground, no scenery, no text, no labels, no outlines of cells, no checkerboard pixels, no antialias/blur/smoothing, no extra objects or limbs. Each of16 poses is a coherent animation step, complete sprites, no duplicated labels.",
+      "edit_reference": "dive_slash_initial_source.png",
+      "original_generator_path": "C:\\Users\\Lenovo\\.codex\\generated_images\\01a13b4b-744e-75b0-9154-74ed7fa7e23f\\exec-22317362-54f5-4951-be5e-cd6e2e352b77.png"
+    },
+    {
+      "name": "air_idle",
+      "source_path": "air_idle_source.png",
+      "generator": "built-in image_gen",
+      "prompt": "Use case: identity-preserve. Input image is the edit target: exact Nightwalker 4x4 16-frame RIGHT-facing pixel-sprite atlas. Keep the same slim hooded old charcoal trenchcoat character, ragged brown lining, tiny concealed face, gloves, boots, single slender silver sword. KEEP CHARACTER SMALL LIKE THE REFERENCE, do NOT enlarge the figure. Standing anatomy is28 native pixels tall, hood7, sword20px long1-2px wide. Preserve exact 4x4 layout and anchor. Native cells80x80 displayed nearest4x in320x320 cells, full canvas1280x1280. Native foot pivot(40,68), displayed(160,272); full poses remain inside each cell. One same native pixel size in all16frames (display4x4blocks), maximum18 flat colors, no antialiasing, no fine illustration detail. Palette charcoal11141a/20242b/303842/414b58/566170/6b7480, brown33251f/533729/76513a/a07a5b, facec5a18a/e1b999 only1-3nativepixels, steel5a6268/8e999f/bbc2c3/e5e8e0. TRUE TRANSPARENT background, no text/grid/scenery/glow/trails/extra limbs. No ground under feet. Upper body and weapon identity must match the reference. Create an independent16-frame LOOP of suspended airborne guard/idle. BOTH KNEES TUCKED, feet clearly suspended beneath pelvis with relaxed asymmetry, coat tails lift upward behind and ripple softly, body slightly leans forward, sword kept near chest angled forward-right ready for a midair strike. No standing straight-legged pose, no walk/run cycle, no ground breathing silhouette. Tiny coherent 1-2nativepixel changes of bent knees, coat and grip across frames; last frame blends back into first without jump. Stable virtual center and anatomical scale.",
+      "native_cell": [
+        80,
+        80
+      ],
+      "foot_pivot": [
+        40,
+        68
+      ],
+      "frame_count": 16,
+      "uniform_sampling_scale": 0.18,
+      "source_pivot": [
+        160,
+        272
+      ],
+      "target_sample_pivot": [
+        40,
+        60
+      ],
+      "original_generator_path": "C:\\Users\\Lenovo\\.codex\\generated_images\\01a13b4b-744e-75b0-9154-74ed7fa7e23f\\exec-3086ac91-0866-49c1-ab26-89af7cc7f6bf.png"
+    },
+    {
+      "name": "air_attack1",
+      "source_path": "air_attack1_source.png",
+      "generator": "built-in image_gen",
+      "prompt": "Use case: identity-preserve. Input image is the edit target: exact Nightwalker 4x4 16-frame RIGHT-facing pixel-sprite atlas. Keep the same slim hooded old charcoal trenchcoat character, ragged brown lining, tiny concealed face, gloves, boots, single slender silver sword. KEEP CHARACTER SMALL LIKE THE REFERENCE, do NOT enlarge the figure. Standing anatomy is28 native pixels tall, hood7, sword20px long1-2px wide. Preserve exact 4x4 layout and anchor. Native cells80x80 displayed nearest4x in320x320 cells, full canvas1280x1280. Native foot pivot(40,68), displayed(160,272); full poses remain inside each cell. One same native pixel size in all16frames (display4x4blocks), maximum18 flat colors, no antialiasing, no fine illustration detail. Palette charcoal11141a/20242b/303842/414b58/566170/6b7480, brown33251f/533729/76513a/a07a5b, facec5a18a/e1b999 only1-3nativepixels, steel5a6268/8e999f/bbc2c3/e5e8e0. TRUE TRANSPARENT background, no text/grid/scenery/glow/trails/extra limbs. No ground under feet. Upper body and weapon identity must match the reference. Create independent16-frame AIRBORNE FIRST COMBO SWING. Change the reference grounded leg stance into compact suspended BOTH-KNEES-BENT aerial body posture throughout all16frames; coat tails drift upward, slight forward torso curl. Hand drives a long-sword overhead diagonal cut toward lower-right. Frames0-5anticipation,6-9true visible swing arc from overhead-left across front toward down-right,10-15aerial recovery. The character never plants or spreads feet on a ground line. Preserve the original strike order/timing and skinny sword. This is not the original grounded pose with feet erased.",
+      "native_cell": [
+        80,
+        80
+      ],
+      "foot_pivot": [
+        40,
+        68
+      ],
+      "frame_count": 16,
+      "uniform_sampling_scale": 0.18,
+      "source_pivot": [
+        160,
+        272
+      ],
+      "target_sample_pivot": [
+        40,
+        60
+      ],
+      "original_generator_path": "C:\\Users\\Lenovo\\.codex\\generated_images\\01a13b4b-744e-75b0-9154-74ed7fa7e23f\\exec-b7ba8d29-c407-4af5-9077-976879ad0dfb.png"
+    },
+    {
+      "name": "air_attack2",
+      "source_path": "air_attack2_source.png",
+      "generator": "built-in image_gen",
+      "prompt": "Use case: identity-preserve. Input image is the edit target: exact Nightwalker 4x4 16-frame RIGHT-facing pixel-sprite atlas. Keep the same slim hooded old charcoal trenchcoat character, ragged brown lining, tiny concealed face, gloves, boots, single slender silver sword. KEEP CHARACTER SMALL LIKE THE REFERENCE, do NOT enlarge the figure. Standing anatomy is28 native pixels tall, hood7, sword20px long1-2px wide. Preserve exact 4x4 layout and anchor. Native cells80x80 displayed nearest4x in320x320 cells, full canvas1280x1280. Native foot pivot(40,68), displayed(160,272); full poses remain inside each cell. One same native pixel size in all16frames (display4x4blocks), maximum18 flat colors, no antialiasing, no fine illustration detail. Palette charcoal11141a/20242b/303842/414b58/566170/6b7480, brown33251f/533729/76513a/a07a5b, facec5a18a/e1b999 only1-3nativepixels, steel5a6268/8e999f/bbc2c3/e5e8e0. TRUE TRANSPARENT background, no text/grid/scenery/glow/trails/extra limbs. No ground under feet. Upper body and weapon identity must match the reference. Create independent16-frame AIRBORNE SECOND COMBO SWING. All16poses have knees folded/tucked off the ground with waist twisting into a reverse upward/diagonal slash. Sword moves from low-forward through horizontal-forward toward up-right across frames6-9; preparation0-5and floating guard recovery10-15. Coat fans behind and upward from torso rotation. Distinct suspended silhouette, no grounded stance. Keep original weapon size and continuous wrist attachment.",
+      "native_cell": [
+        80,
+        80
+      ],
+      "foot_pivot": [
+        40,
+        68
+      ],
+      "frame_count": 16,
+      "uniform_sampling_scale": 0.18,
+      "source_pivot": [
+        160,
+        272
+      ],
+      "target_sample_pivot": [
+        40,
+        60
+      ],
+      "original_generator_path": "C:\\Users\\Lenovo\\.codex\\generated_images\\01a13b4b-744e-75b0-9154-74ed7fa7e23f\\exec-19512625-c97d-4635-8fe2-0fe0015e7204.png"
+    },
+    {
+      "name": "air_attack3",
+      "source_path": "air_attack3_source.png",
+      "generator": "built-in image_gen",
+      "prompt": "Use case: identity-preserve. Input image is the edit target: exact Nightwalker 4x4 16-frame RIGHT-facing pixel-sprite atlas. Keep the same slim hooded old charcoal trenchcoat character, ragged brown lining, tiny concealed face, gloves, boots, single slender silver sword. KEEP CHARACTER SMALL LIKE THE REFERENCE, do NOT enlarge the figure. Standing anatomy is28 native pixels tall, hood7, sword20px long1-2px wide. Preserve exact 4x4 layout and anchor. Native cells80x80 displayed nearest4x in320x320 cells, full canvas1280x1280. Native foot pivot(40,68), displayed(160,272); full poses remain inside each cell. One same native pixel size in all16frames (display4x4blocks), maximum18 flat colors, no antialiasing, no fine illustration detail. Palette charcoal11141a/20242b/303842/414b58/566170/6b7480, brown33251f/533729/76513a/a07a5b, facec5a18a/e1b999 only1-3nativepixels, steel5a6268/8e999f/bbc2c3/e5e8e0. TRUE TRANSPARENT background, no text/grid/scenery/glow/trails/extra limbs. No ground under feet. Upper body and weapon identity must match the reference. Create independent16-frame AIRBORNE THIRD COMBO FINISHER. Folded knees, one knee raised, torso leans forward suspended in midair. Frame0-5draw the slim longblade back alongside chest, frames6-9a strong forward-right piercing finishing cut/thrust,10-15body recoils into tucked aerial guard. Coat flares upward/back, not dragging on ground. No normal standing/lunging pose. Preserve exact slim anatomy and sword20nativepx, do not turn it into a broad rectangular gun/bar.",
+      "native_cell": [
+        80,
+        80
+      ],
+      "foot_pivot": [
+        40,
+        68
+      ],
+      "frame_count": 16,
+      "uniform_sampling_scale": 0.18,
+      "source_pivot": [
+        160,
+        272
+      ],
+      "target_sample_pivot": [
+        40,
+        60
+      ],
+      "original_generator_path": "C:\\Users\\Lenovo\\.codex\\generated_images\\01a13b4b-744e-75b0-9154-74ed7fa7e23f\\exec-1cc553fe-4cbd-44d6-9da6-9abe76be1374.png"
+    }
+  ]
+}

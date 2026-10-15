@@ -1,0 +1,33 @@
+{
+  "action": "dash_stab",
+  "native_frame": [
+    80,
+    64
+  ],
+  "pivot": [
+    40,
+    52
+  ],
+  "body": "SIDE RIGHT short INSTANT DASH THRUST 16 chronological frames. 0 waist-level readyguard matching reference;1-3 coil low with bentknees, front forearm/dagger pulled beside rust waistbelt;4-8 FAST low forward lean, frontdaggerarm FULLY EXTENDED RIGHT at chestlevel, backglovedarm EMPTY and sweeps behind, hood same7pixelheight though tilted/slanted, slim torso unchanged, leadleg longforwardstep/backleg trailing, coat torn tails streaming LEFT;9-12 recover elbow/shoulders, retract single dagger and decelerate;13-15 settle back into originalguard. Ground/root fixed at native40,52, waistaround36: front/back boot grounding may change withstride but don't translate the wholefigure across cells; engine moves the actor instantly. 80wide transparent cell supports outstretched arm/cloth WITHOUT resizing body. Large anticipation->fully extended thrust->recovery, recognizably a STAB with a short steel dagger, not slash, notgun/sword. Keep knife and ragged tails8nativepixels inside allcells.",
+  "prompt": "Use case: precise-object-edit, PIXEL SPRITE WEAPON SHAPE ONLY. Image1 is the exact sixteen-frame RIGHT SIDE hooded old trenchcoat animation atlas to edit. Image2 is the existing samecharacter outfit and short DAGGER reference. Preserve EVERY hood/face/coat/torso/arm/leg pose, nativepixelgrid/bodyproportions, exact4x4cell placements, colors and transparent background.\nCHANGE ONLY the held white rectangular GUN-LIKE objects across these16cells into ONE SHORT POINTED STEEL DAGGER perfigure. Keep every gloved HAND and WRIST exactlyunchanged, knife orientation follows existing wrist. The blade is visibly a narrow SILVER TRIANGLE/WEDGE, base2nativepixels and length7nativepixels, taper to a SINGLE SHARP PIXEL POINT at farend. Simpletiny1-2pixel blackhilt inside glove. REMOVE bulky black rectangular metalboxes/gunreceiver/barrel/trigger and empty black frame aroundblade; dagger steel has NO BLACK RECTANGULAR outline box. Every blade's two edges must visibly CONVERGE to a point; no solid white rectangulargunbar. Match clear short tapered dagger fromImage2, tiltedup in raisedhand and pointingright in extendedhand. Handle is onlygripped tinyhilt; do NOTadd shield/secondblade/sword/longthinrapier. There is exactlyONE knife ONLYforeground rightglovedhand; otherhandremains emptyblackglove.\nDo not change ANY bodypose/bodydimensions/spriteplacement/details/characteridentity or cloth motion. Keep EXACTLY16full-body cellsfourrowsfourcolumns and originaltransparency. Do not switchtofront/backview. No additional effects/text/scenery/glow/blur/AA/halo. Background trulytransparent, no black backdrop.",
+  "name": "side_view_right_dash_stab",
+  "view": "side_view",
+  "direction": "right",
+  "frame_count": 16,
+  "columns": 4,
+  "rows": 4,
+  "new_character": "hooded_worn_trenchcoat",
+  "generator": "built-in image_gen",
+  "referenced_image_paths": [
+    "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-6d1085cd-a355-4fdb-8cc0-7eca91b7712a.png",
+    "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v06/hooded_side_view_right_raw_identity_reference.png"
+  ],
+  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-e513a28c-0128-4149-9382-f448beabf3ef.png",
+  "original_prompt": "Use case: stylized-concept. Production transparent LOW-RES PIXEL animation atlas for existing Nightwalker Godot game. Input Image1 is the EXACT approved 28-native-pixel character enlarged by nearest neighbor; authoritative pixel density/proportions/colors. Image2 is supporting outfit identity ONLY, not target detail density. Preserve the current player's identity exactly: worn knee-length slateblue/charcoal trenchcoat, hood up, asymmetrical two small hem tears, warm brown lining, rustbrown thin waist tie, black gloves/slim trousers/boots. Face hidden in dark hood, ONLY ONE TO THREE tiny mutedskin pixels, nohair/facial expression/white lapels. ONE short steel DAGGER in foreground rightglovedhand,7nativepixels long,2pixels wide at base,tapers to ONE PIXEL tip, simple tinyblackhilt; otherhand EMPTY. Never duplicate knife, nevergun/rectangularblade orlongsword. Neutral bodyheight28nativepixels INCLUDINGHOOD, hood7 high/profile6wide, profiletorso5wide; same hood/torso/limb lengths across all16poses. Knee bends and lean change posture, NEVER body scale.\nExactly 4 rows x 4 columns (=16) evenlyspaced full-body sprites, chronological lefttoright thentopdown. Cell 80x64 nativepixels, foot/root [40,52] at neutral, source shown integer-nearest enlarged. Keep SAME atlas/cell grid with transparent margins and nooverflow. Allcharacters SIDE PROFILE FACINGRIGHT, neverfront/back. SIDE RIGHT short INSTANT DASH THRUST 16 chronological frames. 0 waist-level readyguard matching reference;1-3 coil low with bentknees, front forearm/dagger pulled beside rust waistbelt;4-8 FAST low forward lean, frontdaggerarm FULLY EXTENDED RIGHT at chestlevel, backglovedarm EMPTY and sweeps behind, hood same7pixelheight though tilted/slanted, slim torso unchanged, leadleg longforwardstep/backleg trailing, coat torn tails streaming LEFT;9-12 recover elbow/shoulders, retract single dagger and decelerate;13-15 settle back into originalguard. Ground/root fixed at native40,52, waistaround36: front/back boot grounding may change withstride but don't translate the wholefigure across cells; engine moves the actor instantly. 80wide transparent cell supports outstretched arm/cloth WITHOUT resizing body. Large anticipation->fully extended thrust->recovery, recognizably a STAB with a short steel dagger, not slash, notgun/sword. Keep knife and ragged tails8nativepixels inside allcells.\nOne consistent native square pixelgrid, chunky small flat colorblocks, maximum18opaque colors matching Image1. Plain TRUE TRANSPARENT BACKGROUND across allcells; don'tcopy dark/black referencebackdrops. NO antialias/gradients/shadingnoise/halo/blur/glow/ghostfigures/gridlines/text/labels/shadows/enemies/scenery. Effects will be drawn by game so only ONE player+ONE dagger in EACH cell. Draw each changingpose coherently, clean silhouette. Canvas padding may be larger but anatomy/pixel blocks exactlyImage1, don'tfit bodytofillcell.",
+  "corrected_from_generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-6d1085cd-a355-4fdb-8cc0-7eca91b7712a.png",
+  "standing_body_height": 28,
+  "hood_height": 7,
+  "face_visible_pixels_max": 3,
+  "correction_reason": "Pointed triangular steel dagger, preserving all body poses",
+  "base_character_version": "v05"
+}

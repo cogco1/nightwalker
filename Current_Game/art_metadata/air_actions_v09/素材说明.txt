@@ -1,0 +1,10 @@
+v09 空中动作与下劈素材
+五种动作各 16 帧，左右各一组，共 160 个新增原生像素帧。
+由内置 image_gen 根据现有人物生成；generation_manifest.json 保存原始提示词和下劈刀刃修改提示词。
+*_source.png 是原始生成图，*_reference.png 是生成时使用的参考，*_native_preview.png 是实际导入帧的最近邻预览。
+整个图集使用同一取样比例，固定 80×80 透明画布、(40,68) 足点和原有 18 色；人物节点保持 scale=1。
+原有站姿约 28 原生像素；新增滞空收腿和下劈弯身会压缩姿态高度，不对单帧人体另行缩放。
+新增 SpriteFrames 与刀尖轨迹合并到 assets/side_view.tres 和 blade_paths.json。
+import_air_actions.gd 为离线素材处理脚本，不在游戏运行时执行。
+如需重建本版新增素材，使用 Godot --headless --path <Current_Game> --script res://art_metadata/air_actions_v09/import_air_actions.gd。
+重建会基于保存的 v08 资源底稿覆盖本版侧视资源及刀尖轨迹；后续新增动作前请先保存新底稿。

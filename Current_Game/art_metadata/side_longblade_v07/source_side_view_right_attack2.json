@@ -1,0 +1,27 @@
+{
+  "name": "side_view_right_attack2",
+  "action": "attack2",
+  "view": "side_view",
+  "direction": "right",
+  "frame_count": 16,
+  "columns": 4,
+  "rows": 4,
+  "native_frame": [
+    112,
+    96
+  ],
+  "pivot": [
+    56,
+    84
+  ],
+  "standing_body_height": 28,
+  "hood_height": 7,
+  "new_character": "approved_hooded_trenchcoat_side_longblade",
+  "base_character_version": "v06",
+  "generator": "built-in image_gen",
+  "referenced_image_paths": [
+    "E:/CodexWorkspace/MaidCompanion/Nightwalker_Preproduction/art/characters/animation_v08/edit_references/side_view_right_attack2.png"
+  ],
+  "prompt": "Use case: precise-object-edit. ONE PIXEL SPRITE ATLAS WEAPON REPLACEMENT ONLY. Input Image1 is the EXACT approved 16-frame right-side hooded oldtrenchcoat attack2 animation, 4x4 cells. It is the EDIT TARGET, all existing character pixels/poses must be preserved exactly. This is a true LOW-RES game sprite: standing body28 nativepixels, hood7, displayed NEAREST-NEIGHBOR at3x, cells112x96native (=336x288 displayed), pivot56,84native. Transparent padded canvas1344x1152; preserve canvas/layout/footroots and every cell placement.\nReplace the SHORT DAGGER in the one foreground gloved hand IN EVERYONE of16cells with ONE LONG, SLENDER SINGLE-EDGE KATANA-LIKE BLADE: steel blade exactly20 nativepixels fromguardtotip (60displaypixels), width1-2nativepixels, very subtlecurve and sharplytapered single point; tinyplain dark guard2-3nativepixels across, simple charcoal wrapped hilt3-4nativepixels inside same grip. It must read as a longblade abouttwo-thirds characterstandingheight, not a dagger, not a giantbroadsword/gun. One same longknife/sword geometry andmaterial in ALL16frames, following each existing wrist/action orientation. For attacking poses, keep the sword orientation in line with the existing knife/hand sweep or thrust, now a clearly longblade; the hilt stays fixed inside that exact gripping hand. Raised slash points upward, thrusts point forward-right, followthrough keeps its existing action. Don't change elbow/shoulder/body poses.\nOnly weapon pixels maychange: remove the original smallblade and draw the longblade at that exactgrip. EVERYexisting hood/face/eyes/coat/tornhem/lining/waisttie/arms/gloves/legs/boots remains EXACTpixelshape/location/color, no newbodyoutline, no newarms, no longerhands/limbs, no enlargedhood/torso. Don'tredraw/reinterpret the figure, justedit the weapon. Faces remain hidden1-3tiny skinpixels, same coldexpression. ExactlyONE sword perfigure and otherhandEMPTY; no leftoverseconddagger/scabbard/spareblade/doubleswords/effectghosts. Matching palette maximum18 flat opaquecolors; steel uses mutedgray/silver/ivory smallblocks, plain darkhilt, no extra gold/red ornaments. Native1pixelsquaregrid (displayblock3x3), NO thin subpixel lines/antialias/smoothing/fineillustrationdetail. The blade itself uses the SAME pixel size asbody/scenery.\nEXACT4rows4columns16fullsprites. No crop/reposition/bodyrescaling/rearrangedcells/gridlines/text/labels/enemies/lighttrails/sparks/blur/halo/background/scenery. Entirebackground remains genuinely TRANSPARENT. Changes ONLYheldweapon geometry. Brightsteel longblade has a clearpoint, no whitebars in blackrectangulargunframe. All16inclfirstandlast musthaveone20-nativepixels longblade.",
+  "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-19575578-c9e8-4155-837c-0ddf28e9c3fe.png"
+}

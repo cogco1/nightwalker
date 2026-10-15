@@ -1,0 +1,19 @@
+﻿《夜行者》v14 实际运行交付结果
+引擎：4.7.2.stable.official.ed1daf0bf
+项目：E:\CodexWorkspace\MaidCompanion\Nightwalker_Preproduction\integration_v14\outputs\Current_Game
+原始v10基线：717项检查全部通过。
+融合后完整检查：1277项，11组，失败0。
+干净工程导入：退出0，无错误日志；完整Test-Game.ps1退出0。
+新增动作：左右各16帧，40fps，112×96，固定足点(56,84)，人物scale=1；总64动作/1024帧。
+原992帧、原玩家场景、俯视资源与地面突刺保持；player.gd仅增加两行动画分支。
+真实医院录制256帧：左右空突刺→air_idle→空中三连→S下劈→落地；另有安全屋/医院双视角截图。
+可玩入口：Run-Demo.cmd；编辑器：Open-Editor.cmd；完整检查：Test-Game.cmd。
+正式游戏仅安全屋和医院；E门口/医院出口往返，F7快捷往返；F6训练入口移除。
+原717战斗环境仅保存在tests/fixtures，自动测试时使用，不会在正式流程创建训练目标。
+医院俯视三门密码1010；电闸需钥匙，后续NPC对话发钥匙，本版不放NPC。
+按键配置保留原user://路径；改键后重置位置生效，若F7已被玩家绑定，快捷转场不抢键。
+修改前人物备份：E:\CodexWorkspace\MaidCompanion\Nightwalker_Preproduction\integration_v14\outputs\夜行者_v10_人物工程_修改前备份.zip
+修改前场景备份：E:\CodexWorkspace\MaidCompanion\Nightwalker_Preproduction\integration_v14\outputs\夜行者_融合前安全屋医院工程备份.zip
+新增原画与完整提示词：Current_Game/art_metadata/air_dash_v14，内置image_gen制作。
+最终记录：Current_Game/evidence/qa_summary_v14.json及各组日志。
+源包：E:\CodexWorkspace\MaidCompanion\Nightwalker_Preproduction\integration_v14\outputs\夜行者_v14_场景融合与独立空中突刺_源码与素材.zip

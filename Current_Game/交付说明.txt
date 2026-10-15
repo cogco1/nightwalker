@@ -1,0 +1,8 @@
+夜行者v14完整工程
+Current_Game/project.godot可直接用Godot4.7.2打开。上一级Run-Demo.cmd启动，Open-Editor.cmd打开编辑器，Test-Game.cmd测试。
+以输入ZIP的player场景、控制器、992原始动作帧和原空战手感为基线，仅新增左右32帧收腿突刺。
+安全屋和医院复用前版美术、交互、双视角分层与实体楼梯。正式场景没有训练目标、NPC或旧角色副本。
+scripts/game_session.gd共用按键设置与命中停顿；scripts/scene_routes.gd只允许安全屋和医院跳转。
+原战斗回归环境位于tests/fixtures；原基线717项已在独立副本实际复核，新增动作更新资源计数检查。
+art_metadata/air_dash_v14保存全部新增原画、提示词、技术导入和校验，使用内置image_gen。
+当前运行结果、源码包及修改前备份见上一级outputs目录。

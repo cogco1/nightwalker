@@ -1,0 +1,43 @@
+{
+  "mode": "built-in image_gen",
+  "revision": "v11.3_optional_straight_side_stairs",
+  "request": "下楼脚穿模；楼梯脚只能上楼不能向前走，可以改变朝向",
+  "prompt": "Use case: precise-object-edit.\nAsset type: production SIDE-VIEW pixel-art hospital cutaway background, native640x360.\nImage1 is the EDIT TARGET. Change ONLY the FAR LEFT STAIRWELL (native x12..168,y160..286). Preserve both floor heights, all room furniture and every other part of the composition.\nREPLACE the existing two-flight zig-zag stairs with ONE STRAIGHT DIAGONAL STAIR FLIGHT. It rises from the LOWER RIGHT to the UPPER LEFT. Exact native walking-edge endpoints: LOWER FOOT at(144,286), UPPER HEAD at(24,164). One continuous diagonal flight between these points, NO turning landing and NO second flight. Shallow economical pixel steps/tread edges should follow this diagonal tightly, 2-native-pixel rise/run clusters, not large deep6-10px-tall risers. Keep one thin diagonal rear handrail8-12px ABOVE the walking edge; rail is clearly distinct from the walking surface. Open, clear tread surfaces, narrow stair slab underneath. Do not place a solid foreground railing in front of a future character's feet.\nPreserve a CLEAR HORIZONTAL FOREGROUND WALKWAY at y286 across x12..168 into the ward atx168. A hero on the LOWER FLOOR must be able to pass IN FRONT OF the stairs and continue right to the ward, without automatically climbing. Draw this front walkway visibly continuous and unblocked, while the staircase sits farther back in the stairwell. At the lower right foot, a small flat approach space x150..168,y286 joins the front walkway. Upper floor remains a continuous thin straight platform y164 with the stair head joining atx24. The rightward upper-floor walking route remains intact. No black holes across either floor. Reposition/remove old stairwell pipes/utility details only if they interfere with the new diagonal stairs. Keep the old lower-left back door and electrical box if practical; they are background fixtures, not obstacles on the walkway.\nStyle: same cold oppressive low-resolution pixel game, native640x360 coarse square pixels, limited navy/steel/cyan palette, no smoothing, gradients, high-resolution microdetail or bloom. Preserve all furniture and empty3-bed ward, top reception/treatment/office and right storage, same floor heights164 and286, same canvas16:9, no people/NPCs or characters. No UI, text, labels, arrows, route lines or diagram. Deliver ONE complete revised SIDE-VIEW background.",
+  "source": "hospital_side_source_before_straight_stairs.png",
+  "selected_source": "hospital_side_source.png",
+  "native_asset": "hospital_side_native.png",
+  "native_size": [
+    640,
+    360
+  ],
+  "viewport": [
+    320,
+    180
+  ],
+  "technical_processing": "Nearest registration to640x360, preserved39-color palette; native scale1:1. Single upper-left/lower-right flight and a separate foreground flat route. Removed downward sprite correction.",
+  "native_sha256": "45fdfd60cdfca886233876d25756215761b1bd7f562ffd33633ef6146ffc6cc5",
+  "collision_polygon": [
+    [
+      24,
+      164
+    ],
+    [
+      144,
+      286
+    ],
+    [
+      144,
+      294
+    ],
+    [
+      24,
+      172
+    ]
+  ],
+  "controls": {
+    "floor": "ADwalkpaststairswithoutentry",
+    "up": "W/E atlowerfoot,thenA",
+    "down": "S/E atupperhead,thenD"
+  },
+  "feet_review": "Removed old6pxdownwardcorrection;actualGPUupanddowncontactstillsreviewed atnative320x180."
+}

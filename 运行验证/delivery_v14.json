@@ -1,0 +1,52 @@
+{
+  "version": "v14",
+  "status": "passed",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "source": {
+    "source_archive": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\integration_v14\\夜行者_v10_空中突刺衔接_源码与素材.zip",
+    "source_sha256": "d0ded3047886a3bcb8afcc40b3c37bdd9274c84cab07e404f7e9525e0a0752a9",
+    "original_project": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\integration_v14\\original_v10\\Current_Game",
+    "working_project": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\integration_v14\\outputs\\Current_Game",
+    "scene_backup": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\integration_v14\\outputs\\夜行者_融合前安全屋医院工程备份.zip",
+    "source_crc": "passed"
+  },
+  "baseline_checks": 717,
+  "current_checks": 1277,
+  "suites": {
+    "test_results_v07.json": 528,
+    "keybindings_report.json": 58,
+    "keybindings_reload_report.json": 20,
+    "air_combat_report.json": 115,
+    "air_dash_animation_v14_report.json": 174,
+    "scene_integration_results_v14.json": 106,
+    "hospital_interaction_results_v11.json": 23,
+    "hospital_test_results_v11.json": 73,
+    "hospital_physical_stairs_v11.json": 54,
+    "hospital_ward_layout_v11_2.json": 22,
+    "hospital_security_results_v13.json": 104
+  },
+  "original_frames_preserved": 992,
+  "new_air_dash_frames": 32,
+  "animation_clips": 64,
+  "frames": 1024,
+  "player_runtime_change_lines": 2,
+  "main_scene": "res://scenes/main.tscn",
+  "main_behavior": "home_601",
+  "public_scenes": [
+    "home_601",
+    "underground_hospital"
+  ],
+  "training_entry_removed": true,
+  "training_fixture": "tests/fixtures/combat_lab.tscn",
+  "clean_import": "passed",
+  "actual_project": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\integration_v14\\outputs\\Current_Game",
+  "source_backup": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\integration_v14\\outputs\\夜行者_v10_人物工程_修改前备份.zip",
+  "scene_backup": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\integration_v14\\outputs\\夜行者_融合前安全屋医院工程备份.zip",
+  "generation_mode": "built-in image_gen",
+  "prompt_manifest": "Current_Game/art_metadata/air_dash_v14/generation_manifest.json",
+  "gpu_frames": 256,
+  "gpu_scenes": "actual environments, no targets/NPCs",
+  "archive": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\integration_v14\\outputs\\夜行者_v14_场景融合与独立空中突刺_源码与素材.zip",
+  "zip_bytes": 84437434,
+  "sha256": "9e5d9411f5e8ed76d6283a57a995ab3bf8f63588fb2e19e4ee10832925e1fddc"
+}

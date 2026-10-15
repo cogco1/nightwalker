@@ -1,0 +1,19 @@
+{
+  "version": "v12",
+  "generation_mode": "built-in image_gen",
+  "asset": "res://assets/ui/hero_portrait.png",
+  "native_resolution": [
+    48,
+    64
+  ],
+  "reference": "approved_sprite_reference.png",
+  "prompt": "Use case: identity-preserve.\nAsset type: transparent low-resolution PIXEL CHARACTER PORTRAIT for the left side of a dialogue box in a320x180 game.\nInput image1 is the approved in-game protagonist, enlarged with nearest-neighbor ONLY as an IDENTITY / COLOR / PIXEL-STYLE REFERENCE. Keep this same character: worn, torn charcoal-gray hooded trench coat, hood UP and deep shadow over almost the entire face, tiny muted warm-brown face pixels, faded rusty-brown straps and cuffs, ragged shoulders, dark layered inner clothing. Do NOT invent a new face, hairstyle, hat, armor or costume. The image is a small sprite, so translate its design into a readable portrait rather than copying the tiny whole sprite.\nGenerate ONE WAIST-UP dialogue standing portrait, facing slightly RIGHT toward the text, calm and still, straight posture. Hood, shoulders, chest and waist visible, hands largely outside crop. Face remains obscured with only a tiny4-6pixel suggestion of cheek/nose, no detailed eyes or expressive mouth, no skin exposure beyond this. No weapon crossing the portrait.\nProduction NATIVE resolution48x64 pixels, intended to be displayed1:1 inside the game. Coarse clearly visible square pixel clusters matching the reference and game, economical16-20color palette, sharp pixel edges, limited stepped shading, no antialiasing, no smooth gradients, no realistic/rendered detail, no glossy surfaces. You may deliver a uniform integer enlargement of this native48x64 pixel art; retain exactly the coarse art structure. The portrait fills the canvas with a small margin, no clipping the hood peak. Dark gray/blue cloth with subtle dusty tan/brown accents, readable silhouette against dark dialogue panels.\nTRUE TRANSPARENT background, no frame, backdrop, lettering, UI, border, glow, fog, groundshadow, logo or watermark. Do not include multiple poses, variants, comparison sheets or text.",
+  "source": "hero_portrait_source.png",
+  "technical_processing": [
+    "transparent margin crop",
+    "nearest-neighbor registration to48x64",
+    "binary alpha",
+    "20-color quantization"
+  ],
+  "identity": "Approved hooded protagonist with worn gray trench coat and obscured face"
+}

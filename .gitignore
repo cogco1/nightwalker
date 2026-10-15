@@ -1,0 +1,25 @@
+# Godot 4 editor cache and imported data (rebuilt by --import)
+.godot/
+.import/
+export_presets.cfg
+*.translation
+
+# QA output written by the test and recording scripts (regenerate with Test-Game.cmd)
+**/evidence/
+
+# Machine-specific Godot path (copy godot-path.example.txt)
+godot-path.txt
+
+# Logs and Python caches
+*.log
+__pycache__/
+*.pyc
+
+# Pre-change backup archives live outside the repo
+修改前备份/
+*.zip
+
+# OS clutter
+Thumbs.db
+desktop.ini
+.DS_Store

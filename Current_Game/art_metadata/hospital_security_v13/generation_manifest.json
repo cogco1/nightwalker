@@ -1,0 +1,174 @@
+{
+  "revision": "hospital_security_v13",
+  "generation_mode": "built-in image_gen, transparent_background=true",
+  "art_use": "top-down only; closed password door and key-locked breaker cabinet; no NPCs",
+  "prompts_file": "prompts.json",
+  "references": [
+    "assets/underground_hospital/hospital_floor_1_native.png",
+    "assets/underground_hospital/hospital_floor_2_native.png",
+    "frames/side_view_right_idle/00.png"
+  ],
+  "sources": [
+    {
+      "file": "door_source.png",
+      "original_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13f30-752d-7b42-8e9d-15319dd2e6c9\\exec-61dbcea2-7346-46a5-a236-b0d1401b6e54.png",
+      "sha256": "49f19b4b80f98826c8d4c0a882e379f78f9ff626f9a18a92b50e637e9f58b870"
+    },
+    {
+      "file": "breaker_sheet_source.png",
+      "original_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13f30-752d-7b42-8e9d-15319dd2e6c9\\exec-74408277-702e-4021-bcfb-dbf67b10710d.png",
+      "sha256": "3687babbe54092d67f27ba5c8cc974d273fb2798d228e0764b27ac1d622c6bdc"
+    }
+  ],
+  "technical_processing": {
+    "resampling": "nearest neighbor only",
+    "alpha_threshold": 128,
+    "palette_rgb": [
+      [
+        8,
+        20,
+        29
+      ],
+      [
+        13,
+        25,
+        35
+      ],
+      [
+        18,
+        33,
+        44
+      ],
+      [
+        24,
+        41,
+        53
+      ],
+      [
+        31,
+        50,
+        63
+      ],
+      [
+        39,
+        60,
+        72
+      ],
+      [
+        49,
+        72,
+        84
+      ],
+      [
+        61,
+        86,
+        97
+      ],
+      [
+        75,
+        106,
+        118
+      ],
+      [
+        88,
+        131,
+        141
+      ],
+      [
+        107,
+        155,
+        162
+      ],
+      [
+        107,
+        50,
+        53
+      ],
+      [
+        145,
+        71,
+        70
+      ],
+      [
+        105,
+        83,
+        48
+      ],
+      [
+        157,
+        125,
+        67
+      ],
+      [
+        208,
+        173,
+        101
+      ]
+    ],
+    "dithering": false,
+    "door_source_crop": [
+      139,
+      242,
+      1635,
+      638
+    ],
+    "breaker_closed_source_crop": [
+      80,
+      141,
+      628,
+      870
+    ],
+    "breaker_open_source_crop": [
+      831,
+      141,
+      1456,
+      870
+    ],
+    "cabinet_registration": "Both 24x30 frames align cabinet bodies at approximately x=4; open cover extends left."
+  },
+  "outputs": [
+    {
+      "file": "assets/underground_hospital/security/breaker_closed.png",
+      "native_size": [
+        24,
+        30
+      ],
+      "sha256": "53dc4013d90f65ce1f7097c13a34bc1ec6c06f3a7e66889c7dc4e70377e963ba",
+      "opaque_colors": 14,
+      "alpha_values": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/underground_hospital/security/breaker_open.png",
+      "native_size": [
+        24,
+        30
+      ],
+      "sha256": "99c6a0653ae1cf50764592f5d94991c11ed4623078f08f110302aa1e07b183ca",
+      "opaque_colors": 14,
+      "alpha_values": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/underground_hospital/security/door_closed.png",
+      "native_size": [
+        32,
+        16
+      ],
+      "sha256": "79e351cf372e26bfcf05dc9de57bee1cbd801c5b3c258c42c0d755c790003765",
+      "opaque_colors": 12,
+      "alpha_values": [
+        0,
+        255
+      ]
+    }
+  ],
+  "runtime": {
+    "door_closed": "32x16; split at x=16 into two sliding halves, draw with nearest texture filter",
+    "breaker": "24x30 closed/open frames; nearest filter, integer positions"
+  }
+}

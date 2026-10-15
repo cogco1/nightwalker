@@ -1,0 +1,27 @@
+{
+  "constant_scale": 0.11715481171548117,
+  "sampling_phase": [
+    0,
+    0
+  ],
+  "measurement_source": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-e513a28c-0128-4149-9382-f448beabf3ef.png",
+  "body_frame0_bbox": [
+    140,
+    54,
+    222,
+    293
+  ],
+  "body_frame0_height": 239,
+  "body_native_reference_height": 28,
+  "hood_frame0_slate_component_bbox": [
+    173,
+    59,
+    212,
+    103
+  ],
+  "expected_native_slate_cap_wh": [
+    4.569037656903766,
+    5.154811715481172
+  ],
+  "basis": "Standing source0 boots-to-crown checked against approved side idle28px and hood7px; constant scale preserves crouch/lean and limb lengths; cap measurements independently exclude arms/mask"
+}

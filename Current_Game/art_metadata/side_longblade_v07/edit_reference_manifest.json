@@ -1,0 +1,3350 @@
+{
+  "base_game": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06",
+  "native_frame": [
+    112,
+    96
+  ],
+  "pivot": [
+    56,
+    84
+  ],
+  "nearest_reference_scale": 3,
+  "clips": {
+    "side_view_right_idle": {
+      "native_input_atlas": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\native_input_atlases\\side_view_right_idle.png",
+      "edit_reference": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\edit_references\\side_view_right_idle.png",
+      "base_frames": [
+        {
+          "frame": 0,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\00.png",
+          "base_sha256": "f2b02e871ab67d5d47373f76a51c8a43e5eecf84a5e2b2ea5891bd6680248f9f",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 1,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\01.png",
+          "base_sha256": "f2b02e871ab67d5d47373f76a51c8a43e5eecf84a5e2b2ea5891bd6680248f9f",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 2,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\02.png",
+          "base_sha256": "f2b02e871ab67d5d47373f76a51c8a43e5eecf84a5e2b2ea5891bd6680248f9f",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 3,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\03.png",
+          "base_sha256": "e08c4f15ade0d01694a8fda762af678694be1d2ff00d213fb659692a5e450c33",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 4,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\04.png",
+          "base_sha256": "e08c4f15ade0d01694a8fda762af678694be1d2ff00d213fb659692a5e450c33",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 5,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\05.png",
+          "base_sha256": "e08c4f15ade0d01694a8fda762af678694be1d2ff00d213fb659692a5e450c33",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 6,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\06.png",
+          "base_sha256": "40bcab63194634531bb5fad6acaae3ffaa736ed46f9b53e0114bf9c5e4d44787",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 7,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\07.png",
+          "base_sha256": "40bcab63194634531bb5fad6acaae3ffaa736ed46f9b53e0114bf9c5e4d44787",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 8,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\08.png",
+          "base_sha256": "40bcab63194634531bb5fad6acaae3ffaa736ed46f9b53e0114bf9c5e4d44787",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 9,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\09.png",
+          "base_sha256": "40bcab63194634531bb5fad6acaae3ffaa736ed46f9b53e0114bf9c5e4d44787",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 10,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\10.png",
+          "base_sha256": "e08c4f15ade0d01694a8fda762af678694be1d2ff00d213fb659692a5e450c33",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 11,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\11.png",
+          "base_sha256": "e08c4f15ade0d01694a8fda762af678694be1d2ff00d213fb659692a5e450c33",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 12,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\12.png",
+          "base_sha256": "e08c4f15ade0d01694a8fda762af678694be1d2ff00d213fb659692a5e450c33",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 13,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\13.png",
+          "base_sha256": "f2b02e871ab67d5d47373f76a51c8a43e5eecf84a5e2b2ea5891bd6680248f9f",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 14,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\14.png",
+          "base_sha256": "f2b02e871ab67d5d47373f76a51c8a43e5eecf84a5e2b2ea5891bd6680248f9f",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 15,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_idle\\15.png",
+          "base_sha256": "f2b02e871ab67d5d47373f76a51c8a43e5eecf84a5e2b2ea5891bd6680248f9f",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        }
+      ]
+    },
+    "side_view_right_walk": {
+      "native_input_atlas": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\native_input_atlases\\side_view_right_walk.png",
+      "edit_reference": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\edit_references\\side_view_right_walk.png",
+      "base_frames": [
+        {
+          "frame": 0,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\00.png",
+          "base_sha256": "f1ee48eda86734b25ceafbd0e0fdffa6e2e05b3b596000f4ac21b0ec346bdaf0",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 1,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\01.png",
+          "base_sha256": "8bd8709a484791794effbf7ca939168d8c6d2c4a4ff74414f46c3dc959910cfc",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 2,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\02.png",
+          "base_sha256": "7ff8a3b8660b2bc3c9d1a80da7f31e3e1161960fbf0ce39a0a827fa7b57e6e24",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 3,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\03.png",
+          "base_sha256": "d336c3ef0dc2f6571727b358c24bf2b5f3dc48e30545880cf74df1601f70f4b5",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 4,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\04.png",
+          "base_sha256": "108e1016784c85f9d39d28185ad07eef9c065afe7a29350dd352c4bc9eec5738",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 5,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\05.png",
+          "base_sha256": "a3cbe5a19636b0b69cdf0ea6299c66d0e951930a309f1b5e0ff14acf5980a167",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 6,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\06.png",
+          "base_sha256": "0c5ea24624518ba353ce7e7c57df2b40b42ed2b2b5154696dc7a70001f875355",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 7,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\07.png",
+          "base_sha256": "59ff8cb44a19b202dc60dab396b821076b5ddc3500b32ae0121af8880827cd3d",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 8,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\08.png",
+          "base_sha256": "839224f715c828e850d3c207b7a3b5ad0abe9251dd25149b75e69fdbafe40047",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 9,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\09.png",
+          "base_sha256": "76500ecd1bd6ce263219f44d18abc0369bcebbefb8f5ebf6df563eb6444eaa37",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 10,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\10.png",
+          "base_sha256": "f0dbc79f66479e503e7b80a6cd5116dae4ac215b56afcca947f784abe0d5bed4",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 11,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\11.png",
+          "base_sha256": "f209cc122c1c56a9b896423267b1442a62b3f5c68dd9cc21f0aa495692682301",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 12,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\12.png",
+          "base_sha256": "8d050371200c1f5ed764a7e5c1b883546d334d53c01f130d39efc98e1649df01",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 13,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\13.png",
+          "base_sha256": "cd3a32dca07e35a5860e6a251b356c7a9441d16e10cdeab4c095f80a57965930",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 14,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\14.png",
+          "base_sha256": "5ba6fe37fae051a1a65cf5bb76419f67e0630937870ffef0fe0a09f58d9582f7",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 15,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_walk\\15.png",
+          "base_sha256": "657d3f617f632a4c4b9c115c840435227b6ede03ededdbab20c7e447f1e1e23a",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        }
+      ]
+    },
+    "side_view_right_run": {
+      "native_input_atlas": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\native_input_atlases\\side_view_right_run.png",
+      "edit_reference": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\edit_references\\side_view_right_run.png",
+      "base_frames": [
+        {
+          "frame": 0,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\00.png",
+          "base_sha256": "e14f12290d7f068b82fee3ec8c91eebbe2b35ea339f0fc69343c7cc3a6d6f309",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 1,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\01.png",
+          "base_sha256": "c82dfb27b66da79e4ca398eefb1a658fa23fb1d6ce0302fa3bc07e0a6cc27181",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 2,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\02.png",
+          "base_sha256": "037173ab63e86bc8d8d277e44938939a6cc722ac480e8e4e299a185aa5df09c8",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 3,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\03.png",
+          "base_sha256": "caa9fcf8eccbf3425948bec0257eee2ec4e9fb5f155926855c4e3a26dda19317",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 4,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\04.png",
+          "base_sha256": "01fc32de3c231af4af495f101154b46df4c3d0fa35a8e1912b9cf638443c3edf",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 5,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\05.png",
+          "base_sha256": "39af42769d5edde8d33f5c508b7853d09d118770ccfae3312b1c58035766c070",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 6,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\06.png",
+          "base_sha256": "54718a356aa31384b39567ccf29080a177d57b729d61cbc63779328311d69109",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 7,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\07.png",
+          "base_sha256": "319b91f52b350b377547c3ff3c8c165834f3c1b2c35da385e8b0a473261a1695",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 8,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\08.png",
+          "base_sha256": "740266e83ec23cf16af21f188f75eacb27848b24a5d72b30df53a9a54dbd29a1",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 9,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\09.png",
+          "base_sha256": "611df5e9c4e4a0d7aa13441048625ed12ddcc6427c079ec50d07d8ee9ce90c12",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 10,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\10.png",
+          "base_sha256": "25e3ce1b4d675c5abb3518adbf8a2da39daa4b33b07c12b2d4e7696ee0e6204a",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 11,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\11.png",
+          "base_sha256": "532d1f13dedf3aa140b30435d5f28ebd23e72c3ec8fe5d3a21a5dca70a22d47e",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 12,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\12.png",
+          "base_sha256": "0c85d75d4a65dbb51f928b73a3e28e715ad7b7588e859337a945e698f3beb13a",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 13,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\13.png",
+          "base_sha256": "890c8ac6cbd348c1b2e680d08d0d55db4b539e166a9dc53260db21da3a598349",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 14,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\14.png",
+          "base_sha256": "3a2b7e4b046be47356d7eb41f088126a2764f6a2b6efd7e64873a16e2a375923",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 15,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_run\\15.png",
+          "base_sha256": "1935f20b20c2a2e743b2d93177ca15c3e35f9e256b0f9255c7a10211f6b28e63",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        }
+      ]
+    },
+    "side_view_right_stab": {
+      "native_input_atlas": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\native_input_atlases\\side_view_right_stab.png",
+      "edit_reference": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\edit_references\\side_view_right_stab.png",
+      "base_frames": [
+        {
+          "frame": 0,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\00.png",
+          "base_sha256": "8311389d65046defd9d9e36506e66fb4925fcf58c3743032bd61137db5076ae6",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 1,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\01.png",
+          "base_sha256": "b0e467ead5c09ee00e203c3cf0d317f1cfb227c1d71911d705fc47c959c2770d",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 2,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\02.png",
+          "base_sha256": "c35c242bf6eb079ef05ed152f6dbc4079174baf36d1b06e30ac6c66e41110fb4",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 3,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\03.png",
+          "base_sha256": "cd157d80687ac44d26803a69ed4c751d9af410d1f522f67d3254ffb5a3c975be",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 4,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\04.png",
+          "base_sha256": "fb36b177c7a9987ca81705307412891416a3a8496eb600f4b5d4d608dc8cbef6",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 5,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\05.png",
+          "base_sha256": "d2ce5d535892100f07ea22a4d038a56e718c704b1b2dfdb58deac22ef595f97a",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 6,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\06.png",
+          "base_sha256": "b5fc5a8ec96c4d5897a123c821f9c8c8cbcaf0131d2f3394e9d840ba5b34ecd0",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 7,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\07.png",
+          "base_sha256": "a449c11bd4dfa60ca1201e5b53a03dd716dd562060809a8e3dd20be5d1c9a5c1",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 8,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\08.png",
+          "base_sha256": "80c5e13e4e47aed4d5db1314af84e5e583e4bd4fb5790ea33c5e80baf6305401",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 9,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\09.png",
+          "base_sha256": "4429fd41613e32ce00becf3fffe5f85f7db617fc482bc5881886c8d9c98535c5",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 10,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\10.png",
+          "base_sha256": "fc935906c5e3ff9bdb7ec3f4569cd508ff91a685121c160ee6178b04a6574a52",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 11,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\11.png",
+          "base_sha256": "97bd495330f024e608ef54f8f9ddf260a9bf5ad3dbe0e886d215cd525bba4f78",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 12,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\12.png",
+          "base_sha256": "2798f993f7a3d1d1030345fc62335dffa408b341f3f3ea8fcbb2937ba42228b5",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 13,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\13.png",
+          "base_sha256": "002b4693a3387317b9b6a5564e78a0899878c86dda3fd45b12d91e954fe12969",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 14,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\14.png",
+          "base_sha256": "f9999a39017c10fcdbdbc1cd19bd117f8de877bc703a514a3045786a827c01a3",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 15,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_stab\\15.png",
+          "base_sha256": "2e0290acb68a86d82680c9bf68cc58f23a17e12746dcd76393a457d25ef375ab",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        }
+      ]
+    },
+    "side_view_right_attack1": {
+      "native_input_atlas": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\native_input_atlases\\side_view_right_attack1.png",
+      "edit_reference": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\edit_references\\side_view_right_attack1.png",
+      "base_frames": [
+        {
+          "frame": 0,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\00.png",
+          "base_sha256": "dd8d62f594c89b6aab9fa94ff312289c1b5e7985bd0fdefc9bc914801478fdb9",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 1,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\01.png",
+          "base_sha256": "dd8d62f594c89b6aab9fa94ff312289c1b5e7985bd0fdefc9bc914801478fdb9",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 2,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\02.png",
+          "base_sha256": "56c80a518204394b2a56f38cb7ff38dbcd4665220ccdd2c4ade0ae95df83446d",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 3,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\03.png",
+          "base_sha256": "5a0d05fbdd48ee0902acab7294abde2e1a0bfaf6301bf63ffb6108e6fd666ed2",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 4,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\04.png",
+          "base_sha256": "064f0d26936d194359550f9bf0f15da51c55e71bdd5e8555733731c63f9ef72f",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 5,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\05.png",
+          "base_sha256": "38fedaf4260803b586c3f336916b336db9e5af0ce38e452a4e63d89bf0a4b4d0",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 6,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\06.png",
+          "base_sha256": "9e591a5049554a21f4feccf2f4fa8dee83fd5dfc3de6b5b78238e4535e2544f5",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 7,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\07.png",
+          "base_sha256": "45dfe8ab4070c12c1c69fced3cf94131c9255e1cdb4a809e8a64d73e62141c08",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 8,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\08.png",
+          "base_sha256": "5982304bca52c798473b4f7138ec1372fa0a8a05522cc6ce3f48c26c92ad68b5",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 9,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\09.png",
+          "base_sha256": "5a36cb6b230b91c531f0ef7b3f1af8b7f853f3b72ca1a06d6f45e10f0f009f6f",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 10,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\10.png",
+          "base_sha256": "eb4dc232572f9d81015b96b0cba7a1c79f6b81bfe0347136360ea10a5d6db11e",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 11,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\11.png",
+          "base_sha256": "4f17d46757a67df5e487e909d0ca1e892c1338141a5bf177e7c4d8bb06f24099",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 12,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\12.png",
+          "base_sha256": "756ff094b1527e64317280a30fd32ab38eefa472e8a10522d7ba2898c511ecd9",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 13,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\13.png",
+          "base_sha256": "84e5649a3a928d4cae92634752d002a938ca7f5191b5f4533f95f593318e7875",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 14,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\14.png",
+          "base_sha256": "65ae4eba404ebbe6b63376196157399f0512c1c88904036641b30d397c99a855",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 15,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack1\\15.png",
+          "base_sha256": "90c6c54aae6cb798b9cd42afc5829f3fc7197424cd54581f004c3ea35f5a9231",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        }
+      ]
+    },
+    "side_view_right_attack2": {
+      "native_input_atlas": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\native_input_atlases\\side_view_right_attack2.png",
+      "edit_reference": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\edit_references\\side_view_right_attack2.png",
+      "base_frames": [
+        {
+          "frame": 0,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\00.png",
+          "base_sha256": "674d7fcd32c5a7affa4987a50b57c5b4bbe3a08296c4cc5617cadd94ccc79089",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 1,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\01.png",
+          "base_sha256": "674d7fcd32c5a7affa4987a50b57c5b4bbe3a08296c4cc5617cadd94ccc79089",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 2,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\02.png",
+          "base_sha256": "da76e332b1b24361dda8f19a072e81a13f804935126abb0e970b2d580b9c46c3",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 3,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\03.png",
+          "base_sha256": "0ce2abca02e7769a0eedd8b62e9af9cf20048d27a973f89a76bbe91ef79e491e",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 4,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\04.png",
+          "base_sha256": "8334bca7464433933f3238918477443c30902482fc92e31f90874ad410db59d2",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 5,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\05.png",
+          "base_sha256": "88d0ad0239f2a6ba8b0e53c2040cf61784e98b4ffbb269bd03b8827a158e5fbb",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 6,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\06.png",
+          "base_sha256": "f666b66919804d314ede5a2407e68741aabb1e4f3da9df70de245ed7c159e4db",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 7,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\07.png",
+          "base_sha256": "a5d69b945aba544e2dd213b3b203dba8c305a5e37166a3bea5cbffe06228e143",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 8,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\08.png",
+          "base_sha256": "551d265261996d0abb5f84dced806cfa66245332cf772f5471014d8701261244",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 9,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\09.png",
+          "base_sha256": "d91f713bdd283f2cea34a47802dd5d7ea667b896b7936d5ddc2fa5e7916e8c34",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 10,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\10.png",
+          "base_sha256": "39ae28691ede44add7a9ed9740c2ac5e4ccb387c6992b4e60a8e5604bc249ee2",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 11,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\11.png",
+          "base_sha256": "aa8d44e42ebcbde92fbb5eb6eef87126817c8dcd9b4b738780f8cc6ea6889cb9",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 12,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\12.png",
+          "base_sha256": "bebdc8532c3135ad4677249ca9b956d228f3a7fc799b203875867559eea6473b",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 13,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\13.png",
+          "base_sha256": "3c741173f078e8409b3791be77245827e7594283dcfdd1099ae37e3a7daf8e3b",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 14,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\14.png",
+          "base_sha256": "6188abe43ab26947d0c0ff403f5a00554343d07f89b0951efac709c7df52f3a5",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        },
+        {
+          "frame": 15,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack2\\15.png",
+          "base_sha256": "055d7e0c25460a589042575af177b06775a5b977a6c2df5b727bcc587914fac8",
+          "base_size": [
+            64,
+            64
+          ],
+          "base_pivot": [
+            32,
+            52
+          ],
+          "root_padding": [
+            24,
+            32
+          ]
+        }
+      ]
+    },
+    "side_view_right_attack3": {
+      "native_input_atlas": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\native_input_atlases\\side_view_right_attack3.png",
+      "edit_reference": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\edit_references\\side_view_right_attack3.png",
+      "base_frames": [
+        {
+          "frame": 0,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\00.png",
+          "base_sha256": "989ccb488cec3d5864edc7b26db0ea6230008922892610641733944250004c31",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 1,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\01.png",
+          "base_sha256": "989ccb488cec3d5864edc7b26db0ea6230008922892610641733944250004c31",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 2,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\02.png",
+          "base_sha256": "b4286f76cecd264c617f8ede25ca02febae32d1f1ae0666d5ca7707aa6e15c50",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 3,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\03.png",
+          "base_sha256": "f051958a7e86918721d54dd2e42c06401705903702e6c23c91ca22330ad6e43d",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 4,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\04.png",
+          "base_sha256": "1109f8864bc0fc000d644f703cbe82c87a26f90cba12495160c6187e5d27eea4",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 5,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\05.png",
+          "base_sha256": "56e7d2721d9e66f2465a45491804bca83f1d66ee01d3848d40c911ebcf099177",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 6,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\06.png",
+          "base_sha256": "c6ff9b4dfe8f92d6a580ade50ec001afb00a5b1b7daa5114f0ce8a5f5fd2e272",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 7,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\07.png",
+          "base_sha256": "b663b2902e2f1a406a02eb0e6798ba6e88f07312fb09737336a4f5ae2047ccec",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 8,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\08.png",
+          "base_sha256": "362c0cf9f5ae65759e49b81f416526b171ef93a7a049e8b5b8f4be4d9af0941c",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 9,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\09.png",
+          "base_sha256": "6cff66460bd5e691a873da0590e29212813cb8bf8ea41440e9af7caf5c556de5",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 10,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\10.png",
+          "base_sha256": "a2e2311948fc8c02d29343cb03f204431f76e46279e6d29123668c6248bb908b",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 11,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\11.png",
+          "base_sha256": "dffbfa027950063263eb556e0becfcf9324278628531f1b03bc60e723fefabfe",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 12,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\12.png",
+          "base_sha256": "1e69a066d3b7745a23bde522598800d39672aed56c7fbbe97f805e9d65fd96d7",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 13,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\13.png",
+          "base_sha256": "e74f093c255bf4dca339e5a8c2aafda4688e22e1956f4f547890c301e4bed4ad",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 14,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\14.png",
+          "base_sha256": "7592110c51e7187f53860ad2c310960f84176a5226340a3d3e2b0a3696d75c1c",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 15,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_attack3\\15.png",
+          "base_sha256": "c237001b395ba4ca49609fbea7f163e71583b0d8fb9be56349a25e12b39eb6eb",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        }
+      ]
+    },
+    "side_view_right_jump": {
+      "native_input_atlas": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\native_input_atlases\\side_view_right_jump.png",
+      "edit_reference": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\edit_references\\side_view_right_jump.png",
+      "base_frames": [
+        {
+          "frame": 0,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\00.png",
+          "base_sha256": "42903ab0defb1cf1cae16531c2e990cd96c4b193ef5a0b614d660929fa159d72",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 1,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\01.png",
+          "base_sha256": "7af07175787498cd480a7ef556bc6f866759401a9d26129ef5b230417de4ef56",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 2,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\02.png",
+          "base_sha256": "bc9c44de52f280e3e2ea8a38f44592c7a71009283262dbc9e4107d8039648c54",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 3,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\03.png",
+          "base_sha256": "b968583db3dd69b400d9f5db204a793a928cac623f1168aa76f01ac7e41d675b",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 4,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\04.png",
+          "base_sha256": "b256caf541ba9f59ccebff86749df801bd041947453f8bf70a263ca831911d73",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 5,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\05.png",
+          "base_sha256": "b5a0f22f928021a1113e81b23120251aec7e2807380cd5d3a50eca5b22346d64",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 6,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\06.png",
+          "base_sha256": "18203597275c69a9af579d950fc1ac288c42ea3d46425ae28244258184b5ea2c",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 7,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\07.png",
+          "base_sha256": "f44da0e4b8e5873e5a4295edcc2fd743233d4a6629d7e374a5cdfa4bfd3c881d",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 8,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\08.png",
+          "base_sha256": "84664b3528892fbc6bafac60e177b97b2e3d7f219216d2a7743291e1468540dd",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 9,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\09.png",
+          "base_sha256": "354c3fef6ad294e3b99aa691b6d3ef4690f5aec86d23591bcd8cc0da05f80cbd",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 10,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\10.png",
+          "base_sha256": "1ea531990cdd5b7e11a3defce90e9198e5f751773163736386331af1bb523863",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 11,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\11.png",
+          "base_sha256": "9d2553ea4d49f15a4821bb4a66b49169735934a4574cb595947f3d45fee3e9c0",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 12,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\12.png",
+          "base_sha256": "b88b9b14e35566ca447d1690af1a6dda5bdb45b9d4ff252530c11096d43f96c0",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 13,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\13.png",
+          "base_sha256": "a76cd8aa8a597a39dd945dca84d220f0fe8dbd04fa8c7f607817d7996ee59c91",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 14,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\14.png",
+          "base_sha256": "b52516cb05cbdf39b7846c887f193dc85d8d7e3327e0dfcb7dca87c601d972da",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 15,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_jump\\15.png",
+          "base_sha256": "371e267fcbf70b328baa5c0554be80af00a53f7ad606a4e4c41e0cee99227d47",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        }
+      ]
+    },
+    "side_view_right_crouch": {
+      "native_input_atlas": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\native_input_atlases\\side_view_right_crouch.png",
+      "edit_reference": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\edit_references\\side_view_right_crouch.png",
+      "base_frames": [
+        {
+          "frame": 0,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\00.png",
+          "base_sha256": "0772541d1d86bcc379b6540ce2571267b21572c2f5349a33b13deefaf29291fb",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 1,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\01.png",
+          "base_sha256": "20e01dc8abe30572255a39e897a0646d8718b5446f8fc564f1beb5bb739953d9",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 2,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\02.png",
+          "base_sha256": "1b209a2361caf9419b74691b2bfc436ce5e4105975c7f3b445c247494232237f",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 3,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\03.png",
+          "base_sha256": "69d7044dca5858e321d614ce72293f1ca94796192280ce7bbe42f6df1b86a814",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 4,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\04.png",
+          "base_sha256": "f2ce463a13dd216fb94b5be411cf33187a7d0525ed6101d3f3889876c43f44f3",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 5,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\05.png",
+          "base_sha256": "467738ba6578792d004666f9e9773d423628dbfe35580689812033ad01f8e94a",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 6,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\06.png",
+          "base_sha256": "300fc01c6569a761dfa067b7fe5ffed15dc152d7dfdd3fafe3420ab9e88b45e5",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 7,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\07.png",
+          "base_sha256": "74b5a91ab51b3e96272f9d87aa24a6fc77d5f5b84740368d6efccbc8a1ae6b67",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 8,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\08.png",
+          "base_sha256": "c6ca39a0d65056f9e8bbd0d2927ce651bbcc7353c0af4c624a9a72238f8a0ce6",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 9,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\09.png",
+          "base_sha256": "7c4f5d4eed8dd2fbec725d1e38d358f6082e23b97770be175f0394002b24437f",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 10,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\10.png",
+          "base_sha256": "e9f3bca4102e992826362e00ce72da5f7acb567205d49cc935d7c5ddd20689bf",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 11,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\11.png",
+          "base_sha256": "285af91c76b8f285f218cd2c2e49e415ebc063e4c9e5c0c07c5b7652a812feda",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 12,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\12.png",
+          "base_sha256": "13a421fc8668536bb0a67110229e9faf83bfcac7aa860622fb8c02f813679eb4",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 13,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\13.png",
+          "base_sha256": "17e84d6269a2d2ebc6512dc8242df4e993c4fd4cd3ad05a0d857a6923b73c265",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 14,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\14.png",
+          "base_sha256": "2e9d99d4afbdc4cc55618b04b0faeb003cdd80c5a84c468e914ea2bdcf7288ab",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 15,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch\\15.png",
+          "base_sha256": "f1e232058944ff8a823b43758b07f665bc90131df385e8a0f82fc1029a0f860f",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        }
+      ]
+    },
+    "side_view_right_crouch_stab": {
+      "native_input_atlas": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\native_input_atlases\\side_view_right_crouch_stab.png",
+      "edit_reference": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\edit_references\\side_view_right_crouch_stab.png",
+      "base_frames": [
+        {
+          "frame": 0,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\00.png",
+          "base_sha256": "8da367a78be6bc436782771d78021a5f5c77cec4b821e2bde68ba5843a858991",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 1,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\01.png",
+          "base_sha256": "c174e640636edeb7e5564f580fc22546a45158f4984ce6db4bff109af3b7a234",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 2,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\02.png",
+          "base_sha256": "3f5dc1fbc0c33b2970b29dabc36f46521b79b187bd365e557ee7d052c3915e86",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 3,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\03.png",
+          "base_sha256": "53bb52a9e841ff783a548591aecc9c310742621bc2313cb43a1164083ba3dae8",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 4,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\04.png",
+          "base_sha256": "ba4391a78eb8e64a0ffba380a75868352698b84ee5bd6b9420deb67b4599f3c5",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 5,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\05.png",
+          "base_sha256": "fc65113f1ad1206ed5d0f6dcffb3b158b1a0bce4270f40c6c31665e4db65648e",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 6,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\06.png",
+          "base_sha256": "2875f871c3d19e717828e85890c5fe3bc257d25e48aef35d4b71be16685a9993",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 7,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\07.png",
+          "base_sha256": "d8004791ca387c667cdfb8487352251a29559234f5280c237a0c02c94d518b1d",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 8,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\08.png",
+          "base_sha256": "9640f563d06c697ce40a3bf8d569485dcb637bb9a111a7157e42808994549076",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 9,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\09.png",
+          "base_sha256": "674539cbcd0ab8d22b1aefcc6128e4571d208afac12eb71d0526edc1a0fe8c68",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 10,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\10.png",
+          "base_sha256": "c5704c3c7f22db705640b2ae5dfd064184145afb5c69beedfbd645f998d42837",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 11,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\11.png",
+          "base_sha256": "787dbd486c1358685c4e3ed3884f474ddc537668bf3f96a57f7fb8b78e5ecfe3",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 12,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\12.png",
+          "base_sha256": "5026c0126aa3a9e383b603550eee1b7574c4e2d9de4337ee3680bcc7ef375a74",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 13,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\13.png",
+          "base_sha256": "516a96d5765249ff5daf8a2ebd86230d986162c7037a7eb943712b9bad5762b6",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 14,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\14.png",
+          "base_sha256": "7970f76a40939feaf728a2d15d53d4767fae95dcc03de210d17372c7b4c21202",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        },
+        {
+          "frame": 15,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_crouch_stab\\15.png",
+          "base_sha256": "58b60890f08342b09ffdcceb130402355297fa20f2027a26d189ff3a39e3fc45",
+          "base_size": [
+            48,
+            48
+          ],
+          "base_pivot": [
+            24,
+            42
+          ],
+          "root_padding": [
+            32,
+            42
+          ]
+        }
+      ]
+    },
+    "side_view_right_rising_slash": {
+      "native_input_atlas": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\native_input_atlases\\side_view_right_rising_slash.png",
+      "edit_reference": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\edit_references\\side_view_right_rising_slash.png",
+      "base_frames": [
+        {
+          "frame": 0,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\00.png",
+          "base_sha256": "9812402d12359fdfc6165def755693e978415413ff498e43e45f0d1fd5952ae8",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 1,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\01.png",
+          "base_sha256": "84d46c37496a296cf8acdab77b8fc413e371068885de8964e5a7ba15113b3d3a",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 2,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\02.png",
+          "base_sha256": "a578421d6fff5029b1edee3197fc021895df01abf073738ff19a7a27620b1ee7",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 3,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\03.png",
+          "base_sha256": "351280c52c8abd07f74b9549507ecad5db4c2ef7541ffd7861b134d0bed9282f",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 4,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\04.png",
+          "base_sha256": "90154f23a55c01c306de9837247036157e72e15b46f436db1b60f00d3d5a0c07",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 5,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\05.png",
+          "base_sha256": "8083f341a81299541778702920500b350fcc2737a8c5dfa8c00900276042483a",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 6,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\06.png",
+          "base_sha256": "f390b2f7297c00222c0dd98ea5fc3988fd0cc7a2ab337fd5f7304be217e97202",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 7,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\07.png",
+          "base_sha256": "33c328dec4cfe0ac15b2470bd1530291bfd7d6f881bfb16fc6a2eda3be65e92e",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 8,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\08.png",
+          "base_sha256": "e875641b3bfb366c9dd991b887887a6605519e88e2584586d62b8874693aaf1c",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 9,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\09.png",
+          "base_sha256": "096690f30c026373f6b1e901118d6991344ef22c845beac4860a7d54f0fd842f",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 10,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\10.png",
+          "base_sha256": "65fb46dded13abca681216c43104269fc70987cf1326d39faa33ee34bce64a89",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 11,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\11.png",
+          "base_sha256": "cd4e87d9a469ad766e24135ae0a7ba632d55146b0c3c8e8289d046a8155501f6",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 12,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\12.png",
+          "base_sha256": "3499486eb7a5ff114766437eb02d543b359b3748e9a8757902cb205daea48672",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 13,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\13.png",
+          "base_sha256": "bec12707ed78caca5293e769ba5be6a8e72eb933ce52f2631045e8a1d7711d8e",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 14,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\14.png",
+          "base_sha256": "f4ee64c84abc7c7ab8f49a4561c5fa7994fa4be05c4508037ddd1fd53d707261",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        },
+        {
+          "frame": 15,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_rising_slash\\15.png",
+          "base_sha256": "6fc556f16e5a265b5264434a64e05910ecab291fdbbf2ade2c390632432a3f61",
+          "base_size": [
+            80,
+            80
+          ],
+          "base_pivot": [
+            40,
+            68
+          ],
+          "root_padding": [
+            16,
+            16
+          ]
+        }
+      ]
+    },
+    "side_view_right_dash_stab": {
+      "native_input_atlas": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\native_input_atlases\\side_view_right_dash_stab.png",
+      "edit_reference": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\art\\characters\\animation_v08\\edit_references\\side_view_right_dash_stab.png",
+      "base_frames": [
+        {
+          "frame": 0,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\00.png",
+          "base_sha256": "c237001b395ba4ca49609fbea7f163e71583b0d8fb9be56349a25e12b39eb6eb",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 1,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\01.png",
+          "base_sha256": "f71c126a52b9bc0b377c5ecd6c59593e3095b002e584a5b8d0900b717ac9292e",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 2,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\02.png",
+          "base_sha256": "a47114be3eca58a2f843a941e5b1e35fba8153976311d614f80d9676d198eb41",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 3,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\03.png",
+          "base_sha256": "7357a37b3278e4923fd761e146cfd217d6e85d8a24ed2954d1f183abfb08c356",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 4,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\04.png",
+          "base_sha256": "3e841b2247b7c609e3c0a0d30150f81b76b6bb80e613a3a894afa17a74ddc7d7",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 5,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\05.png",
+          "base_sha256": "4356e6ef34ac490f9aae7154e57b775953d4814fd13ec2eb8a1e442ddb43df23",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 6,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\06.png",
+          "base_sha256": "55ed93f94937c4837779f958181fa3cbeeea79d4d4daecb722ed87fa85b18f46",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 7,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\07.png",
+          "base_sha256": "ac405ba74126333d75ea55c431542df69211a6446744627faa6fe80757bd158c",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 8,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\08.png",
+          "base_sha256": "ec766ad0ddb527fe83b5e6fa6430733119d7c8923e72369d967d0f71c44343c8",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 9,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\09.png",
+          "base_sha256": "f3e51da125307b0119c64e48cee4fccc9ed448088b387ff3a6e893a54b6e0cb5",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 10,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\10.png",
+          "base_sha256": "c2f21eba196eec3284be117c4c4f37591d217f6e46733dd5318c721842331e1e",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 11,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\11.png",
+          "base_sha256": "4a4717d6892930a54d15d93266170875846b93cc61573de8f15123e0b17bff2e",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 12,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\12.png",
+          "base_sha256": "e47c9d5db317893398113a80e1a46fc804790fb98aa8da438d6db29f69529909",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 13,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\13.png",
+          "base_sha256": "7963072f8d441d06a45dec40c7492bd6408c7559080b60c697a633e8fb711104",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 14,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\14.png",
+          "base_sha256": "0d3312748e353254a69f5a7371ce8a964be18b6eb5af05393ced23d4dcc07502",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        },
+        {
+          "frame": 15,
+          "base_path": "E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\game_v06\\frames\\side_view_right_dash_stab\\15.png",
+          "base_sha256": "c237001b395ba4ca49609fbea7f163e71583b0d8fb9be56349a25e12b39eb6eb",
+          "base_size": [
+            80,
+            64
+          ],
+          "base_pivot": [
+            40,
+            52
+          ],
+          "root_padding": [
+            16,
+            32
+          ]
+        }
+      ]
+    }
+  }
+}

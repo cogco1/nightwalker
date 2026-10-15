@@ -1,0 +1,72 @@
+{
+	"air_attack1": {
+		"frames_per_direction": 16,
+		"native_canvas": [
+			80,
+			80
+		],
+		"opaque_alpha_only": true,
+		"palette_colors": 18,
+		"source_size": [
+			1254,
+			1254
+		],
+		"uniform_scale": 0.183732057416268
+	},
+	"air_attack2": {
+		"frames_per_direction": 16,
+		"native_canvas": [
+			80,
+			80
+		],
+		"opaque_alpha_only": true,
+		"palette_colors": 18,
+		"source_size": [
+			1254,
+			1254
+		],
+		"uniform_scale": 0.183732057416268
+	},
+	"air_attack3": {
+		"frames_per_direction": 16,
+		"native_canvas": [
+			80,
+			80
+		],
+		"opaque_alpha_only": true,
+		"palette_colors": 18,
+		"source_size": [
+			1254,
+			1254
+		],
+		"uniform_scale": 0.183732057416268
+	},
+	"air_idle": {
+		"frames_per_direction": 16,
+		"native_canvas": [
+			80,
+			80
+		],
+		"opaque_alpha_only": true,
+		"palette_colors": 18,
+		"source_size": [
+			1254,
+			1254
+		],
+		"uniform_scale": 0.183732057416268
+	},
+	"dive_slash": {
+		"frames_per_direction": 16,
+		"native_canvas": [
+			80,
+			80
+		],
+		"opaque_alpha_only": true,
+		"palette_colors": 18,
+		"source_size": [
+			1254,
+			1254
+		],
+		"uniform_scale": 0.183732057416268
+	}
+}

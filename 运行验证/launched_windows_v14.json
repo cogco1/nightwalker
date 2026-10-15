@@ -1,0 +1,16 @@
+[
+  {
+    "ProcessId": 6548,
+    "Editor": true,
+    "Title": "main.tscn - 夜行者 · 长刀斩光与命中停顿 v07 - Godot Engine",
+    "Responding": true,
+    "CommandLine": "\"D:\\浏览器下载\\Godot_v4.7.2-stable_win64.exe\\Godot_v4.7.2-stable_win64.exe\" --editor --path \"E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\integration_v14\\outputs\\Current_Game\""
+  },
+  {
+    "ProcessId": 16268,
+    "Editor": false,
+    "Title": "夜行者 · 长刀斩光与命中停顿 v07 (DEBUG)",
+    "Responding": true,
+    "CommandLine": "\"D:\\浏览器下载\\Godot_v4.7.2-stable_win64.exe\\Godot_v4.7.2-stable_win64.exe\" --path \"E:\\CodexWorkspace\\MaidCompanion\\Nightwalker_Preproduction\\integration_v14\\outputs\\Current_Game\""
+  }
+]

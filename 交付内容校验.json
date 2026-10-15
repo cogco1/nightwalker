@@ -1,0 +1,25 @@
+{
+  "version": "v14",
+  "created_at": "2026-10-16T01:51:51.014448+08:00",
+  "checks": 1277,
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "input_artifacts": {
+    "夜行者_v14_场景融合与独立空中突刺_源码与素材.zip": {
+      "bytes": 84437434,
+      "sha256": "9e5d9411f5e8ed76d6283a57a995ab3bf8f63588fb2e19e4ee10832925e1fddc"
+    },
+    "夜行者_v10_人物工程_修改前备份.zip": {
+      "bytes": 31136447,
+      "sha256": "d0ded3047886a3bcb8afcc40b3c37bdd9274c84cab07e404f7e9525e0a0752a9"
+    },
+    "夜行者_融合前安全屋医院工程备份.zip": {
+      "bytes": 189319425,
+      "sha256": "7e15bfafe206e1c5c287bcb05360e8f607d1c2f9d07e86c4631dccf31a4e9969"
+    }
+  },
+  "current_source_layout": "Current_Game/ (expanded from verified v14 source archive)",
+  "source_changed_for_handoff": false,
+  "engine_binary_included": false,
+  "backups_layout": "修改前备份/",
+  "archive": "夜行者_v14_完整转接包.zip"
+}
