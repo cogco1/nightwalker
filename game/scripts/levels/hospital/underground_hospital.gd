@@ -6,6 +6,7 @@ const INTERACTIONS = preload("res://scripts/levels/hospital/hospital_interaction
 const SECURITY = preload("res://scripts/levels/hospital/hospital_security.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
+const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
 const LAYOUT_PATH := "res://assets/underground_hospital/layout.json"
 const DEFAULT_BACKGROUND := "res://assets/underground_hospital/hospital_native.png"
 const VIEWPORT_SIZE := Vector2i(320, 180)
@@ -166,7 +167,7 @@ func activate_view(mode: int, room_id := "", forced_position: Variant = null) ->
 		push_error("Hospital background is missing: " + path)
 	world.add_child(background)
 	for item in layout.get("colliders", []):
-		_add_obstacle(item)
+		LEVEL_KIT.add_layout_collider(world, item)
 	var spawn_position := start_position()
 	var record := _room_record(room_id)
 	var anchor_key := "top_down_anchor" if mode == 0 else "side_view_anchor"
@@ -201,33 +202,6 @@ func activate_view(mode: int, room_id := "", forced_position: Variant = null) ->
 	follow_player()
 	refresh_ui()
 	queue_redraw()
-
-
-func _add_obstacle(item: Dictionary) -> void:
-	var values: Array = item["rect"]
-	var rectangle := Rect2(values[0], values[1], values[2], values[3])
-	var obstacle := StaticBody2D.new()
-	obstacle.name = String(item["id"])
-	obstacle.collision_layer = 0 if bool(item.get("stair_only", false)) else 1
-	obstacle.collision_mask = 0
-	if item.has("polygon"):
-		var polygon := CollisionPolygon2D.new()
-		var points := PackedVector2Array()
-		for point in item["polygon"]:
-			points.append(Vector2(point[0], point[1]))
-		polygon.polygon = points
-		polygon.one_way_collision = bool(item.get("one_way", false))
-		obstacle.add_child(polygon)
-		world.add_child(obstacle)
-		return
-	obstacle.position = rectangle.get_center()
-	var collision := CollisionShape2D.new()
-	var shape := RectangleShape2D.new()
-	shape.size = rectangle.size
-	collision.shape = shape
-	collision.one_way_collision = bool(item.get("one_way", false))
-	obstacle.add_child(collision)
-	world.add_child(obstacle)
 
 
 func switch_view() -> void:
@@ -341,9 +315,7 @@ func _update_stair_access() -> void:
 func follow_player() -> void:
 	if camera == null or not is_instance_valid(player):
 		return
-	var half_view := Vector2(VIEWPORT_SIZE) * 0.5
-	camera.global_position = player.global_position.round().clamp(half_view, Vector2(world_size) - half_view)
-	camera.force_update_scroll()
+	LEVEL_KIT.follow(camera, player.global_position, Rect2(Vector2.ZERO, Vector2(world_size)), Vector2(VIEWPORT_SIZE))
 
 
 ## Whether the player's footprint at point stays inside the world and clear of colliders and closed doors.
@@ -358,15 +330,11 @@ func position_is_clear(point: Vector2, mode: int) -> bool:
 		if mode == 1 and bool(item.get("stair_only", false)):
 			continue
 		if item.has("polygon"):
-			var polygon := PackedVector2Array()
-			for vertex in item["polygon"]:
-				polygon.append(Vector2(vertex[0], vertex[1]))
 			var box := PackedVector2Array([footprint.position, Vector2(footprint.end.x, footprint.position.y), footprint.end, Vector2(footprint.position.x, footprint.end.y)])
-			if not Geometry2D.intersect_polygons(box, polygon).is_empty():
+			if not Geometry2D.intersect_polygons(box, LEVEL_KIT.points(item["polygon"])).is_empty():
 				return false
 			continue
-		var values: Array = item["rect"]
-		if footprint.intersects(Rect2(values[0], values[1], values[2], values[3])):
+		if footprint.intersects(LEVEL_KIT.rect(item["rect"])):
 			return false
 	return true
 
