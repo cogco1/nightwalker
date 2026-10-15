@@ -21,7 +21,7 @@ Nightwalker/
 │  ├─ scenes/                                       main / home_601 / underground_hospital / player
 │  ├─ scripts/
 │  │  ├─ core/        controls · game_session · scene_routes · story_state
-│  │  ├─ player/      player.gd（移动、连招、突刺、空战、顿帧信号）
+│  │  ├─ player/      player.gd（移动、轻击连招、蓄力重斩、突刺、空战、顿帧信号）
 │  │  ├─ ui/          pixel_ui · keybindings_menu
 │  │  └─ levels/
 │  │     ├─ home_601/   home_601 · home_prop_fx
@@ -46,7 +46,7 @@ Nightwalker/
 
 ## 测试
 
-`Test-Game.cmd` 先做一次素材导入，再依次跑 12 组套件，日志写到 `game/evidence/logs/`，最后打印每组检查数和总数，有失败时返回非零退出码。
+`Test-Game.cmd` 先做一次素材导入，再依次跑 13 组套件，日志写到 `game/evidence/logs/`，最后打印每组检查数和总数，有失败时返回非零退出码。
 
 | 套件 | 内容 |
 |---|---|
@@ -56,6 +56,7 @@ Nightwalker/
 | scene_integration_v14 | 安全屋与医院里的实际玩家、顿帧和改键 |
 | hospital_* (5 组) | 医院交互、环境、实体楼梯、病房布局、门禁与电闸 |
 | contact_refresh_v07 | 高刷新率下的命中停顿 |
+| charged_slash | 点击仍是轻击；按住转蓄力、蓄满松开重斩（3 倍伤害、暴击顿帧）、早松取消、蓄力定身、跳跃和清空输入会打断、突刺和空中不蓄力 |
 
 ## 开发约束（摘要）
 
