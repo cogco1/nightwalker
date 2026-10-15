@@ -1,0 +1,390 @@
+extends Node2D
+## Night-street prototype (side view only). Not routed from the safe house or the hospital:
+## launch scenes/night_street_proto.tscn directly (Run-NightStreet.cmd or F6 in the editor).
+## Light = being watched: standing in the patrol drone's cone raises exposure; full exposure marks you.
+
+const PLAYER_SCENE = preload("res://scenes/player.tscn")
+const CONTROLS = preload("res://scripts/core/controls.gd")
+const GAME_SESSION = preload("res://scripts/core/game_session.gd")
+const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
+const BEAM_DRONE = preload("res://scripts/levels/night_street/beam_drone.gd")
+const HOVER_TARGET = preload("res://scripts/levels/night_street/hover_target.gd")
+const RAIN = preload("res://scripts/levels/night_street/rain.gd")
+const EMISSIVE = preload("res://shaders/emissive_add.gdshader")
+const WET = preload("res://shaders/wet_reflection.gdshader")
+const FOG = preload("res://shaders/low_fog.gdshader")
+const POST = preload("res://shaders/exposure_post.gdshader")
+const ART := "res://assets/night_street/"
+const VIEWPORT_SIZE := Vector2i(320, 180)
+const WORLD_WIDTH := 960.0
+const FLOOR_Y := 156.0
+const START := Vector2(60, 156)
+const AMBIENT := Color(0.6, 0.55, 0.76)
+# name, scroll factor (0 = fixed to the screen, 1 = moves with the street)
+const LAYERS := [["sky", 0.0], ["far_towers", 0.15], ["petra", 0.4], ["district_c", 0.7], ["street", 1.0]]
+# position, colour, energy, radius in native pixels
+const LIGHTS := [
+	[Vector2(111, 101), Color(1.0, 0.6, 0.24), 1.0, 56.0],
+	[Vector2(421, 101), Color(1.0, 0.6, 0.24), 1.0, 56.0],
+	[Vector2(771, 101), Color(1.0, 0.6, 0.24), 1.0, 56.0],
+	[Vector2(259, 114), Color(1.0, 0.24, 0.6), 1.3, 64.0],
+	[Vector2(568, 131), Color(0.31, 0.94, 1.0), 0.9, 40.0],
+	[Vector2(706, 118), Color(0.31, 0.94, 1.0), 0.8, 36.0],
+]
+# Street lights only reach the street layer and the actors; the parallax backdrop keeps its own colours.
+const LIT_MASK := 1
+const BACKDROP_MASK := 2
+const TARGET_POSITIONS := [Vector2(330, 156), Vector2(500, 156), Vector2(640, 156)]
+const EXPOSURE_RISE := 0.55
+const EXPOSURE_FALL := 0.22
+const UNMARK_BELOW := 0.35
+
+var player: CharacterBody2D
+var camera: Camera2D
+var drone: Node2D
+var exposure := 0.0
+var marked := false
+var in_beam := false
+var look_on := true
+var _parallax: Array = []
+var _lights: Array[PointLight2D] = []
+var _beam_light: PointLight2D
+var _hero_material: ShaderMaterial
+var _wet: ShaderMaterial
+var _fog: ShaderMaterial
+var _post: ShaderMaterial
+var _rain: Node2D
+var _hud: Node2D
+var _status: Label
+var _notice_left := 0.0
+var _clock := 0.0
+
+
+func _ready() -> void:
+	get_tree().root.content_scale_size = VIEWPORT_SIZE
+	DisplayServer.window_set_title("夜行者 · 夜街原型")
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	# Run after the player's own physics step so camera and exposure use its final position.
+	process_physics_priority = 100
+	CONTROLS.install()
+	_build_environment()
+	_build_backdrop()
+	_build_world()
+	_build_overlays()
+	_create_ui()
+	var session := GAME_SESSION.new()
+	session.name = "GameSession"
+	add_child(session)
+	_follow_player()
+
+
+func _build_environment() -> void:
+	var environment := Environment.new()
+	environment.background_mode = Environment.BG_CANVAS
+	environment.glow_enabled = true
+	environment.glow_intensity = 0.9
+	environment.glow_bloom = 0.0
+	environment.glow_hdr_threshold = 1.0
+	environment.glow_blend_mode = Environment.GLOW_BLEND_MODE_ADDITIVE
+	var world_environment := WorldEnvironment.new()
+	world_environment.name = "Glow"
+	world_environment.environment = environment
+	add_child(world_environment)
+	var ambient := CanvasModulate.new()
+	ambient.name = "NightAmbient"
+	ambient.color = AMBIENT
+	add_child(ambient)
+
+
+func _build_backdrop() -> void:
+	for index in range(LAYERS.size()):
+		var layer_name: String = LAYERS[index][0]
+		var holder := Node2D.new()
+		holder.name = "Layer_" + layer_name
+		holder.z_index = -20 + index
+		add_child(holder)
+		var base := Sprite2D.new()
+		base.centered = false
+		base.texture = load(ART + layer_name + ".png")
+		base.light_mask = LIT_MASK if layer_name == "street" else BACKDROP_MASK
+		holder.add_child(base)
+		var lit := Sprite2D.new()
+		lit.name = "SelfLit"
+		lit.centered = false
+		lit.texture = load(ART + layer_name + "_emit.png")
+		var glow := ShaderMaterial.new()
+		glow.shader = EMISSIVE
+		glow.set_shader_parameter("gain", 1.25 + 0.15 * index)
+		glow.set_shader_parameter("flicker", 0.35 if layer_name == "street" else 0.0)
+		lit.material = glow
+		holder.add_child(lit)
+		_parallax.append([holder, float(LAYERS[index][1])])
+
+
+func _build_world() -> void:
+	var world := Node2D.new()
+	world.name = "World"
+	add_child(world)
+	_add_wall(world, Rect2(0, FLOOR_Y, WORLD_WIDTH, 40))
+	_add_wall(world, Rect2(-16, -40, 16, 240))
+	_add_wall(world, Rect2(WORLD_WIDTH, -40, 16, 240))
+	for item in LIGHTS:
+		var light := _make_light(item[0], item[1], item[2], item[3])
+		world.add_child(light)
+		_lights.append(light)
+	drone = BEAM_DRONE.new()
+	drone.name = "PatrolDrone"
+	drone.position = Vector2(300, 14)
+	drone.floor_y = FLOOR_Y
+	drone.z_index = 1
+	world.add_child(drone)
+	_beam_light = _make_light(Vector2(300, FLOOR_Y - 8), BEAM_DRONE.WATCH, 1.2, 42.0)
+	world.add_child(_beam_light)
+	for spot in TARGET_POSITIONS:
+		var target := HOVER_TARGET.new()
+		target.position = spot
+		target.z_index = 1
+		world.add_child(target)
+	player = PLAYER_SCENE.instantiate()
+	player.name = "Player"
+	player.view_mode = 1
+	player.position = START
+	player.floor_snap_length = 6.0
+	player.z_index = 2
+	world.add_child(player)
+	_hero_material = player.get_node("Sprite").material as ShaderMaterial
+	_hero_material.set_shader_parameter("emission_lift", Vector3(1.0 / AMBIENT.r, 1.0 / AMBIENT.g, 1.0 / AMBIENT.b))
+	_hero_material.set_shader_parameter("emission_gain", 1.5)
+	_hero_material.set_shader_parameter("body_lift", 1.3)
+	camera = Camera2D.new()
+	camera.name = "StreetCamera"
+	camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
+	camera.position_smoothing_enabled = false
+	camera.limit_left = 0
+	camera.limit_right = int(WORLD_WIDTH)
+	camera.limit_top = 0
+	camera.limit_bottom = VIEWPORT_SIZE.y
+	add_child(camera)
+	camera.make_current()
+
+
+func _add_wall(parent: Node, area: Rect2) -> void:
+	var body := StaticBody2D.new()
+	body.collision_layer = 1
+	body.collision_mask = 0
+	body.position = area.get_center()
+	var shape := CollisionShape2D.new()
+	var rectangle := RectangleShape2D.new()
+	rectangle.size = area.size
+	shape.shape = rectangle
+	body.add_child(shape)
+	parent.add_child(body)
+
+
+func _make_light(at: Vector2, colour: Color, energy: float, radius: float) -> PointLight2D:
+	# Banded falloff reads as pixel-art lighting instead of a smooth airbrush.
+	var gradient := Gradient.new()
+	gradient.interpolation_mode = Gradient.GRADIENT_INTERPOLATE_CONSTANT
+	gradient.offsets = PackedFloat32Array([0.0, 0.35, 0.65, 0.9])
+	gradient.colors = PackedColorArray([Color.WHITE, Color(0.55, 0.55, 0.55), Color(0.22, 0.22, 0.22), Color.BLACK])
+	var texture := GradientTexture2D.new()
+	texture.gradient = gradient
+	texture.width = 128
+	texture.height = 128
+	texture.fill = GradientTexture2D.FILL_RADIAL
+	texture.fill_from = Vector2(0.5, 0.5)
+	texture.fill_to = Vector2(0.5, 0.0)
+	var light := PointLight2D.new()
+	light.texture = texture
+	light.texture_scale = radius * 2.0 / 128.0
+	light.color = colour
+	light.energy = energy
+	light.blend_mode = Light2D.BLEND_MODE_ADD
+	light.position = at
+	light.range_item_cull_mask = LIT_MASK
+	light.set_meta("radius", radius)
+	return light
+
+
+func _build_overlays() -> void:
+	var wet_layer := CanvasLayer.new()
+	wet_layer.name = "WetStreet"
+	wet_layer.layer = 1
+	add_child(wet_layer)
+	var wet_copy := BackBufferCopy.new()
+	wet_copy.copy_mode = BackBufferCopy.COPY_MODE_VIEWPORT
+	wet_layer.add_child(wet_copy)
+	_wet = ShaderMaterial.new()
+	_wet.shader = WET
+	_wet.set_shader_parameter("floor_y", FLOOR_Y)
+	wet_layer.add_child(_screen_rect(Rect2(0, FLOOR_Y, VIEWPORT_SIZE.x, VIEWPORT_SIZE.y - FLOOR_Y), _wet))
+	var weather := CanvasLayer.new()
+	weather.name = "Weather"
+	weather.layer = 2
+	add_child(weather)
+	_fog = ShaderMaterial.new()
+	_fog.shader = FOG
+	weather.add_child(_screen_rect(Rect2(Vector2.ZERO, Vector2(VIEWPORT_SIZE)), _fog))
+	_rain = RAIN.new()
+	_rain.floor_y = FLOOR_Y
+	weather.add_child(_rain)
+	var post_layer := CanvasLayer.new()
+	post_layer.name = "ExposurePost"
+	post_layer.layer = 30
+	add_child(post_layer)
+	var post_copy := BackBufferCopy.new()
+	post_copy.copy_mode = BackBufferCopy.COPY_MODE_VIEWPORT
+	post_layer.add_child(post_copy)
+	_post = ShaderMaterial.new()
+	_post.shader = POST
+	post_layer.add_child(_screen_rect(Rect2(Vector2.ZERO, Vector2(VIEWPORT_SIZE)), _post))
+
+
+func _screen_rect(area: Rect2, shader_material: ShaderMaterial) -> ColorRect:
+	var rect := ColorRect.new()
+	rect.position = area.position
+	rect.size = area.size
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	rect.material = shader_material
+	return rect
+
+
+func _create_ui() -> void:
+	var canvas := CanvasLayer.new()
+	canvas.name = "StreetUI"
+	canvas.layer = 31
+	add_child(canvas)
+	var font: FontFile = PIXEL_UI.font()
+	var title := _label(canvas, font, Vector2(5, 3), "C区 · 夜街（原型）")
+	title.modulate = Color("c9b8e8")
+	var hint := _label(canvas, font, Vector2(5, 162), "AD走 空格跳 左键斩 Shift+AD突刺 F9原色 R重置")
+	hint.modulate = Color("9d8fc0")
+	_status = _label(canvas, font, Vector2(206, 16), "")
+	_status.size = Vector2(110, 16)
+	_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	var meter_label := _label(canvas, font, Vector2(236, 1), "暴露")
+	meter_label.modulate = Color("9ff6ff")
+	_hud = Node2D.new()
+	_hud.name = "ExposureMeter"
+	canvas.add_child(_hud)
+	_hud.draw.connect(_draw_meter)
+
+
+func _label(parent: Node, font: Font, location: Vector2, text: String) -> Label:
+	var label := Label.new()
+	parent.add_child(label)
+	label.position = location
+	label.size = Vector2(310, 16)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.add_theme_font_override("font", font)
+	label.add_theme_font_size_override("font_size", 12)
+	label.text = text
+	return label
+
+
+func _physics_process(delta: float) -> void:
+	if not is_instance_valid(player):
+		return
+	_follow_player()
+	var feet := player.global_position + Vector2(0, -2)
+	in_beam = drone.contains(feet) or drone.contains(feet + Vector2(0, -14)) or drone.contains(feet + Vector2(0, -24))
+	exposure = clampf(exposure + (EXPOSURE_RISE if in_beam else -EXPOSURE_FALL) * delta, 0.0, 1.0)
+	if exposure >= 1.0:
+		marked = true
+	elif exposure < UNMARK_BELOW:
+		marked = false
+	drone.marked = marked
+	drone.target_x = player.global_position.x if marked else -1.0
+	_update_hero_light()
+
+
+func _process(delta: float) -> void:
+	_clock += delta
+	_notice_left = maxf(0.0, _notice_left - delta)
+	var left := camera.get_screen_center_position().x - VIEWPORT_SIZE.x * 0.5
+	for entry in _parallax:
+		entry[0].position.x = roundf(left * (1.0 - entry[1]))
+	_beam_light.position = drone.ground_spot() + Vector2(0, -8)
+	_beam_light.color = drone.light_color()
+	_wet.set_shader_parameter("scroll_x", left)
+	_fog.set_shader_parameter("scroll_x", left)
+	_rain.scroll_x = left
+	_post.set_shader_parameter("exposure", exposure)
+	_post.set_shader_parameter("marked", 1.0 if marked else 0.0)
+	if _notice_left <= 0.0:
+		if marked:
+			_status.text = "已被标记" if fmod(_clock, 0.5) < 0.3 else ""
+			_status.modulate = Color("ff4f7e")
+		elif in_beam:
+			_status.text = "监控中"
+			_status.modulate = Color("9ff6ff")
+		else:
+			_status.text = ""
+	_hud.queue_redraw()
+
+
+func _follow_player() -> void:
+	var half := VIEWPORT_SIZE.x * 0.5
+	camera.global_position = Vector2(clampf(roundf(player.global_position.x), half, WORLD_WIDTH - half), VIEWPORT_SIZE.y * 0.5)
+	camera.force_update_scroll()
+
+
+# The two strongest nearby lights drive the hero's rim shader; inside the beam the drone wins.
+func _update_hero_light() -> void:
+	var chest := player.global_position + Vector2(0, -16)
+	var candidates: Array = []
+	for light in _lights:
+		var to_light := light.global_position - chest
+		var influence := light.energy * clampf(1.0 - to_light.length() / float(light.get_meta("radius")), 0.0, 1.0)
+		if influence > 0.03:
+			candidates.append([influence, to_light.normalized(), light.color])
+	if in_beam:
+		candidates.append([1.4, (drone.global_position - chest).normalized(), drone.light_color()])
+	candidates.sort_custom(func(a: Array, b: Array) -> bool: return a[0] > b[0])
+	var rims := [[Vector2.UP, Color(0.31, 0.94, 1.0), 0.15], [Vector2.RIGHT, Color(1.0, 0.24, 0.6), 0.0]]
+	for index in range(mini(2, candidates.size())):
+		rims[index] = [candidates[index][1], candidates[index][2], clampf(candidates[index][0] * 0.75, 0.0, 0.85)]
+	_hero_material.set_shader_parameter("rim_a_dir", rims[0][0])
+	_hero_material.set_shader_parameter("rim_a_color", Color(rims[0][1], rims[0][2]))
+	_hero_material.set_shader_parameter("rim_b_dir", rims[1][0])
+	_hero_material.set_shader_parameter("rim_b_color", Color(rims[1][1], rims[1][2]))
+
+
+func _draw_meter() -> void:
+	var origin := Vector2(262, 6)
+	var colour := Color("ff4f7e") if marked else Color("ff3d9a") if exposure >= 0.7 else Color("4ff0ff")
+	_hud.draw_rect(Rect2(origin + Vector2(-4, 0), Vector2(2, 5)), colour)
+	var lit := int(ceilf(exposure * 10.0 - 0.001))
+	for index in range(10):
+		var on := index < lit and not (marked and fmod(_clock, 0.5) > 0.3)
+		_hud.draw_rect(Rect2(origin + Vector2(index * 5, 1), Vector2(4, 3)), colour if on else Color("2a2a4a"))
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not (event is InputEventKey and event.pressed and not event.echo):
+		return
+	if event.keycode == KEY_F9:
+		look_on = not look_on
+		_hero_material.set_shader_parameter("look", 1.0 if look_on else 0.0)
+		_notice("赛博配色" if look_on else "原始配色")
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("reset_arena"):
+		reset_street()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("switch_view"):
+		_notice("夜街原型只有侧视")
+		get_viewport().set_input_as_handled()
+
+
+func _notice(text: String) -> void:
+	_status.text = text
+	_status.modulate = Color("e8e0ff")
+	_notice_left = 1.5
+
+
+func reset_street() -> void:
+	player.position = START
+	player.velocity = Vector2.ZERO
+	exposure = 0.0
+	marked = false
+	_follow_player()

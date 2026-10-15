@@ -5,7 +5,7 @@ Godot 4.7.2 像素动作游戏（SK 项目）。设定在 2040 年的佩特拉�
 ## 快速开始
 
 1. 把 `godot-path.example.txt` 复制成 `godot-path.txt`，写入本机 Godot 4.7.2 的路径（这个文件不入库）。也可以设环境变量 `NIGHTWALKER_GODOT`。
-2. 双击 `Run-Demo.cmd` 试玩，`Open-Editor.cmd` 打开编辑器，`Test-Game.cmd` 跑完整回归。
+2. 双击 `Run-Demo.cmd` 试玩，`Open-Editor.cmd` 打开编辑器，`Test-Game.cmd` 跑完整回归。`Run-NightStreet.cmd` 直接进夜街赛博原型（不在正式流程里）。
 3. 操作见 [docs/操作说明.txt](docs/操作说明.txt) 和 [docs/游戏内改键说明.txt](docs/游戏内改键说明.txt)。
 
 已验证引擎版本：`4.7.2.stable.official.ed1daf0bf`，GL Compatibility 渲染器。
@@ -15,18 +15,22 @@ Godot 4.7.2 像素动作游戏（SK 项目）。设定在 2040 年的佩特拉�
 ```
 Nightwalker/
 ├─ Run-Demo.cmd / Open-Editor.cmd / Test-Game.cmd   双击入口，都调用 tools/ 里的脚本
+├─ Run-NightStreet.cmd                              直接启动夜街原型场景
 ├─ godot-path.example.txt                           本机 Godot 路径模板
 ├─ game/                                            Godot 工程（res:// 根目录）
 │  ├─ project.godot                                 320×180 原生分辨率，整数缩放；autoload：SceneRoutes
-│  ├─ scenes/                                       main / home_601 / underground_hospital / player
+│  ├─ scenes/                                       main / home_601 / underground_hospital / player / night_street_proto
+│  ├─ shaders/                                      人物赛博配色、发光层、湿地反光、低雾、暴露度色差
 │  ├─ scripts/
 │  │  ├─ core/        controls · game_session · scene_routes · story_state
 │  │  ├─ player/      player.gd（移动、连招、突刺、空战、顿帧信号）
 │  │  ├─ ui/          pixel_ui · keybindings_menu
 │  │  └─ levels/
 │  │     ├─ home_601/   home_601 · home_prop_fx
-│  │     └─ hospital/   underground_hospital · hospital_interactions · hospital_security
-│  ├─ assets/                                       SpriteFrames、刀尖路径、场景底图与 layout.json、字体、立绘
+│  │     ├─ hospital/   underground_hospital · hospital_interactions · hospital_security
+│  │     └─ night_street/ night_street · beam_drone · hover_target · rain（原型）
+│  ├─ assets/                                       SpriteFrames、刀尖路径、场景底图与 layout.json、字体、立绘；
+│  │                                                fx/ 人物查找表和材质，night_street/ 夜街分层底图
 │  ├─ frames/                                       人物动作帧：<视角>_<方向>_<动作>/00–15.png
 │  ├─ art_metadata/                                 原画、提示词、遮罩、导入与校验记录（.gdignore，不参与导入）
 │  ├─ tests/                                        回归套件（Test-Game 全部运行）
@@ -36,6 +40,7 @@ Nightwalker/
 │  └─ evidence/                                     测试和录制输出（不入库）
 ├─ tools/
 │  ├─ Run-Game.ps1 / Test-Game.ps1 / common.ps1     运行、编辑器、回归
+│  ├─ art/                                          夜街底图和人物查找表的生成脚本（可重复生成）
 │  └─ art_qa/                                       动作帧和刀光的 Python 校验、预览合成脚本
 └─ docs/
    ├─ ARCHITECTURE.md                               运行时结构、脚本职责、扩展点
@@ -46,7 +51,7 @@ Nightwalker/
 
 ## 测试
 
-`Test-Game.cmd` 先做一次素材导入，再依次跑 12 组套件，日志写到 `game/evidence/logs/`，最后打印每组检查数和总数，有失败时返回非零退出码。
+`Test-Game.cmd` 先做一次素材导入，再依次跑 13 组套件，日志写到 `game/evidence/logs/`，最后打印每组检查数和总数，有失败时返回非零退出码。
 
 | 套件 | 内容 |
 |---|---|
@@ -56,6 +61,15 @@ Nightwalker/
 | scene_integration_v14 | 安全屋与医院里的实际玩家、顿帧和改键 |
 | hospital_* (5 组) | 医院交互、环境、实体楼梯、病房布局、门禁与电闸 |
 | contact_refresh_v07 | 高刷新率下的命中停顿 |
+| night_street_proto | 人物材质覆盖所有场景、光束暴露与标记、无人机连击和顿帧、原型专用按键、正式流程没有路由到原型 |
+
+## 赛博朋克视觉原型（分支 proto/night-street-cyber）
+
+- 人物：`assets/fx/character_cyber.tres` 挂在 `player.tscn` 的 Sprite 上，所以安全屋、医院、夜街都生效。它按 18 色查找表（`assets/fx/cyber_palette.png`）换色，按光源方向给朝光的边缘上色、背光一侧压暗，刀刃三种钢色和脸部两种肤色做成自发光（刀光、目镜）。原帧一张没改；`look = 0` 就是原配色。
+- 夜街：`scenes/night_street_proto.tscn`，只有侧视。CanvasModulate 压暗，PointLight2D 街灯和霓虹，三层视差（A 区巨塔、佩特拉玫瑰砂岩立面、C 区楼房和招牌），巡逻无人机的监控光束（光束里飘着微光粒子），湿地反光、雨、低雾、WorldEnvironment 辉光。
+- 光 = 被监控：站进光束，右上角暴露条上升、画面出现轻微色差；暴露满了被标记，光束变红并追人，离开光束一段时间后解除。
+- 夜街操作：AD 走、空格跳、左键连斩、Shift+AD+左键突刺；F9 切换赛博配色和原配色对比；R 重置；Tab 在这里不切视角。
+- 改动清单：[docs/prototypes/夜街赛博原型_改动清单.md](docs/prototypes/夜街赛博原型_改动清单.md)。
 
 ## 开发约束（摘要）
 

@@ -17,7 +17,8 @@ $suites = @(
     @{ Name = 'hospital_physical_stairs'; Script = 'test_hospital_physical_stairs' },
     @{ Name = 'hospital_ward_layout';     Script = 'test_hospital_ward_layout' },
     @{ Name = 'hospital_security';        Script = 'test_hospital_security' },
-    @{ Name = 'contact_refresh_v07';      Script = 'test_contact_refresh_v07' }
+    @{ Name = 'contact_refresh_v07';      Script = 'test_contact_refresh_v07' },
+    @{ Name = 'night_street_proto';       Script = 'test_night_street_proto' }
 )
 
 $failed = @()
