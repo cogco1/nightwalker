@@ -58,7 +58,7 @@ func capture() -> void:
 	for target in arena.targets:
 		targets.append({"position":[target.global_position.x,target.global_position.y],"velocity":[target.velocity.x,target.velocity.y],"hp":target.hp,"knock_count":target.knock_count})
 	var air: Array[Array] = []
-	for effect in player._effects:
+	for effect in player.fx.effects:
 		if effect.has("tail"):
 			var point: Vector2 = effect["position"]
 			var tail: Vector2 = effect["tail"]
@@ -66,13 +66,13 @@ func capture() -> void:
 			var b := (point+tail).round()
 			air.append([a.x,a.y,b.x,b.y,float(effect["life"])])
 	var afterimages: Array[Array] = []
-	for ghost in player._afterimages:
+	for ghost in player.fx.afterimages:
 		var point: Vector2 = ghost["position"]
 		var native := point.round()
 		afterimages.append([native.x,native.y,float(ghost["life"])])
 	var canvas_offset: Vector2 = root.canvas_transform.origin
 	var hud_offset: Vector2 = arena.hud_layer.offset
-	var state := {"index":captured,"section":section_name,"engine_frame":Engine.get_process_frames(),"native_viewport":[root.get_texture().get_width(),root.get_texture().get_height()],"animation":str(sprite.animation),"frame":sprite.frame,"frame_progress":sprite.frame_progress,"position":[player.global_position.x,player.global_position.y],"velocity":[player.velocity.x,player.velocity.y],"render_position":[sprite.global_position.x,sprite.global_position.y],"sprite_offset":[sprite.offset.x,sprite.offset.y],"texture_size":[texture.get_width(),texture.get_height()],"special_kind":player.special_kind,"stage":player.combo_stage,"is_critical":player.stage_is_critical,"rolls":player.critical_rolls,"critical_impact_count":player.critical_impact_count,"hits":arena.hits,"targets":targets,"paused":paused,"stop_active":arena.hit_stop_active,"stop_displayed_before_render":arena.hit_stop_displayed_frames,"stop_shake":[arena.hit_stop_shake.x,arena.hit_stop_shake.y],"canvas_offset":[canvas_offset.x,canvas_offset.y],"hud_offset":[hud_offset.x,hud_offset.y],"stop_overlay_visible":arena.hit_stop_overlay.visible,"airflow_count":player.airflow_count,"air_lines":air,"afterimage_positions":afterimages,"blade_pixels":player._blade_effect_pixels().size(),"dash_executed":player.dash_executed,"dash_start":[player.dash_start.x,player.dash_start.y],"dash_end":[player.dash_end.x,player.dash_end.y],"duration_ms":17}
+	var state := {"index":captured,"section":section_name,"engine_frame":Engine.get_process_frames(),"native_viewport":[root.get_texture().get_width(),root.get_texture().get_height()],"animation":str(sprite.animation),"frame":sprite.frame,"frame_progress":sprite.frame_progress,"position":[player.global_position.x,player.global_position.y],"velocity":[player.velocity.x,player.velocity.y],"render_position":[sprite.global_position.x,sprite.global_position.y],"sprite_offset":[sprite.offset.x,sprite.offset.y],"texture_size":[texture.get_width(),texture.get_height()],"special_kind":player.special_kind,"stage":player.combo_stage,"is_critical":player.stage_is_critical,"rolls":player.critical_rolls,"critical_impact_count":player.critical_impact_count,"hits":arena.hits,"targets":targets,"paused":paused,"stop_active":arena.hit_stop_active,"stop_displayed_before_render":arena.hit_stop_displayed_frames,"stop_shake":[arena.hit_stop_shake.x,arena.hit_stop_shake.y],"canvas_offset":[canvas_offset.x,canvas_offset.y],"hud_offset":[hud_offset.x,hud_offset.y],"stop_overlay_visible":arena.hit_stop_overlay.visible,"airflow_count":player.airflow_count,"air_lines":air,"afterimage_positions":afterimages,"blade_pixels":player.fx.blade_effect_pixels().size(),"dash_executed":player.dash_executed,"dash_start":[player.dash_start.x,player.dash_start.y],"dash_end":[player.dash_end.x,player.dash_end.y],"duration_ms":17}
 	await RenderingServer.frame_post_draw
 	var picture := root.get_texture().get_image()
 	if picture.is_empty() or picture.save_png(OUTPUT+"%04d.png" % captured) != OK:
