@@ -94,6 +94,11 @@ func check_reserved_key() -> void:
 	check(CONTROLS.load_notice.contains("跳跃") and CONTROLS.load_notice.contains("Ctrl"), "the moved binding is reported to the player")
 	CONTROLS.settings_path = ISOLATED_SETTINGS_PATH
 	use_bindings({})
+	check(CONTROLS.hint_text("attack_mouse") == "左键" and CONTROLS.hint_text("heavy_mouse") == "右键"
+		and CONTROLS.binding_text("attack_mouse") == "LMB", "scene hints name the default mouse buttons in Chinese; the settings menu keeps LMB")
+	use_bindings({"attack_mouse": MOUSE_BUTTON_MIDDLE, "heavy_mouse": MOUSE_BUTTON_XBUTTON1})
+	check(CONTROLS.hint_text("attack_mouse") == "中键" and CONTROLS.hint_text("heavy_mouse") == "侧键1", "scene hints follow rebound mouse buttons")
+	use_bindings({})
 
 
 func check_level_kit() -> void:
