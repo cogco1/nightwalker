@@ -5,13 +5,17 @@ extends Node
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const MENU = preload("res://scripts/ui/keybindings_menu.gd")
 const COMBAT_FEEDBACK = preload("res://scripts/core/combat_feedback.gd")
-# Impact weight -> displayed frames held (and at least frames/60 s), shake in native px, flash of the frozen
-# frame, and the camera after-shock once it resumes. light 4 / critical 6 are the source game's guarantees.
+const IMPACT_FRAME = preload("res://shaders/impact_frame.gdshader")
+# Impact weight -> displayed frames held (and at least frames/60 s), shake in native px, how the frozen frame
+# looks (negative frames first, then flash frames) and the camera after-shock once it resumes; after-shock x
+# follows the attack direction, so the camera is kicked along the blow. light 4 / critical 6 are the source
+# game's guarantees; only the look is added on top.
 const STOPS := {
 	&"light": {"frames": 4, "shake": 1},
-	&"critical": {"frames": 6, "shake": 1, "aftershock": [Vector2(1, 0), Vector2(-1, 0), Vector2.ZERO]},
-	&"heavy": {"frames": 10, "shake": 2, "flash": Color(1.7, 1.7, 1.9),
-		"aftershock": [Vector2(2, 1), Vector2(-2, -1), Vector2(2, 0), Vector2(-1, 1), Vector2(1, 0), Vector2(-1, 0), Vector2.ZERO]},
+	&"critical": {"frames": 6, "shake": 1, "flash": Color(1.5, 1.5, 1.6), "flash_frames": 1,
+		"aftershock": [Vector2(2, 0), Vector2(-2, 0), Vector2(1, 0), Vector2.ZERO]},
+	&"heavy": {"frames": 10, "shake": 2, "negative_frames": 1, "flash": Color(1.8, 1.8, 2.0), "flash_frames": 2,
+		"aftershock": [Vector2(4, 1), Vector2(-3, -1), Vector2(3, 1), Vector2(-2, 0), Vector2(1, 0), Vector2(-1, 0), Vector2.ZERO]},
 }
 const HEAVY_STOP_FRAMES := 10
 
@@ -29,6 +33,7 @@ var hit_stop_elapsed_seconds := 0.0
 var hit_stop_displayed_frames := 0
 var hit_stop_shake := Vector2i.ZERO
 var hit_stop_overlay: TextureRect
+var _impact_frame: ShaderMaterial
 var completed_stop_frames: Array[int] = []
 var completed_stop_durations: Array[float] = []
 var _player: CharacterBody2D
@@ -58,6 +63,9 @@ func _ready() -> void:
 	hit_stop_overlay.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	hit_stop_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hit_stop_overlay.hide()
+	_impact_frame = ShaderMaterial.new()
+	_impact_frame.shader = IMPACT_FRAME
+	hit_stop_overlay.material = _impact_frame
 	_overlay_layer.add_child(hit_stop_overlay)
 	combat_feedback = COMBAT_FEEDBACK.new()
 	combat_feedback.name = "CombatFeedback"
@@ -170,7 +178,7 @@ func _run_hit_stop(direction: Vector2, weight: StringName) -> void:
 		var snapshot := get_viewport().get_texture().get_image()
 		if snapshot != null and not snapshot.is_empty():
 			hit_stop_overlay.texture = ImageTexture.create_from_image(snapshot)
-			hit_stop_overlay.modulate = stop.get("flash", Color.WHITE)
+			_frozen_look(stop, 1)
 			hit_stop_overlay.show()
 	# Retain the frame AND visible-time guarantees on every refresh rate.
 	while hit_stop_displayed_frames < hit_stop_requested_frames or hit_stop_elapsed_seconds + 0.000001 < hit_stop_min_seconds:
@@ -179,17 +187,24 @@ func _run_hit_stop(direction: Vector2, weight: StringName) -> void:
 			return
 		hit_stop_displayed_frames += 1
 		hit_stop_frame.emit(hit_stop_displayed_frames, hit_stop_shake)
-		if hit_stop_displayed_frames == 3:
-			hit_stop_overlay.modulate = Color.WHITE
+		_frozen_look(stop, hit_stop_displayed_frames)
 	completed_stop_frames.append(hit_stop_displayed_frames)
 	completed_stop_durations.append(hit_stop_elapsed_seconds)
 	_finish_hit_stop()
 	hit_stop_finished.emit(hit_stop_displayed_frames)
 	if stop.has("aftershock"):
-		_aftershock(stop["aftershock"], token)
+		_aftershock(stop["aftershock"], token, -1.0 if direction.x < 0.0 else 1.0)
 
 
-func _aftershock(offsets: Array, token: int) -> void:
+# Frozen-frame look for displayed frame `frame` (1-based): negative first, then flash, then the plain snapshot.
+func _frozen_look(stop: Dictionary, frame: int) -> void:
+	var negative_frames := int(stop.get("negative_frames", 0))
+	var flash_until := negative_frames + int(stop.get("flash_frames", 0))
+	_impact_frame.set_shader_parameter("negative", 1.0 if frame <= negative_frames else 0.0)
+	hit_stop_overlay.modulate = stop.get("flash", Color.WHITE) if frame > negative_frames and frame <= flash_until else Color.WHITE
+
+
+func _aftershock(offsets: Array, token: int, side: float) -> void:
 	var camera := get_viewport().get_camera_2d()
 	if camera == null:
 		return
@@ -197,7 +212,7 @@ func _aftershock(offsets: Array, token: int) -> void:
 	for offset in offsets:
 		if token != _token or not is_instance_valid(camera):
 			break
-		camera.offset = rest + offset
+		camera.offset = rest + Vector2(offset.x * side, offset.y)
 		await get_tree().process_frame
 	if is_instance_valid(camera):
 		camera.offset = rest
