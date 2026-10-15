@@ -45,9 +45,15 @@ const DIVE_SPEED := 360.0
 # on the attack3 frames that always resolves as a critical (3x damage, critical hit-stop).
 const CHARGE_POSE_FRAME := 3
 const CHARGE_FULL_SECONDS := 0.55
+# The first part of the charge coils attack3 frames 0..CHARGE_POSE_FRAME and steps back a little.
+const CHARGE_COIL_PORTION := 0.6
+const CHARGE_BACKSTEP := 3.0
 const HEAVY_FPS := 46.0
-const HEAVY_LUNGE := 14.0
+const HEAVY_LUNGE := 32.0
+const HEAVY_LUNGE_START := 4
 const HEAVY_RECOVERY_SECONDS := 0.18
+# One press of the dash key stabs towards the held direction (or facing); a press during an attack waits this long.
+const DASH_BUFFER_SECONDS := 0.15
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var body_shape: CollisionShape2D = $BodyShape
@@ -99,6 +105,8 @@ var _jumps_used := 0
 var _air_hold_left := 0.0
 var is_charging := false
 var charge_time := 0.0
+var _heavy_ghost_frame := -1
+var _dash_buffer_left := 0.0
 
 
 func _ready() -> void:
@@ -140,6 +148,7 @@ func _physics_process(delta: float) -> void:
 	_landing_left = maxf(0.0, _landing_left - delta)
 	_air_hold_left = maxf(0.0, _air_hold_left - delta)
 	_recovery_left = maxf(0.0, _recovery_left - delta)
+	_dash_buffer_left = maxf(0.0, _dash_buffer_left - delta)
 	if queued_attack or pending_new_attack:
 		attack_buffer_left = maxf(0.0, attack_buffer_left - delta)
 		if attack_buffer_left <= 0.0:
@@ -165,14 +174,16 @@ func _physics_process(delta: float) -> void:
 			_spawn_dust(global_position, 3)
 	if not is_attacking and not is_charging and _recovery_left <= 0.0 and not direction.is_zero_approx():
 		_update_facing(direction)
+	if _dash_buffer_left > 0.0 and not is_charging:
+		var dash_direction := int(signf(direction.x)) if direction.x != 0.0 else (1 if facing == "right" else -1)
+		if request_dash_stab(dash_direction):
+			_dash_buffer_left = 0.0
 	# Taps are processed while attacking too. Holding a button never auto-chains.
 	if _mouse_attack_pending:
 		var special := false
 		if not is_attacking and _recovery_left <= 0.0 and view_mode == ViewMode.SIDE_VIEW:
 			if Input.is_action_pressed("rising_modifier") and was_grounded:
 				special = request_rising_slash()
-			elif Input.is_action_pressed("dash_modifier") and direction.x != 0.0:
-				special = request_dash_stab(int(signf(direction.x)))
 		if not special:
 			request_attack()
 		_mouse_attack_pending = false
@@ -199,6 +210,12 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	# Physics retains subpixel precision; every drawn pixel uses the same native grid.
 	sprite.position = global_position.round() - global_position
+	if is_charging and charge_time >= CHARGE_FULL_SECONDS:
+		sprite.position.x += 1.0 if int(charge_time * 30.0) % 2 == 0 else -1.0
+	if special_kind == "heavy_slash" and sprite.frame in [5, 7] and sprite.frame != _heavy_ghost_frame:
+		_heavy_ghost_frame = sprite.frame
+		_afterimages.append({"texture": sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame),
+			"position": global_position + sprite.offset, "life": 0.12})
 	_update_sprite_layout()
 	if view_mode == ViewMode.SIDE_VIEW and not was_grounded and is_on_floor():
 		_landing_left = LANDING_SECONDS
@@ -242,6 +259,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func clear_input_buffer() -> void:
 	if is_charging:
 		_cancel_charge()
+	_dash_buffer_left = 0.0
 	_mouse_attack_pending = false
 	_mouse_attack_held = false
 	queued_attack = false
@@ -258,6 +276,8 @@ func _input(event: InputEvent) -> void:
 		elif not _mouse_attack_held:
 			_mouse_attack_held = true
 			_mouse_attack_pending = true
+	if event is InputEventKey and not event.echo and event.is_action_pressed("dash_modifier"):
+		_dash_buffer_left = DASH_BUFFER_SECONDS
 	if view_mode != ViewMode.SIDE_VIEW or not event is InputEventKey or event.echo:
 		return
 	if event.is_action_pressed("crouch"):
@@ -494,10 +514,12 @@ func _start_attack_stage(stage: int) -> void:
 
 func _attack_lunge_speed() -> float:
 	var heavy := special_kind == "heavy_slash"
-	if _attack_crouched or (special_kind != "" and not heavy) or sprite.frame < ACTIVE_START or sprite.frame > ACTIVE_END:
+	var first := HEAVY_LUNGE_START if heavy else ACTIVE_START
+	if _attack_crouched or (special_kind != "" and not heavy) or sprite.frame < first or sprite.frame > ACTIVE_END:
 		return 0.0
-	var phase := (float(sprite.frame - ACTIVE_START) + sprite.frame_progress) / float(ACTIVE_END - ACTIVE_START + 1)
-	var duration: float = float(ACTIVE_END - ACTIVE_START + 1) / (HEAVY_FPS if heavy else STAGE_FPS[combo_stage - 1])
+	var window := float(ACTIVE_END - first + 1)
+	var phase := (float(sprite.frame - first) + sprite.frame_progress) / window
+	var duration: float = window / (HEAVY_FPS if heavy else STAGE_FPS[combo_stage - 1])
 	var distance := HEAVY_LUNGE if heavy else (6.8 if combo_stage == 3 else 5.5)
 	# The wider drawn swing advances a few native pixels, easing in and out safely.
 	return sin(phase * PI) * distance * PI / (2.0 * duration)
@@ -616,7 +638,7 @@ func request_dive_slash() -> bool:
 func request_dash_stab(direction: int) -> bool:
 	if view_mode != ViewMode.SIDE_VIEW or is_attacking or _recovery_left > 0.0 or is_crouching:
 		return false
-	if direction == 0 or not Input.is_action_pressed("dash_modifier"):
+	if direction == 0:
 		return false
 	facing = "right" if direction > 0 else "left"
 	_crouch_exiting = false
@@ -734,7 +756,8 @@ func _begin_charge() -> void:
 	is_charging = true
 	charge_time = 0.0
 	is_running = false
-	_set_manual_frame("attack3_" + facing, CHARGE_POSE_FRAME)
+	_set_manual_frame("attack3_" + facing, 0)
+	_spawn_dust(global_position, 4)
 	charge_started.emit()
 
 
@@ -745,15 +768,33 @@ func _update_charge(delta: float, grounded: bool) -> void:
 	if _mouse_attack_held:
 		var was_full := charge_time >= CHARGE_FULL_SECONDS
 		charge_time += delta
-		var tip := _blade_tip_for_frame(CHARGE_POSE_FRAME)
+		var coil := clampf(charge_time / (CHARGE_FULL_SECONDS * CHARGE_COIL_PORTION), 0.0, 1.0)
+		var pose := mini(CHARGE_POSE_FRAME, int(coil * (CHARGE_POSE_FRAME + 1)))
+		if sprite.frame != pose:
+			_set_manual_frame("attack3_" + facing, pose)
+		if coil < 1.0:
+			# Settle back into the stance while coiling.
+			var back := -_facing_vector() * CHARGE_BACKSTEP / (CHARGE_FULL_SECONDS * CHARGE_COIL_PORTION)
+			if view_mode == ViewMode.TOP_DOWN:
+				velocity = back
+			else:
+				velocity.x = back.x
+		var tip := _blade_tip_for_frame(sprite.frame)
+		var tick := int(charge_time * 20.0) != int((charge_time - delta) * 20.0)
+		if tick:
+			# Light rises off the body while the charge builds.
+			var mote := global_position + Vector2(_rng.randf_range(-7.0, 7.0), -_rng.randf_range(3.0, 24.0))
+			_effects.append({"position": mote.round(), "velocity": Vector2(0, -34), "life": 0.22,
+				"color": Color("f2f8ff") if was_full else Color("8ebce8")})
 		if not was_full and charge_time >= CHARGE_FULL_SECONDS:
 			_spawn_sparks(tip)
+			_spawn_dust(global_position, 6)
 			charge_ready.emit()
 		elif was_full and int(charge_time * 10.0) != int((charge_time - delta) * 10.0):
 			# Full: a blinking white star on the tip says "release now".
 			for offset in [Vector2.ZERO, Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
 				_effects.append({"position": tip + offset, "velocity": Vector2.ZERO, "life": 0.05, "color": Color("f2f8ff")})
-		elif not was_full and int(charge_time * 20.0) != int((charge_time - delta) * 20.0):
+		elif not was_full and tick:
 			# Coiling: light gathers onto the blade from a ring that tightens as the charge fills.
 			var radius := lerpf(14.0, 4.0, charge_time / CHARGE_FULL_SECONDS)
 			var start := tip + Vector2.from_angle(charge_time * 11.0) * radius
@@ -777,6 +818,7 @@ func _release_heavy_slash() -> void:
 	charge_time = 0.0
 	charge_ended.emit(true)
 	special_kind = "heavy_slash"
+	_heavy_ghost_frame = -1
 	_attack_crouched = false
 	attack_direction = _facing_vector()
 	airflow_count = 0

@@ -247,10 +247,10 @@ func impact_checks() -> void:
 		check(impacts.size() == impact_count + 1 and arena.player._effects.filter(func(effect: Dictionary) -> bool: return effect.has("tail")).is_empty(), "impact waves expire and never repeat while airborne: " + direction)
 	await reset()
 	await tap(KEY_SPACE)
-	key(KEY_SHIFT, true)
 	key(KEY_D, true)
-	await attack()
-	check(arena.player.special_kind == "dash_stab", "Shift directional fresh click also starts a piercing dash in the air")
+	await tap(KEY_SHIFT)
+	check(arena.player.special_kind == "dash_stab", "a Shift press with a held direction also starts a piercing dash in the air")
+	key(KEY_D, false)
 
 
 func wait_for_stage(stage: int, limit: int = 60) -> bool:
@@ -262,11 +262,9 @@ func wait_for_stage(stage: int, limit: int = 60) -> bool:
 
 
 func dash_input(direction: int) -> void:
-	key(KEY_SHIFT, true)
 	key(KEY_D if direction > 0 else KEY_A, true)
-	await attack()
+	await tap(KEY_SHIFT)
 	key(KEY_D if direction > 0 else KEY_A, false)
-	key(KEY_SHIFT, false)
 
 
 func air_dash_checks() -> void:

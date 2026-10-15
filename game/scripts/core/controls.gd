@@ -5,7 +5,7 @@ const SLOTS := ["move_up", "move_down", "move_left", "move_right", "run", "jump"
 const LABELS := {
 	"move_up": "俯视上移", "move_down": "俯视下移", "move_left": "左移 / 突刺", "move_right": "右移 / 突刺",
 	"run": "按住跑步", "jump": "跳跃 / 二段跳", "crouch": "下蹲 / 下劈", "rising_modifier": "上挑修饰键",
-	"dash_modifier": "突刺修饰键",
+	"dash_modifier": "突刺键",
 	"attack_mouse": "攻击鼠标键", "switch_view": "切换视角", "reset_arena": "重置位置",
 }
 const MOUSE_BUTTONS := [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_MIDDLE, MOUSE_BUTTON_XBUTTON1, MOUSE_BUTTON_XBUTTON2]
@@ -49,10 +49,25 @@ static func _load_saved() -> void:
 			load_notice = "设置文件不完整，已使用默认按键。"
 			return
 		profile[slot] = config.get_value("bindings", slot)
+	if profile["dash_modifier"] == profile["run"]:
+		# The dash key used to be a modifier that could share run's key; it is now a press of its own.
+		profile["dash_modifier"] = _free_dash_key(profile)
+		load_notice = "突刺键改成单按触发，已从跑步键移到「%s」。" % binding_text("dash_modifier", profile)
 	if not validate(profile).is_empty():
 		load_notice = "设置文件无效，已使用默认按键。"
 		return
 	current = profile
+
+
+static func _free_dash_key(profile: Dictionary) -> int:
+	var used: Array = []
+	for slot in SLOTS:
+		if slot != "dash_modifier" and slot != "attack_mouse":
+			used.append(profile[slot])
+	for code in [KEY_SHIFT, KEY_CTRL, KEY_ALT, KEY_F, KEY_Q, KEY_E, KEY_L, KEY_K]:
+		if code not in used:
+			return code
+	return KEY_SHIFT
 
 
 static func _valid_key(code: int) -> bool:
@@ -89,8 +104,8 @@ static func validate(profile: Dictionary) -> String:
 			var b: String = SLOTS[right]
 			if a == "attack_mouse" or b == "attack_mouse" or profile[a] != profile[b]:
 				continue
-			# Cross-view pairs and the held run/dash modifiers may share a key.
-			if [a, b] in [["move_up", "rising_modifier"], ["move_down", "crouch"], ["run", "dash_modifier"]]:
+			# Cross-view pairs may share a key; the dash key is a press of its own and cannot share with run.
+			if [a, b] in [["move_up", "rising_modifier"], ["move_down", "crouch"]]:
 				continue
 			return "与「%s」/「%s」冲突，请换一个键。" % [LABELS[a], LABELS[b]]
 	return ""
