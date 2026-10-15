@@ -1,31 +1,43 @@
 extends Node
-## Shared settings and impact pause for the two environment scenes.
+## Shared settings menu, impact pause (hit-stop) and combat sounds for every scene with a player,
+## including the combat test fixture, so tests exercise the same hit-stop the game ships.
 
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const MENU = preload("res://scripts/ui/keybindings_menu.gd")
 const COMBAT_FEEDBACK = preload("res://scripts/core/combat_feedback.gd")
-# Normal 4 / critical 6 frames are the source game's guarantees; the charged heavy slash freezes longer,
-# flashes the frozen frame and shakes 2 px, then the camera settles through a short after-shock.
+# Impact weight -> displayed frames held (and at least frames/60 s), shake in native px, flash of the frozen
+# frame, and the camera after-shock once it resumes. light 4 / critical 6 are the source game's guarantees.
+const STOPS := {
+	&"light": {"frames": 4, "shake": 1},
+	&"critical": {"frames": 6, "shake": 1, "aftershock": [Vector2(1, 0), Vector2(-1, 0), Vector2.ZERO]},
+	&"heavy": {"frames": 10, "shake": 2, "flash": Color(1.7, 1.7, 1.9),
+		"aftershock": [Vector2(2, 1), Vector2(-2, -1), Vector2(2, 0), Vector2(-1, 1), Vector2(1, 0), Vector2(-1, 0), Vector2.ZERO]},
+}
 const HEAVY_STOP_FRAMES := 10
-const HEAVY_FLASH := Color(1.7, 1.7, 1.9)
-const AFTERSHOCK := {"critical": [Vector2(1, 0), Vector2(-1, 0), Vector2.ZERO],
-	"heavy": [Vector2(2, 1), Vector2(-2, -1), Vector2(2, 0), Vector2(-1, 1), Vector2(1, 0), Vector2(-1, 0), Vector2.ZERO]}
 
 signal stop_clock_step
+signal hit_stop_started
+signal hit_stop_frame(frame: int, shake: Vector2i)
+signal hit_stop_finished(frames: int)
 var settings_open := false
 var keybindings_menu: CanvasLayer
-var hit_stop_active := false
-var completed_stop_frames: Array[int] = []
 var combat_feedback: Node
+var hit_stop_active := false
+var hit_stop_requested_frames := 0
+var hit_stop_min_seconds := 0.0
+var hit_stop_elapsed_seconds := 0.0
+var hit_stop_displayed_frames := 0
+var hit_stop_shake := Vector2i.ZERO
+var hit_stop_overlay: TextureRect
+var completed_stop_frames: Array[int] = []
+var completed_stop_durations: Array[float] = []
 var _player: CharacterBody2D
 var _host: Node
-var _overlay: TextureRect
 var _overlay_layer: CanvasLayer
 var _saved_pause := false
 var _menu_saved_pause := false
 var _saved_canvas := Transform2D.IDENTITY
 var _layer_offsets: Dictionary = {}
-var _elapsed := 0.0
 var _token := 0
 
 
@@ -40,13 +52,13 @@ func _ready() -> void:
 	_overlay_layer.layer = 100
 	_overlay_layer.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(_overlay_layer)
-	_overlay = TextureRect.new()
-	_overlay.size = Vector2(320, 180)
-	_overlay.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	_overlay.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_overlay.hide()
-	_overlay_layer.add_child(_overlay)
+	hit_stop_overlay = TextureRect.new()
+	hit_stop_overlay.size = Vector2(320, 180)
+	hit_stop_overlay.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	hit_stop_overlay.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	hit_stop_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hit_stop_overlay.hide()
+	_overlay_layer.add_child(hit_stop_overlay)
 	combat_feedback = COMBAT_FEEDBACK.new()
 	combat_feedback.name = "CombatFeedback"
 	add_child(combat_feedback)
@@ -57,16 +69,14 @@ func bind_player(player: CharacterBody2D) -> void:
 	_player = player
 	if not is_instance_valid(_player):
 		return
-	if not _player.normal_contact_stop.is_connected(_on_normal_contact):
-		_player.normal_contact_stop.connect(_on_normal_contact)
-	if not _player.critical_hit.is_connected(_on_critical_hit):
-		_player.critical_hit.connect(_on_critical_hit)
+	if not _player.impact.is_connected(_on_impact):
+		_player.impact.connect(_on_impact)
 	combat_feedback.bind_player(_player)
 
 
 func _process(delta: float) -> void:
 	if hit_stop_active:
-		_elapsed += delta
+		hit_stop_elapsed_seconds += delta
 		stop_clock_step.emit()
 
 
@@ -114,15 +124,10 @@ func _close_keybindings(_saved: bool) -> void:
 		_host.call("_refresh_ui")
 
 
-func _on_normal_contact(direction: Vector2) -> void:
+# One pause per attack stage: the player emits impact once per stage, and a request during a pause is ignored.
+func _on_impact(weight: StringName, direction: Vector2) -> void:
 	if not hit_stop_active:
-		_run_hit_stop(direction, 4)
-
-
-func _on_critical_hit(_target: Node, _damage: int, direction: Vector2) -> void:
-	if not hit_stop_active:
-		var heavy: bool = is_instance_valid(_player) and _player.special_kind == "heavy_slash"
-		_run_hit_stop(direction, HEAVY_STOP_FRAMES if heavy else 6, "heavy" if heavy else "critical")
+		_run_hit_stop(direction, weight)
 
 
 func _display_frame() -> void:
@@ -132,47 +137,56 @@ func _display_frame() -> void:
 		await RenderingServer.frame_post_draw
 
 
-func _run_hit_stop(direction: Vector2, requested: int, weight := "") -> void:
+func _run_hit_stop(direction: Vector2, weight: StringName) -> void:
+	var stop: Dictionary = STOPS.get(weight, STOPS[&"light"])
 	_token += 1
 	var token := _token
 	hit_stop_active = true
-	_elapsed = 0.0
+	hit_stop_requested_frames = int(stop["frames"])
+	hit_stop_min_seconds = hit_stop_requested_frames / 60.0
+	hit_stop_elapsed_seconds = 0.0
+	hit_stop_displayed_frames = 0
+	var unit := Vector2i(int(signf(direction.x)), 0) if direction.x != 0.0 else Vector2i(0, int(signf(direction.y)))
+	hit_stop_shake = unit * int(stop["shake"])
 	_saved_pause = get_tree().paused
 	_saved_canvas = get_viewport().canvas_transform
-	var shake := Vector2(signf(direction.x), 0) if direction.x != 0 else Vector2(0, signf(direction.y))
-	if weight == "heavy":
-		shake *= 2.0
 	var shifted := _saved_canvas
-	shifted.origin += shake
+	shifted.origin += Vector2(hit_stop_shake)
 	get_viewport().canvas_transform = shifted
 	_layer_offsets.clear()
 	for layer in _host.find_children("*", "CanvasLayer", true, false):
 		if layer != _overlay_layer:
 			_layer_offsets[layer] = layer.offset
-			layer.offset += shake
+			layer.offset += Vector2(hit_stop_shake)
 	get_tree().paused = true
+	hit_stop_started.emit()
+	# The first displayed freeze frame already holds the impact and the shared shift.
 	await _display_frame()
 	if token != _token:
 		return
-	var frames := 1
+	hit_stop_displayed_frames = 1
+	hit_stop_frame.emit(1, hit_stop_shake)
 	if DisplayServer.get_name() != "headless":
 		var snapshot := get_viewport().get_texture().get_image()
 		if snapshot != null and not snapshot.is_empty():
-			_overlay.texture = ImageTexture.create_from_image(snapshot)
-			_overlay.modulate = HEAVY_FLASH if weight == "heavy" else Color.WHITE
-			_overlay.show()
-	# Retain the source game's frame and time guarantees on every refresh rate.
-	while frames < requested or _elapsed + 0.000001 < requested / 60.0:
+			hit_stop_overlay.texture = ImageTexture.create_from_image(snapshot)
+			hit_stop_overlay.modulate = stop.get("flash", Color.WHITE)
+			hit_stop_overlay.show()
+	# Retain the frame AND visible-time guarantees on every refresh rate.
+	while hit_stop_displayed_frames < hit_stop_requested_frames or hit_stop_elapsed_seconds + 0.000001 < hit_stop_min_seconds:
 		await _display_frame()
 		if token != _token:
 			return
-		frames += 1
-		if frames == 3:
-			_overlay.modulate = Color.WHITE
-	completed_stop_frames.append(frames)
+		hit_stop_displayed_frames += 1
+		hit_stop_frame.emit(hit_stop_displayed_frames, hit_stop_shake)
+		if hit_stop_displayed_frames == 3:
+			hit_stop_overlay.modulate = Color.WHITE
+	completed_stop_frames.append(hit_stop_displayed_frames)
+	completed_stop_durations.append(hit_stop_elapsed_seconds)
 	_finish_hit_stop()
-	if AFTERSHOCK.has(weight):
-		_aftershock(AFTERSHOCK[weight], token)
+	hit_stop_finished.emit(hit_stop_displayed_frames)
+	if stop.has("aftershock"):
+		_aftershock(stop["aftershock"], token)
 
 
 func _aftershock(offsets: Array, token: int) -> void:
@@ -190,7 +204,7 @@ func _aftershock(offsets: Array, token: int) -> void:
 
 
 func _finish_hit_stop() -> void:
-	_overlay.hide()
+	hit_stop_overlay.hide()
 	get_viewport().canvas_transform = _saved_canvas
 	for layer in _layer_offsets:
 		if is_instance_valid(layer):

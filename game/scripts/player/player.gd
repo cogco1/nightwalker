@@ -8,6 +8,10 @@ signal critical_hit(target: Node, damage: int, direction: Vector2)
 signal normal_contact_stop(direction: Vector2)
 signal special_started(kind: String, direction: Vector2)
 signal landing_impact(point: Vector2)
+## Once per attack stage on first contact: light / critical / heavy. GameSession maps it to a hit-stop.
+signal impact(weight: StringName, direction: Vector2)
+## Every attack or special start, with the move id (attack1-3, crouch_stab, air_attack1-3, rising_slash, ...).
+signal move_started(move: StringName)
 signal charge_started
 signal charge_ready
 signal charge_ended(released: bool)
@@ -515,6 +519,7 @@ func _start_attack_stage(stage: int) -> void:
 	sprite.play(animation)
 	combo_changed.emit(stage)
 	attack_started.emit()
+	move_started.emit(StringName(special_kind) if special_kind != "" else StringName(animation.trim_suffix("_" + facing)))
 
 
 func _attack_lunge_speed() -> float:
@@ -610,9 +615,11 @@ func _resolve_hit(target: Node, point: Vector2) -> bool:
 		for axis in [Vector2(4, 0), Vector2(-4, 0), Vector2(0, 4), Vector2(0, -4)]:
 			_blade_trails.append({"pixels": _pixel_line(point, point + axis), "edge": Vector2i(0, 1), "life": BLADE_TRAIL_SECONDS})
 		critical_hit.emit(target, damage, attack_direction)
+		impact.emit(&"heavy" if special_kind == "heavy_slash" else &"critical", attack_direction)
 	elif not stage_is_critical and not _normal_stop_emitted:
 		_normal_stop_emitted = true
 		normal_contact_stop.emit(attack_direction)
+		impact.emit(&"light", attack_direction)
 	return true
 
 

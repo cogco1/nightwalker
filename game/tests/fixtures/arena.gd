@@ -3,11 +3,12 @@ extends Node2D
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const PLAYER_SCENE = preload("res://scenes/player.tscn")
 const TARGET_SCRIPT = preload("res://tests/fixtures/training_target.gd")
-const KEYBINDINGS_MENU = preload("res://scripts/ui/keybindings_menu.gd")
+const GAME_SESSION = preload("res://scripts/core/game_session.gd")
+# The fixture runs the shipped GameSession (hit-stop, settings menu, combat sounds); the names below forward
+# to it so the suites keep their wording while testing the real code.
 signal hit_stop_started
 signal hit_stop_frame(frame: int, shake: Vector2i)
 signal hit_stop_finished(frames: int)
-signal hit_stop_clock_step
 
 var view_mode := 0
 var world: Node2D
@@ -22,25 +23,30 @@ var status_label: Label
 var message := "Tap LMB again to chain."
 var critical_events := 0
 var normal_contact_events := 0
-var hit_stop_requested_frames := 0
-var hit_stop_elapsed_seconds := 0.0
-var hit_stop_min_seconds := 0.0
-var completed_stop_requests: Array[int] = []
-var completed_stop_durations: Array[float] = []
-var hit_stop_active := false
-var hit_stop_displayed_frames := 0
-var hit_stop_shake := Vector2i.ZERO
-var hit_stop_snapshot: Image
-var hit_stop_overlay: TextureRect
-var hit_stop_render_frames: Array[int] = []
 var hud_layer: CanvasLayer
-var _stop_token := 0
-var _saved_pause := false
-var _saved_canvas := Transform2D.IDENTITY
-var _saved_hud_offset := Vector2.ZERO
-var keybindings_menu: CanvasLayer
-var settings_open := false
-var _settings_saved_pause := false
+var session: Node
+var hit_stop_active: bool:
+	get: return session != null and session.hit_stop_active
+var hit_stop_requested_frames: int:
+	get: return session.hit_stop_requested_frames
+var hit_stop_elapsed_seconds: float:
+	get: return session.hit_stop_elapsed_seconds
+var hit_stop_min_seconds: float:
+	get: return session.hit_stop_min_seconds
+var hit_stop_displayed_frames: int:
+	get: return session.hit_stop_displayed_frames
+var hit_stop_shake: Vector2i:
+	get: return session.hit_stop_shake
+var hit_stop_overlay: TextureRect:
+	get: return session.hit_stop_overlay
+var completed_stop_requests: Array[int]:
+	get: return session.completed_stop_frames
+var completed_stop_durations: Array[float]:
+	get: return session.completed_stop_durations
+var keybindings_menu: CanvasLayer:
+	get: return session.keybindings_menu
+var settings_open: bool:
+	get: return session != null and session.settings_open
 
 
 func _ready() -> void:
@@ -48,14 +54,17 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	CONTROLS.install()
 	_create_hud()
-	keybindings_menu = KEYBINDINGS_MENU.new()
-	add_child(keybindings_menu)
-	keybindings_menu.closed.connect(_close_keybindings)
+	session = GAME_SESSION.new()
+	session.name = "GameSession"
+	add_child(session)
+	session.hit_stop_started.connect(hit_stop_started.emit)
+	session.hit_stop_frame.connect(hit_stop_frame.emit)
+	session.hit_stop_finished.connect(hit_stop_finished.emit)
 	build_arena(0)
 
 
 func build_arena(mode: int) -> void:
-	_cancel_hit_stop()
+	session.cancel_hit_stop()
 	view_mode = mode
 	if is_instance_valid(world):
 		remove_child(world)
@@ -114,6 +123,7 @@ func build_arena(mode: int) -> void:
 		target.destroyed.connect(_on_target_destroyed)
 		world.add_child(target)
 		targets.append(target)
+	session.bind_player(player)
 	_refresh_hud()
 	queue_redraw()
 
@@ -150,46 +160,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
-func _input(event: InputEvent) -> void:
-	if settings_open:
-		return
-	if event is InputEventKey and event.pressed and not event.echo and (event.keycode in [KEY_F1, KEY_ESCAPE] or event.physical_keycode in [KEY_F1, KEY_ESCAPE]):
-		open_keybindings()
-		get_viewport().set_input_as_handled()
-		return
-	if hit_stop_active and is_instance_valid(player):
-		# Only collect button edges during the freeze; the paused player acts after it ends.
-		player.handle_input(event)
-
-
 func open_keybindings() -> void:
-	if settings_open:
-		return
-	_cancel_hit_stop()
-	_settings_saved_pause = get_tree().paused
-	settings_open = true
-	player.input_suspended = true
-	player.clear_input_buffer()
-	CONTROLS.release_actions()
-	get_tree().paused = true
-	keybindings_menu.open()
+	session.open_keybindings()
 
 
-func _close_keybindings(saved: bool) -> void:
-	CONTROLS.release_actions()
-	player.clear_input_buffer()
-	player.input_suspended = false
-	settings_open = false
-	get_tree().paused = _settings_saved_pause
-	if saved:
-		message = "Bindings saved."
+func _refresh_ui() -> void:
+	# GameSession calls this after the settings menu closes.
 	_refresh_hud()
-
-
-func _process(delta: float) -> void:
-	if hit_stop_active:
-		hit_stop_elapsed_seconds += delta
-		hit_stop_clock_step.emit()
 
 
 func _on_attack_hit(target: Node) -> void:
@@ -223,86 +200,12 @@ func _on_landing_impact(_point: Vector2) -> void:
 	_refresh_hud()
 
 
-func _on_critical_hit(_target: Node, _damage: int, direction: Vector2) -> void:
+func _on_critical_hit(_target: Node, _damage: int, _direction: Vector2) -> void:
 	critical_events += 1
-	if not hit_stop_active:
-		_run_hit_stop(direction)
 
 
-func _on_normal_contact_stop(direction: Vector2) -> void:
+func _on_normal_contact_stop(_direction: Vector2) -> void:
 	normal_contact_events += 1
-	if not hit_stop_active:
-		_run_hit_stop(direction, 4)
-
-
-func _display_frame() -> void:
-	if DisplayServer.get_name() == "headless":
-		# Dummy rendering has no post-draw image; count after this frame's clock update.
-		await hit_stop_clock_step
-	else:
-		await RenderingServer.frame_post_draw
-
-
-func _run_hit_stop(direction: Vector2, frames: int = 6) -> void:
-	_stop_token += 1
-	var token := _stop_token
-	hit_stop_active = true
-	hit_stop_requested_frames = clampi(frames, 4, 6)
-	hit_stop_elapsed_seconds = 0.0
-	hit_stop_min_seconds = hit_stop_requested_frames / 60.0
-	hit_stop_displayed_frames = 0
-	hit_stop_render_frames.clear()
-	hit_stop_shake = Vector2i(int(signf(direction.x)), 0) if direction.x != 0.0 else Vector2i(0, int(signf(direction.y)))
-	_saved_pause = get_tree().paused
-	_saved_canvas = get_viewport().canvas_transform
-	_saved_hud_offset = hud_layer.offset
-	var shifted := _saved_canvas
-	shifted.origin += Vector2(hit_stop_shake)
-	get_viewport().canvas_transform = shifted
-	hud_layer.offset = _saved_hud_offset + Vector2(hit_stop_shake)
-	get_tree().paused = true
-	hit_stop_started.emit()
-	# The first actual displayed freeze frame contains the impact and one shared shift.
-	await _display_frame()
-	if token != _stop_token:
-		return
-	hit_stop_displayed_frames = 1
-	hit_stop_render_frames.append(Engine.get_process_frames())
-	hit_stop_frame.emit(1, hit_stop_shake)
-	if DisplayServer.get_name() != "headless":
-		hit_stop_snapshot = get_viewport().get_texture().get_image()
-		if hit_stop_snapshot != null and not hit_stop_snapshot.is_empty():
-			hit_stop_overlay.texture = ImageTexture.create_from_image(hit_stop_snapshot)
-			hit_stop_overlay.visible = true
-	# Keep the entire impact image still for the minimum frame count AND real duration.
-	# Higher refresh rates need additional displayed frames to preserve the visible pause.
-	while hit_stop_displayed_frames < hit_stop_requested_frames or hit_stop_elapsed_seconds + 0.000001 < hit_stop_min_seconds:
-		await _display_frame()
-		if token != _stop_token:
-			return
-		hit_stop_displayed_frames += 1
-		hit_stop_render_frames.append(Engine.get_process_frames())
-		hit_stop_frame.emit(hit_stop_displayed_frames, hit_stop_shake)
-	_finish_hit_stop()
-
-
-func _finish_hit_stop() -> void:
-	hit_stop_overlay.visible = false
-	get_viewport().canvas_transform = _saved_canvas
-	hud_layer.offset = _saved_hud_offset
-	get_tree().paused = _saved_pause
-	hit_stop_active = false
-	completed_stop_requests.append(hit_stop_displayed_frames)
-	completed_stop_durations.append(hit_stop_elapsed_seconds)
-	hit_stop_finished.emit(hit_stop_displayed_frames)
-
-
-func _cancel_hit_stop() -> void:
-	_stop_token += 1
-	if hit_stop_active:
-		_finish_hit_stop()
-	hit_stop_displayed_frames = 0
-	hit_stop_shake = Vector2i.ZERO
 
 
 func _create_hud() -> void:
@@ -339,17 +242,6 @@ func _create_hud() -> void:
 	mono.antialiasing = TextServer.FONT_ANTIALIASING_NONE
 	controls_label.add_theme_font_override("font", mono)
 	status_label.add_theme_font_override("font", mono)
-	var overlay_layer := CanvasLayer.new()
-	overlay_layer.layer = 100
-	overlay_layer.process_mode = Node.PROCESS_MODE_ALWAYS
-	add_child(overlay_layer)
-	hit_stop_overlay = TextureRect.new()
-	hit_stop_overlay.size = Vector2(320, 180)
-	hit_stop_overlay.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	hit_stop_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hit_stop_overlay.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	hit_stop_overlay.visible = false
-	overlay_layer.add_child(hit_stop_overlay)
 
 
 func _label(parent: Node, location: Vector2, size: int) -> Label:
