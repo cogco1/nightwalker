@@ -50,7 +50,7 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 
 `player.tscn` 的 Sprite 挂 `assets/fx/character_cyber.tres`（`resource_local_to_scene`，每个玩家实例一份），shader 是 `shaders/character_cyber.gdshader`：
 
-- **换色**：`assets/fx/cyber_palette.png` 是 18 × 3 查找表。第 0 行是 1024 帧里出现的全部 18 种原色，第 1 行是换成的颜色，第 2 行 rgb 是光晕颜色、alpha 是自发光强度。改色只改这张图（或 `tools/art/gen_cyber_palette.py`）；`tools/art_qa/validate_cyber_palette.py` 检查新帧有没有表外颜色。
+- **换色**：`assets/fx/cyber_palette.png` 是 18 × 4 查找表。第 0 行是 1024 帧里出现的全部 18 种原色，第 1 行是换成的颜色，第 2 行 rgb 是光晕颜色、alpha 是自发光强度，第 3 行 alpha 是反光度（目前只有斜挎带的 #533729）。改色只改这张图（或 `tools/art/gen_cyber_palette.py`）；`tools/art_qa/validate_cyber_palette.py` 检查新帧有没有表外颜色。
 - **轮廓光**：`rim_a_*`、`rim_b_*` 是两个屏幕空间的光源方向和颜色。只有朝向光源、且外侧是透明像素的边缘被上色；没被照到的边缘往 `shade_edge_color` 压暗。安全屋和医院用默认值（顶上一点青光）；夜街每帧取离人物最近、最强的两盏灯写进去。
 - **自发光**：刀刃三种钢色（#e5e8e0 / #bbc2c3 / #8e999f）和脸部两种肤色是自发光像素，在帧内画半径 3 像素的光晕，成了刀光和目镜。按颜色识别刀刃，不需要逐帧遮罩：v07 的 24 个侧视动作里，这三种钢色 99.6% 落在刀刃遮罩里。
 - **暗场景补偿**：`emission_lift`（= 1 / CanvasModulate 颜色）让自发光、轮廓光不被压暗；`emission_gain` > 1 把它们推过 1.0，WorldEnvironment 辉光才会把它们晕开。`body_lift` 提亮身体，免得人物在暗处糊成一团。
@@ -63,7 +63,7 @@ NightStreetProto
 ├─ Glow (WorldEnvironment)      canvas 背景 + 辉光，阈值 1.0：只有超过 1.0 的自发光像素会晕开
 ├─ NightAmbient (CanvasModulate) 压暗主画布
 ├─ Layer_sky / far_towers / petra / district_c / street   每层一张底图 + 一张 _emit 自发光图
-│                                视差系数 0 / 0.15 / 0.4 / 0.7 / 1.0；底图只有 street 受街灯照射
+│                                视差系数 0 / 0.15 / 0.34 / 0.7 / 1.0；底图只有 street 受街灯照射
 ├─ World                         地面碰撞、PointLight2D、巡逻无人机光束、悬浮无人机、玩家
 ├─ StreetCamera
 ├─ WetStreet   (CanvasLayer 1)   BackBufferCopy + 湿地反光（读屏幕纹理，按世界坐标定水洼）
@@ -98,7 +98,8 @@ NightStreetProto
 
 ## 扩展点
 
-- **夜街原型**：灯光表 `LIGHTS`、无人机位置 `TARGET_POSITIONS`、环境光 `AMBIENT`、暴露速度 `EXPOSURE_RISE/FALL` 都在 `scripts/levels/night_street/night_street.gd` 顶部；底图改 `tools/art/gen_night_street.py` 后重新生成。
+- **夜街原型**：街灯和霓虹的点光源来自 `assets/night_street/lights.json`（拼装脚本按街面层的自发光灯具算出）；无人机位置 `TARGET_POSITIONS`、环境光 `AMBIENT`、暴露速度 `EXPOSURE_RISE/FALL` 在 `scripts/levels/night_street/night_street.gd` 顶部。底图流程：Codex 出原图 → `tools/art/pixelize_layer.py`（共用 40 色调色板、按块取众数降采样、拆自发光层）→ `tools/art/assemble_night_street.py`（拼宽、纵向定位、灯光表），记录在 `art_metadata/night_street_v15/prompts.json`。
+- **义体**：反光条由查找表第 3 行和 shader 的 `reflect_*` 参数控制；条码疤是 `player.tscn` 里 Sprite 下的 `ImplantOverlay`（`scripts/player/implant_overlay.gd`），位置读 `assets/fx/implant_anchors.json`，由 `tools/art/gen_implant_anchors.py` 从帧里算出（新增动作帧后重跑）。场景把它的 `scanned` 设为 1 时会故障闪烁。
 
 - **新关卡**：脚本放 `scripts/levels/<名字>/`，场景放 `scenes/<名字>.tscn`，素材放 `assets/<名字>/`；在 `scene_routes.gd` 里登记路径；关卡里实例化 `player.tscn` 并挂一个 `GameSession`，就能拿到改键和顿帧。
 - **剧情物品**：NPC 对话完成后调用 `/root/NightwalkerStoryState.grant_item("breaker_key")`，医院电闸就能打开。

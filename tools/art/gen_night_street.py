@@ -1,7 +1,7 @@
 """Generate the night-street prototype backdrop (2040 Petra new town, light = being watched).
 
 Usage: python -I tools/art/gen_night_street.py
-Writes game/assets/night_street/<layer>.png and <layer>_emit.png. The base layers are painted for a
+Writes game/assets/night_street_placeholder/<layer>.png and <layer>_emit.png (Godot ignores this folder). The base layers are painted for a
 CanvasModulate of about 0.5 (street lights reveal their true colours); the _emit layers hold only
 self-lit pixels (windows, neon, beacons) and are drawn unshaded so they stay bright and bloom.
 Deterministic: the same seed always produces the same pixels.
@@ -12,7 +12,9 @@ from pathlib import Path
 
 from PIL import Image
 
-OUT = Path(__file__).resolve().parents[2] / "game" / "assets" / "night_street"
+# Since v15 the shipped layers come from generated art (tools/art/assemble_night_street.py); this script
+# writes the hand-coded placeholder set next to them as a fallback, and its sky is still the shipped sky.
+OUT = Path(__file__).resolve().parents[2] / "game" / "assets" / "night_street_placeholder"
 VIEW_W, VIEW_H = 320, 180
 WORLD_W = 960
 FLOOR = 156

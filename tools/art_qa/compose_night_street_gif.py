@@ -1,9 +1,13 @@
-"""Turn the night-street recorder frames into a GIF and a contact sheet of the stills.
+"""Turn the night-street recorder frames into a GIF, an MP4 and a contact sheet of the stills.
 
 Usage: python -I tools/art_qa/compose_night_street_gif.py [scale]
 Reads game/evidence/night_street_proto/ written by tests/recorders/record_night_street_proto.gd.
+The MP4 (H.264, 1280x720 nearest-neighbour, 30 fps) needs ffmpeg: imageio-ffmpeg's bundled binary, or
+ffmpeg on PATH; without one only the GIF and the sheet are written.
 """
 import json
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -30,6 +34,21 @@ def main() -> int:
         sheet.paste(still.resize((width, height), Image.NEAREST), ((index % 2) * (width + 8), (index // 2) * (height + 8)))
     sheet.save(EVIDENCE / "night_street_stills.png")
     print(gif, len(frames), "frames,", round(gif.stat().st_size / 1e6, 1), "MB")
+    ffmpeg = shutil.which("ffmpeg")
+    try:
+        import imageio_ffmpeg
+        ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+    except ImportError:
+        pass
+    if ffmpeg:
+        mp4 = EVIDENCE / "night_street_proto.mp4"
+        subprocess.run([ffmpeg, "-y", "-loglevel", "error", "-framerate", "30", "-start_number", "0",
+                        "-i", str(EVIDENCE / "frames" / "%04d.png"), "-frames:v", str(report["frames"]),
+                        "-vf", "scale=1280:720:flags=neighbor,format=yuv420p", "-c:v", "libx264", "-crf", "16",
+                        "-preset", "slow", "-movflags", "+faststart", str(mp4)], check=True)
+        print(mp4, round(mp4.stat().st_size / 1e6, 1), "MB")
+    else:
+        print("no ffmpeg found: MP4 skipped")
     return 0
 
 

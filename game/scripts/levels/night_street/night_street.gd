@@ -21,15 +21,15 @@ const FLOOR_Y := 156.0
 const START := Vector2(60, 156)
 const AMBIENT := Color(0.6, 0.55, 0.76)
 # name, scroll factor (0 = fixed to the screen, 1 = moves with the street)
-const LAYERS := [["sky", 0.0], ["far_towers", 0.15], ["petra", 0.4], ["district_c", 0.7], ["street", 1.0]]
-# position, colour, energy, radius in native pixels
-const LIGHTS := [
+const LAYERS := [["sky", 0.0], ["far_towers", 0.15], ["petra", 0.34], ["district_c", 0.7], ["street", 1.0]]
+# Street lights come from the art: tools/art/assemble_night_street.py writes one entry per self-lit fixture
+# (lamp heads, kiosk sign, vending machine, ID gate) into lights.json. FALLBACK_LIGHTS: position, colour,
+# energy, radius in native pixels, used only if that file is missing.
+const LIGHTS_PATH := "res://assets/night_street/lights.json"
+const FALLBACK_LIGHTS := [
 	[Vector2(111, 101), Color(1.0, 0.6, 0.24), 1.0, 56.0],
-	[Vector2(421, 101), Color(1.0, 0.6, 0.24), 1.0, 56.0],
-	[Vector2(771, 101), Color(1.0, 0.6, 0.24), 1.0, 56.0],
 	[Vector2(259, 114), Color(1.0, 0.24, 0.6), 1.3, 64.0],
 	[Vector2(568, 131), Color(0.31, 0.94, 1.0), 0.9, 40.0],
-	[Vector2(706, 118), Color(0.31, 0.94, 1.0), 0.8, 36.0],
 ]
 # Street lights only reach the street layer and the actors; the parallax backdrop keeps its own colours.
 const LIT_MASK := 1
@@ -131,7 +131,7 @@ func _build_world() -> void:
 	_add_wall(world, Rect2(0, FLOOR_Y, WORLD_WIDTH, 40))
 	_add_wall(world, Rect2(-16, -40, 16, 240))
 	_add_wall(world, Rect2(WORLD_WIDTH, -40, 16, 240))
-	for item in LIGHTS:
+	for item in _light_table():
 		var light := _make_light(item[0], item[1], item[2], item[3])
 		world.add_child(light)
 		_lights.append(light)
@@ -170,6 +170,16 @@ func _build_world() -> void:
 	camera.limit_bottom = VIEWPORT_SIZE.y
 	add_child(camera)
 	camera.make_current()
+
+
+func _light_table() -> Array:
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(LIGHTS_PATH)) if FileAccess.file_exists(LIGHTS_PATH) else null
+	if not parsed is Array:
+		return FALLBACK_LIGHTS
+	var table: Array = []
+	for entry in parsed:
+		table.append([Vector2(entry["position"][0], entry["position"][1]), Color(String(entry["colour"])), float(entry["energy"]), float(entry["radius"])])
+	return table
 
 
 func _add_wall(parent: Node, area: Rect2) -> void:
@@ -221,6 +231,9 @@ func _build_overlays() -> void:
 	_wet = ShaderMaterial.new()
 	_wet.shader = WET
 	_wet.set_shader_parameter("floor_y", FLOOR_Y)
+	# the street art already has painted reflections under its lamps; the live mirror only adds the actors
+	_wet.set_shader_parameter("strength", 0.2)
+	_wet.set_shader_parameter("puddle_strength", 0.5)
 	wet_layer.add_child(_screen_rect(Rect2(0, FLOOR_Y, VIEWPORT_SIZE.x, VIEWPORT_SIZE.y - FLOOR_Y), _wet))
 	var weather := CanvasLayer.new()
 	weather.name = "Weather"

@@ -30,7 +30,7 @@ Nightwalker/
 │  │     ├─ hospital/   underground_hospital · hospital_interactions · hospital_security
 │  │     └─ night_street/ night_street · beam_drone · hover_target · rain（原型）
 │  ├─ assets/                                       SpriteFrames、刀尖路径、场景底图与 layout.json、字体、立绘；
-│  │                                                fx/ 人物查找表和材质，night_street/ 夜街分层底图
+│  │                                                fx/ 人物查找表、材质和义体锚点，night_street/ 夜街分层底图和灯光表
 │  ├─ frames/                                       人物动作帧：<视角>_<方向>_<动作>/00–15.png
 │  ├─ art_metadata/                                 原画、提示词、遮罩、导入与校验记录（.gdignore，不参与导入）
 │  ├─ tests/                                        回归套件（Test-Game 全部运行）
@@ -66,7 +66,8 @@ Nightwalker/
 ## 赛博朋克视觉原型（分支 proto/night-street-cyber）
 
 - 人物：`assets/fx/character_cyber.tres` 挂在 `player.tscn` 的 Sprite 上，所以安全屋、医院、夜街都生效。它按 18 色查找表（`assets/fx/cyber_palette.png`）换色，按光源方向给朝光的边缘上色、背光一侧压暗，刀刃三种钢色和脸部两种肤色做成自发光（刀光、目镜）。原帧一张没改；`look = 0` 就是原配色。
-- 夜街：`scenes/night_street_proto.tscn`，只有侧视。CanvasModulate 压暗，PointLight2D 街灯和霓虹，三层视差（A 区巨塔、佩特拉玫瑰砂岩立面、C 区楼房和招牌），巡逻无人机的监控光束（光束里飘着微光粒子），湿地反光、雨、低雾、WorldEnvironment 辉光。
+- 夜街：`scenes/night_street_proto.tscn`，只有侧视。CanvasModulate 压暗，PointLight2D 街灯和霓虹，三层视差（A 区巨塔和总控塔、佩特拉卡兹尼神殿式岩壁立面、C 区楼房和金域大厦）加街面层，巡逻无人机的监控光束（光束里飘着微光粒子），湿地反光、雨、低雾、WorldEnvironment 辉光。底图由本机 Codex 的 image_gen 生成、降到原生像素后拼装，过程记录在 `game/art_metadata/night_street_v15/`；脚本占位版留在 `game/assets/night_street_placeholder/`。
+- 义体：兜帽下的洋红目镜；斜挎带、腰带和肩带是反光条，被灯照到就亮成那盏灯的颜色；握刀手的前臂上有一块被刮掉的条码疤（设定里主角没有身份序列号），偶尔闪红。站进光束时头顶弹出扫描面板，显示“ID 无法识别”。
 - 光 = 被监控：站进光束，右上角暴露条上升、画面出现轻微色差；暴露满了被标记，光束变红并追人，离开光束一段时间后解除。
 - 夜街操作：AD 走、空格跳、左键连斩、Shift+AD+左键突刺；F9 切换赛博配色和原配色对比；R 重置；Tab 在这里不切视角。
 - 改动清单：[docs/prototypes/夜街赛博原型_改动清单.md](docs/prototypes/夜街赛博原型_改动清单.md)。

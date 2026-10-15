@@ -1,10 +1,10 @@
 {
-  "mode": "pending generator choice (local Flux via ComfyUI / Canva generate-image / hand-made fallback)",
+  "mode": "Codex CLI 0.153.4 built-in image_gen via `codex exec` (read-only sandbox, model_reasoning_effort=low), one call per layer, 2026-10-15",
   "asset": "night_street_proto parallax backdrop v15",
   "source_document": "User_Materials/SK.txt (v07 handoff): Petra New Town, A-district full surveillance, District C weakest coverage, Golden Domain Tower 124 storeys (chapter 2), ID serial = barcode tattoo",
   "approved_direction": "2026-10-15: Petra rose sandstone + neon (surveillance cyan, black-market magenta, sodium orange); light = being watched",
   "native_floor_y": 156,
-  "pipeline": "generate canvas at 4x native -> tools/art/pixelize_layer.py palette (shared <=40 colours) -> pixelize_layer.py layer (box downsample, chroma-key alpha, palette map, lone-pixel cleanup, neon split into _emit)",
+  "pipeline": "source/<layer>_source_0.png (Codex returns transparent PNGs, max aspect 3:1) -> tools/art/pixelize_layer.py palette shared_palette.png source/*.png -> tools/art/pixelize_layer.py layer source/<layer>_source_0.png <layer> 0 shared_palette.png (petra with --emit-hues cm) -> native/ -> tools/art/assemble_night_street.py native/ -> game/assets/night_street/",
   "common_prompt": "Side-view 2D pixel-art parallax background layer for an original neo-noir action game set in 2040 'Petra New Town', a surveillance city built around the ruins of Petra, Jordan. Strict orthographic side elevation: no perspective, no vanishing points, flat horizon. Night, light rain haze. Palette: deep indigo and violet shadows, Petra rose-red sandstone, and neon accents only in surveillance cyan #4ff0ff, black-market magenta #ff3d9a and sodium orange #ff9a3c. Hard square pixels: every design pixel is exactly one uniform 4x4 block of the output; 32-40 flat colours; one-design-pixel window and neon accents; readable clusters, economical detail. No antialiasing, smooth gradients, blur, bloom, painterly or photographic or 3D rendering, no letters or readable text (signs use abstract glyph strokes), no people, no vehicles.",
   "layers": [
     {
@@ -74,5 +74,22 @@
       "tiles": 2,
       "prompt": "Street level of District C seen from the road: the back pavement wall and shopfronts at ground level, kerb line exactly at y=624, wet dark asphalt below the kerb to the bottom edge. Props spaced along the street: three tall sodium street lamps (x=480, 1720, 3120), a noodle kiosk with a magenta striped awning and a magenta glyph sign (x=940-1130), a cyan-lit vending machine (x=2240), an ID scanner gate with a glowing cyan barcode panel (x=2760-2890), crates, bins and a low barrier. Keep a clear 160px-high walking band in front of everything; props never block the kerb line. Solid flat #00ff00 above the props."
     }
-  ]
+  ],
+  "references": {
+    "guide": "guides/guide_<layer>.png: the hand-coded placeholder layer on #00ff00 at 4x (composition only)",
+    "style": "guides/style_hospital_side.png: approved hospital side view at 2x (pixel scale / rendering only)"
+  },
+  "results": {
+    "far_towers": "1978x795 (2.49:1) -> 448x180, used as is",
+    "petra": "2172x724 (tool max 3:1) -> 540x180; parallax lowered 0.4 -> 0.34 to fit; warm rock highlights kept out of the emit layer",
+    "district_c": "2172x724 -> 540x180; blocks separated at empty columns and re-laid to 768 (second half mirrored and reordered, Golden Domain Tower once), cables redrawn between roofs",
+    "street": "2172x724 -> 540x180; joined to its mirror image to 960 (seamless); lights.json derived from the self-lit fixtures",
+    "sky": "procedural, from game/assets/night_street_placeholder/",
+    "vertical_shift": {
+      "far_towers": 0,
+      "petra": 10,
+      "district_c": 14,
+      "street": 14
+    }
+  }
 }
