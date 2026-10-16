@@ -6,6 +6,7 @@ const TARGET_SCRIPT = preload("res://tests/fixtures/training_target.gd")
 const DRONE_SCRIPT = preload("res://tests/fixtures/attack_drone.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
+const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
 # The fixture runs the shipped GameSession (hit-stop, settings menu, combat sounds); the names below forward
 # to it so the suites keep their wording while testing the real code.
 signal hit_stop_started
@@ -147,17 +148,7 @@ func add_attacker(at: Vector2) -> CharacterBody2D:
 
 func add_wall(rectangle: Rect2) -> StaticBody2D:
 	obstacles.append(rectangle)
-	var body := StaticBody2D.new()
-	body.collision_layer = 1
-	body.collision_mask = 0
-	body.position = rectangle.get_center()
-	var collider := CollisionShape2D.new()
-	var shape := RectangleShape2D.new()
-	shape.size = rectangle.size
-	collider.shape = shape
-	body.add_child(collider)
-	world.add_child(body)
-	return body
+	return LEVEL_KIT.add_box(world, rectangle)
 
 
 func switch_view() -> void:

@@ -201,9 +201,17 @@ static func interact_text() -> String:
 	return OS.get_keycode_string(INTERACT_KEY)
 
 
-## Key name for the on-screen scene hints: binding_text, except that Space reads 空格 there.
+## Key name for the on-screen scene hints: binding_text, except that Space and the mouse buttons read in Chinese
+## there (空格, 左键, 右键 ...).
 static func hint_text(slot: String) -> String:
-	if slot not in MOUSE_SLOTS and int(current[slot]) == KEY_SPACE:
+	if slot in MOUSE_SLOTS:
+		match int(current[slot]):
+			MOUSE_BUTTON_LEFT: return "左键"
+			MOUSE_BUTTON_RIGHT: return "右键"
+			MOUSE_BUTTON_MIDDLE: return "中键"
+			MOUSE_BUTTON_XBUTTON1: return "侧键1"
+			MOUSE_BUTTON_XBUTTON2: return "侧键2"
+	elif int(current[slot]) == KEY_SPACE:
 		return "空格"
 	return binding_text(slot)
 

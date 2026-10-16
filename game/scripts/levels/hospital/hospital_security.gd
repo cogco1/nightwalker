@@ -5,6 +5,7 @@ const STORY_STATE = preload("res://scripts/core/story_state.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
+const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
 const STORY_NODE_NAME := "NightwalkerStoryState"
 const DOOR_TEXTURE_PATH := "res://assets/underground_hospital/security/door_closed.png"
 const BREAKER_TEXTURE_PATH := "res://assets/underground_hospital/security/breaker_closed.png"
@@ -137,18 +138,7 @@ func refresh_view() -> void:
 				var rectangle := _rectangle(item.get("rect", []))
 				if id.is_empty() or not rectangle.has_area():
 					continue
-				var body := StaticBody2D.new()
-				body.name = "SecurityDoor_" + id
-				body.position = rectangle.get_center()
-				body.collision_layer = 0 if is_door_unlocked(id) else 1
-				body.collision_mask = 0
-				var collision := CollisionShape2D.new()
-				var shape := RectangleShape2D.new()
-				shape.size = rectangle.size
-				collision.shape = shape
-				body.add_child(collision)
-				world.add_child(body)
-				_door_bodies[id] = body
+				_door_bodies[id] = LEVEL_KIT.add_box(world, rectangle, "SecurityDoor_" + id, 0 if is_door_unlocked(id) else 1)
 				_door_progress[id] = 1.0 if is_door_unlocked(id) else 0.0
 			_add_breaker_collision(world)
 	_refresh_hint()
@@ -162,17 +152,7 @@ func _add_breaker_collision(world: Node) -> void:
 	var rectangle := _rectangle(settings.get("collision_rect", []))
 	if not rectangle.has_area() or world.get_node_or_null("SecurityBreakerCover") != null:
 		return
-	var body := StaticBody2D.new()
-	body.name = "SecurityBreakerCover"
-	body.position = rectangle.get_center()
-	body.collision_layer = 1
-	body.collision_mask = 0
-	var collision := CollisionShape2D.new()
-	var shape := RectangleShape2D.new()
-	shape.size = rectangle.size
-	collision.shape = shape
-	body.add_child(collision)
-	world.add_child(body)
+	LEVEL_KIT.add_box(world, rectangle, "SecurityBreakerCover")
 
 
 func is_position_blocked(point: Vector2, floor: int) -> bool:

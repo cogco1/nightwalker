@@ -34,18 +34,19 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 
 - **DialogueBox**（`scripts/ui/dialogue_box.gd`）：安全屋和医院共用的阅读框，80% 大小、12px 像素字体、48×64 立绘不变。每个场景自己定分页字数和打字速度（安全屋 24 字 / 每秒 28 字，医院 32 / 36）；说话人写在 layout.json 的 `speakers`（逐行）和 `speaker`（默认）里。打开时冻结玩家、向 GameSession 登记为剧情弹窗，关闭时释放。
 - **pixel_ui.gd**：`label()` 是所有关卡文字标签的唯一入口；`shrink_dialogue()`、`add_portrait()`、`set_speaker()` 给对话框用。
+- **LevelKit**（`scripts/levels/level_kit.gd`）：关卡共用的静态函数。`add_box` 建矩形静态碰撞体，`add_layout_collider` 按 layout.json 条目建碰撞体（矩形或多边形，`one_way`、`stair_only`），`follow` 把镜头放到取整后的主角位置并限制在世界范围内。安全屋、医院、医院门禁和测试场 arena 都用它，新关卡不要再自己写一份。
 
 - **GameSession**：所有有玩家的场景共用，测试夹具 combat_lab 也挂同一个（夹具里原来那份顿帧副本已删除，测到的就是正式代码）。负责 F1/Esc 改键菜单（关闭后发 `keybindings_closed`，场景据此重写带按键名的提示）；对话框、密码门这类剧情弹窗用 `push_modal(owner)` / `pop_modal(owner)` 登记，有弹窗时 F1/Esc 归弹窗；监听玩家的 `impact(档位, 方向)` 信号，按 `STOPS` 表做全屏顿帧：light 4 帧 / 至少 0.0667 秒、critical 6 帧 / 至少 0.1 秒（这两档是原作保证）、heavy 10 帧偏移 2 像素并闪白，critical 和 heavy 结束后镜头有几帧余震。对外有 `hit_stop_started / hit_stop_frame / hit_stop_finished` 信号和帧数、时长等观测字段。
 - **CombatFeedback**（`scripts/core/combat_feedback.gd`）：GameSession 的子节点，`PROCESS_MODE_ALWAYS`，所以顿帧暂停时命中声不被截断。只听玩家主动发的信号：`move_started(招式)` 决定挥刀声，`impact(档位)` 决定命中声，`charge_started / charge_ready / charge_ended` 决定蓄力声，不读玩家内部字段；`played` 记录播放顺序供测试和录屏使用。音效是 `tools/audio/gen_combat_sfx.py` 合成的占位 WAV（`assets/audio/sfx/`），同名替换即可换成正式音效。无头模式下只记录不播放。
 - **NightwalkerStoryState**（`scripts/core/story_state.gd`）：由 `hospital_security.gd` 按需挂到 `/root`，存放本次进程内的物品和标记（`grant_item`、`has_item`、`set_flag`、`has_flag`）。没有存档，退出游戏就清空。
-- **Controls**（`scripts/core/controls.gd`）：静态类，持有当前按键方案，读写 `user://keybindings.cfg`，把方案应用到 InputMap。各脚本通过 `CONTROLS.binding_pressed(slot)` 读输入。交互键 E（`INTERACT_KEY`）是保留键，不在改键表里，`validate` 不允许其他动作用它；场景用 `is_interact(event)` 判断，提示文字用 `binding_text` / `hint_text` 按当前键位生成。
+- **Controls**（`scripts/core/controls.gd`）：静态类，持有当前按键方案，读写 `user://keybindings.cfg`，把方案应用到 InputMap。各脚本通过 `CONTROLS.binding_pressed(slot)` 读输入。交互键 E（`INTERACT_KEY`）是保留键，不在改键表里，`validate` 不允许其他动作用它；场景用 `is_interact(event)` 判断，提示文字用 `binding_text` / `hint_text` 按当前键位生成（场景提示用 `hint_text`：空格写成「空格」，鼠标键写成「左键 / 右键 / 中键 / 侧键1 / 侧键2」；改键界面用 `binding_text`，是 Space、LMB 这类英文名）。
 
 ## 玩家
 
 `scenes/player.tscn` = `CharacterBody2D` + `AnimatedSprite2D` + 脚底碰撞盒。玩家代码分三块：
 
 - `scripts/player/player.gd`：移动、状态机、按键意图、出招和命中判定。
-- `scripts/player/moves_long_blade.gd`：**招式表**。每个招式的动画、帧速、起始帧、判定帧、判定框、前冲、暴击规则、顿帧档位、命中反应、空中滞空、收招等都写在 `MOVES` 里，连段图写在 `STRINGS` 里（当前招式 → 输入 light / heavy → 下一招，或按优先顺序排的几个候选，玩家取第一个当前允许的：`side_only` 只在侧视、`ground` 只在地面、`air_only` 只在空中）。多段招式用 `then` 串起下一段，`end` 截掉片段后半，`rehit` 让同一目标在一招里再被打一次，`cancel` 是新招式命中后提前接下一招的帧，`arc` 是代码画的整圈刀光，`shockwave` 是下劈落地冲击波，`knockback` 击退，`dmg_mult` 伤害倍数，`jump` 起跳速度，`swing`/`pitch` 挥刀音效，`dash_cancel` 是轻击可被突刺取消的起始帧，`dodge` 标出突刺本身，`resumes`/`as` 让一个招式在连段图里顶替另一个。字段说明在文件头。加新招式只在这里加数据，`tests/test_moveset.gd` 会检查动画、判定帧和刀尖路径是否齐全。
+- `scripts/player/moves_long_blade.gd`：**招式表**。每个招式的动画、帧速、起始帧、判定帧、判定框、前冲、暴击规则、顿帧档位、命中反应、空中滞空、收招等都写在 `MOVES` 里，连段图写在 `STRINGS` 里（当前招式 → 输入 light / heavy → 下一招，或按优先顺序排的几个候选，玩家取第一个当前允许的：`side_only` 只在侧视、`ground` 只在地面、`air_only` 只在空中）。多段招式用 `then` 串起下一段，`end` 截掉片段后半，`rehit` 让同一目标在一招里再被打一次，`cancel` 是新招式命中后提前接下一招的帧，`arc` 是代码画的整圈刀光，`shockwave` 是下劈落地冲击波，`knockback` 击退，`dmg_mult` 伤害倍数，`jump` 起跳速度，`swing`/`pitch` 挥刀音效，`dash_cancel` 是轻击可被突刺取消的起始帧，`dodge` 标出突刺本身，`resumes`/`as` 让一个招式在连段图里顶替另一个。字段说明在文件头。加新招式只在这里加数据，`tests/test_moveset.gd` 会检查动画、判定帧和刀尖路径是否齐全。帧速以招式表为准：player.gd 按 fps ÷ 动画自带速度设 `speed_scale`；与招式同名的动画（attack1、dash_stab 等）在 tres 里的速度要等于该招式的 fps，test_moveset 也会检查。
 - `scripts/player/player_fx.gd`：特效层（尘土、火花、斩痕和冲击线、气流、蓄力光粒、刀光轨迹、残影），玩家的第一个子节点，画在人物身后，由玩家的物理帧驱动，装饰随机数和暴击判定分开。
 
 状态：`state` 是一个枚举 FREE / ATTACK / CHARGE / RECOVERY / HURT；`move_id`、`move` 是当前招式，`move_ticks` 是它走过的物理帧数。`is_attacking`、`is_charging`、`special_kind`、`combo_stage` 都是从 `state` 和 `move` 算出来的只读值。
