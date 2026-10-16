@@ -6,6 +6,7 @@ const PROP_EFFECTS = preload("res://scripts/levels/home_601/home_prop_fx.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
 const DIALOGUE_BOX = preload("res://scripts/ui/dialogue_box.gd")
+const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
 # Safehouse reading pace; the hospital keeps its own 32 / 36.
 const PAGE_CHARACTERS := 24
 const TYPE_SPEED := 28.0
@@ -40,7 +41,7 @@ func _ready() -> void:
 	background.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	world.add_child(background)
 	for item in layout["colliders"]:
-		_add_obstacle(item)
+		LEVEL_KIT.add_layout_collider(world, item)
 	player = PLAYER_SCENE.instantiate()
 	player.name = "Player"
 	player.view_mode = 0
@@ -68,22 +69,6 @@ func _ready() -> void:
 	add_child(session)
 	session.keybindings_closed.connect(func(_saved: bool) -> void: _refresh_nearest())
 	_refresh_nearest()
-
-
-func _add_obstacle(item: Dictionary) -> void:
-	var values: Array = item["rect"]
-	var rectangle := Rect2(values[0], values[1], values[2], values[3])
-	var obstacle := StaticBody2D.new()
-	obstacle.name = String(item["id"])
-	obstacle.collision_layer = 1
-	obstacle.collision_mask = 0
-	obstacle.position = rectangle.get_center()
-	var collision := CollisionShape2D.new()
-	var shape := RectangleShape2D.new()
-	shape.size = rectangle.size
-	collision.shape = shape
-	obstacle.add_child(collision)
-	world.add_child(obstacle)
 
 
 func _unhandled_input(event: InputEvent) -> void:

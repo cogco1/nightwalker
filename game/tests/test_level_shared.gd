@@ -1,11 +1,12 @@
 extends "res://tests/support/isolated_suite.gd"
 ## Shared level plumbing: the owner-counted player freeze, story modals keeping Esc / F1 from the settings menu,
 ## the shared dialogue box (per-scene paging, speakers from layout data), the reserved E key with its save
-## migration, and control hints written from the current bindings.
+## migration, control hints written from the current bindings, and LevelKit (colliders and the follow camera).
 
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const HOME = preload("res://scenes/home_601.tscn")
 const HOSPITAL = preload("res://scenes/underground_hospital.tscn")
+const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
 const TEST_PATH := "user://level_shared_keybindings.cfg"
 var checks := 0
 var failures: Array[String] = []
@@ -57,6 +58,7 @@ func use_bindings(changes: Dictionary) -> void:
 
 func run() -> void:
 	check_reserved_key()
+	check_level_kit()
 	var home: Node2D = HOME.instantiate()
 	root.add_child(home)
 	current_scene = home
@@ -92,6 +94,39 @@ func check_reserved_key() -> void:
 	check(CONTROLS.load_notice.contains("跳跃") and CONTROLS.load_notice.contains("Ctrl"), "the moved binding is reported to the player")
 	CONTROLS.settings_path = ISOLATED_SETTINGS_PATH
 	use_bindings({})
+	check(CONTROLS.hint_text("attack_mouse") == "左键" and CONTROLS.hint_text("heavy_mouse") == "右键"
+		and CONTROLS.binding_text("attack_mouse") == "LMB", "scene hints name the default mouse buttons in Chinese; the settings menu keeps LMB")
+	use_bindings({"attack_mouse": MOUSE_BUTTON_MIDDLE, "heavy_mouse": MOUSE_BUTTON_XBUTTON1})
+	check(CONTROLS.hint_text("attack_mouse") == "中键" and CONTROLS.hint_text("heavy_mouse") == "侧键1", "scene hints follow rebound mouse buttons")
+	use_bindings({})
+
+
+func check_level_kit() -> void:
+	# In the tree so global positions and the camera scroll resolve without "not inside tree" errors.
+	var parent := Node2D.new()
+	root.add_child(parent)
+	var box := LEVEL_KIT.add_box(parent, Rect2(10, 20, 30, 8), "Crate")
+	var shape := box.get_child(0) as CollisionShape2D
+	check(box.get_parent() == parent and box.name == "Crate" and box.position == Vector2(25, 24)
+		and (shape.shape as RectangleShape2D).size == Vector2(30, 8) and box.collision_layer == 1 and box.collision_mask == 0,
+		"LevelKit box: centred static body of the rectangle's size on layer 1, mask 0")
+	var door := LEVEL_KIT.add_box(parent, Rect2(0, 0, 4, 4), "", 0)
+	check(door.collision_layer == 0 and not String(door.name).is_empty(), "LevelKit box: an open door has no layer and keeps a generated name")
+	var ledge := LEVEL_KIT.add_layout_collider(parent, {"id": "ledge", "rect": [0, 100, 40, 6], "one_way": true})
+	check(ledge.name == "ledge" and (ledge.get_child(0) as CollisionShape2D).one_way_collision, "LevelKit layout entry: a one-way ledge")
+	var ramp := LEVEL_KIT.add_layout_collider(parent, {"id": "ramp", "rect": [0, 0, 1, 1], "stair_only": true,
+		"polygon": [[0, 10], [20, 0], [20, 10]]})
+	var polygon := ramp.get_child(0) as CollisionPolygon2D
+	check(polygon != null and polygon.polygon.size() == 3 and polygon.polygon[1] == Vector2(20, 0) and ramp.position == Vector2.ZERO
+		and ramp.collision_layer == 0, "LevelKit layout entry: a stair-only polygon starts with no layer, points in world space")
+	var camera := Camera2D.new()
+	parent.add_child(camera)
+	var bounds := Rect2(0, 0, 640, 360)
+	LEVEL_KIT.follow(camera, Vector2(300.6, 200.4), bounds, Vector2(320, 180))
+	check(camera.global_position == Vector2(301, 200), "LevelKit follow: the camera sits on whole pixels at the hero")
+	LEVEL_KIT.follow(camera, Vector2(5, 355), bounds, Vector2(320, 180))
+	check(camera.global_position == Vector2(160, 270), "LevelKit follow: the view stays inside the world at its edges")
+	parent.free()
 
 
 func check_freeze(home: Node2D) -> void:
