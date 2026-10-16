@@ -16,7 +16,7 @@ home_601.tscn   underground_hospital.tscn
 
 - `SceneRoutes`（`scripts/core/scene_routes.gd`）是唯一的 autoload。它处理 F7 快捷往返（F7 被玩家改键占用时不抢键），切场景前取消顿帧、恢复暂停和画布变换。
 - `main.tscn` 和 `home_601.tscn` 都挂 `home_601.gd`。`main.tscn` 是项目入口，切回安全屋时用 `home_601.tscn`。
-- `night_street_proto.tscn`（原型分支）不在路由里，只能直接启动：`Run-NightStreet.cmd`，或在编辑器里打开后按 F6。
+- `night_street_proto.tscn`（夜街原型）不在路由里，只能直接启动：`Run-NightStreet.cmd`，或在编辑器里打开后按 F6。
 
 ## 每个关卡的节点
 
