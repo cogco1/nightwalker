@@ -7,6 +7,7 @@ const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
 const DIALOGUE_BOX = preload("res://scripts/ui/dialogue_box.gd")
 const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
+const INTERIOR_LIGHTING = preload("res://scripts/levels/interior_lighting.gd")
 # Safehouse reading pace; the hospital keeps its own 32 / 36.
 const PAGE_CHARACTERS := 24
 const TYPE_SPEED := 28.0
@@ -15,12 +16,14 @@ var layout: Dictionary = {}
 var world: Node2D
 var player: CharacterBody2D
 var prop_effects: Node2D
+var lighting: Node2D
 var dialogue: Panel
 var dialogue_active: bool:
 	get: return dialogue != null and dialogue.active
 var current_interaction := ""
 var nearest_interaction := ""
 var _hint: Label
+var _route_hint: Label
 
 
 func _ready() -> void:
@@ -63,6 +66,10 @@ func _ready() -> void:
 	prop_effects.name = "PropEffects"
 	prop_effects.call("configure", layout)
 	add_child(prop_effects)
+	lighting = INTERIOR_LIGHTING.new()
+	lighting.name = "InteriorLighting"
+	add_child(lighting)
+	lighting.call("refresh_context", world, player, {"profile": "home", "layout": layout, "view_mode": 0, "floor_id": 1})
 	_create_ui()
 	var session := GAME_SESSION.new()
 	session.name = "GameSession"
@@ -99,6 +106,8 @@ func _process(_delta: float) -> void:
 
 
 func _refresh_nearest() -> void:
+	if _route_hint != null:
+		_route_hint.text = "" if CONTROLS.current.values().has(KEY_F8) else "F8夜街"
 	nearest_interaction = ""
 	var best := INF
 	for item in layout.get("interactions", []):
@@ -166,6 +175,15 @@ func reset_home() -> void:
 	player.show_idle()
 
 
+## Future device switches use one entry point for the screen animation, short
+## downward beam, real nearby light and the hero's changing reflection.
+func set_device_power(id: String, powered: bool) -> void:
+	if id not in ["computer", "television"]:
+		return
+	prop_effects.call("set_source_power", id, powered)
+	lighting.call("set_source_power", id, powered)
+
+
 func _create_ui() -> void:
 	var canvas := CanvasLayer.new()
 	canvas.name = "HomeUI"
@@ -173,6 +191,8 @@ func _create_ui() -> void:
 	add_child(canvas)
 	var title := PIXEL_UI.label(canvas, Vector2(6, 3), Vector2(308, 16), "C区 · 601  12:00", PIXEL_UI.FONT_SIZE, true)
 	title.modulate = Color("98adb9")
+	_route_hint = PIXEL_UI.label(canvas, Vector2(252, 3), Vector2(62, 16), "F8夜街", PIXEL_UI.FONT_SIZE, true)
+	_route_hint.modulate = Color("98adb9")
 	_hint = PIXEL_UI.label(canvas, Vector2(6, 162), Vector2(308, 16), "", PIXEL_UI.FONT_SIZE, true)
 	_hint.modulate = Color("bac9d1")
 	dialogue = DIALOGUE_BOX.new()

@@ -1,0 +1,31 @@
+{
+  "home": {
+    "ambient": "c4cbdc",
+    "body_lift": 1.14,
+    "glow_intensity": 0.45,
+    "fog_density": 0.05,
+    "screens": [
+      {"id": "computer", "rect": [52, 44, 14, 8], "colour": "78cddc", "energy": 0.32, "radius": 66},
+      {"id": "television", "rect": [178, 48, 16, 10], "colour": "8dd9e3", "energy": 0.30, "radius": 62}
+    ]
+  },
+  "hospital": {
+    "ambient": "bacbd8",
+    "body_lift": 1.17,
+    "glow_intensity": 0.48,
+    "fog_density": 0.055,
+    "emergency_top_down_1": [
+      {"id": "emergency_stair_1", "position": [112, 125]},
+      {"id": "emergency_exit_1", "position": [609, 62]}
+    ],
+    "emergency_top_down_2": [
+      {"id": "emergency_stair_2", "position": [181, 59]},
+      {"id": "emergency_exit_2", "position": [576, 58]}
+    ],
+    "emergency_side_view": [
+      {"id": "emergency_lower_stair", "position": [38, 245]},
+      {"id": "emergency_upper_stair", "position": [40, 117]},
+      {"id": "emergency_upper_exit", "position": [612, 118]}
+    ]
+  }
+}

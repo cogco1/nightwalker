@@ -12,6 +12,8 @@ $suites = @(
     @{ Name = 'air_combat';               Script = 'test_air_combat' },
     @{ Name = 'air_dash_animation_v14';   Script = 'test_air_dash_animation_v14' },
     @{ Name = 'scene_integration_v14';    Script = 'test_scene_integration_v14' },
+    @{ Name = 'scene_routes';             Script = 'test_scene_routes' },
+    @{ Name = 'interior_lighting';        Script = 'test_interior_lighting' },
     @{ Name = 'hospital_interactions';    Script = 'test_hospital_interactions' },
     @{ Name = 'hospital_environment';     Script = 'test_hospital_environment' },
     @{ Name = 'hospital_physical_stairs'; Script = 'test_hospital_physical_stairs' },

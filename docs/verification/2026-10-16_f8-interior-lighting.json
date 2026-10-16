@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-16",
+  "timezone": "Asia/Shanghai",
+  "based_on_commit": "4b5046e962d391d71d278f0e92ea67b30b79c574",
+  "tested_game_tree": "e1bae6c973e6750abae1b960cebec3352d5defda",
+  "tested_runner_blob": "3ade024f9a25cbe06975289971608a10622939a6",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "status": "passed",
+  "import": "passed",
+  "runner_exit_code": 0,
+  "suite_count": 22,
+  "checks": 2882,
+  "failed_suites": [],
+  "suite_checks": {
+    "core_v07": 532,
+    "keybindings": 68,
+    "keybindings_reload": 20,
+    "air_combat": 115,
+    "air_dash_animation_v14": 174,
+    "scene_integration_v14": 106,
+    "scene_routes": 69,
+    "interior_lighting": 192,
+    "hospital_interactions": 23,
+    "hospital_environment": 73,
+    "hospital_physical_stairs": 54,
+    "hospital_ward_layout": 22,
+    "hospital_security": 104,
+    "level_shared": 38,
+    "contact_refresh_v07": 6,
+    "charged_slash": 52,
+    "moveset": 1013,
+    "combat_state": 18,
+    "rhythm_combat": 94,
+    "enemy_attack": 29,
+    "perfect_counter": 31,
+    "night_street_proto": 49
+  },
+  "command": "tools/Test-Game.ps1 -GodotPath <local Godot executable>",
+  "local_logs": "game/evidence/logs/",
+  "visual": {
+    "renderer": "GL Compatibility / NVIDIA GeForce RTX 3050 Laptop GPU",
+    "baseline_level_captures": 88,
+    "updated_level_captures": 88,
+    "interior_light_captures": 19,
+    "capture_scripts": [
+      "res://tests/recorders/capture_levels.gd",
+      "res://tests/recorders/capture_interior_lighting.gd"
+    ],
+    "screen_pixel_checks": {
+      "computer": {
+        "animated_pixels_changed": 16,
+        "screen_pixels": 1792,
+        "on_mean_rgb": [
+          65.95535714285714,
+          183.66071428571428,
+          189.66964285714286
+        ],
+        "off_mean_rgb": [
+          0.44642857142857145,
+          9.1875,
+          16.116071428571427
+        ]
+      },
+      "television": {
+        "animated_pixels_changed": 432,
+        "screen_pixels": 2560,
+        "on_mean_rgb": [
+          84.7125,
+          165.45625,
+          179.175
+        ],
+        "off_mean_rgb": [
+          0.95625,
+          8.88125,
+          16.2375
+        ]
+      },
+      "status": "passed"
+    },
+    "review": "Safehouse, hospital top-down and side-view, powered and unpowered fixtures, readable dialogue and actual F8 travel reviewed on GPU.",
+    "hud_glyph_comparison": {
+      "status": "passed",
+      "changed_glyph_pixels": 0,
+      "home_title_glyph_pixels": 5264,
+      "hospital_top_2f_title_glyph_pixels": 8128,
+      "hospital_side_title_glyph_pixels": 8256,
+      "hospital_side_controls_glyph_pixels": 13408,
+      "conditions": "home screen on/off and F8 return; hospital clinical power on/off"
+    }
+  },
+  "scope": "Actual execution on the exact game tree and runner blob above. Later changes to either need their own verification; documentation-only changes do not change the tested game tree."
+}

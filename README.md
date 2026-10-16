@@ -2,12 +2,12 @@
 
 当前进度、待完成事项与最近验证见 [PROJECT_STATUS.md](PROJECT_STATUS.md)。
 
-Godot 4.7.2 像素动作游戏（SK 项目）。设定在 2040 年的佩特拉新城：白天俯视潜行，夜晚侧视长刀战斗。当前基线是 **v14**：601 安全屋 + 地下医院（俯视/侧视双视角）+ v10 人物（64 个动作 × 16 帧 = 1024 帧，含左右空中突刺）。
+Godot 4.7.2 像素动作游戏（SK 项目）。设定在 2040 年的佩特拉新城：白天俯视潜行，夜晚侧视长刀战斗。在 **v14** 人物与场景基线上继续开发：601 安全屋、地下医院（俯视/侧视双视角）、C 区夜街，以及 64 个动作、1024 帧人物动画（含左右空中突刺）。
 
 ## 快速开始
 
 1. 把 `godot-path.example.txt` 复制成 `godot-path.txt`，写入本机 Godot 4.7.2 的路径（这个文件不入库）。也可以设环境变量 `NIGHTWALKER_GODOT`。
-2. 双击 `Run-Demo.cmd` 试玩，`Open-Editor.cmd` 打开编辑器，`Test-Game.cmd` 跑完整回归。`Run-NightStreet.cmd` 直接进夜街赛博原型（不在正式流程里）。
+2. 双击 `Run-Demo.cmd` 从安全屋开始；F7 往返安全屋与医院，F8 进入夜街、再按返回来源室内。`Open-Editor.cmd` 打开编辑器，`Test-Game.cmd` 跑完整回归；`Run-NightStreet.cmd` 仍可直接进夜街。
 3. 操作见 [docs/操作说明.txt](docs/操作说明.txt) 和 [docs/游戏内改键说明.txt](docs/游戏内改键说明.txt)。
 
 已验证引擎版本：`4.7.2.stable.official.ed1daf0bf`，GL Compatibility 渲染器。
@@ -29,6 +29,7 @@ Nightwalker/
 │  │  ├─ ui/          pixel_ui · keybindings_menu
 │  │  └─ levels/
 │  │     ├─ level_kit.gd 关卡共用：碰撞体、镜头跟随
+│  │     ├─ interior_lighting.gd 安全屋与医院共用的像素灯光、辉光、薄雾与人物轮廓光
 │  │     ├─ home_601/   home_601 · home_prop_fx
 │  │     ├─ hospital/   underground_hospital · hospital_interactions · hospital_security
 │  │     └─ night_street/ night_street · beam_drone · hover_target · rain（原型）
@@ -56,7 +57,7 @@ Nightwalker/
 
 ## 测试
 
-`Test-Game.cmd` 先做一次素材导入，再依次跑 20 组套件，日志写到 `game/evidence/logs/`，最后打印每组检查数和总数，有失败时返回非零退出码。套件清单以 `tools/Test-Game.ps1` 为准，最近实际执行结果见 [项目进度](PROJECT_STATUS.md#最近验证)。
+`Test-Game.cmd` 先做一次素材导入，再依次跑 22 组套件，日志写到 `game/evidence/logs/`，最后打印每组检查数和总数，有失败时返回非零退出码。套件清单以 `tools/Test-Game.ps1` 为准，最近实际执行结果见 [项目进度](PROJECT_STATUS.md#最近验证)。
 
 | 套件 | 内容 |
 |---|---|
@@ -64,6 +65,8 @@ Nightwalker/
 | keybindings / keybindings_reload | 改键保存、冲突（突刺不能和跑步共用）、旧存档突刺键迁移、重启读取 |
 | air_combat / air_dash_animation_v14 | 二段跳、空中三连、下劈、空中突刺 |
 | scene_integration_v14 | 安全屋与医院里的实际玩家、顿帧和改键 |
+| scene_routes | 真实 F8 输入、来源楼层/视角/安全脚点恢复、改键优先、弹窗/楼梯拦截和顿帧切场清理 |
+| interior_lighting | 室内实际光源与人物材质、设备/分区供电、俯视楼层与侧视重建、像素规格及原交互 |
 | hospital_* (5 组) | 医院交互、环境、实体楼梯、病房布局、门禁与电闸 |
 | level_shared | 共用关卡逻辑、冻结计数、剧情弹窗、对话框说话人、E 键保留和改键提示 |
 | contact_refresh_v07 | 高刷新率下的命中停顿 |
@@ -73,7 +76,7 @@ Nightwalker/
 | rhythm_combat | 轻重连段、闪避派生和空中旋转斩 |
 | enemy_attack | 敌人预警与攻击、玩家受击、闪避和完美闪避判定 |
 | perfect_counter | 完美闪避慢动作、反击落点与伤害、顿帧和时钟恢复 |
-| night_street_proto | 人物材质覆盖所有场景、光束暴露与标记、无人机连击和顿帧、原型专用按键、正式流程没有路由到原型 |
+| night_street_proto | 人物材质覆盖所有场景、光束暴露与标记、无人机连击和顿帧、原型专用按键、F8 场景入口 |
 
 ## 赛博朋克视觉原型（夜街）
 
@@ -82,6 +85,8 @@ Nightwalker/
 - 义体：兜帽下的洋红目镜；斜挎带、腰带和肩带是反光条，被灯照到就亮成那盏灯的颜色；握刀手的前臂上有一块被刮掉的条码疤（设定里主角没有身份序列号），偶尔闪红。站进光束时头顶弹出扫描面板，显示“ID 无法识别”。
 - 光 = 被监控：站进光束，右上角暴露条上升、画面出现轻微色差；暴露满了被标记，光束变红并追人，离开光束一段时间后解除。
 - 夜街操作：AD 走、空格跳、左键连斩、按住左键蓄力重斩、按一下 Shift 突刺；F9 切换赛博配色和原配色对比；R 重置；Tab 在这里不切视角。
+- F8 在室内与夜街间往返，返回时恢复医院楼层、视角及可落脚位置；直接启动夜街时 F8 返回安全屋。对话、密码、设置和楼梯过渡期间不切场景；若 F8 已被改键占用，优先执行玩家绑定。
+- 安全屋与医院共用夜街的冷色环境光、分档像素点光源、自发光辉光和随位置变化的人物轮廓光，并加入低密度室内薄雾。电视、电脑保留动画及短而向下的光锥；医院灯具与屏幕跟随原有供电分区，应急光独立。室内保持原地图、碰撞与清晰字幕。
 - 改动清单：[docs/prototypes/夜街赛博原型_改动清单.md](docs/prototypes/夜街赛博原型_改动清单.md)。
 
 ## 开发约束（摘要）
@@ -92,7 +97,7 @@ Nightwalker/
 - `project.godot` 里的项目名仍带 v07：`user://` 改键配置目录跟着项目名走，改名会丢掉玩家已有的改键。
 - 输入动作 `reset_arena` 现在的意思是“重置位置”，为了兼容已有改键配置保留原名。
 - 原画、提示词和校验记录在 `art_metadata/`，不要只留导出帧。
-- 正式流程只有安全屋和医院，不放 NPC 和训练木桩；`tests/fixtures` 只供回归。
+- 安全屋和医院不放 NPC 和训练木桩；夜街保留已有悬浮无人机。`tests/fixtures` 只供回归。
 
 ## 和 v14 交接包的对应关系
 
