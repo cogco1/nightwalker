@@ -119,6 +119,7 @@ NightStreetProto
 | `frames/<视角>_<方向>_<动作>/NN.png` | 64 个动作 × 16 帧。原 992 帧保持原字节，v14 新增 `air_dash_stab_*` 32 帧（112×96 画布，足点 56,84） |
 | `assets/side_view.tres`、`top_down.tres` | 把 frames 组装成 SpriteFrames |
 | `assets/home_601/layout.json` | 安全屋碰撞、可交互物、对话文本 |
+| `assets/home_601/home_601_furnished_native.png` | 当前安全屋底图；旧图 `home_601_native.png` 保留，场景和 PropEffects 统一读取 layout.background |
 | `assets/underground_hospital/layout.json` | 医院俯视两层和侧视的房间、墙、楼梯（`stairs.side_flight`：侧视楼梯两端平台高度和上下楼判定区间）、门禁、交互点 |
 | `assets/fonts/` | fusion-pixel 10/12px 中文像素字体（OFL） |
 | `art_metadata/` | 原画、提示词、遮罩、导入脚本和校验报告；有 `.gdignore`，Godot 不导入 |
@@ -133,6 +134,7 @@ NightStreetProto
 - `tests/test_level_shared.gd` 覆盖关卡共用部分：冻结计数、剧情弹窗、对话框参数和说话人、E 键保留与旧配置迁移、提示文字跟随改键。
 - `tests/recorders/capture_levels.gd` 在窗口模式下截安全屋、医院俯视和侧视、每一页对话、密码门和楼梯提示（88 张），改关卡代码前后各跑一次逐像素比对，就能确认画面没变。
 - `tests/recorders/capture_interior_lighting.gd` 记录 19 张室内灯光对照：屏幕动画两时刻、开关屏、人物近光、清晰对话、真实 F8 往返、医院两层/双视角的供电切换。用非无头模式运行，图与渲染尺寸报告写入 `evidence/interior_lighting/`；测试与录制都使用隔离改键配置。
+- `tests/test_home_furniture.gd` 以 12×8 足框和 0.25 像素余量核对全屋可站空间，再用真实 WASD 输入沿路径访问全部 10 处新旧交互及厨房/卧室细通道，不靠传送证明通达。`recorders/capture_home_furniture.gd` 输出 11 张家具、暖灯、关屏与新对白的 GPU 对照图。
 - `tests/recorders/` 用真实渲染录制截图和 GIF，`tools/art_qa/` 的 Python 脚本再拿这些输出做像素校验和预览合成。
 - `tests/legacy/` 是 v02–v06 的旧套件，针对旧美术和旧操作，现在会失败，只作参考。
 

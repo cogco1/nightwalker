@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-16",
+  "timezone": "Asia/Shanghai",
+  "based_on_commit": "f08fe9aae89b63389945218716cbd8e241de94aa",
+  "tested_game_tree": "9cc2ae3f86db080e682b7d6678f5b23c1ed470a7",
+  "tested_runner_blob": "bfee9a8101a30d39fb9cbe0ccc60989d675f36a6",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "status": "passed",
+  "import": "passed",
+  "runner_exit_code": 0,
+  "suite_count": 23,
+  "checks": 2966,
+  "failed_suites": [],
+  "suite_checks": {
+    "core_v07": 532,
+    "keybindings": 68,
+    "keybindings_reload": 20,
+    "air_combat": 115,
+    "air_dash_animation_v14": 174,
+    "scene_integration_v14": 106,
+    "scene_routes": 69,
+    "interior_lighting": 192,
+    "home_furniture": 84,
+    "hospital_interactions": 23,
+    "hospital_environment": 73,
+    "hospital_physical_stairs": 54,
+    "hospital_ward_layout": 22,
+    "hospital_security": 104,
+    "level_shared": 38,
+    "contact_refresh_v07": 6,
+    "charged_slash": 52,
+    "moveset": 1013,
+    "combat_state": 18,
+    "rhythm_combat": 94,
+    "enemy_attack": 29,
+    "perfect_counter": 31,
+    "night_street_proto": 49
+  },
+  "home_observations": {
+    "foot_space": {
+      "connected_points": 6444,
+      "safety_margin": 0.25,
+      "standable_points": 6444
+    },
+    "material_pixels": {
+      "bedroom": {
+        "sample_rect": "[P: (239, 143), S: (42, 7)]",
+        "warm_pixel_fraction": 0.816326530612245
+      },
+      "kitchen": {
+        "sample_rect": "[P: (52, 84), S: (28, 28)]",
+        "warm_pixel_fraction": 0.829081632653061
+      },
+      "living_room": {
+        "sample_rect": "[P: (118, 136), S: (36, 12)]",
+        "warm_pixel_fraction": 0.884259259259259
+      }
+    },
+    "real_input_tour": {
+      "ending_position": [
+        109.948699951172,
+        104.09398651123
+      ],
+      "physics_frames": 1546,
+      "visited": [
+        "computer",
+        "fridge",
+        "bookshelf",
+        "repair_desk",
+        "door",
+        "frame",
+        "television",
+        "bed",
+        "dumbbells",
+        "storage_box"
+      ]
+    },
+    "warm_hero": {
+      "dark": {
+        "colour": "(0.549, 0.7412, 0.8078, 0.025)",
+        "direction": "(0.0, -1.0)",
+        "reflection": 0.07
+      },
+      "lamp": "repair_lamp",
+      "lit": {
+        "colour": "(1.0, 0.6078, 0.2824, 0.55)",
+        "direction": "(-0.024382, -0.999703)",
+        "reflection": 0.72
+      }
+    }
+  },
+  "visual": {
+    "renderer": "GL Compatibility / NVIDIA GeForce RTX 3050 Laptop GPU",
+    "captures": 11,
+    "command": "Godot --path game --fixed-fps 60 --script res://tests/recorders/capture_home_furniture.gd",
+    "review": "Warm worn timber, plum plaster, furniture proportions, localized amber/cyan contrast, animated CRTs, lamp independence and all three new readable interactions reviewed."
+  },
+  "art": {
+    "generator": "built-in image_gen (two generations)",
+    "source_record": "game/art_metadata/home_furniture_warm_v16/import_record.json",
+    "prompts": [
+      "game/art_metadata/home_furniture_warm_v16/generation_prompt.txt",
+      "game/art_metadata/home_furniture_warm_v16/materials_generation_prompt.txt"
+    ],
+    "rebuild": "python tools/art/import_home_furniture.py",
+    "output": "game/assets/home_601/home_601_furnished_native.png",
+    "output_sha256": "399cfa5958f614919b31f83de4bfa91472383bbebc186a3ce9d5675635880bed",
+    "changed_native_pixels": 17234,
+    "outside_approved_masks_or_props_changes": 0,
+    "floor_pixels": 14161,
+    "wall_pixels": 2267,
+    "protected_screens_and_empty_frame": "unchanged",
+    "previous_original_retained": true,
+    "visual_reference_urls": [
+      "https://www.nintendolife.com/reviews/switch-eshop/katana_zero",
+      "https://www.steamgriddb.com/game/11465/heroes"
+    ]
+  },
+  "command": "tools/Test-Game.ps1 -GodotPath <local Godot executable>",
+  "local_logs": "game/evidence/logs/",
+  "scope": "Actual execution on this exact game tree and runner blob. Documentation-only changes do not change the tested game tree."
+}

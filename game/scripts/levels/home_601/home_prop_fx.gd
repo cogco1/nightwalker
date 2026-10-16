@@ -39,9 +39,9 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	z_index = 1
-	background_texture = load("res://assets/home_601/home_601_native.png") as Texture2D
 	if layout.is_empty():
 		layout = JSON.parse_string(FileAccess.get_file_as_string("res://assets/home_601/layout.json"))
+	background_texture = load(String(layout["background"])) as Texture2D
 	native_size = Vector2i(background_texture.get_size())
 	var world_size: Array = layout.get("world_size", [320, 180])
 	_world_per_native = Vector2(float(world_size[0]) / native_size.x, float(world_size[1]) / native_size.y)
@@ -164,6 +164,20 @@ func _draw() -> void:
 		_copy_native(_reference_rect(Rect2i(124, 61, 15, 10)), Vector2i(0, shift))
 	if reactions.has("door"):
 		_native_pixel(_reference_pixel(Vector2(69, 24)), Color("8abcc9"))
+	if reactions.has("repair_desk"):
+		# A small tool reflection stays clear of the work lamp itself.
+		var glint: Array = layout["fx"]["repair_desk_glint_native"]
+		var phase := int(float(reactions["repair_desk"]) * 12.0) % int(glint[2])
+		_native_pixel(Vector2i(int(glint[0]) + phase, int(glint[1])), Color("e4b67c"))
+	if reactions.has("storage_box"):
+		var values: Array = layout["fx"]["storage_box_lid_native"]
+		var lid := Rect2i(values[0], values[1], values[2], values[3])
+		var shift := -1 if float(reactions["storage_box"]) < 0.3 else 0
+		if shift != 0:
+			var seam := Rect2(Vector2(lid.position.x, lid.end.y - 1) * _world_per_native,
+				Vector2(lid.size.x, 1) * _world_per_native)
+			draw_rect(seam, Color("101c24"), true)
+		_copy_native(lid, Vector2i(0, shift))
 	if fridge_frame_index >= 0 and fridge_frame_index < _fridge_frames.size():
 		var frame := _fridge_frames[fridge_frame_index]
 		draw_texture_rect(frame, Rect2(_fridge_origin, frame.get_size() * _world_per_native), false)

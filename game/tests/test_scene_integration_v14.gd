@@ -205,7 +205,7 @@ func validate_reset_remap(host: Node2D, label: String) -> void:
 	CONTROLS.current = profile
 	CONTROLS.install(false)
 	var player: CharacterBody2D = host.get("player")
-	player.position = Vector2(110, 80) if host.has_method("reset_home") else Vector2(160, 65)
+	player.position = Vector2(110, 94) if host.has_method("reset_home") else Vector2(160, 65)
 	player.velocity = Vector2.ZERO
 	key(KEY_D, true)
 	await frames(10)
