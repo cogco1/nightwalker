@@ -1,15 +1,19 @@
 extends "res://tests/support/isolated_suite.gd"
 ## Move data sanity: every move in moves_long_blade.gd points at drawn frames for both facings, keeps its hit
 ## window inside the animation, has blade paths, uses hit-stop weights GameSession knows, and the combo graph
-## only names existing moves. Playback rates live in the move table (player.gd plays a clip at fps / clip speed);
-## a clip named after its move carries that move's fps as its own speed, so the two never disagree.
+## only names existing moves. Playback: every move, started in each view, facing and (where it has an air clip)
+## in the air, plays at its move-table fps. The speed written in side_view.tres / top_down.tres is only the
+## divisor player.gd scales by, so the test reads the sprite's actual rate and never the tres numbers.
 
 const MOVESET = preload("res://scripts/player/moves_long_blade.gd")
 const SESSION = preload("res://scripts/core/game_session.gd")
+const LAB = preload("res://tests/fixtures/combat_lab.tscn")
 const SIDE = preload("res://assets/side_view.tres")
 const TOP = preload("res://assets/top_down.tres")
 # Moves the top-down view can start (no crouch, no specials there).
 const TOP_MOVES := [&"attack1", &"attack2", &"attack3", &"heavy_slash"]
+# speed_scale is a 32-bit float, so fps / clip speed * clip speed can be off by about 1e-6.
+const RATE_TOLERANCE := 0.001
 # Moves player.gd starts by request rather than through the combo graph.
 const REQUESTED := [&"crouch_stab", &"rising_slash", &"dive_slash", &"dash_stab", &"heavy_slash", &"counter_slash", &"leap_cleave"]
 const CRITS := [&"none", &"roll", &"always"]
@@ -61,13 +65,6 @@ func run() -> void:
 		if id in TOP_MOVES:
 			for facing in ["up", "down", "left", "right"]:
 				verify_clip(TOP, "%s_%s" % [data["anim"], facing], data, paths.get("top_down", {}), id)
-		if String(data["anim"]) == String(id):
-			for prefix in [data["anim"]] + ([data["air_anim"]] if data.has("air_anim") else []):
-				for facing in ["left", "right"]:
-					check_clip_rate(SIDE, "side_view", "%s_%s" % [prefix, facing], data, id)
-				if id in TOP_MOVES and prefix == data["anim"]:
-					for facing in ["up", "down", "left", "right"]:
-						check_clip_rate(TOP, "top_down", "%s_%s" % [prefix, facing], data, id)
 	var reachable: Dictionary = {}
 	for id in REQUESTED:
 		reachable[id] = true
@@ -85,12 +82,39 @@ func run() -> void:
 					check(next in TOP_MOVES, "%s can start in the top-down view, so it has top-down frames" % next)
 	for id in MOVESET.MOVES:
 		check(reachable.has(id), "%s can be started (combo graph, segment or request)" % id)
+	await verify_playback_rates()
 	finish()
 
 
-func check_clip_rate(frames: SpriteFrames, view: String, clip: String, data: Dictionary, id: StringName) -> void:
-	if frames.has_animation(clip):
-		check(is_equal_approx(frames.get_animation_speed(clip), float(data["fps"])), "%s: %s.tres %s speed is the move's %s fps" % [id, view, clip, data["fps"]])
+## Starts each move on a fresh hero in the combat lab and compares the sprite's playing rate with the move's fps.
+## player.gd has no public way to start an arbitrary move, so this calls its _start_move directly.
+func verify_playback_rates() -> void:
+	var lab: Node2D = LAB.instantiate()
+	root.add_child(lab)
+	await physics_frame
+	for mode in [0, 1]:
+		for id in MOVESET.MOVES:
+			var data: Dictionary = MOVESET.MOVES[id]
+			if mode == 0 and id not in TOP_MOVES:
+				continue
+			for facing in (["up", "down", "left", "right"] if mode == 0 else ["left", "right"]):
+				for airborne in ([false, true] if mode == 1 and data.has("air_anim") else [false]):
+					lab.build_arena(mode)
+					await physics_frame
+					await physics_frame
+					var player: CharacterBody2D = lab.player
+					if airborne:
+						player.position.y -= 60.0
+						await physics_frame
+					player.facing = facing
+					player.call("_start_move", id)
+					var sprite: AnimatedSprite2D = player.sprite
+					var clip := "%s_%s" % [data["air_anim"] if airborne else data["anim"], facing]
+					var rate := sprite.sprite_frames.get_animation_speed(sprite.animation) * sprite.speed_scale
+					check(String(sprite.animation) == clip and absf(rate - float(data["fps"])) < RATE_TOLERANCE,
+						"%s plays %s at its %s fps (view %d, playing %s at %.4f)" % [id, clip, data["fps"], mode, sprite.animation, rate])
+	lab.queue_free()
+	await process_frame
 
 
 func verify_clip(frames: SpriteFrames, clip: String, data: Dictionary, blade_paths: Dictionary, id: StringName) -> void:
