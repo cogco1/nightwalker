@@ -42,7 +42,7 @@ reset_arena是历史动作名称，目前含义为重置位置，请保留动作
 已确认的对话UI为80%大小、12px清晰字体、48×64左侧立绘，UI窗口分辨率合成，不要直接降低文字分辨率。
 尽量复用逻辑，保持player.gd简洁，不引入重复状态、重复代码或无必要运行时循环。
 （2026-10-15 关卡标准化：E 是保留的交互键，不进改键表；暂停玩家统一用 player.freeze(owner) / unfreeze(owner)，剧情弹窗向 GameSession.push_modal / pop_modal 登记；对话框统一用 scripts/ui/dialogue_box.gd，安全屋每页 24 字、每秒 28 字，医院 32 / 36，按用户决定各自保留；文字标签统一用 pixel_ui.label()。）
-（2026-10-15 LevelKit：碰撞体和镜头跟随统一用 scripts/levels/level_kit.gd 的 add_box / add_layout_collider / follow。攻击帧率以 moves_long_blade.gd 的 fps 为准，player.gd 按 fps ÷ 动画自带速度设 speed_scale；与招式同名的动画在 side_view.tres / top_down.tres 里的速度必须等于招式 fps，test_moveset 会检查，改帧率两处一起改。）
+（2026-10-15 LevelKit：碰撞体和镜头跟随统一用 scripts/levels/level_kit.gd 的 add_box / add_layout_collider / follow。招式表 moves_long_blade.gd 的 fps 才是实际帧率。side_view.tres / top_down.tres 里的速度只是被约掉的除数：attack1/2/3 写的是 40/44/40，实际播放是 36/40/42。不要动这些数：speed_scale 是 float32，改了会让帧边界移动 1 个物理帧，判定时机跟着变。test_moveset 检查每个招式的实际播放速度等于招式 fps。）
 
 【医院解谜及后续接口】
 仅俯视下存在密码门和钥匙电闸；三扇门密码均1010，输入失败可重试，成功开门后可通行。
