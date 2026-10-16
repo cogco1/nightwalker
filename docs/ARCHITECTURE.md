@@ -16,6 +16,7 @@ home_601.tscn   underground_hospital.tscn
 
 - `SceneRoutes`（`scripts/core/scene_routes.gd`）是唯一的 autoload。它处理 F7 快捷往返（F7 被玩家改键占用时不抢键），切场景前取消顿帧、恢复暂停和画布变换。
 - `main.tscn` 和 `home_601.tscn` 都挂 `home_601.gd`。`main.tscn` 是项目入口，切回安全屋时用 `home_601.tscn`。
+- `night_street_proto.tscn`（夜街原型）不在路由里，只能直接启动：`Run-NightStreet.cmd`，或在编辑器里打开后按 F6。
 
 ## 每个关卡的节点
 
@@ -74,6 +75,37 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 - `scripts/enemies/enemy_attacker.gd`：挂在敌人身体下的攻击组件。主角进入范围后身体红闪预警 0.5 秒（结束前 0.2 秒锁定位置），然后 0.18 秒直线突袭到锁定点，最后 0.12 秒是判定；碰到主角就调用它的 `receive_attack`，判定结束没碰到也报告一次（contact = false），这样闪开的突刺也能判完美闪避。之后停顿、飘回原位、冷却 1.2 秒。时间按世界时钟走：delta 乘 `GameSession.world_time_scale`，顿帧时整棵树暂停。身体和主角之间加了碰撞例外，突袭穿过主角而不是推开它。
 - 测试夹具 `tests/fixtures/attack_drone.gd`：会攻击的悬浮无人机（木桩不攻击），由 `arena.add_attacker(位置)` 按需加入，默认场地里没有。
 
+## 人物材质（所有场景）
+
+`player.tscn` 的 Sprite 挂 `assets/fx/character_cyber.tres`（`resource_local_to_scene`，每个玩家实例一份），shader 是 `shaders/character_cyber.gdshader`：
+
+- **换色**：`assets/fx/cyber_palette.png` 是 18 × 4 查找表。第 0 行是 1024 帧里出现的全部 18 种原色，第 1 行是换成的颜色，第 2 行 rgb 是光晕颜色、alpha 是自发光强度，第 3 行 alpha 是反光度（目前只有斜挎带的 #533729）。改色只改这张图（或 `tools/art/gen_cyber_palette.py`）；`tools/art_qa/validate_cyber_palette.py` 检查新帧有没有表外颜色。
+- **轮廓光**：`rim_a_*`、`rim_b_*` 是两个屏幕空间的光源方向和颜色。只有朝向光源、且外侧是透明像素的边缘被上色；没被照到的边缘往 `shade_edge_color` 压暗。安全屋和医院用默认值（顶上一点青光）；夜街每帧取离人物最近、最强的两盏灯写进去。
+- **自发光**：刀刃三种钢色（#e5e8e0 / #bbc2c3 / #8e999f）和脸部两种肤色是自发光像素，在帧内画半径 3 像素的光晕，成了刀光和目镜。按颜色识别刀刃，不需要逐帧遮罩：v07 的 24 个侧视动作里，这三种钢色 99.6% 落在刀刃遮罩里。
+- **暗场景补偿**：`emission_lift`（= 1 / CanvasModulate 颜色）让自发光、轮廓光不被压暗；`emission_gain` > 1 把它们推过 1.0，WorldEnvironment 辉光才会把它们晕开。`body_lift` 提亮身体，免得人物在暗处糊成一团。
+- `look` = 0 时完全是原配色（夜街里按 F9 切换）。
+
+## 夜街原型的渲染分层
+
+```
+NightStreetProto
+├─ Glow (WorldEnvironment)      canvas 背景 + 辉光，阈值 1.0：只有超过 1.0 的自发光像素会晕开
+├─ NightAmbient (CanvasModulate) 压暗主画布
+├─ Layer_sky / far_towers / petra / district_c / street   每层一张底图 + 一张 _emit 自发光图
+│                                视差系数 0 / 0.15 / 0.34 / 0.7 / 1.0；底图只有 street 受街灯照射
+├─ World                         地面碰撞、PointLight2D、巡逻无人机光束、悬浮无人机、玩家
+├─ StreetCamera
+├─ WetStreet   (CanvasLayer 1)   BackBufferCopy + 湿地反光（读屏幕纹理，按世界坐标定水洼）
+├─ Weather     (CanvasLayer 2)   低雾 + 雨
+├─ ExposurePost (CanvasLayer 30) BackBufferCopy + 暴露度色差、暗角
+├─ StreetUI    (CanvasLayer 31)  标题、提示、暴露条
+└─ GameSession                   改键菜单 (200)、顿帧覆盖层 (100)
+```
+
+- 自发光的东西（`_emit` 图、光束、光粒子、无人机灯）都用 `shaders/emissive_add.gdshader`：`unshaded` 不受 CanvasModulate 影响，叠加混合，`gain` 推过 1.0 触发辉光。
+- 实测（4.7.2，Compatibility，RTX 4090 Laptop）：CanvasModulate 会压暗普通物体，不影响 `unshaded` 物体和其他 CanvasLayer；WorldEnvironment 辉光在 2D 下可用，超过 1.0 的颜色晕得更开，所以不需要另写假辉光。
+- 夜街保持 `CONTENT_SCALE_MODE_VIEWPORT`（原生 320 × 180 渲染），湿地反光、雾和色差都以原生像素为单位。
+
 ## 数据和素材
 
 | 位置 | 内容 |
@@ -98,6 +130,9 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 - `tests/legacy/` 是 v02–v06 的旧套件，针对旧美术和旧操作，现在会失败，只作参考。
 
 ## 扩展点
+
+- **夜街原型**：街灯和霓虹的点光源来自 `assets/night_street/lights.json`（拼装脚本按街面层的自发光灯具算出）；悬浮无人机位置 `targets` 和 lights.json 缺失时用的 `fallback_lights` 在 `assets/night_street/layout.json`；环境光 `AMBIENT`、暴露速度 `EXPOSURE_RISE/FALL` 在 `scripts/levels/night_street/night_street.gd` 顶部。操作提示由 `CONTROLS.hint_text` 按当前键位生成，改键菜单关闭后重写；墙体和镜头跟随用 LevelKit。底图流程：Codex 出原图 → `tools/art/pixelize_layer.py`（共用 40 色调色板、按块取众数降采样、拆自发光层）→ `tools/art/assemble_night_street.py`（拼宽、纵向定位、灯光表），记录在 `art_metadata/night_street_v15/prompts.json`。
+- **义体**：反光条由查找表第 3 行和 shader 的 `reflect_*` 参数控制；条码疤是 `player.tscn` 里 Sprite 下的 `ImplantOverlay`（`scripts/player/implant_overlay.gd`），位置读 `assets/fx/implant_anchors.json`，由 `tools/art/gen_implant_anchors.py` 从帧里算出（新增动作帧后重跑）。场景把它的 `scanned` 设为 1 时会故障闪烁。
 
 - **新关卡**：脚本放 `scripts/levels/<名字>/`，场景放 `scenes/<名字>.tscn`，素材放 `assets/<名字>/`；在 `scene_routes.gd` 里登记路径；关卡里实例化 `player.tscn` 并挂一个 `GameSession`，就能拿到改键和顿帧。
 - **剧情物品**：NPC 对话完成后调用 `/root/NightwalkerStoryState.grant_item("breaker_key")`，医院电闸就能打开。

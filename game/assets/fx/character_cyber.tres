@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3]
+
+[ext_resource type="Shader" path="res://shaders/character_cyber.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" path="res://assets/fx/cyber_palette.png" id="2_palette"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_shader")
+shader_parameter/palette = ExtResource("2_palette")
+shader_parameter/look = 1.0
+shader_parameter/rim_a_dir = Vector2(0, -1)
+shader_parameter/rim_a_color = Color(0.31, 0.94, 1, 0.35)
+shader_parameter/rim_b_dir = Vector2(1, 0)
+shader_parameter/rim_b_color = Color(1, 0.24, 0.6, 0)
+shader_parameter/shade_edge_color = Color(0.03, 0.02, 0.06, 0.55)
+shader_parameter/glow_strength = 0.8

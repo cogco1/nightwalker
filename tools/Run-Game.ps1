@@ -1,5 +1,6 @@
-﻿# Imports assets and starts the game; -Editor opens the Godot editor instead.
-param([string]$GodotPath = '', [switch]$Editor)
+﻿# Imports assets and starts the game; -Scene starts another scene (e.g. res://scenes/night_street_proto.tscn);
+# -Editor opens the Godot editor instead.
+param([string]$GodotPath = '', [switch]$Editor, [string]$Scene = '')
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'common.ps1')
 $godot = Get-NightwalkerGodot $GodotPath
@@ -9,4 +10,6 @@ if ($Editor) {
     return
 }
 Invoke-NightwalkerImport $godot
-Start-Process -FilePath $godot -ArgumentList @('--path', $quotedProject) -WorkingDirectory $NightwalkerProject -WindowStyle Normal
+$arguments = @('--path', $quotedProject)
+if ($Scene) { $arguments += $Scene }
+Start-Process -FilePath $godot -ArgumentList $arguments -WorkingDirectory $NightwalkerProject -WindowStyle Normal

@@ -1,0 +1,3202 @@
+{
+"res://frames/side_view_left_air_attack1/00.png": [
+30,
+57
+],
+"res://frames/side_view_left_air_attack1/01.png": [
+30,
+57
+],
+"res://frames/side_view_left_air_attack1/02.png": [
+43,
+36
+],
+"res://frames/side_view_left_air_attack1/03.png": [
+43,
+36
+],
+"res://frames/side_view_left_air_attack1/04.png": [
+46,
+39
+],
+"res://frames/side_view_left_air_attack1/05.png": [
+48,
+39
+],
+"res://frames/side_view_left_air_attack1/06.png": [
+48,
+39
+],
+"res://frames/side_view_left_air_attack1/07.png": [
+48,
+39
+],
+"res://frames/side_view_left_air_attack1/08.png": [
+28,
+56
+],
+"res://frames/side_view_left_air_attack1/09.png": [
+28,
+56
+],
+"res://frames/side_view_left_air_attack1/10.png": [
+31,
+55
+],
+"res://frames/side_view_left_air_attack1/11.png": [
+26,
+56
+],
+"res://frames/side_view_left_air_attack1/12.png": [
+28,
+53
+],
+"res://frames/side_view_left_air_attack1/13.png": [
+30,
+51
+],
+"res://frames/side_view_left_air_attack1/14.png": [
+31,
+51
+],
+"res://frames/side_view_left_air_attack1/15.png": [
+30,
+53
+],
+"res://frames/side_view_left_air_attack2/00.png": [
+33,
+53
+],
+"res://frames/side_view_left_air_attack2/01.png": [
+33,
+52
+],
+"res://frames/side_view_left_air_attack2/02.png": [
+34,
+54
+],
+"res://frames/side_view_left_air_attack2/03.png": [
+39,
+52
+],
+"res://frames/side_view_left_air_attack2/04.png": [
+32,
+48
+],
+"res://frames/side_view_left_air_attack2/05.png": [
+38,
+45
+],
+"res://frames/side_view_left_air_attack2/06.png": [
+29,
+42
+],
+"res://frames/side_view_left_air_attack2/07.png": [
+35,
+42
+],
+"res://frames/side_view_left_air_attack2/08.png": [
+35,
+39
+],
+"res://frames/side_view_left_air_attack2/09.png": [
+37,
+39
+],
+"res://frames/side_view_left_air_attack2/10.png": [
+32,
+40
+],
+"res://frames/side_view_left_air_attack2/11.png": [
+30,
+44
+],
+"res://frames/side_view_left_air_attack2/12.png": [
+28,
+47
+],
+"res://frames/side_view_left_air_attack2/13.png": [
+29,
+47
+],
+"res://frames/side_view_left_air_attack2/14.png": [
+31,
+47
+],
+"res://frames/side_view_left_air_attack2/15.png": [
+31,
+47
+],
+"res://frames/side_view_left_air_attack3/00.png": [
+40,
+56
+],
+"res://frames/side_view_left_air_attack3/01.png": [
+43,
+52
+],
+"res://frames/side_view_left_air_attack3/02.png": [
+41,
+49
+],
+"res://frames/side_view_left_air_attack3/03.png": [
+41,
+48
+],
+"res://frames/side_view_left_air_attack3/04.png": [
+42,
+48
+],
+"res://frames/side_view_left_air_attack3/05.png": [
+37,
+52
+],
+"res://frames/side_view_left_air_attack3/06.png": [
+29,
+52
+],
+"res://frames/side_view_left_air_attack3/07.png": [
+31,
+50
+],
+"res://frames/side_view_left_air_attack3/08.png": [
+38,
+43
+],
+"res://frames/side_view_left_air_attack3/09.png": [
+28,
+45
+],
+"res://frames/side_view_left_air_attack3/10.png": [
+36,
+45
+],
+"res://frames/side_view_left_air_attack3/11.png": [
+41,
+46
+],
+"res://frames/side_view_left_air_attack3/12.png": [
+38,
+49
+],
+"res://frames/side_view_left_air_attack3/13.png": [
+36,
+49
+],
+"res://frames/side_view_left_air_attack3/14.png": [
+36,
+39
+],
+"res://frames/side_view_left_air_attack3/15.png": [
+38,
+47
+],
+"res://frames/side_view_left_air_dash_stab/00.png": [
+50,
+71
+],
+"res://frames/side_view_left_air_dash_stab/01.png": [
+51,
+73
+],
+"res://frames/side_view_left_air_dash_stab/02.png": [
+53,
+72
+],
+"res://frames/side_view_left_air_dash_stab/03.png": [
+53,
+72
+],
+"res://frames/side_view_left_air_dash_stab/04.png": [
+52,
+72
+],
+"res://frames/side_view_left_air_dash_stab/05.png": [
+47,
+71
+],
+"res://frames/side_view_left_air_dash_stab/06.png": [
+44,
+67
+],
+"res://frames/side_view_left_air_dash_stab/07.png": [
+46,
+67
+],
+"res://frames/side_view_left_air_dash_stab/08.png": [
+46,
+65
+],
+"res://frames/side_view_left_air_dash_stab/09.png": [
+46,
+65
+],
+"res://frames/side_view_left_air_dash_stab/10.png": [
+51,
+68
+],
+"res://frames/side_view_left_air_dash_stab/11.png": [
+55,
+68
+],
+"res://frames/side_view_left_air_dash_stab/12.png": [
+53,
+68
+],
+"res://frames/side_view_left_air_dash_stab/13.png": [
+51,
+69
+],
+"res://frames/side_view_left_air_dash_stab/14.png": [
+52,
+68
+],
+"res://frames/side_view_left_air_dash_stab/15.png": [
+52,
+67
+],
+"res://frames/side_view_left_air_idle/00.png": [
+35,
+54
+],
+"res://frames/side_view_left_air_idle/01.png": [
+37,
+53
+],
+"res://frames/side_view_left_air_idle/02.png": [
+35,
+54
+],
+"res://frames/side_view_left_air_idle/03.png": [
+37,
+53
+],
+"res://frames/side_view_left_air_idle/04.png": [
+38,
+53
+],
+"res://frames/side_view_left_air_idle/05.png": [
+37,
+53
+],
+"res://frames/side_view_left_air_idle/06.png": [
+38,
+53
+],
+"res://frames/side_view_left_air_idle/07.png": [
+38,
+53
+],
+"res://frames/side_view_left_air_idle/08.png": [
+38,
+53
+],
+"res://frames/side_view_left_air_idle/09.png": [
+38,
+53
+],
+"res://frames/side_view_left_air_idle/10.png": [
+38,
+53
+],
+"res://frames/side_view_left_air_idle/11.png": [
+38,
+53
+],
+"res://frames/side_view_left_air_idle/12.png": [
+37,
+53
+],
+"res://frames/side_view_left_air_idle/13.png": [
+37,
+53
+],
+"res://frames/side_view_left_air_idle/14.png": [
+37,
+53
+],
+"res://frames/side_view_left_air_idle/15.png": [
+37,
+53
+],
+"res://frames/side_view_left_attack1/00.png": [
+55,
+74
+],
+"res://frames/side_view_left_attack1/01.png": [
+55,
+74
+],
+"res://frames/side_view_left_attack1/02.png": [
+66,
+71
+],
+"res://frames/side_view_left_attack1/03.png": [
+66,
+71
+],
+"res://frames/side_view_left_attack1/04.png": [
+65,
+57
+],
+"res://frames/side_view_left_attack1/05.png": [
+62,
+54
+],
+"res://frames/side_view_left_attack1/06.png": [
+66,
+60
+],
+"res://frames/side_view_left_attack1/07.png": [
+45,
+72
+],
+"res://frames/side_view_left_attack1/08.png": [
+44,
+76
+],
+"res://frames/side_view_left_attack1/09.png": [
+39,
+77
+],
+"res://frames/side_view_left_attack1/10.png": [
+43,
+78
+],
+"res://frames/side_view_left_attack1/11.png": [
+44,
+79
+],
+"res://frames/side_view_left_attack1/12.png": [
+47,
+78
+],
+"res://frames/side_view_left_attack1/13.png": [
+48,
+76
+],
+"res://frames/side_view_left_attack1/14.png": [
+52,
+75
+],
+"res://frames/side_view_left_attack1/15.png": [
+50,
+74
+],
+"res://frames/side_view_left_attack2/00.png": [
+50,
+74
+],
+"res://frames/side_view_left_attack2/01.png": [
+50,
+74
+],
+"res://frames/side_view_left_attack2/02.png": [
+59,
+77
+],
+"res://frames/side_view_left_attack2/03.png": [
+63,
+80
+],
+"res://frames/side_view_left_attack2/04.png": [
+51,
+71
+],
+"res://frames/side_view_left_attack2/05.png": [
+45,
+68
+],
+"res://frames/side_view_left_attack2/06.png": [
+47,
+64
+],
+"res://frames/side_view_left_attack2/07.png": [
+57,
+61
+],
+"res://frames/side_view_left_attack2/08.png": [
+56,
+57
+],
+"res://frames/side_view_left_attack2/09.png": [
+46,
+55
+],
+"res://frames/side_view_left_attack2/10.png": [
+45,
+62
+],
+"res://frames/side_view_left_attack2/11.png": [
+44,
+66
+],
+"res://frames/side_view_left_attack2/12.png": [
+41,
+71
+],
+"res://frames/side_view_left_attack2/13.png": [
+42,
+71
+],
+"res://frames/side_view_left_attack2/14.png": [
+43,
+71
+],
+"res://frames/side_view_left_attack2/15.png": [
+43,
+71
+],
+"res://frames/side_view_left_attack3/00.png": [
+43,
+71
+],
+"res://frames/side_view_left_attack3/01.png": [
+43,
+71
+],
+"res://frames/side_view_left_attack3/02.png": [
+45,
+73
+],
+"res://frames/side_view_left_attack3/03.png": [
+53,
+72
+],
+"res://frames/side_view_left_attack3/04.png": [
+56,
+71
+],
+"res://frames/side_view_left_attack3/05.png": [
+48,
+68
+],
+"res://frames/side_view_left_attack3/06.png": [
+44,
+67
+],
+"res://frames/side_view_left_attack3/07.png": [
+43,
+67
+],
+"res://frames/side_view_left_attack3/08.png": [
+39,
+65
+],
+"res://frames/side_view_left_attack3/09.png": [
+42,
+65
+],
+"res://frames/side_view_left_attack3/10.png": [
+54,
+74
+],
+"res://frames/side_view_left_attack3/11.png": [
+52,
+73
+],
+"res://frames/side_view_left_attack3/12.png": [
+51,
+73
+],
+"res://frames/side_view_left_attack3/13.png": [
+53,
+72
+],
+"res://frames/side_view_left_attack3/14.png": [
+54,
+73
+],
+"res://frames/side_view_left_attack3/15.png": [
+55,
+74
+],
+"res://frames/side_view_left_crouch/00.png": [
+53,
+69
+],
+"res://frames/side_view_left_crouch/01.png": [
+50,
+70
+],
+"res://frames/side_view_left_crouch/02.png": [
+45,
+72
+],
+"res://frames/side_view_left_crouch/03.png": [
+44,
+73
+],
+"res://frames/side_view_left_crouch/04.png": [
+47,
+73
+],
+"res://frames/side_view_left_crouch/05.png": [
+44,
+74
+],
+"res://frames/side_view_left_crouch/06.png": [
+48,
+76
+],
+"res://frames/side_view_left_crouch/07.png": [
+46,
+75
+],
+"res://frames/side_view_left_crouch/08.png": [
+50,
+79
+],
+"res://frames/side_view_left_crouch/09.png": [
+51,
+76
+],
+"res://frames/side_view_left_crouch/10.png": [
+43,
+73
+],
+"res://frames/side_view_left_crouch/11.png": [
+46,
+73
+],
+"res://frames/side_view_left_crouch/12.png": [
+46,
+71
+],
+"res://frames/side_view_left_crouch/13.png": [
+47,
+71
+],
+"res://frames/side_view_left_crouch/14.png": [
+50,
+72
+],
+"res://frames/side_view_left_crouch/15.png": [
+54,
+71
+],
+"res://frames/side_view_left_crouch_stab/00.png": [
+50,
+78
+],
+"res://frames/side_view_left_crouch_stab/01.png": [
+45,
+77
+],
+"res://frames/side_view_left_crouch_stab/02.png": [
+53,
+77
+],
+"res://frames/side_view_left_crouch_stab/03.png": [
+45,
+78
+],
+"res://frames/side_view_left_crouch_stab/04.png": [
+43,
+76
+],
+"res://frames/side_view_left_crouch_stab/05.png": [
+38,
+74
+],
+"res://frames/side_view_left_crouch_stab/06.png": [
+39,
+74
+],
+"res://frames/side_view_left_crouch_stab/07.png": [
+40,
+74
+],
+"res://frames/side_view_left_crouch_stab/08.png": [
+39,
+74
+],
+"res://frames/side_view_left_crouch_stab/09.png": [
+45,
+79
+],
+"res://frames/side_view_left_crouch_stab/10.png": [
+44,
+77
+],
+"res://frames/side_view_left_crouch_stab/11.png": [
+45,
+76
+],
+"res://frames/side_view_left_crouch_stab/12.png": [
+47,
+80
+],
+"res://frames/side_view_left_crouch_stab/13.png": [
+47,
+80
+],
+"res://frames/side_view_left_crouch_stab/14.png": [
+46,
+78
+],
+"res://frames/side_view_left_crouch_stab/15.png": [
+51,
+78
+],
+"res://frames/side_view_left_dash_stab/00.png": [
+55,
+74
+],
+"res://frames/side_view_left_dash_stab/01.png": [
+55,
+71
+],
+"res://frames/side_view_left_dash_stab/02.png": [
+53,
+73
+],
+"res://frames/side_view_left_dash_stab/03.png": [
+50,
+76
+],
+"res://frames/side_view_left_dash_stab/04.png": [
+47,
+68
+],
+"res://frames/side_view_left_dash_stab/05.png": [
+44,
+68
+],
+"res://frames/side_view_left_dash_stab/06.png": [
+43,
+68
+],
+"res://frames/side_view_left_dash_stab/07.png": [
+42,
+68
+],
+"res://frames/side_view_left_dash_stab/08.png": [
+46,
+68
+],
+"res://frames/side_view_left_dash_stab/09.png": [
+48,
+68
+],
+"res://frames/side_view_left_dash_stab/10.png": [
+53,
+68
+],
+"res://frames/side_view_left_dash_stab/11.png": [
+53,
+67
+],
+"res://frames/side_view_left_dash_stab/12.png": [
+56,
+73
+],
+"res://frames/side_view_left_dash_stab/13.png": [
+54,
+73
+],
+"res://frames/side_view_left_dash_stab/14.png": [
+57,
+74
+],
+"res://frames/side_view_left_dash_stab/15.png": [
+55,
+74
+],
+"res://frames/side_view_left_dive_slash/00.png": [
+35,
+51
+],
+"res://frames/side_view_left_dive_slash/01.png": [
+32,
+53
+],
+"res://frames/side_view_left_dive_slash/02.png": [
+33,
+55
+],
+"res://frames/side_view_left_dive_slash/03.png": [
+32,
+56
+],
+"res://frames/side_view_left_dive_slash/04.png": [
+33,
+55
+],
+"res://frames/side_view_left_dive_slash/05.png": [
+32,
+56
+],
+"res://frames/side_view_left_dive_slash/06.png": [
+34,
+58
+],
+"res://frames/side_view_left_dive_slash/07.png": [
+33,
+58
+],
+"res://frames/side_view_left_dive_slash/08.png": [
+34,
+58
+],
+"res://frames/side_view_left_dive_slash/09.png": [
+34,
+58
+],
+"res://frames/side_view_left_dive_slash/10.png": [
+34,
+58
+],
+"res://frames/side_view_left_dive_slash/11.png": [
+33,
+58
+],
+"res://frames/side_view_left_dive_slash/12.png": [
+34,
+58
+],
+"res://frames/side_view_left_dive_slash/13.png": [
+33,
+55
+],
+"res://frames/side_view_left_dive_slash/14.png": [
+33,
+59
+],
+"res://frames/side_view_left_dive_slash/15.png": [
+34,
+60
+],
+"res://frames/side_view_left_idle/00.png": [
+55,
+74
+],
+"res://frames/side_view_left_idle/01.png": [
+55,
+74
+],
+"res://frames/side_view_left_idle/02.png": [
+55,
+74
+],
+"res://frames/side_view_left_idle/03.png": [
+56,
+74
+],
+"res://frames/side_view_left_idle/04.png": [
+56,
+74
+],
+"res://frames/side_view_left_idle/05.png": [
+56,
+74
+],
+"res://frames/side_view_left_idle/06.png": [
+56,
+74
+],
+"res://frames/side_view_left_idle/07.png": [
+56,
+74
+],
+"res://frames/side_view_left_idle/08.png": [
+56,
+74
+],
+"res://frames/side_view_left_idle/09.png": [
+56,
+74
+],
+"res://frames/side_view_left_idle/10.png": [
+56,
+74
+],
+"res://frames/side_view_left_idle/11.png": [
+56,
+74
+],
+"res://frames/side_view_left_idle/12.png": [
+56,
+74
+],
+"res://frames/side_view_left_idle/13.png": [
+55,
+74
+],
+"res://frames/side_view_left_idle/14.png": [
+55,
+74
+],
+"res://frames/side_view_left_idle/15.png": [
+55,
+74
+],
+"res://frames/side_view_left_jump/00.png": [
+57,
+71
+],
+"res://frames/side_view_left_jump/01.png": [
+55,
+74
+],
+"res://frames/side_view_left_jump/02.png": [
+46,
+74
+],
+"res://frames/side_view_left_jump/03.png": [
+49,
+61
+],
+"res://frames/side_view_left_jump/04.png": [
+48,
+68
+],
+"res://frames/side_view_left_jump/05.png": [
+50,
+67
+],
+"res://frames/side_view_left_jump/06.png": [
+48,
+66
+],
+"res://frames/side_view_left_jump/07.png": [
+48,
+64
+],
+"res://frames/side_view_left_jump/08.png": [
+50,
+68
+],
+"res://frames/side_view_left_jump/09.png": [
+49,
+69
+],
+"res://frames/side_view_left_jump/10.png": [
+51,
+68
+],
+"res://frames/side_view_left_jump/11.png": [
+54,
+69
+],
+"res://frames/side_view_left_jump/12.png": [
+48,
+68
+],
+"res://frames/side_view_left_jump/13.png": [
+49,
+74
+],
+"res://frames/side_view_left_jump/14.png": [
+56,
+70
+],
+"res://frames/side_view_left_jump/15.png": [
+57,
+73
+],
+"res://frames/side_view_left_rising_slash/00.png": [
+55,
+74
+],
+"res://frames/side_view_left_rising_slash/01.png": [
+55,
+75
+],
+"res://frames/side_view_left_rising_slash/02.png": [
+52,
+80
+],
+"res://frames/side_view_left_rising_slash/03.png": [
+54,
+81
+],
+"res://frames/side_view_left_rising_slash/04.png": [
+52,
+71
+],
+"res://frames/side_view_left_rising_slash/05.png": [
+53,
+69
+],
+"res://frames/side_view_left_rising_slash/06.png": [
+48,
+61
+],
+"res://frames/side_view_left_rising_slash/07.png": [
+49,
+55
+],
+"res://frames/side_view_left_rising_slash/08.png": [
+53,
+54
+],
+"res://frames/side_view_left_rising_slash/09.png": [
+55,
+50
+],
+"res://frames/side_view_left_rising_slash/10.png": [
+54,
+52
+],
+"res://frames/side_view_left_rising_slash/11.png": [
+53,
+55
+],
+"res://frames/side_view_left_rising_slash/12.png": [
+51,
+58
+],
+"res://frames/side_view_left_rising_slash/13.png": [
+49,
+69
+],
+"res://frames/side_view_left_rising_slash/14.png": [
+47,
+68
+],
+"res://frames/side_view_left_rising_slash/15.png": [
+50,
+68
+],
+"res://frames/side_view_left_run/00.png": [
+63,
+73
+],
+"res://frames/side_view_left_run/01.png": [
+63,
+73
+],
+"res://frames/side_view_left_run/02.png": [
+62,
+73
+],
+"res://frames/side_view_left_run/03.png": [
+62,
+71
+],
+"res://frames/side_view_left_run/04.png": [
+63,
+71
+],
+"res://frames/side_view_left_run/05.png": [
+60,
+68
+],
+"res://frames/side_view_left_run/06.png": [
+64,
+66
+],
+"res://frames/side_view_left_run/07.png": [
+47,
+72
+],
+"res://frames/side_view_left_run/08.png": [
+47,
+73
+],
+"res://frames/side_view_left_run/09.png": [
+51,
+73
+],
+"res://frames/side_view_left_run/10.png": [
+50,
+74
+],
+"res://frames/side_view_left_run/11.png": [
+48,
+73
+],
+"res://frames/side_view_left_run/12.png": [
+62,
+72
+],
+"res://frames/side_view_left_run/13.png": [
+61,
+71
+],
+"res://frames/side_view_left_run/14.png": [
+61,
+70
+],
+"res://frames/side_view_left_run/15.png": [
+61,
+70
+],
+"res://frames/side_view_left_stab/00.png": [
+56,
+74
+],
+"res://frames/side_view_left_stab/01.png": [
+56,
+74
+],
+"res://frames/side_view_left_stab/02.png": [
+58,
+74
+],
+"res://frames/side_view_left_stab/03.png": [
+56,
+73
+],
+"res://frames/side_view_left_stab/04.png": [
+59,
+73
+],
+"res://frames/side_view_left_stab/05.png": [
+56,
+72
+],
+"res://frames/side_view_left_stab/06.png": [
+44,
+68
+],
+"res://frames/side_view_left_stab/07.png": [
+43,
+65
+],
+"res://frames/side_view_left_stab/08.png": [
+35,
+66
+],
+"res://frames/side_view_left_stab/09.png": [
+40,
+67
+],
+"res://frames/side_view_left_stab/10.png": [
+56,
+72
+],
+"res://frames/side_view_left_stab/11.png": [
+57,
+74
+],
+"res://frames/side_view_left_stab/12.png": [
+56,
+70
+],
+"res://frames/side_view_left_stab/13.png": [
+53,
+72
+],
+"res://frames/side_view_left_stab/14.png": [
+56,
+73
+],
+"res://frames/side_view_left_stab/15.png": [
+56,
+75
+],
+"res://frames/side_view_left_walk/00.png": [
+57,
+74
+],
+"res://frames/side_view_left_walk/01.png": [
+58,
+75
+],
+"res://frames/side_view_left_walk/02.png": [
+49,
+73
+],
+"res://frames/side_view_left_walk/03.png": [
+49,
+72
+],
+"res://frames/side_view_left_walk/04.png": [
+49,
+72
+],
+"res://frames/side_view_left_walk/05.png": [
+61,
+73
+],
+"res://frames/side_view_left_walk/06.png": [
+62,
+73
+],
+"res://frames/side_view_left_walk/07.png": [
+62,
+76
+],
+"res://frames/side_view_left_walk/08.png": [
+53,
+73
+],
+"res://frames/side_view_left_walk/09.png": [
+52,
+72
+],
+"res://frames/side_view_left_walk/10.png": [
+55,
+63
+],
+"res://frames/side_view_left_walk/11.png": [
+54,
+72
+],
+"res://frames/side_view_left_walk/12.png": [
+58,
+73
+],
+"res://frames/side_view_left_walk/13.png": [
+60,
+73
+],
+"res://frames/side_view_left_walk/14.png": [
+56,
+73
+],
+"res://frames/side_view_left_walk/15.png": [
+58,
+74
+],
+"res://frames/side_view_right_air_attack1/00.png": [
+50,
+57
+],
+"res://frames/side_view_right_air_attack1/01.png": [
+50,
+57
+],
+"res://frames/side_view_right_air_attack1/02.png": [
+37,
+36
+],
+"res://frames/side_view_right_air_attack1/03.png": [
+37,
+36
+],
+"res://frames/side_view_right_air_attack1/04.png": [
+34,
+39
+],
+"res://frames/side_view_right_air_attack1/05.png": [
+32,
+39
+],
+"res://frames/side_view_right_air_attack1/06.png": [
+32,
+39
+],
+"res://frames/side_view_right_air_attack1/07.png": [
+32,
+39
+],
+"res://frames/side_view_right_air_attack1/08.png": [
+52,
+56
+],
+"res://frames/side_view_right_air_attack1/09.png": [
+52,
+56
+],
+"res://frames/side_view_right_air_attack1/10.png": [
+49,
+55
+],
+"res://frames/side_view_right_air_attack1/11.png": [
+54,
+56
+],
+"res://frames/side_view_right_air_attack1/12.png": [
+52,
+53
+],
+"res://frames/side_view_right_air_attack1/13.png": [
+50,
+51
+],
+"res://frames/side_view_right_air_attack1/14.png": [
+49,
+51
+],
+"res://frames/side_view_right_air_attack1/15.png": [
+50,
+53
+],
+"res://frames/side_view_right_air_attack2/00.png": [
+47,
+53
+],
+"res://frames/side_view_right_air_attack2/01.png": [
+47,
+52
+],
+"res://frames/side_view_right_air_attack2/02.png": [
+46,
+54
+],
+"res://frames/side_view_right_air_attack2/03.png": [
+41,
+52
+],
+"res://frames/side_view_right_air_attack2/04.png": [
+48,
+48
+],
+"res://frames/side_view_right_air_attack2/05.png": [
+42,
+45
+],
+"res://frames/side_view_right_air_attack2/06.png": [
+51,
+42
+],
+"res://frames/side_view_right_air_attack2/07.png": [
+45,
+42
+],
+"res://frames/side_view_right_air_attack2/08.png": [
+45,
+39
+],
+"res://frames/side_view_right_air_attack2/09.png": [
+43,
+39
+],
+"res://frames/side_view_right_air_attack2/10.png": [
+48,
+40
+],
+"res://frames/side_view_right_air_attack2/11.png": [
+50,
+44
+],
+"res://frames/side_view_right_air_attack2/12.png": [
+52,
+47
+],
+"res://frames/side_view_right_air_attack2/13.png": [
+51,
+47
+],
+"res://frames/side_view_right_air_attack2/14.png": [
+49,
+47
+],
+"res://frames/side_view_right_air_attack2/15.png": [
+49,
+47
+],
+"res://frames/side_view_right_air_attack3/00.png": [
+40,
+56
+],
+"res://frames/side_view_right_air_attack3/01.png": [
+37,
+52
+],
+"res://frames/side_view_right_air_attack3/02.png": [
+39,
+49
+],
+"res://frames/side_view_right_air_attack3/03.png": [
+39,
+48
+],
+"res://frames/side_view_right_air_attack3/04.png": [
+38,
+48
+],
+"res://frames/side_view_right_air_attack3/05.png": [
+43,
+52
+],
+"res://frames/side_view_right_air_attack3/06.png": [
+51,
+52
+],
+"res://frames/side_view_right_air_attack3/07.png": [
+49,
+50
+],
+"res://frames/side_view_right_air_attack3/08.png": [
+42,
+43
+],
+"res://frames/side_view_right_air_attack3/09.png": [
+52,
+45
+],
+"res://frames/side_view_right_air_attack3/10.png": [
+44,
+45
+],
+"res://frames/side_view_right_air_attack3/11.png": [
+39,
+46
+],
+"res://frames/side_view_right_air_attack3/12.png": [
+42,
+49
+],
+"res://frames/side_view_right_air_attack3/13.png": [
+44,
+49
+],
+"res://frames/side_view_right_air_attack3/14.png": [
+44,
+39
+],
+"res://frames/side_view_right_air_attack3/15.png": [
+42,
+47
+],
+"res://frames/side_view_right_air_dash_stab/00.png": [
+62,
+71
+],
+"res://frames/side_view_right_air_dash_stab/01.png": [
+61,
+73
+],
+"res://frames/side_view_right_air_dash_stab/02.png": [
+59,
+72
+],
+"res://frames/side_view_right_air_dash_stab/03.png": [
+59,
+72
+],
+"res://frames/side_view_right_air_dash_stab/04.png": [
+60,
+72
+],
+"res://frames/side_view_right_air_dash_stab/05.png": [
+65,
+71
+],
+"res://frames/side_view_right_air_dash_stab/06.png": [
+68,
+67
+],
+"res://frames/side_view_right_air_dash_stab/07.png": [
+66,
+67
+],
+"res://frames/side_view_right_air_dash_stab/08.png": [
+66,
+65
+],
+"res://frames/side_view_right_air_dash_stab/09.png": [
+66,
+65
+],
+"res://frames/side_view_right_air_dash_stab/10.png": [
+61,
+68
+],
+"res://frames/side_view_right_air_dash_stab/11.png": [
+57,
+68
+],
+"res://frames/side_view_right_air_dash_stab/12.png": [
+59,
+68
+],
+"res://frames/side_view_right_air_dash_stab/13.png": [
+61,
+69
+],
+"res://frames/side_view_right_air_dash_stab/14.png": [
+60,
+68
+],
+"res://frames/side_view_right_air_dash_stab/15.png": [
+60,
+67
+],
+"res://frames/side_view_right_air_idle/00.png": [
+45,
+54
+],
+"res://frames/side_view_right_air_idle/01.png": [
+43,
+53
+],
+"res://frames/side_view_right_air_idle/02.png": [
+45,
+54
+],
+"res://frames/side_view_right_air_idle/03.png": [
+43,
+53
+],
+"res://frames/side_view_right_air_idle/04.png": [
+42,
+53
+],
+"res://frames/side_view_right_air_idle/05.png": [
+43,
+53
+],
+"res://frames/side_view_right_air_idle/06.png": [
+42,
+53
+],
+"res://frames/side_view_right_air_idle/07.png": [
+42,
+53
+],
+"res://frames/side_view_right_air_idle/08.png": [
+42,
+53
+],
+"res://frames/side_view_right_air_idle/09.png": [
+42,
+53
+],
+"res://frames/side_view_right_air_idle/10.png": [
+42,
+53
+],
+"res://frames/side_view_right_air_idle/11.png": [
+42,
+53
+],
+"res://frames/side_view_right_air_idle/12.png": [
+43,
+53
+],
+"res://frames/side_view_right_air_idle/13.png": [
+43,
+53
+],
+"res://frames/side_view_right_air_idle/14.png": [
+43,
+53
+],
+"res://frames/side_view_right_air_idle/15.png": [
+43,
+53
+],
+"res://frames/side_view_right_attack1/00.png": [
+57,
+74
+],
+"res://frames/side_view_right_attack1/01.png": [
+57,
+74
+],
+"res://frames/side_view_right_attack1/02.png": [
+46,
+71
+],
+"res://frames/side_view_right_attack1/03.png": [
+46,
+71
+],
+"res://frames/side_view_right_attack1/04.png": [
+47,
+57
+],
+"res://frames/side_view_right_attack1/05.png": [
+50,
+54
+],
+"res://frames/side_view_right_attack1/06.png": [
+46,
+60
+],
+"res://frames/side_view_right_attack1/07.png": [
+67,
+72
+],
+"res://frames/side_view_right_attack1/08.png": [
+68,
+76
+],
+"res://frames/side_view_right_attack1/09.png": [
+73,
+77
+],
+"res://frames/side_view_right_attack1/10.png": [
+69,
+78
+],
+"res://frames/side_view_right_attack1/11.png": [
+68,
+79
+],
+"res://frames/side_view_right_attack1/12.png": [
+65,
+78
+],
+"res://frames/side_view_right_attack1/13.png": [
+64,
+76
+],
+"res://frames/side_view_right_attack1/14.png": [
+60,
+75
+],
+"res://frames/side_view_right_attack1/15.png": [
+62,
+74
+],
+"res://frames/side_view_right_attack2/00.png": [
+62,
+74
+],
+"res://frames/side_view_right_attack2/01.png": [
+62,
+74
+],
+"res://frames/side_view_right_attack2/02.png": [
+53,
+77
+],
+"res://frames/side_view_right_attack2/03.png": [
+49,
+80
+],
+"res://frames/side_view_right_attack2/04.png": [
+61,
+71
+],
+"res://frames/side_view_right_attack2/05.png": [
+67,
+68
+],
+"res://frames/side_view_right_attack2/06.png": [
+65,
+64
+],
+"res://frames/side_view_right_attack2/07.png": [
+55,
+61
+],
+"res://frames/side_view_right_attack2/08.png": [
+56,
+57
+],
+"res://frames/side_view_right_attack2/09.png": [
+66,
+55
+],
+"res://frames/side_view_right_attack2/10.png": [
+67,
+62
+],
+"res://frames/side_view_right_attack2/11.png": [
+68,
+66
+],
+"res://frames/side_view_right_attack2/12.png": [
+71,
+71
+],
+"res://frames/side_view_right_attack2/13.png": [
+70,
+71
+],
+"res://frames/side_view_right_attack2/14.png": [
+69,
+71
+],
+"res://frames/side_view_right_attack2/15.png": [
+69,
+71
+],
+"res://frames/side_view_right_attack3/00.png": [
+69,
+71
+],
+"res://frames/side_view_right_attack3/01.png": [
+69,
+71
+],
+"res://frames/side_view_right_attack3/02.png": [
+67,
+73
+],
+"res://frames/side_view_right_attack3/03.png": [
+59,
+72
+],
+"res://frames/side_view_right_attack3/04.png": [
+56,
+71
+],
+"res://frames/side_view_right_attack3/05.png": [
+64,
+68
+],
+"res://frames/side_view_right_attack3/06.png": [
+68,
+67
+],
+"res://frames/side_view_right_attack3/07.png": [
+69,
+67
+],
+"res://frames/side_view_right_attack3/08.png": [
+73,
+65
+],
+"res://frames/side_view_right_attack3/09.png": [
+70,
+65
+],
+"res://frames/side_view_right_attack3/10.png": [
+58,
+74
+],
+"res://frames/side_view_right_attack3/11.png": [
+60,
+73
+],
+"res://frames/side_view_right_attack3/12.png": [
+61,
+73
+],
+"res://frames/side_view_right_attack3/13.png": [
+59,
+72
+],
+"res://frames/side_view_right_attack3/14.png": [
+58,
+73
+],
+"res://frames/side_view_right_attack3/15.png": [
+57,
+74
+],
+"res://frames/side_view_right_crouch/00.png": [
+59,
+69
+],
+"res://frames/side_view_right_crouch/01.png": [
+62,
+70
+],
+"res://frames/side_view_right_crouch/02.png": [
+67,
+72
+],
+"res://frames/side_view_right_crouch/03.png": [
+68,
+73
+],
+"res://frames/side_view_right_crouch/04.png": [
+65,
+73
+],
+"res://frames/side_view_right_crouch/05.png": [
+68,
+74
+],
+"res://frames/side_view_right_crouch/06.png": [
+64,
+76
+],
+"res://frames/side_view_right_crouch/07.png": [
+66,
+75
+],
+"res://frames/side_view_right_crouch/08.png": [
+62,
+79
+],
+"res://frames/side_view_right_crouch/09.png": [
+61,
+76
+],
+"res://frames/side_view_right_crouch/10.png": [
+69,
+73
+],
+"res://frames/side_view_right_crouch/11.png": [
+66,
+73
+],
+"res://frames/side_view_right_crouch/12.png": [
+66,
+71
+],
+"res://frames/side_view_right_crouch/13.png": [
+65,
+71
+],
+"res://frames/side_view_right_crouch/14.png": [
+62,
+72
+],
+"res://frames/side_view_right_crouch/15.png": [
+58,
+71
+],
+"res://frames/side_view_right_crouch_stab/00.png": [
+62,
+78
+],
+"res://frames/side_view_right_crouch_stab/01.png": [
+67,
+77
+],
+"res://frames/side_view_right_crouch_stab/02.png": [
+59,
+77
+],
+"res://frames/side_view_right_crouch_stab/03.png": [
+67,
+78
+],
+"res://frames/side_view_right_crouch_stab/04.png": [
+69,
+76
+],
+"res://frames/side_view_right_crouch_stab/05.png": [
+74,
+74
+],
+"res://frames/side_view_right_crouch_stab/06.png": [
+73,
+74
+],
+"res://frames/side_view_right_crouch_stab/07.png": [
+72,
+74
+],
+"res://frames/side_view_right_crouch_stab/08.png": [
+73,
+74
+],
+"res://frames/side_view_right_crouch_stab/09.png": [
+67,
+79
+],
+"res://frames/side_view_right_crouch_stab/10.png": [
+68,
+77
+],
+"res://frames/side_view_right_crouch_stab/11.png": [
+67,
+76
+],
+"res://frames/side_view_right_crouch_stab/12.png": [
+65,
+80
+],
+"res://frames/side_view_right_crouch_stab/13.png": [
+65,
+80
+],
+"res://frames/side_view_right_crouch_stab/14.png": [
+66,
+78
+],
+"res://frames/side_view_right_crouch_stab/15.png": [
+61,
+78
+],
+"res://frames/side_view_right_dash_stab/00.png": [
+57,
+74
+],
+"res://frames/side_view_right_dash_stab/01.png": [
+57,
+71
+],
+"res://frames/side_view_right_dash_stab/02.png": [
+59,
+73
+],
+"res://frames/side_view_right_dash_stab/03.png": [
+62,
+76
+],
+"res://frames/side_view_right_dash_stab/04.png": [
+65,
+68
+],
+"res://frames/side_view_right_dash_stab/05.png": [
+68,
+68
+],
+"res://frames/side_view_right_dash_stab/06.png": [
+69,
+68
+],
+"res://frames/side_view_right_dash_stab/07.png": [
+70,
+68
+],
+"res://frames/side_view_right_dash_stab/08.png": [
+66,
+68
+],
+"res://frames/side_view_right_dash_stab/09.png": [
+64,
+68
+],
+"res://frames/side_view_right_dash_stab/10.png": [
+59,
+68
+],
+"res://frames/side_view_right_dash_stab/11.png": [
+59,
+67
+],
+"res://frames/side_view_right_dash_stab/12.png": [
+56,
+73
+],
+"res://frames/side_view_right_dash_stab/13.png": [
+58,
+73
+],
+"res://frames/side_view_right_dash_stab/14.png": [
+55,
+74
+],
+"res://frames/side_view_right_dash_stab/15.png": [
+57,
+74
+],
+"res://frames/side_view_right_dive_slash/00.png": [
+45,
+51
+],
+"res://frames/side_view_right_dive_slash/01.png": [
+48,
+53
+],
+"res://frames/side_view_right_dive_slash/02.png": [
+47,
+55
+],
+"res://frames/side_view_right_dive_slash/03.png": [
+48,
+56
+],
+"res://frames/side_view_right_dive_slash/04.png": [
+47,
+55
+],
+"res://frames/side_view_right_dive_slash/05.png": [
+48,
+56
+],
+"res://frames/side_view_right_dive_slash/06.png": [
+46,
+58
+],
+"res://frames/side_view_right_dive_slash/07.png": [
+46,
+58
+],
+"res://frames/side_view_right_dive_slash/08.png": [
+46,
+58
+],
+"res://frames/side_view_right_dive_slash/09.png": [
+46,
+58
+],
+"res://frames/side_view_right_dive_slash/10.png": [
+46,
+58
+],
+"res://frames/side_view_right_dive_slash/11.png": [
+46,
+58
+],
+"res://frames/side_view_right_dive_slash/12.png": [
+46,
+58
+],
+"res://frames/side_view_right_dive_slash/13.png": [
+47,
+55
+],
+"res://frames/side_view_right_dive_slash/14.png": [
+47,
+59
+],
+"res://frames/side_view_right_dive_slash/15.png": [
+46,
+60
+],
+"res://frames/side_view_right_idle/00.png": [
+57,
+74
+],
+"res://frames/side_view_right_idle/01.png": [
+57,
+74
+],
+"res://frames/side_view_right_idle/02.png": [
+57,
+74
+],
+"res://frames/side_view_right_idle/03.png": [
+56,
+74
+],
+"res://frames/side_view_right_idle/04.png": [
+56,
+74
+],
+"res://frames/side_view_right_idle/05.png": [
+56,
+74
+],
+"res://frames/side_view_right_idle/06.png": [
+56,
+74
+],
+"res://frames/side_view_right_idle/07.png": [
+56,
+74
+],
+"res://frames/side_view_right_idle/08.png": [
+56,
+74
+],
+"res://frames/side_view_right_idle/09.png": [
+56,
+74
+],
+"res://frames/side_view_right_idle/10.png": [
+56,
+74
+],
+"res://frames/side_view_right_idle/11.png": [
+56,
+74
+],
+"res://frames/side_view_right_idle/12.png": [
+56,
+74
+],
+"res://frames/side_view_right_idle/13.png": [
+57,
+74
+],
+"res://frames/side_view_right_idle/14.png": [
+57,
+74
+],
+"res://frames/side_view_right_idle/15.png": [
+57,
+74
+],
+"res://frames/side_view_right_jump/00.png": [
+55,
+71
+],
+"res://frames/side_view_right_jump/01.png": [
+57,
+74
+],
+"res://frames/side_view_right_jump/02.png": [
+66,
+74
+],
+"res://frames/side_view_right_jump/03.png": [
+63,
+61
+],
+"res://frames/side_view_right_jump/04.png": [
+64,
+68
+],
+"res://frames/side_view_right_jump/05.png": [
+62,
+67
+],
+"res://frames/side_view_right_jump/06.png": [
+64,
+66
+],
+"res://frames/side_view_right_jump/07.png": [
+64,
+64
+],
+"res://frames/side_view_right_jump/08.png": [
+62,
+68
+],
+"res://frames/side_view_right_jump/09.png": [
+63,
+69
+],
+"res://frames/side_view_right_jump/10.png": [
+61,
+68
+],
+"res://frames/side_view_right_jump/11.png": [
+58,
+69
+],
+"res://frames/side_view_right_jump/12.png": [
+64,
+68
+],
+"res://frames/side_view_right_jump/13.png": [
+63,
+74
+],
+"res://frames/side_view_right_jump/14.png": [
+56,
+70
+],
+"res://frames/side_view_right_jump/15.png": [
+55,
+73
+],
+"res://frames/side_view_right_rising_slash/00.png": [
+57,
+74
+],
+"res://frames/side_view_right_rising_slash/01.png": [
+57,
+75
+],
+"res://frames/side_view_right_rising_slash/02.png": [
+60,
+80
+],
+"res://frames/side_view_right_rising_slash/03.png": [
+58,
+81
+],
+"res://frames/side_view_right_rising_slash/04.png": [
+60,
+71
+],
+"res://frames/side_view_right_rising_slash/05.png": [
+59,
+69
+],
+"res://frames/side_view_right_rising_slash/06.png": [
+64,
+61
+],
+"res://frames/side_view_right_rising_slash/07.png": [
+63,
+55
+],
+"res://frames/side_view_right_rising_slash/08.png": [
+59,
+54
+],
+"res://frames/side_view_right_rising_slash/09.png": [
+57,
+50
+],
+"res://frames/side_view_right_rising_slash/10.png": [
+58,
+52
+],
+"res://frames/side_view_right_rising_slash/11.png": [
+59,
+55
+],
+"res://frames/side_view_right_rising_slash/12.png": [
+61,
+58
+],
+"res://frames/side_view_right_rising_slash/13.png": [
+63,
+69
+],
+"res://frames/side_view_right_rising_slash/14.png": [
+65,
+68
+],
+"res://frames/side_view_right_rising_slash/15.png": [
+62,
+68
+],
+"res://frames/side_view_right_run/00.png": [
+49,
+73
+],
+"res://frames/side_view_right_run/01.png": [
+49,
+73
+],
+"res://frames/side_view_right_run/02.png": [
+50,
+73
+],
+"res://frames/side_view_right_run/03.png": [
+50,
+71
+],
+"res://frames/side_view_right_run/04.png": [
+49,
+71
+],
+"res://frames/side_view_right_run/05.png": [
+52,
+68
+],
+"res://frames/side_view_right_run/06.png": [
+48,
+66
+],
+"res://frames/side_view_right_run/07.png": [
+65,
+72
+],
+"res://frames/side_view_right_run/08.png": [
+65,
+73
+],
+"res://frames/side_view_right_run/09.png": [
+61,
+73
+],
+"res://frames/side_view_right_run/10.png": [
+62,
+74
+],
+"res://frames/side_view_right_run/11.png": [
+64,
+73
+],
+"res://frames/side_view_right_run/12.png": [
+50,
+72
+],
+"res://frames/side_view_right_run/13.png": [
+51,
+71
+],
+"res://frames/side_view_right_run/14.png": [
+51,
+70
+],
+"res://frames/side_view_right_run/15.png": [
+51,
+70
+],
+"res://frames/side_view_right_stab/00.png": [
+56,
+74
+],
+"res://frames/side_view_right_stab/01.png": [
+56,
+74
+],
+"res://frames/side_view_right_stab/02.png": [
+54,
+74
+],
+"res://frames/side_view_right_stab/03.png": [
+56,
+73
+],
+"res://frames/side_view_right_stab/04.png": [
+53,
+73
+],
+"res://frames/side_view_right_stab/05.png": [
+56,
+72
+],
+"res://frames/side_view_right_stab/06.png": [
+68,
+68
+],
+"res://frames/side_view_right_stab/07.png": [
+69,
+65
+],
+"res://frames/side_view_right_stab/08.png": [
+77,
+66
+],
+"res://frames/side_view_right_stab/09.png": [
+72,
+67
+],
+"res://frames/side_view_right_stab/10.png": [
+56,
+72
+],
+"res://frames/side_view_right_stab/11.png": [
+55,
+74
+],
+"res://frames/side_view_right_stab/12.png": [
+56,
+70
+],
+"res://frames/side_view_right_stab/13.png": [
+59,
+72
+],
+"res://frames/side_view_right_stab/14.png": [
+56,
+73
+],
+"res://frames/side_view_right_stab/15.png": [
+56,
+75
+],
+"res://frames/side_view_right_walk/00.png": [
+55,
+74
+],
+"res://frames/side_view_right_walk/01.png": [
+54,
+75
+],
+"res://frames/side_view_right_walk/02.png": [
+63,
+73
+],
+"res://frames/side_view_right_walk/03.png": [
+63,
+72
+],
+"res://frames/side_view_right_walk/04.png": [
+63,
+72
+],
+"res://frames/side_view_right_walk/05.png": [
+51,
+73
+],
+"res://frames/side_view_right_walk/06.png": [
+50,
+73
+],
+"res://frames/side_view_right_walk/07.png": [
+50,
+76
+],
+"res://frames/side_view_right_walk/08.png": [
+59,
+73
+],
+"res://frames/side_view_right_walk/09.png": [
+60,
+72
+],
+"res://frames/side_view_right_walk/10.png": [
+57,
+63
+],
+"res://frames/side_view_right_walk/11.png": [
+58,
+72
+],
+"res://frames/side_view_right_walk/12.png": [
+54,
+73
+],
+"res://frames/side_view_right_walk/13.png": [
+52,
+73
+],
+"res://frames/side_view_right_walk/14.png": [
+56,
+73
+],
+"res://frames/side_view_right_walk/15.png": [
+54,
+74
+],
+"res://frames/top_down_down_attack1/00.png": [
+24,
+41
+],
+"res://frames/top_down_down_attack1/01.png": [
+24,
+41
+],
+"res://frames/top_down_down_attack1/02.png": [
+26,
+27
+],
+"res://frames/top_down_down_attack1/03.png": [
+26,
+27
+],
+"res://frames/top_down_down_attack1/04.png": [
+32,
+36
+],
+"res://frames/top_down_down_attack1/05.png": [
+24,
+31
+],
+"res://frames/top_down_down_attack1/06.png": [
+39,
+42
+],
+"res://frames/top_down_down_attack1/07.png": [
+37,
+43
+],
+"res://frames/top_down_down_attack1/08.png": [
+36,
+45
+],
+"res://frames/top_down_down_attack1/09.png": [
+27,
+39
+],
+"res://frames/top_down_down_attack1/10.png": [
+27,
+39
+],
+"res://frames/top_down_down_attack1/11.png": [
+34,
+36
+],
+"res://frames/top_down_down_attack1/12.png": [
+39,
+43
+],
+"res://frames/top_down_down_attack1/13.png": [
+39,
+43
+],
+"res://frames/top_down_down_attack1/14.png": [
+27,
+43
+],
+"res://frames/top_down_down_attack1/15.png": [
+36,
+43
+],
+"res://frames/top_down_down_attack2/00.png": [
+36,
+43
+],
+"res://frames/top_down_down_attack2/01.png": [
+36,
+43
+],
+"res://frames/top_down_down_attack2/02.png": [
+43,
+42
+],
+"res://frames/top_down_down_attack2/03.png": [
+43,
+42
+],
+"res://frames/top_down_down_attack2/04.png": [
+31,
+34
+],
+"res://frames/top_down_down_attack2/05.png": [
+21,
+28
+],
+"res://frames/top_down_down_attack2/06.png": [
+21,
+28
+],
+"res://frames/top_down_down_attack2/07.png": [
+26,
+23
+],
+"res://frames/top_down_down_attack2/08.png": [
+24,
+25
+],
+"res://frames/top_down_down_attack2/09.png": [
+30,
+28
+],
+"res://frames/top_down_down_attack2/10.png": [
+30,
+28
+],
+"res://frames/top_down_down_attack2/11.png": [
+26,
+38
+],
+"res://frames/top_down_down_attack2/12.png": [
+26,
+38
+],
+"res://frames/top_down_down_attack2/13.png": [
+30,
+34
+],
+"res://frames/top_down_down_attack2/14.png": [
+30,
+34
+],
+"res://frames/top_down_down_attack2/15.png": [
+26,
+43
+],
+"res://frames/top_down_down_idle/00.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/01.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/02.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/03.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/04.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/05.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/06.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/07.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/08.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/09.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/10.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/11.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/12.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/13.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/14.png": [
+16,
+31
+],
+"res://frames/top_down_down_idle/15.png": [
+16,
+31
+],
+"res://frames/top_down_down_run/00.png": [
+13,
+30
+],
+"res://frames/top_down_down_run/01.png": [
+9,
+28
+],
+"res://frames/top_down_down_run/02.png": [
+9,
+28
+],
+"res://frames/top_down_down_run/03.png": [
+12,
+30
+],
+"res://frames/top_down_down_run/04.png": [
+13,
+27
+],
+"res://frames/top_down_down_run/05.png": [
+13,
+27
+],
+"res://frames/top_down_down_run/06.png": [
+9,
+27
+],
+"res://frames/top_down_down_run/07.png": [
+13,
+25
+],
+"res://frames/top_down_down_run/08.png": [
+13,
+25
+],
+"res://frames/top_down_down_run/09.png": [
+11,
+26
+],
+"res://frames/top_down_down_run/10.png": [
+11,
+26
+],
+"res://frames/top_down_down_run/11.png": [
+10,
+27
+],
+"res://frames/top_down_down_run/12.png": [
+16,
+32
+],
+"res://frames/top_down_down_run/13.png": [
+15,
+31
+],
+"res://frames/top_down_down_run/14.png": [
+14,
+32
+],
+"res://frames/top_down_down_run/15.png": [
+16,
+31
+],
+"res://frames/top_down_down_stab/00.png": [
+18,
+32
+],
+"res://frames/top_down_down_stab/01.png": [
+17,
+31
+],
+"res://frames/top_down_down_stab/02.png": [
+17,
+32
+],
+"res://frames/top_down_down_stab/03.png": [
+16,
+31
+],
+"res://frames/top_down_down_stab/04.png": [
+20,
+30
+],
+"res://frames/top_down_down_stab/05.png": [
+20,
+30
+],
+"res://frames/top_down_down_stab/06.png": [
+17,
+25
+],
+"res://frames/top_down_down_stab/07.png": [
+18,
+30
+],
+"res://frames/top_down_down_stab/08.png": [
+20,
+30
+],
+"res://frames/top_down_down_stab/09.png": [
+20,
+30
+],
+"res://frames/top_down_down_stab/10.png": [
+23,
+19
+],
+"res://frames/top_down_down_stab/11.png": [
+18,
+29
+],
+"res://frames/top_down_down_stab/12.png": [
+16,
+30
+],
+"res://frames/top_down_down_stab/13.png": [
+17,
+29
+],
+"res://frames/top_down_down_stab/14.png": [
+17,
+29
+],
+"res://frames/top_down_down_stab/15.png": [
+17,
+31
+],
+"res://frames/top_down_left_attack1/00.png": [
+42,
+39
+],
+"res://frames/top_down_left_attack1/01.png": [
+42,
+39
+],
+"res://frames/top_down_left_attack1/02.png": [
+42,
+39
+],
+"res://frames/top_down_left_attack1/03.png": [
+42,
+39
+],
+"res://frames/top_down_left_attack1/04.png": [
+39,
+26
+],
+"res://frames/top_down_left_attack1/05.png": [
+39,
+26
+],
+"res://frames/top_down_left_attack1/06.png": [
+23,
+39
+],
+"res://frames/top_down_left_attack1/07.png": [
+23,
+39
+],
+"res://frames/top_down_left_attack1/08.png": [
+22,
+41
+],
+"res://frames/top_down_left_attack1/09.png": [
+18,
+42
+],
+"res://frames/top_down_left_attack1/10.png": [
+21,
+43
+],
+"res://frames/top_down_left_attack1/11.png": [
+23,
+45
+],
+"res://frames/top_down_left_attack1/12.png": [
+25,
+43
+],
+"res://frames/top_down_left_attack1/13.png": [
+25,
+42
+],
+"res://frames/top_down_left_attack1/14.png": [
+27,
+42
+],
+"res://frames/top_down_left_attack1/15.png": [
+27,
+42
+],
+"res://frames/top_down_left_attack2/00.png": [
+27,
+42
+],
+"res://frames/top_down_left_attack2/01.png": [
+27,
+42
+],
+"res://frames/top_down_left_attack2/02.png": [
+37,
+43
+],
+"res://frames/top_down_left_attack2/03.png": [
+40,
+44
+],
+"res://frames/top_down_left_attack2/04.png": [
+40,
+44
+],
+"res://frames/top_down_left_attack2/05.png": [
+23,
+37
+],
+"res://frames/top_down_left_attack2/06.png": [
+23,
+37
+],
+"res://frames/top_down_left_attack2/07.png": [
+31,
+30
+],
+"res://frames/top_down_left_attack2/08.png": [
+31,
+30
+],
+"res://frames/top_down_left_attack2/09.png": [
+25,
+28
+],
+"res://frames/top_down_left_attack2/10.png": [
+25,
+28
+],
+"res://frames/top_down_left_attack2/11.png": [
+22,
+33
+],
+"res://frames/top_down_left_attack2/12.png": [
+20,
+40
+],
+"res://frames/top_down_left_attack2/13.png": [
+21,
+39
+],
+"res://frames/top_down_left_attack2/14.png": [
+22,
+39
+],
+"res://frames/top_down_left_attack2/15.png": [
+22,
+39
+],
+"res://frames/top_down_left_run/00.png": [
+29,
+30
+],
+"res://frames/top_down_left_run/01.png": [
+27,
+29
+],
+"res://frames/top_down_left_run/02.png": [
+27,
+29
+],
+"res://frames/top_down_left_run/03.png": [
+28,
+27
+],
+"res://frames/top_down_left_run/04.png": [
+28,
+28
+],
+"res://frames/top_down_left_run/05.png": [
+28,
+26
+],
+"res://frames/top_down_left_run/06.png": [
+31,
+24
+],
+"res://frames/top_down_left_run/07.png": [
+17,
+30
+],
+"res://frames/top_down_left_run/08.png": [
+17,
+30
+],
+"res://frames/top_down_left_run/09.png": [
+19,
+31
+],
+"res://frames/top_down_left_run/10.png": [
+19,
+31
+],
+"res://frames/top_down_left_run/11.png": [
+18,
+29
+],
+"res://frames/top_down_left_run/12.png": [
+29,
+31
+],
+"res://frames/top_down_left_run/13.png": [
+26,
+30
+],
+"res://frames/top_down_left_run/14.png": [
+27,
+28
+],
+"res://frames/top_down_left_run/15.png": [
+29,
+28
+],
+"res://frames/top_down_left_walk/00.png": [
+19,
+29
+],
+"res://frames/top_down_left_walk/01.png": [
+19,
+29
+],
+"res://frames/top_down_left_walk/02.png": [
+19,
+29
+],
+"res://frames/top_down_left_walk/03.png": [
+20,
+29
+],
+"res://frames/top_down_left_walk/04.png": [
+19,
+27
+],
+"res://frames/top_down_left_walk/05.png": [
+29,
+29
+],
+"res://frames/top_down_left_walk/06.png": [
+31,
+29
+],
+"res://frames/top_down_left_walk/07.png": [
+28,
+34
+],
+"res://frames/top_down_left_walk/08.png": [
+28,
+34
+],
+"res://frames/top_down_left_walk/09.png": [
+22,
+28
+],
+"res://frames/top_down_left_walk/10.png": [
+22,
+28
+],
+"res://frames/top_down_left_walk/11.png": [
+23,
+28
+],
+"res://frames/top_down_left_walk/12.png": [
+26,
+29
+],
+"res://frames/top_down_left_walk/13.png": [
+28,
+30
+],
+"res://frames/top_down_left_walk/14.png": [
+26,
+29
+],
+"res://frames/top_down_left_walk/15.png": [
+26,
+30
+],
+"res://frames/top_down_right_attack1/00.png": [
+22,
+39
+],
+"res://frames/top_down_right_attack1/01.png": [
+22,
+39
+],
+"res://frames/top_down_right_attack1/02.png": [
+22,
+39
+],
+"res://frames/top_down_right_attack1/03.png": [
+22,
+39
+],
+"res://frames/top_down_right_attack1/04.png": [
+25,
+26
+],
+"res://frames/top_down_right_attack1/05.png": [
+25,
+26
+],
+"res://frames/top_down_right_attack1/06.png": [
+41,
+39
+],
+"res://frames/top_down_right_attack1/07.png": [
+41,
+39
+],
+"res://frames/top_down_right_attack1/08.png": [
+42,
+41
+],
+"res://frames/top_down_right_attack1/09.png": [
+46,
+42
+],
+"res://frames/top_down_right_attack1/10.png": [
+43,
+43
+],
+"res://frames/top_down_right_attack1/11.png": [
+41,
+45
+],
+"res://frames/top_down_right_attack1/12.png": [
+39,
+43
+],
+"res://frames/top_down_right_attack1/13.png": [
+39,
+42
+],
+"res://frames/top_down_right_attack1/14.png": [
+37,
+42
+],
+"res://frames/top_down_right_attack1/15.png": [
+37,
+42
+],
+"res://frames/top_down_right_attack2/00.png": [
+37,
+42
+],
+"res://frames/top_down_right_attack2/01.png": [
+37,
+42
+],
+"res://frames/top_down_right_attack2/02.png": [
+27,
+43
+],
+"res://frames/top_down_right_attack2/03.png": [
+24,
+44
+],
+"res://frames/top_down_right_attack2/04.png": [
+24,
+44
+],
+"res://frames/top_down_right_attack2/05.png": [
+41,
+37
+],
+"res://frames/top_down_right_attack2/06.png": [
+41,
+37
+],
+"res://frames/top_down_right_attack2/07.png": [
+33,
+30
+],
+"res://frames/top_down_right_attack2/08.png": [
+33,
+30
+],
+"res://frames/top_down_right_attack2/09.png": [
+39,
+28
+],
+"res://frames/top_down_right_attack2/10.png": [
+39,
+28
+],
+"res://frames/top_down_right_attack2/11.png": [
+42,
+33
+],
+"res://frames/top_down_right_attack2/12.png": [
+44,
+40
+],
+"res://frames/top_down_right_attack2/13.png": [
+43,
+39
+],
+"res://frames/top_down_right_attack2/14.png": [
+42,
+39
+],
+"res://frames/top_down_right_attack2/15.png": [
+42,
+39
+],
+"res://frames/top_down_right_run/00.png": [
+19,
+30
+],
+"res://frames/top_down_right_run/01.png": [
+21,
+29
+],
+"res://frames/top_down_right_run/02.png": [
+21,
+29
+],
+"res://frames/top_down_right_run/03.png": [
+20,
+27
+],
+"res://frames/top_down_right_run/04.png": [
+20,
+28
+],
+"res://frames/top_down_right_run/05.png": [
+20,
+26
+],
+"res://frames/top_down_right_run/06.png": [
+17,
+24
+],
+"res://frames/top_down_right_run/07.png": [
+31,
+30
+],
+"res://frames/top_down_right_run/08.png": [
+31,
+30
+],
+"res://frames/top_down_right_run/09.png": [
+29,
+31
+],
+"res://frames/top_down_right_run/10.png": [
+29,
+31
+],
+"res://frames/top_down_right_run/11.png": [
+30,
+29
+],
+"res://frames/top_down_right_run/12.png": [
+19,
+31
+],
+"res://frames/top_down_right_run/13.png": [
+22,
+30
+],
+"res://frames/top_down_right_run/14.png": [
+21,
+28
+],
+"res://frames/top_down_right_run/15.png": [
+19,
+28
+],
+"res://frames/top_down_right_walk/00.png": [
+29,
+29
+],
+"res://frames/top_down_right_walk/01.png": [
+29,
+29
+],
+"res://frames/top_down_right_walk/02.png": [
+29,
+29
+],
+"res://frames/top_down_right_walk/03.png": [
+28,
+29
+],
+"res://frames/top_down_right_walk/04.png": [
+29,
+27
+],
+"res://frames/top_down_right_walk/05.png": [
+19,
+29
+],
+"res://frames/top_down_right_walk/06.png": [
+17,
+29
+],
+"res://frames/top_down_right_walk/07.png": [
+20,
+34
+],
+"res://frames/top_down_right_walk/08.png": [
+20,
+34
+],
+"res://frames/top_down_right_walk/09.png": [
+26,
+28
+],
+"res://frames/top_down_right_walk/10.png": [
+26,
+28
+],
+"res://frames/top_down_right_walk/11.png": [
+25,
+28
+],
+"res://frames/top_down_right_walk/12.png": [
+22,
+29
+],
+"res://frames/top_down_right_walk/13.png": [
+20,
+30
+],
+"res://frames/top_down_right_walk/14.png": [
+22,
+29
+],
+"res://frames/top_down_right_walk/15.png": [
+22,
+30
+],
+"res://frames/top_down_up_attack1/00.png": [
+39,
+40
+],
+"res://frames/top_down_up_attack1/01.png": [
+39,
+40
+],
+"res://frames/top_down_up_attack1/02.png": [
+39,
+33
+],
+"res://frames/top_down_up_attack1/03.png": [
+40,
+29
+],
+"res://frames/top_down_up_attack1/04.png": [
+40,
+29
+],
+"res://frames/top_down_up_attack1/05.png": [
+26,
+26
+],
+"res://frames/top_down_up_attack1/06.png": [
+26,
+26
+],
+"res://frames/top_down_up_attack1/07.png": [
+38,
+25
+],
+"res://frames/top_down_up_attack1/08.png": [
+38,
+25
+],
+"res://frames/top_down_up_attack1/09.png": [
+41,
+41
+],
+"res://frames/top_down_up_attack1/10.png": [
+40,
+43
+],
+"res://frames/top_down_up_attack1/11.png": [
+42,
+43
+],
+"res://frames/top_down_up_attack1/12.png": [
+42,
+43
+],
+"res://frames/top_down_up_attack1/13.png": [
+43,
+44
+],
+"res://frames/top_down_up_attack1/14.png": [
+43,
+44
+],
+"res://frames/top_down_up_attack1/15.png": [
+43,
+44
+]
+}
