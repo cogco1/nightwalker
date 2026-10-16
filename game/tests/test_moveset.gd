@@ -10,7 +10,7 @@ const TOP = preload("res://assets/top_down.tres")
 # Moves the top-down view can start (no crouch, no specials there).
 const TOP_MOVES := [&"attack1", &"attack2", &"attack3", &"heavy_slash"]
 # Moves player.gd starts by request rather than through the combo graph.
-const REQUESTED := [&"crouch_stab", &"rising_slash", &"dive_slash", &"dash_stab", &"heavy_slash", &"counter_slash"]
+const REQUESTED := [&"crouch_stab", &"rising_slash", &"dive_slash", &"dash_stab", &"heavy_slash", &"counter_slash", &"leap_cleave"]
 const CRITS := [&"none", &"roll", &"always"]
 
 var checks := 0
@@ -35,7 +35,7 @@ func run() -> void:
 		for field in ["anim", "fps"]:
 			check(data.has(field), "%s has %s" % [id, field])
 		check(data.has("active") or not data.has("box"), "%s: a move with a hit box has a hit window" % id)
-		check(data.get("swing", &"light") in [&"light", &"heavy"], "%s uses a known swing sound" % id)
+		check(data.get("swing", &"light") in [&"light", &"heavy", &"none"], "%s uses a known swing sound" % id)
 		if data.has("as"):
 			check(MOVESET.MOVES.has(data["as"]), "%s counts as a known move" % id)
 		if data.get("resumes", false):
@@ -49,7 +49,7 @@ func run() -> void:
 		if data.has("arc"):
 			check(data["arc"].has("from") and data["arc"].has("to") and data["arc"]["from"] != data["arc"]["to"], "%s: blade arc has a sweep" % id)
 		if data.has("shockwave"):
-			check(data.get("dive", false) and float(data["shockwave"].get("half_width", 0.0)) > 0.0, "%s: only a dive lands a shockwave, with a width" % id)
+			check((data.get("dive", false) or data.get("lands", false)) and float(data["shockwave"].get("half_width", 0.0)) > 0.0, "%s: only a move that lands has a shockwave, with a width" % id)
 			check(SESSION.STOPS.has(data["shockwave"].get("crit_stop", &"critical")) and SESSION.STOPS.has(data["shockwave"].get("stop", &"light")), "%s: shockwave uses known hit-stop weights" % id)
 		check(float(data.get("fps", 0.0)) > 0.0, "%s plays at a positive rate" % id)
 		check(data.get("crit", &"none") in CRITS, "%s uses a known critical rule" % id)
@@ -98,6 +98,8 @@ func verify_clip(frames: SpriteFrames, clip: String, data: Dictionary, blade_pat
 			check(int(data["lunge"]["from"]) <= active.y, "%s: lunge starts no later than the last active frame" % id)
 		for frame in data.get("rehit", []):
 			check(int(frame) > active.x and (active.y == -1 or int(frame) <= active.y), "%s: rehit frame lies inside the hit window" % id)
+	if data.has("hold_frame"):
+		check(int(data["hold_frame"]) >= start and int(data["hold_frame"]) < count, "%s: held air frame lies inside the played part of %s" % [id, clip])
 	if data.has("dash_cancel"):
 		check(int(data["dash_cancel"]) >= start and int(data["dash_cancel"]) < count, "%s: dash-cancel frame lies inside the played part of %s" % [id, clip])
 	if data.has("cancel"):

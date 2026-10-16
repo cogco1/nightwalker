@@ -208,7 +208,7 @@ func _on_attack_received(result: int, _attack: Dictionary) -> void:
 
 
 func _on_special_started(kind: String, _direction: Vector2) -> void:
-	message = "RISING SLASH" if kind == "rising_slash" else ("DIVE SLASH" if kind == "dive_slash" else "PIERCING DASH")
+	message = {"rising_slash": "RISING SLASH", "dive_slash": "DIVE SLASH", "leap_cleave": "LEAP CLEAVE"}.get(kind, "PIERCING DASH")
 	_refresh_hud()
 
 

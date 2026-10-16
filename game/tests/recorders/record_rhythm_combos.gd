@@ -1,8 +1,8 @@
 extends "res://tests/support/isolated_suite.gd"
 ## Real-GPU capture of the light / heavy combo graph through the shipped GameSession path: hospital side view,
 ## a fixture target in front (and one behind for the rift slash). Strings: L x5, H, H H, L-H, L L-H, L L L-H,
-## L L L L-H, the dodge offsets Shift-L-L, L L-Shift-L-L, Shift-H-H, and the aerial spin (jump-H, jump-L L L L)
-## around a hovering drone whose attack is off. Run windowed:
+## L L L L-H, the dodge offsets Shift-L-L, L L-Shift-L-L, Shift-H-H, the aerial spin (jump-H, jump-L L L L)
+## around a hovering drone whose attack is off, and the leap cleave (W+H). Run windowed:
 ##   godot --path game --fixed-fps 60 --script res://tests/recorders/record_rhythm_combos.gd
 ## Output: res://evidence/rhythm_combos/ (stills, frames/NNNN.png every second physics tick, capture_report.json
 ## with the sound timeline and per-string moves / hits / stops). tools/art_qa/compose_combat_capture.py makes the MP4.
@@ -13,6 +13,8 @@ const DRONE = preload("res://tests/fixtures/attack_drone.gd")
 const OUTPUT := "res://evidence/rhythm_combos/"
 const L := MOUSE_BUTTON_LEFT
 const H := MOUSE_BUTTON_RIGHT
+# W held while the right button is clicked.
+const LEAP := -1
 const STRINGS := [
 	["light_x5", [L, L, L, L, L], [&"attack1", &"attack2", &"attack3", &"thrust4", &"spin5a"]],
 	["heavy", [H], [&"rush_cleave"]],
@@ -26,6 +28,7 @@ const STRINGS := [
 	["dash_heavy", [KEY_SHIFT, H, H], [&"dash_stab", &"chase_cleave", &"launch_slash"]],
 	["air_heavy", [KEY_SPACE, H], [&"", &"air_spin_a"]],
 	["air_light4", [KEY_SPACE, L, L, L, L], [&"", &"attack1", &"attack2", &"attack3", &"air_spin_a"]],
+	["leap_cleave", [LEAP], [&"leap_cleave"]],
 ]
 # A still is taken the first time each of these moves reaches the frame.
 const STILLS := {&"spin5a": 7, &"spin5b": 9, &"rush_cleave": 7, &"launch_slash": 6, &"spin_cleave_b": 7, &"rift_dive": 7}
@@ -70,7 +73,13 @@ func key(code: Key, pressed: bool) -> void:
 
 # A mouse button, or a key (codes above the mouse range) such as Shift for the dash.
 func press(button: int, pressed: bool) -> void:
-	if button > MOUSE_BUTTON_XBUTTON2:
+	if button == LEAP:
+		if pressed:
+			key(KEY_W, true)
+		mouse(H, pressed)
+		if not pressed:
+			key(KEY_W, false)
+	elif button > MOUSE_BUTTON_XBUTTON2:
 		key(button, pressed)
 	else:
 		mouse(button, pressed)
@@ -163,7 +172,7 @@ func play(entry: Array, base: Vector2) -> void:
 	player.facing = "right"
 	player.show_idle()
 	# the dash carries the hero 48 px, so the dodge strings put the target past the dash end
-	front.position = base + Vector2(78 if KEY_SHIFT in entry[1] else 34, 0)
+	front.position = base + Vector2(78 if KEY_SHIFT in entry[1] else (56 if LEAP in entry[1] else 34), 0)
 	front.velocity = Vector2.ZERO
 	front.hp = 99
 	# the second target only stands in for the rift slash: it steps in behind the hero once the thrust starts

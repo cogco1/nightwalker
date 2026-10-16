@@ -4,7 +4,9 @@ extends "res://tests/support/isolated_suite.gd"
 ## landing wave, and the limits (top-down view, airborne, crouching, latest press wins). Dodge offset: light swings
 ## cut into the dash after their hit frame, and a press during or just after the dash gives the shadow slash (which
 ## resumes the interrupted string) or the chase cleave. Aerial spin: right click in the air, or a fourth click after
-## the air string; three hits (2, 2 and 6 frame stops), about 0.6 s up, then the dive can follow.
+## the air string; three hits (2, 2 and 6 frame stops), about 0.6 s up, then the dive can follow. Leap cleave: W + right
+## click on the floor leaps about 52 px forward, chops on the way down (2x, heavy stop, launch) and lands with a
+## shockwave along the floor (2x, heavy stop, launch; landing effects even on a miss).
 
 const MAIN = preload("res://tests/fixtures/combat_lab.tscn")
 const MOVESET = preload("res://scripts/player/moves_long_blade.gd")
@@ -95,6 +97,7 @@ func run() -> void:
 	await verify_dodge_offset()
 	await verify_dash_cancel()
 	await verify_air_spin()
+	await verify_leap_cleave()
 	await verify_limits()
 	finish()
 
@@ -407,6 +410,88 @@ func verify_air_spin() -> void:
 	await stage(Vector2(60, 160), Vector2(300, 160))
 	await tap(HEAVY)
 	check(player.move_id == &"rush_cleave", "on the floor a right click is still the rush cleave")
+
+
+# W held, then a click of `button`; W is let go afterwards.
+func with_w(button: MouseButton) -> void:
+	key(KEY_W, true)
+	await frames(1)
+	await tap(button)
+	key(KEY_W, false)
+
+
+func verify_leap_cleave() -> void:
+	var player: CharacterBody2D = arena.player
+	var played: Array = arena.session.combat_feedback.played
+	# into empty air: forward leap, small apex, about 0.4 s up, lands with its effects even on a miss
+	await stage(Vector2(40, 160), Vector2(300, 160))
+	var start_x := player.position.x
+	var sounds_before := played.size()
+	await with_w(HEAVY)
+	check(player.move_id == &"leap_cleave" and player.special_kind == "leap_cleave", "W + right click on the floor starts the leap cleave")
+	check(played.slice(sounds_before).has("swing_heavy"), "the leap takes off with the heavy swing")
+	var peak := player.position.y
+	var airborne := 0
+	for _index in range(60):
+		if player.is_on_floor() and airborne > 0:
+			break
+		if not player.is_on_floor():
+			airborne += 1
+		peak = minf(peak, player.position.y)
+		await frames(1)
+	var travel := player.position.x - start_x
+	check(player.is_on_floor(), "the leap cleave lands")
+	check(travel >= 40.0, "the leap carries the hero at least 40 px forward")
+	check(160.0 - peak >= 10.0 and 160.0 - peak <= 20.0, "the leap rises about half a body")
+	check(airborne >= 20 and airborne <= 32, "the leap stays up about 0.4 s")
+	check(moves_seen.slice(-2) == [&"leap_cleave", &"leap_cleave_chop"], "the leap turns into the chop on the way down")
+	var landing_effects: Array = player.fx.effects.filter(func(effect: Dictionary) -> bool: return effect["color"] == player.PLAYER_FX.DUST and Vector2(effect["velocity"]).y < -40.0)
+	check(landing_effects.size() >= 8, "the landing throws up dust columns even on a miss")
+	check(hits_seen.is_empty() and arena.completed_stop_requests.is_empty(), "a missed leap hits nothing and stops nothing")
+	observations["leap"] = {"travel_px": snappedf(travel, 0.1), "apex_px": snappedf(160.0 - peak, 0.1), "air_ticks": airborne}
+	await wait_until(func() -> bool: return player.state == player.State.FREE, 60)
+	check(player.state == player.State.FREE, "the hero recovers after the landing")
+	# a target where the hero comes down: the chop hits it once, 2x, heavy stop, and bounces it up
+	await stage(Vector2(40, 160), Vector2(92, 160))
+	var target: CharacterBody2D = arena.targets[0]
+	await with_w(HEAVY)
+	await wait_until(func() -> bool: return player.is_on_floor() and player.state != player.State.ATTACK, 90)
+	var hits := hits_by([&"leap_cleave_chop"])
+	check(hits.size() == 1 and hits[0]["target"] == target and hits[0]["damage"] == 2 and not hits[0]["critical"], "a target at the landing point takes one 2x hit")
+	check(arena.completed_stop_requests == [10], "the hit holds the 10-frame heavy stop")
+	check(target.knock_count == 1, "the hit bounces the target up for an air combo")
+	check(played.has("hit_heavy"), "the hit plays the heavy impact sound")
+	# the landing wave: a target beside the landing spot is hit by the wave, one farther away is not
+	await stage(Vector2(40, 160), Vector2(300, 160), Vector2(300, 160))
+	var near: CharacterBody2D = arena.targets[0]
+	var far: CharacterBody2D = arena.targets[1]
+	await with_w(HEAVY)
+	# they step in behind once the hero has flown past (the leap is too low to clear a standing target)
+	await wait_until(func() -> bool: return player.position.x >= start_x + travel - 8.0 or player.is_on_floor() and player.move_id != &"leap_cleave", 40)
+	near.position = Vector2(start_x + travel - 21.0, 160)
+	far.position = Vector2(start_x + travel - 42.0, 160)
+	await wait_until(func() -> bool: return player.is_on_floor() and player.state != player.State.ATTACK, 90)
+	await wait_until(func() -> bool: return not arena.hit_stop_active, 30)
+	var wave := hits_by([&"leap_cleave_chop"])
+	check(wave.size() == 1 and wave[0]["target"] == near and wave[0]["damage"] == 2, "the landing wave hits a target within 24 px along the floor, 2x")
+	check(near.knock_count == 1 and far.hp == far.max_hp, "the wave bounces the near target and leaves the far one alone")
+	check(arena.completed_stop_requests == [10], "the wave hit holds the 10-frame heavy stop")
+	observations["leap_wave"] = {"hits": wave.map(func(hit: Dictionary) -> String: return "%s %d" % ["near" if hit["target"] == near else "other", hit["damage"]]), "landed_x": snappedf(player.position.x, 0.1)}
+	# the other buttons keep their moves
+	await stage(Vector2(40, 160), Vector2(300, 160))
+	await with_w(LIGHT)
+	check(player.special_kind == "rising_slash", "W + left click is still the rising slash")
+	await stage(Vector2(40, 160), Vector2(300, 160))
+	await tap(HEAVY)
+	check(player.move_id == &"rush_cleave", "a right click without W is still the rush cleave")
+	await stage(Vector2(40, 160), Vector2(300, 160))
+	await jump()
+	await frames(8)
+	key(KEY_W, true)
+	await tap(HEAVY)
+	key(KEY_W, false)
+	check(player.move_id == &"air_spin_a", "W + right click in the air is still the aerial spin")
+	await wait_until(func() -> bool: return player.is_on_floor() and player.state == player.State.FREE, 180)
 
 
 func verify_limits() -> void:
