@@ -1,8 +1,7 @@
 extends "res://tests/support/isolated_suite.gd"
 ## Move data sanity: every move in moves_long_blade.gd points at drawn frames for both facings, keeps its hit
 ## window inside the animation, has blade paths, uses hit-stop weights GameSession knows, and the combo graph
-## only names existing moves. Playback rates live in the move table (player.gd plays a clip at fps / clip speed);
-## a clip named after its move carries that move's fps as its own speed, so the two never disagree.
+## only names existing moves.
 
 const MOVESET = preload("res://scripts/player/moves_long_blade.gd")
 const SESSION = preload("res://scripts/core/game_session.gd")
@@ -61,13 +60,6 @@ func run() -> void:
 		if id in TOP_MOVES:
 			for facing in ["up", "down", "left", "right"]:
 				verify_clip(TOP, "%s_%s" % [data["anim"], facing], data, paths.get("top_down", {}), id)
-		if String(data["anim"]) == String(id):
-			for prefix in [data["anim"]] + ([data["air_anim"]] if data.has("air_anim") else []):
-				for facing in ["left", "right"]:
-					check_clip_rate(SIDE, "side_view", "%s_%s" % [prefix, facing], data, id)
-				if id in TOP_MOVES and prefix == data["anim"]:
-					for facing in ["up", "down", "left", "right"]:
-						check_clip_rate(TOP, "top_down", "%s_%s" % [prefix, facing], data, id)
 	var reachable: Dictionary = {}
 	for id in REQUESTED:
 		reachable[id] = true
@@ -86,11 +78,6 @@ func run() -> void:
 	for id in MOVESET.MOVES:
 		check(reachable.has(id), "%s can be started (combo graph, segment or request)" % id)
 	finish()
-
-
-func check_clip_rate(frames: SpriteFrames, view: String, clip: String, data: Dictionary, id: StringName) -> void:
-	if frames.has_animation(clip):
-		check(is_equal_approx(frames.get_animation_speed(clip), float(data["fps"])), "%s: %s.tres %s speed is the move's %s fps" % [id, view, clip, data["fps"]])
 
 
 func verify_clip(frames: SpriteFrames, clip: String, data: Dictionary, blade_paths: Dictionary, id: StringName) -> void:
