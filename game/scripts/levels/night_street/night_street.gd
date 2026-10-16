@@ -292,11 +292,12 @@ func _create_ui() -> void:
 	_scan_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 
-## Control hint from the current bindings; the defaults read "AD走 左键斩 右键重击 长按蓄力 Shift闪避 R重置".
+## Control hint from the current bindings; the defaults read "AD走 左键斩 右键重击 W+右键跃劈 Shift闪避 R重置"
+## (the charge, a held left click, no longer fits on the line once the leap cleave is named).
 func refresh_hint() -> void:
-	_hint.text = "%s%s走 %s斩 %s重击 长按蓄力 %s闪避 %s重置" % [CONTROLS.hint_text("move_left"), CONTROLS.hint_text("move_right"),
-		CONTROLS.hint_text("attack_mouse"), CONTROLS.hint_text("heavy_mouse"), CONTROLS.hint_text("dash_modifier"),
-		CONTROLS.hint_text("reset_arena")]
+	_hint.text = "%s%s走 %s斩 %s重击 %s+%s跃劈 %s闪避 %s重置" % [CONTROLS.hint_text("move_left"), CONTROLS.hint_text("move_right"),
+		CONTROLS.hint_text("attack_mouse"), CONTROLS.hint_text("heavy_mouse"), CONTROLS.hint_text("rising_modifier"),
+		CONTROLS.hint_text("heavy_mouse"), CONTROLS.hint_text("dash_modifier"), CONTROLS.hint_text("reset_arena")]
 
 
 func _physics_process(delta: float) -> void:

@@ -10,6 +10,8 @@ const SCENE = preload("res://scenes/night_street_proto.tscn")
 const OUTPUT := "res://evidence/night_street_rhythm/"
 const L := MOUSE_BUTTON_LEFT
 const H := MOUSE_BUTTON_RIGHT
+# W held while the right button is clicked: the leap cleave.
+const LEAP := -1
 # name, presses (mouse buttons or keys), the move each press should start (&"" = none, for a jump)
 const SEGMENTS := [
 	["light_x5", [L, L, L, L, L], [&"attack1", &"attack2", &"attack3", &"thrust4", &"spin5a"]],
@@ -18,6 +20,7 @@ const SEGMENTS := [
 	["heavy_heavy", [H, H], [&"rush_cleave", &"launch_slash"]],
 	["dash_light", [KEY_SHIFT, L, L], [&"dash_stab", &"shadow_slash", &"attack2"]],
 	["air_spin", [KEY_SPACE, H], [&"", &"air_spin_a"]],
+	["leap_cleave", [LEAP], [&"leap_cleave"]],
 ]
 var street: Node2D
 var session: Node
@@ -55,7 +58,13 @@ func key(code: int, pressed: bool) -> void:
 
 
 func press(code: int) -> void:
-	if code > MOUSE_BUTTON_XBUTTON2:
+	if code == LEAP:
+		key(KEY_W, true)
+		mouse(H, true)
+		await tick(2)
+		mouse(H, false)
+		key(KEY_W, false)
+	elif code > MOUSE_BUTTON_XBUTTON2:
 		key(code, true)
 		await tick(2)
 		key(code, false)
@@ -118,7 +127,7 @@ func run() -> void:
 		await settle()
 		bag.max_hp = 40
 		bag.hp = 40
-		player.position = Vector2(bag.global_position.x - (64.0 if entry[1][0] == KEY_SHIFT else 22.0), 156)
+		player.position = Vector2(bag.global_position.x - (64.0 if entry[1][0] == KEY_SHIFT else (56.0 if entry[1][0] == LEAP else 22.0)), 156)
 		player.velocity = Vector2.ZERO
 		player.facing = "right"
 		player.show_idle()

@@ -102,13 +102,13 @@ func verify_layout_and_hint() -> void:
 		"Hover drones stand where layout.json targets puts them")
 	check(layout is Dictionary and layout.get("fallback_lights", []).size() == 3, "The fallback street lights live in layout.json")
 	var hint: Label = street._hint
-	check(hint.text == "AD走 左键斩 右键重击 长按蓄力 Shift闪避 R重置", "The default bindings keep the original controls hint")
+	check(hint.text == "AD走 左键斩 右键重击 W+右键跃劈 Shift闪避 R重置", "The default bindings give the default controls hint")
 	var profile := CONTROLS.defaults()
 	profile.merge({"move_left": KEY_J, "move_right": KEY_L, "dash_modifier": KEY_CTRL, "heavy_mouse": MOUSE_BUTTON_MIDDLE}, true)
 	CONTROLS.current = profile
 	CONTROLS.install(false)
 	street.refresh_hint()
-	check(hint.text == "JL走 左键斩 中键重击 长按蓄力 Ctrl闪避 R重置", "The controls hint follows rebound keys")
+	check(hint.text == "JL走 左键斩 中键重击 W+中键跃劈 Ctrl闪避 R重置", "The controls hint follows rebound keys")
 	CONTROLS.current = CONTROLS.defaults()
 	CONTROLS.install(false)
 	street.refresh_hint()
