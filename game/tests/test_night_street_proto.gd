@@ -1,9 +1,11 @@
 extends "res://tests/support/isolated_suite.gd"
 ## Night-street prototype: hero material everywhere, surveillance exposure, combat and hit-stop on hover
-## drones, the drones' own attack (hit, perfect dodge, counter), prototype-only controls, and no route into it from
-## the shipped safe house / hospital flow.
+## drones, the drones' own attack (hit, perfect dodge, counter), prototype-only controls, hand-placed data from
+## layout.json, the controls hint written from the bindings, and no route into it from the shipped safe house /
+## hospital flow.
 
 const STREET = preload("res://scenes/night_street_proto.tscn")
+const CONTROLS = preload("res://scripts/core/controls.gd")
 const PLAYER = preload("res://scenes/player.tscn")
 const HERO_SHADER := "res://shaders/character_cyber.gdshader"
 const PALETTE_SOURCE := ["11141a", "20242b", "303842", "414b58", "5a6268", "566170", "6b7480", "8a8a85", "75695a",
@@ -83,11 +85,33 @@ func run() -> void:
 	var table: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://assets/night_street/lights.json"))
 	check(table is Array and lights.size() == table.size() + 1 and lights.size() >= 10, "Street lights follow the fixtures in lights.json (plus the beam spot)")
 	observations["street_lights"] = lights.size()
+	verify_layout_and_hint()
 	await verify_exposure(player)
 	await verify_combat(player)
 	await verify_drone_attack(player)
 	await verify_prototype_keys(player, material)
 	finish()
+
+
+func verify_layout_and_hint() -> void:
+	var layout: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://assets/night_street/layout.json"))
+	var spots: Array = layout.get("targets", []) if layout is Dictionary else []
+	var drones := street.get_node("World").get_children().filter(func(node: Node) -> bool: return node.has_method("take_damage"))
+	var placed := drones.map(func(node: Node2D) -> Vector2: return node.position)
+	check(spots.size() == 3 and placed == spots.map(func(spot: Array) -> Vector2: return Vector2(spot[0], spot[1])),
+		"Hover drones stand where layout.json targets puts them")
+	check(layout is Dictionary and layout.get("fallback_lights", []).size() == 3, "The fallback street lights live in layout.json")
+	var hint: Label = street._hint
+	check(hint.text == "AD走 左键斩 右键重击 长按蓄力 Shift闪避 R重置", "The default bindings keep the original controls hint")
+	var profile := CONTROLS.defaults()
+	profile.merge({"move_left": KEY_J, "move_right": KEY_L, "dash_modifier": KEY_CTRL, "heavy_mouse": MOUSE_BUTTON_MIDDLE}, true)
+	CONTROLS.current = profile
+	CONTROLS.install(false)
+	street.refresh_hint()
+	check(hint.text == "JL走 左键斩 中键重击 长按蓄力 Ctrl闪避 R重置", "The controls hint follows rebound keys")
+	CONTROLS.current = CONTROLS.defaults()
+	CONTROLS.install(false)
+	street.refresh_hint()
 
 
 func verify_material_everywhere() -> void:

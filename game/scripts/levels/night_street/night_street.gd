@@ -7,6 +7,7 @@ const PLAYER_SCENE = preload("res://scenes/player.tscn")
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
+const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
 const BEAM_DRONE = preload("res://scripts/levels/night_street/beam_drone.gd")
 const HOVER_TARGET = preload("res://scripts/levels/night_street/hover_target.gd")
 const RAIN = preload("res://scripts/levels/night_street/rain.gd")
@@ -23,18 +24,14 @@ const AMBIENT := Color(0.6, 0.55, 0.76)
 # name, scroll factor (0 = fixed to the screen, 1 = moves with the street)
 const LAYERS := [["sky", 0.0], ["far_towers", 0.15], ["petra", 0.34], ["district_c", 0.7], ["street", 1.0]]
 # Street lights come from the art: tools/art/assemble_night_street.py writes one entry per self-lit fixture
-# (lamp heads, kiosk sign, vending machine, ID gate) into lights.json. FALLBACK_LIGHTS: position, colour,
-# energy, radius in native pixels, used only if that file is missing.
+# (lamp heads, kiosk sign, vending machine, ID gate) into lights.json. layout.json holds the hand-placed data:
+# hover drone spots ("targets") and "fallback_lights" (same entry format, colour as hex or [r, g, b]) used
+# only if lights.json is missing.
 const LIGHTS_PATH := "res://assets/night_street/lights.json"
-const FALLBACK_LIGHTS := [
-	[Vector2(111, 101), Color(1.0, 0.6, 0.24), 1.0, 56.0],
-	[Vector2(259, 114), Color(1.0, 0.24, 0.6), 1.3, 64.0],
-	[Vector2(568, 131), Color(0.31, 0.94, 1.0), 0.9, 40.0],
-]
+const LAYOUT_PATH := "res://assets/night_street/layout.json"
 # Street lights only reach the street layer and the actors; the parallax backdrop keeps its own colours.
 const LIT_MASK := 1
 const BACKDROP_MASK := 2
-const TARGET_POSITIONS := [Vector2(330, 156), Vector2(500, 156), Vector2(640, 156)]
 const EXPOSURE_RISE := 0.55
 const EXPOSURE_FALL := 0.22
 const UNMARK_BELOW := 0.35
@@ -46,6 +43,7 @@ var exposure := 0.0
 var marked := false
 var in_beam := false
 var look_on := true
+var layout: Dictionary = {}
 var _parallax: Array = []
 var _lights: Array[PointLight2D] = []
 var _beam_light: PointLight2D
@@ -56,6 +54,7 @@ var _post: ShaderMaterial
 var _rain: Node2D
 var _hud: Node2D
 var _status: Label
+var _hint: Label
 var _implants: Node2D
 var _scan: Node2D
 var _scan_label: Label
@@ -70,6 +69,11 @@ func _ready() -> void:
 	# Run after the player's own physics step so camera and exposure use its final position.
 	process_physics_priority = 100
 	CONTROLS.install()
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(LAYOUT_PATH)) if FileAccess.file_exists(LAYOUT_PATH) else null
+	if parsed is Dictionary:
+		layout = parsed
+	else:
+		push_error("Night street layout is missing: " + LAYOUT_PATH)
 	_build_environment()
 	_build_backdrop()
 	_build_world()
@@ -78,6 +82,7 @@ func _ready() -> void:
 	var session := GAME_SESSION.new()
 	session.name = "GameSession"
 	add_child(session)
+	session.keybindings_closed.connect(func(_saved: bool) -> void: refresh_hint())
 	_follow_player()
 
 
@@ -128,9 +133,9 @@ func _build_world() -> void:
 	var world := Node2D.new()
 	world.name = "World"
 	add_child(world)
-	_add_wall(world, Rect2(0, FLOOR_Y, WORLD_WIDTH, 40))
-	_add_wall(world, Rect2(-16, -40, 16, 240))
-	_add_wall(world, Rect2(WORLD_WIDTH, -40, 16, 240))
+	LEVEL_KIT.add_box(world, Rect2(0, FLOOR_Y, WORLD_WIDTH, 40))
+	LEVEL_KIT.add_box(world, Rect2(-16, -40, 16, 240))
+	LEVEL_KIT.add_box(world, Rect2(WORLD_WIDTH, -40, 16, 240))
 	for item in _light_table():
 		var light := _make_light(item[0], item[1], item[2], item[3])
 		world.add_child(light)
@@ -144,9 +149,9 @@ func _build_world() -> void:
 	_beam_light = _make_light(Vector2(300, FLOOR_Y - 8), BEAM_DRONE.WATCH, 1.2, 42.0)
 	world.add_child(_beam_light)
 	var hover_targets: Array = []
-	for spot in TARGET_POSITIONS:
+	for spot in layout.get("targets", []):
 		var target := HOVER_TARGET.new()
-		target.position = spot
+		target.position = Vector2(spot[0], spot[1])
 		target.z_index = 1
 		world.add_child(target)
 		hover_targets.append(target)
@@ -176,27 +181,17 @@ func _build_world() -> void:
 	camera.make_current()
 
 
+## Lights as [position, colour, energy, radius in native px]: lights.json, else layout.json fallback_lights.
 func _light_table() -> Array:
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(LIGHTS_PATH)) if FileAccess.file_exists(LIGHTS_PATH) else null
-	if not parsed is Array:
-		return FALLBACK_LIGHTS
+	var entries: Array = parsed if parsed is Array else layout.get("fallback_lights", [])
 	var table: Array = []
-	for entry in parsed:
-		table.append([Vector2(entry["position"][0], entry["position"][1]), Color(String(entry["colour"])), float(entry["energy"]), float(entry["radius"])])
+	for entry in entries:
+		var colour: Variant = entry["colour"]
+		table.append([Vector2(entry["position"][0], entry["position"][1]),
+			Color(String(colour)) if colour is String else Color(colour[0], colour[1], colour[2]),
+			float(entry["energy"]), float(entry["radius"])])
 	return table
-
-
-func _add_wall(parent: Node, area: Rect2) -> void:
-	var body := StaticBody2D.new()
-	body.collision_layer = 1
-	body.collision_mask = 0
-	body.position = area.get_center()
-	var shape := CollisionShape2D.new()
-	var rectangle := RectangleShape2D.new()
-	rectangle.size = area.size
-	shape.shape = rectangle
-	body.add_child(shape)
-	parent.add_child(body)
 
 
 func _make_light(at: Vector2, colour: Color, energy: float, radius: float) -> PointLight2D:
@@ -277,8 +272,9 @@ func _create_ui() -> void:
 	add_child(canvas)
 	var title := PIXEL_UI.label(canvas, Vector2(5, 3), Vector2(310, 16), "C区 · 夜街（原型）")
 	title.modulate = Color("c9b8e8")
-	var hint := PIXEL_UI.label(canvas, Vector2(5, 162), Vector2(310, 16), "AD走 左键斩 右键重击 长按蓄力 Shift闪避 R重置")
-	hint.modulate = Color("9d8fc0")
+	_hint = PIXEL_UI.label(canvas, Vector2(5, 162), Vector2(310, 16))
+	_hint.modulate = Color("9d8fc0")
+	refresh_hint()
 	_status = PIXEL_UI.label(canvas, Vector2(206, 16), Vector2(110, 16))
 	_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	var meter_label := PIXEL_UI.label(canvas, Vector2(236, 1), Vector2(310, 16), "暴露")
@@ -294,6 +290,13 @@ func _create_ui() -> void:
 	_scan.draw.connect(_draw_scan)
 	_scan_label = PIXEL_UI.label(canvas, Vector2.ZERO, Vector2(72, 16))
 	_scan_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+
+## Control hint from the current bindings; the defaults read "AD走 左键斩 右键重击 长按蓄力 Shift闪避 R重置".
+func refresh_hint() -> void:
+	_hint.text = "%s%s走 %s斩 %s重击 长按蓄力 %s闪避 %s重置" % [CONTROLS.hint_text("move_left"), CONTROLS.hint_text("move_right"),
+		CONTROLS.hint_text("attack_mouse"), CONTROLS.hint_text("heavy_mouse"), CONTROLS.hint_text("dash_modifier"),
+		CONTROLS.hint_text("reset_arena")]
 
 
 func _physics_process(delta: float) -> void:
@@ -344,9 +347,9 @@ func _process(delta: float) -> void:
 
 
 func _follow_player() -> void:
-	var half := VIEWPORT_SIZE.x * 0.5
-	camera.global_position = Vector2(clampf(roundf(player.global_position.x), half, WORLD_WIDTH - half), VIEWPORT_SIZE.y * 0.5)
-	camera.force_update_scroll()
+	# Horizontal follow only: the street is one screen tall.
+	LEVEL_KIT.follow(camera, Vector2(player.global_position.x, VIEWPORT_SIZE.y * 0.5), Rect2(0, 0, WORLD_WIDTH, VIEWPORT_SIZE.y),
+		Vector2(VIEWPORT_SIZE))
 
 
 # The two strongest nearby lights drive the hero's rim shader; inside the beam the drone wins.

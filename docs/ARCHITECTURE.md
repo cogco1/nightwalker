@@ -130,7 +130,7 @@ NightStreetProto
 
 ## 扩展点
 
-- **夜街原型**：街灯和霓虹的点光源来自 `assets/night_street/lights.json`（拼装脚本按街面层的自发光灯具算出）；无人机位置 `TARGET_POSITIONS`、环境光 `AMBIENT`、暴露速度 `EXPOSURE_RISE/FALL` 在 `scripts/levels/night_street/night_street.gd` 顶部。底图流程：Codex 出原图 → `tools/art/pixelize_layer.py`（共用 40 色调色板、按块取众数降采样、拆自发光层）→ `tools/art/assemble_night_street.py`（拼宽、纵向定位、灯光表），记录在 `art_metadata/night_street_v15/prompts.json`。
+- **夜街原型**：街灯和霓虹的点光源来自 `assets/night_street/lights.json`（拼装脚本按街面层的自发光灯具算出）；悬浮无人机位置 `targets` 和 lights.json 缺失时用的 `fallback_lights` 在 `assets/night_street/layout.json`；环境光 `AMBIENT`、暴露速度 `EXPOSURE_RISE/FALL` 在 `scripts/levels/night_street/night_street.gd` 顶部。操作提示由 `CONTROLS.hint_text` 按当前键位生成，改键菜单关闭后重写；墙体和镜头跟随用 LevelKit。底图流程：Codex 出原图 → `tools/art/pixelize_layer.py`（共用 40 色调色板、按块取众数降采样、拆自发光层）→ `tools/art/assemble_night_street.py`（拼宽、纵向定位、灯光表），记录在 `art_metadata/night_street_v15/prompts.json`。
 - **义体**：反光条由查找表第 3 行和 shader 的 `reflect_*` 参数控制；条码疤是 `player.tscn` 里 Sprite 下的 `ImplantOverlay`（`scripts/player/implant_overlay.gd`），位置读 `assets/fx/implant_anchors.json`，由 `tools/art/gen_implant_anchors.py` 从帧里算出（新增动作帧后重跑）。场景把它的 `scanned` 设为 1 时会故障闪烁。
 
 - **新关卡**：脚本放 `scripts/levels/<名字>/`，场景放 `scenes/<名字>.tscn`，素材放 `assets/<名字>/`；在 `scene_routes.gd` 里登记路径；关卡里实例化 `player.tscn` 并挂一个 `GameSession`，就能拿到改键和顿帧。
