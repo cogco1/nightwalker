@@ -24,6 +24,7 @@ Nightwalker/
 │  │  ├─ player/      player.gd（移动、轻击连招、蓄力重斩、突刺、空战、顿帧信号）
 │  │  ├─ ui/          pixel_ui · keybindings_menu
 │  │  └─ levels/
+│  │     ├─ level_kit.gd 关卡共用：碰撞体、镜头跟随
 │  │     ├─ home_601/   home_601 · home_prop_fx
 │  │     └─ hospital/   underground_hospital · hospital_interactions · hospital_security
 │  ├─ assets/                                       SpriteFrames、刀尖路径、场景底图与 layout.json、字体、立绘；
