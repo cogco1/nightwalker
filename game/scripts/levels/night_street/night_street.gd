@@ -1,6 +1,6 @@
 extends Node2D
-## Night-street prototype (side view only). Not routed from the safe house or the hospital:
-## launch scenes/night_street_proto.tscn directly (Run-NightStreet.cmd or F6 in the editor).
+## Night street (side view only). F8 enters from an interior and returns to that interior's safe position.
+## Run-NightStreet.cmd can also launch it directly; F8 then returns to the safe house.
 ## Light = being watched: standing in the patrol drone's cone raises exposure; full exposure marks you.
 
 const PLAYER_SCENE = preload("res://scenes/player.tscn")
@@ -55,6 +55,7 @@ var _rain: Node2D
 var _hud: Node2D
 var _status: Label
 var _hint: Label
+var _route_hint: Label
 var _implants: Node2D
 var _scan: Node2D
 var _scan_label: Label
@@ -272,6 +273,8 @@ func _create_ui() -> void:
 	add_child(canvas)
 	var title := PIXEL_UI.label(canvas, Vector2(5, 3), Vector2(310, 16), "C区 · 夜街（原型）")
 	title.modulate = Color("c9b8e8")
+	_route_hint = PIXEL_UI.label(canvas, Vector2(168, 3), Vector2(66, 16), "")
+	_route_hint.modulate = Color("c9b8e8")
 	_hint = PIXEL_UI.label(canvas, Vector2(5, 162), Vector2(310, 16))
 	_hint.modulate = Color("9d8fc0")
 	refresh_hint()
@@ -295,6 +298,7 @@ func _create_ui() -> void:
 ## Control hint from the current bindings; the defaults read "AD走 左键斩 右键重击 W+右键跃劈 Shift闪避 R重置"
 ## (the charge, a held left click, no longer fits on the line once the leap cleave is named).
 func refresh_hint() -> void:
+	_route_hint.text = "" if CONTROLS.current.values().has(KEY_F8) else "F8返回"
 	_hint.text = "%s%s走 %s斩 %s重击 %s+%s跃劈 %s闪避 %s重置" % [CONTROLS.hint_text("move_left"), CONTROLS.hint_text("move_right"),
 		CONTROLS.hint_text("attack_mouse"), CONTROLS.hint_text("heavy_mouse"), CONTROLS.hint_text("rising_modifier"),
 		CONTROLS.hint_text("heavy_mouse"), CONTROLS.hint_text("dash_modifier"), CONTROLS.hint_text("reset_arena")]

@@ -194,7 +194,7 @@ func check_home_dialogue(home: Node2D) -> void:
 
 
 func control_hint(hospital: Node2D) -> String:
-	return (hospital.get_node("EnvironmentUI").get_child(1) as Label).text
+	return (hospital.get("_hint") as Label).text
 
 
 func check_hospital(hospital: Node2D) -> void:

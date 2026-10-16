@@ -14,6 +14,7 @@ var last_interaction := ""
 var interaction_counts: Dictionary = {}
 var reactions: Dictionary = {}
 var cone_sources: Dictionary = {}
+var source_power: Dictionary = {"computer": true, "television": true}
 var fridge_frame_index := -1
 var _fridge_frames: Array[Texture2D] = []
 var _fridge_origin := Vector2(6, 86)
@@ -25,6 +26,13 @@ var _reference_scale := Vector2(2, 2)
 
 func configure(data: Dictionary) -> void:
 	layout = data
+
+
+func set_source_power(source_id: String, powered: bool) -> void:
+	if source_id not in ["computer", "television"]:
+		return
+	source_power[source_id] = powered
+	queue_redraw()
 
 
 func _ready() -> void:
@@ -135,6 +143,8 @@ func _draw() -> void:
 		return
 	# Every cell maps to exactly one320x180 output pixel at the original character scale.
 	for entry in _cone_pixels:
+		if not bool(source_power.get(entry["source"], true)):
+			continue
 		var opacity: float = [0.10, 0.17, 0.26][int(entry["tier"])]
 		if int(clock * 3.0) % 9 == 0:
 			opacity *= 0.88
@@ -160,6 +170,8 @@ func _draw() -> void:
 
 
 func _draw_tv() -> void:
+	if not bool(source_power.get("television", true)):
+		return
 	var screen := _reference_rect(Rect2i(89, 24, 8, 5))
 	_copy_native(screen, Vector2i.ZERO)
 	var line := tv_frame % screen.size.y
@@ -177,6 +189,8 @@ func _draw_tv() -> void:
 
 
 func _draw_computer() -> void:
+	if not bool(source_power.get("computer", true)):
+		return
 	var screen := _reference_rect(Rect2i(26, 22, 7, 4))
 	_copy_native(screen, Vector2i.ZERO)
 	if pc_frame % 2 == 0:

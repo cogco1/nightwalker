@@ -7,6 +7,7 @@ const SECURITY = preload("res://scripts/levels/hospital/hospital_security.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
+const INTERIOR_LIGHTING = preload("res://scripts/levels/interior_lighting.gd")
 const LAYOUT_PATH := "res://assets/underground_hospital/layout.json"
 const DEFAULT_BACKGROUND := "res://assets/underground_hospital/hospital_native.png"
 const VIEWPORT_SIZE := Vector2i(320, 180)
@@ -28,6 +29,7 @@ var player: CharacterBody2D
 var camera: Camera2D
 var interactions: Node2D
 var security: Node2D
+var lighting: Node2D
 var world_size := DEFAULT_WORLD_SIZE
 var view_mode := 0
 var floor_id := 1
@@ -38,6 +40,7 @@ var _ambient_clock := 0.0
 var _saved_positions: Dictionary = {}
 var _title: Label
 var _hint: Label
+var _route_hint: Label
 var _using_stairs := false
 var _stair_entered := false
 # layout.json stairs.side_flight: landing heights, entry and exit x per landing, jump-off span.
@@ -67,6 +70,9 @@ func _ready() -> void:
 	camera.limit_smoothed = false
 	add_child(camera)
 	camera.make_current()
+	lighting = INTERIOR_LIGHTING.new()
+	lighting.name = "InteriorLighting"
+	add_child(lighting)
 	activate_view(0)
 	interactions = INTERACTIONS.new()
 	interactions.name = "HospitalInteractions"
@@ -77,6 +83,7 @@ func _ready() -> void:
 	security.name = "HospitalSecurity"
 	security.call("configure", self, base_layout.get("security", {}), interactions)
 	add_child(security)
+	lighting.call("set_power_states", interactions.power_states)
 	_create_ui()
 	var session := GAME_SESSION.new()
 	session.name = "GameSession"
@@ -101,6 +108,8 @@ func _physics_process(_delta: float) -> void:
 
 
 func _process(delta: float) -> void:
+	if is_instance_valid(lighting) and is_instance_valid(interactions):
+		lighting.call("set_power_states", interactions.power_states)
 	_ambient_clock += delta
 	var tick := int(_ambient_clock * 12.0)
 	if tick != environment_ticks:
@@ -199,6 +208,10 @@ func activate_view(mode: int, room_id := "", forced_position: Variant = null) ->
 		interactions.call("on_view_change")
 	if is_instance_valid(security):
 		security.call("refresh_view")
+	lighting.call("refresh_context", world, player, {"profile": "hospital", "layout": layout,
+		"base_layout": base_layout, "view_mode": view_mode, "floor_id": floor_id})
+	if is_instance_valid(interactions):
+		lighting.call("set_power_states", interactions.power_states)
 	follow_player()
 	refresh_ui()
 	queue_redraw()
@@ -404,6 +417,8 @@ func _create_ui() -> void:
 	add_child(canvas)
 	_title = PIXEL_UI.label(canvas, Vector2(5, 3), Vector2(310, 16))
 	_title.modulate = Color("9aafb7")
+	_route_hint = PIXEL_UI.label(canvas, Vector2(252, 3), Vector2(62, 16), "F8夜街")
+	_route_hint.modulate = Color("9aafb7")
 	_hint = PIXEL_UI.label(canvas, Vector2(5, 162), Vector2(310, 16))
 	_hint.modulate = Color("8da3ad")
 	refresh_ui()
@@ -413,6 +428,7 @@ func _create_ui() -> void:
 func refresh_ui() -> void:
 	if _title == null:
 		return
+	_route_hint.text = "" if CONTROLS.current.values().has(KEY_F8) else "F8夜街"
 	_hint.visible = not ((is_instance_valid(interactions) and interactions.dialogue_active)
 		or (is_instance_valid(security) and security.keypad_active))
 	_title.text = "地下医院 · %d楼 · %s" % [floor_id, "俯视" if view_mode == 0 else "侧视"]

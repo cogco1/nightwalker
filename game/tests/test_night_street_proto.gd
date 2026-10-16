@@ -1,8 +1,7 @@
 extends "res://tests/support/isolated_suite.gd"
 ## Night-street prototype: hero material everywhere, surveillance exposure, combat and hit-stop on hover
 ## drones, the drones' own attack (hit, perfect dodge, counter), prototype-only controls, hand-placed data from
-## layout.json, the controls hint written from the bindings, and no route into it from the shipped safe house /
-## hospital flow.
+## layout.json, binding-aware hints, and the F8 route shared with the safe house / hospital.
 
 const STREET = preload("res://scenes/night_street_proto.tscn")
 const CONTROLS = preload("res://scripts/core/controls.gd")
@@ -68,7 +67,7 @@ func click() -> void:
 
 func run() -> void:
 	verify_material_everywhere()
-	verify_not_routed()
+	verify_route_entry()
 	street = STREET.instantiate()
 	root.add_child(street)
 	current_scene = street
@@ -136,10 +135,10 @@ func verify_material_everywhere() -> void:
 	player.free()
 
 
-func verify_not_routed() -> void:
-	for path in ["res://scripts/core/scene_routes.gd", "res://scripts/levels/home_601/home_601.gd",
-			"res://scripts/levels/hospital/hospital_interactions.gd", "res://scripts/levels/hospital/underground_hospital.gd"]:
-		check(not FileAccess.get_file_as_string(path).contains("night_street"), path.get_file() + " has no route to the prototype")
+func verify_route_entry() -> void:
+	var routes := root.get_node_or_null("SceneRoutes")
+	check(routes != null and routes.STREET_PATH == STREET.resource_path, "SceneRoutes registers the night-street scene")
+	check(routes != null and routes.has_method("toggle_street"), "The shared router exposes F8 street travel")
 	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/main.tscn", "The game still starts in the safe house")
 
 

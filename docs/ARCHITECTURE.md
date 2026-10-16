@@ -8,15 +8,18 @@
 启动 → scenes/main.tscn（NightwalkerHome，脚本同 home_601.gd）
           │  门口 E / F7
           ▼
-SceneRoutes.switch_to()  ←── autoload，只允许在安全屋和医院之间切换
+SceneRoutes.switch_to()  ←── autoload，登记安全屋、医院和夜街
           │
    ┌──────┴───────┐
 home_601.tscn   underground_hospital.tscn
+      └──────── F8 ────────┘
+                  ↕
+       night_street_proto.tscn
 ```
 
-- `SceneRoutes`（`scripts/core/scene_routes.gd`）是唯一的 autoload。它处理 F7 快捷往返（F7 被玩家改键占用时不抢键），切场景前取消顿帧、恢复暂停和画布变换。
+- `SceneRoutes`（`scripts/core/scene_routes.gd`）是唯一的 autoload。F7 保留安全屋/医院往返，F8 从两处室内进入夜街并返回来源楼层、视角和安全脚点；直接启动夜街则返回安全屋。快捷键被改键占用时不抢键；设置、剧情弹窗和楼梯过渡拦截切场。切场景前取消顿帧、清空攻击缓冲、恢复暂停和画布变换。侧视空中离开医院时返回该楼层既有安全出生点。
 - `main.tscn` 和 `home_601.tscn` 都挂 `home_601.gd`。`main.tscn` 是项目入口，切回安全屋时用 `home_601.tscn`。
-- `night_street_proto.tscn`（夜街原型）不在路由里，只能直接启动：`Run-NightStreet.cmd`，或在编辑器里打开后按 F6。
+- `night_street_proto.tscn`（夜街原型）已接入 F8 路由，也可以用 `Run-NightStreet.cmd` 直接启动，或在编辑器里打开后按 F6。
 
 ## 每个关卡的节点
 
@@ -24,6 +27,7 @@ home_601.tscn   underground_hospital.tscn
 Home601 / UndergroundHospital (Node2D, 关卡脚本)
 ├─ world (Node2D)          底图 Sprite2D、碰撞体、道具
 │  └─ Player               scenes/player.tscn 实例
+├─ InteriorLighting       共用环境光/辉光，World 内的光源和薄雾随视角重建
 ├─ GameSession (Node)      scripts/core/game_session.gd
 │  ├─ KeybindingsMenu      scripts/ui/keybindings_menu.gd
 │  └─ 顿帧覆盖层 CanvasLayer(100)
@@ -80,7 +84,7 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 `player.tscn` 的 Sprite 挂 `assets/fx/character_cyber.tres`（`resource_local_to_scene`，每个玩家实例一份），shader 是 `shaders/character_cyber.gdshader`：
 
 - **换色**：`assets/fx/cyber_palette.png` 是 18 × 4 查找表。第 0 行是 1024 帧里出现的全部 18 种原色，第 1 行是换成的颜色，第 2 行 rgb 是光晕颜色、alpha 是自发光强度，第 3 行 alpha 是反光度（目前只有斜挎带的 #533729）。改色只改这张图（或 `tools/art/gen_cyber_palette.py`）；`tools/art_qa/validate_cyber_palette.py` 检查新帧有没有表外颜色。
-- **轮廓光**：`rim_a_*`、`rim_b_*` 是两个屏幕空间的光源方向和颜色。只有朝向光源、且外侧是透明像素的边缘被上色；没被照到的边缘往 `shade_edge_color` 压暗。安全屋和医院用默认值（顶上一点青光）；夜街每帧取离人物最近、最强的两盏灯写进去。
+- **轮廓光**：`rim_a_*`、`rim_b_*` 是两个屏幕空间的光源方向和颜色。只有朝向光源、且外侧是透明像素的边缘被上色；没被照到的边缘往 `shade_edge_color` 压暗。夜街与室内均按人物位置选取影响最强的两盏灯，关闭的灯不参与轮廓光或反光条计算。
 - **自发光**：刀刃三种钢色（#e5e8e0 / #bbc2c3 / #8e999f）和脸部两种肤色是自发光像素，在帧内画半径 3 像素的光晕，成了刀光和目镜。按颜色识别刀刃，不需要逐帧遮罩：v07 的 24 个侧视动作里，这三种钢色 99.6% 落在刀刃遮罩里。
 - **暗场景补偿**：`emission_lift`（= 1 / CanvasModulate 颜色）让自发光、轮廓光不被压暗；`emission_gain` > 1 把它们推过 1.0，WorldEnvironment 辉光才会把它们晕开。`body_lift` 提亮身体，免得人物在暗处糊成一团。
 - `look` = 0 时完全是原配色（夜街里按 F9 切换）。
@@ -108,6 +112,8 @@ NightStreetProto
 
 ## 数据和素材
 
+室内光照由 `scripts/levels/interior_lighting.gd` 统一管理，参数在 `assets/lighting/interiors.json`。宿主只保存一个 `lighting`，调用 `refresh_context(world, player, context)` 绑定当前楼层/视角；旧 World 的灯、发光层和雾随之释放，人物材质重新绑定。`set_power_states()` 接收医院既有供电分区，`set_source_power()` 控制单个设备；安全屋 `set_device_power()` 同时控制原屏幕动画、光锥和新增光照。医院灯位取当前 layout 的 fluorescents/monitors，应急光由参数表单列。`interior_fog.gdshader` 按世界原生坐标量化，避免清晰 UI 的 CANVAS_ITEMS 合成模式把雾变成窗口像素。室内未加入街景的雨、无人机或暴露度后处理。
+
 | 位置 | 内容 |
 |---|---|
 | `frames/<视角>_<方向>_<动作>/NN.png` | 64 个动作 × 16 帧。原 992 帧保持原字节，v14 新增 `air_dash_stab_*` 32 帧（112×96 画布，足点 56,84） |
@@ -126,6 +132,7 @@ NightStreetProto
 - `tests/test_enemy_attack.gd` 覆盖敌人攻击和受击：预警红闪和时长、HIT 的击退距离和硬直、打断挥刀和蓄力、过早突刺和跳过是 EVADE、判定前 0.14 秒和判定中的突刺是 PERFECT、被打坏的无人机不再攻击。
 - `tests/test_level_shared.gd` 覆盖关卡共用部分：冻结计数、剧情弹窗、对话框参数和说话人、E 键保留与旧配置迁移、提示文字跟随改键。
 - `tests/recorders/capture_levels.gd` 在窗口模式下截安全屋、医院俯视和侧视、每一页对话、密码门和楼梯提示（88 张），改关卡代码前后各跑一次逐像素比对，就能确认画面没变。
+- `tests/recorders/capture_interior_lighting.gd` 记录 19 张室内灯光对照：屏幕动画两时刻、开关屏、人物近光、清晰对话、真实 F8 往返、医院两层/双视角的供电切换。用非无头模式运行，图与渲染尺寸报告写入 `evidence/interior_lighting/`；测试与录制都使用隔离改键配置。
 - `tests/recorders/` 用真实渲染录制截图和 GIF，`tools/art_qa/` 的 Python 脚本再拿这些输出做像素校验和预览合成。
 - `tests/legacy/` 是 v02–v06 的旧套件，针对旧美术和旧操作，现在会失败，只作参考。
 
