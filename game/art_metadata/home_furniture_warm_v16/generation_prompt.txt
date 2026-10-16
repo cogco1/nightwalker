@@ -1,0 +1,16 @@
+Use case: stylized-concept, game furniture sprite atlas.
+Input image: the existing Nightwalker safehouse bitmap is STYLE AND CAMERA REFERENCE ONLY. Make a NEW transparent atlas, do not redraw that room.
+Asset type: production 2D low resolution pixel furniture for this exact gritty top-down apartment. No people.
+Output a transparent PNG, 1536 by 1024, EXACTLY 3 columns by 2 rows of equally sized 512-square cells, no grid lines, no labels, no floor and no background.
+Each object is isolated and centered in its own cell, every cell bottom aligned with 10% margin. Row-major six objects:
+1. A narrow battered dark wood bookcase, about 18 pixels wide and 34 pixels tall on a virtual 64x64 native cell. Four shelves with a few dusty books, muted rust-red and ochre spines, worn corners.
+2. A compact battered repair workbench, 25x20 native pixels including its small desk lamp at BACK LEFT. Rusty steel legs, warm brown wooden top, two drawers, a few tiny maintenance tools and folded dirty rag. A small amber bare bulb desk lamp, no external light cone.
+3. A small old wooden kitchen stool, 12x14 native pixels, scratched reddish brown seat and visible front legs.
+4. A low closed metal storage trunk, 16x14 native pixels, dark teal metal with rusty brown corners and two small brass latches.
+5. A folded-out old folding chair, 14x18 native pixels, chipped steel frame and faded oxblood seat.
+6. A small worn amber bedside table lamp, 10x12 native pixels, ochre cloth shade and dark stem/base. ONLY the lamp, no table.
+
+Camera: same orthogonal top-down 2D adventure-game view as reference, tops visible with short front faces toward the bottom; NO diamond/isometric rotation and no side-scroller camera. The tall bookcase faces down.
+Pixel art constraint: virtual native 192x128 atlas (64x64 per cell) rendered as nearest-neighbor 8x blocks. Every single edge, highlight and speck belongs to that coarse common grid, with chunky readable clusters. A bookcase is 34 native pixels tall; protagonist is 28 native pixels tall. Very small deliberately hand-clustered details, 3-4 tones per material. No antialiasing, smooth lines, gradients, photographic textures, tiny high-resolution detail, outlines finer than one native pixel, dithering, soft shadows or glow.
+Palette: match the reference's charcoal/navy and desaturated blue-gray shadows, then add restrained warm walnut/rust/ochre materials. Amber light cores are allowed but do not bake colored illumination onto a room or a transparent background. Worn utilitarian furniture, oppressive neglected urban safehouse, not a cozy cottage, not decorative fantasy.
+Alpha must be genuinely transparent. Keep six silhouettes separate, complete and fully inside their cells. No readable text, watermarks, interface, extra objects, characters or logos.

@@ -38,7 +38,7 @@ func _ready() -> void:
 	var background := Sprite2D.new()
 	background.name = "HomeBackground"
 	background.centered = false
-	background.texture = load("res://assets/home_601/home_601_native.png")
+	background.texture = load(String(layout["background"]))
 	background.scale = Vector2.ONE
 	background.z_index = -10
 	background.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -153,7 +153,7 @@ func _open_interaction(id: String) -> void:
 	current_interaction = id
 	prop_effects.call("play_interaction", id)
 	# Props low in the room read at the top so the box never covers them.
-	dialogue.position.y = 16 if id in ["fridge", "bed", "dumbbells"] else 116
+	dialogue.position.y = 16 if id in ["fridge", "bed", "dumbbells", "storage_box"] else 116
 	dialogue.open(item.get("lines", []), String(item["name"]), player, item.get("speakers", []))
 	_hint.hide()
 

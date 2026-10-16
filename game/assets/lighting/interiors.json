@@ -7,6 +7,10 @@
     "screens": [
       {"id": "computer", "rect": [52, 44, 14, 8], "colour": "78cddc", "energy": 0.32, "radius": 66},
       {"id": "television", "rect": [178, 48, 16, 10], "colour": "8dd9e3", "energy": 0.30, "radius": 62}
+    ],
+    "lamps": [
+      {"id": "repair_lamp", "rect": [100, 65, 2, 2], "colour": "ff9b48", "energy": 1.35, "radius": 49},
+      {"id": "bedside_lamp", "rect": [234, 49, 3, 2], "colour": "ffbb78", "energy": 1.05, "radius": 45}
     ]
   },
   "hospital": {

@@ -1,0 +1,626 @@
+{
+  "schema_version": 2,
+  "generator": "built-in image_gen",
+  "native_size": [
+    320,
+    180
+  ],
+  "palette_rgb": [
+    [
+      9,
+      12,
+      20
+    ],
+    [
+      34,
+      44,
+      53
+    ],
+    [
+      21,
+      27,
+      35
+    ],
+    [
+      44,
+      53,
+      66
+    ],
+    [
+      30,
+      41,
+      49
+    ],
+    [
+      23,
+      31,
+      39
+    ],
+    [
+      30,
+      35,
+      45
+    ],
+    [
+      4,
+      6,
+      15
+    ],
+    [
+      40,
+      48,
+      57
+    ],
+    [
+      16,
+      21,
+      31
+    ],
+    [
+      26,
+      35,
+      43
+    ],
+    [
+      12,
+      16,
+      25
+    ],
+    [
+      58,
+      69,
+      85
+    ],
+    [
+      35,
+      46,
+      54
+    ],
+    [
+      88,
+      102,
+      111
+    ],
+    [
+      4,
+      7,
+      16
+    ],
+    [
+      30,
+      38,
+      46
+    ],
+    [
+      34,
+      42,
+      51
+    ],
+    [
+      9,
+      14,
+      22
+    ],
+    [
+      14,
+      22,
+      34
+    ],
+    [
+      4,
+      7,
+      18
+    ],
+    [
+      94,
+      202,
+      220
+    ],
+    [
+      11,
+      13,
+      21
+    ],
+    [
+      67,
+      158,
+      175
+    ],
+    [
+      58,
+      146,
+      164
+    ],
+    [
+      10,
+      13,
+      22
+    ],
+    [
+      62,
+      134,
+      159
+    ],
+    [
+      24,
+      42,
+      55
+    ],
+    [
+      23,
+      20,
+      26
+    ],
+    [
+      39,
+      31,
+      34
+    ],
+    [
+      57,
+      48,
+      42
+    ],
+    [
+      83,
+      65,
+      54
+    ],
+    [
+      112,
+      82,
+      59
+    ],
+    [
+      150,
+      100,
+      63
+    ],
+    [
+      183,
+      123,
+      67
+    ],
+    [
+      217,
+      155,
+      83
+    ],
+    [
+      246,
+      191,
+      101
+    ],
+    [
+      255,
+      220,
+      138
+    ],
+    [
+      73,
+      30,
+      38
+    ],
+    [
+      101,
+      45,
+      47
+    ],
+    [
+      138,
+      65,
+      65
+    ],
+    [
+      162,
+      86,
+      77
+    ],
+    [
+      21,
+      37,
+      42
+    ],
+    [
+      38,
+      58,
+      60
+    ],
+    [
+      166,
+      160,
+      154
+    ]
+  ],
+  "alpha_threshold": 160,
+  "dither": false,
+  "source_sha256": "9ac738926f3061d9808b0dd992093d017d0fd758ba8b176eed1315b8ff342a12",
+  "materials_source_sha256": "33c6d9a4b30a2c4bac1345c33b061e5be9f84bc8817c9e5de0e8c4bf34017e61",
+  "material_palette_size": 48,
+  "style_reference_input": "blue_floor_furniture_candidate.png",
+  "style_reference_input_sha256": "30020e1202863a99ab869cd2747bfa22c43323c9f36dffcd638dc1e6282bb06a",
+  "visual_reference": "Katana ZERO apartment atmosphere, translated into the existing top-down layout; all new materials are original generated assets",
+  "reference_urls": [
+    "https://www.nintendolife.com/reviews/switch-eshop/katana_zero",
+    "https://www.steamgriddb.com/game/11465/heroes"
+  ],
+  "base_sha256": "aa135d93fd8e1b642b0d541859b15de75a765941a863fa53286bc7f3a4f45a79",
+  "output_sha256": "399cfa5958f614919b31f83de4bfa91472383bbebc186a3ce9d5675635880bed",
+  "output": "game/assets/home_601/home_601_furnished_native.png",
+  "changed_native_pixels": 17234,
+  "placements": [
+    {
+      "id": "bookshelf",
+      "rect": [
+        90,
+        24,
+        18,
+        34
+      ],
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_crop": [
+        181,
+        76,
+        365,
+        454
+      ],
+      "native_sprite": "bookshelf_native.png"
+    },
+    {
+      "id": "repair_desk",
+      "rect": [
+        94,
+        64,
+        25,
+        20
+      ],
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_crop": [
+        98,
+        144,
+        415,
+        447
+      ],
+      "native_sprite": "repair_desk_native.png"
+    },
+    {
+      "id": "stool",
+      "rect": [
+        96,
+        126,
+        12,
+        14
+      ],
+      "source_cell": [
+        2,
+        0
+      ],
+      "source_crop": [
+        187,
+        243,
+        317,
+        437
+      ],
+      "native_sprite": "stool_native.png"
+    },
+    {
+      "id": "storage_box",
+      "rect": [
+        219,
+        132,
+        16,
+        14
+      ],
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_crop": [
+        139,
+        177,
+        403,
+        371
+      ],
+      "native_sprite": "storage_box_native.png"
+    },
+    {
+      "id": "folding_chair",
+      "rect": [
+        229,
+        82,
+        12,
+        18
+      ],
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_crop": [
+        164,
+        66,
+        349,
+        392
+      ],
+      "native_sprite": "folding_chair_native.png"
+    },
+    {
+      "id": "bedside_lamp",
+      "rect": [
+        231,
+        48,
+        10,
+        12
+      ],
+      "source_cell": [
+        2,
+        1
+      ],
+      "source_crop": [
+        195,
+        178,
+        311,
+        366
+      ],
+      "native_sprite": "bedside_lamp_native.png"
+    }
+  ],
+  "floor_regions": [
+    [
+      26,
+      60,
+      178,
+      92
+    ],
+    [
+      214,
+      60,
+      80,
+      92
+    ],
+    [
+      204,
+      101,
+      10,
+      22
+    ]
+  ],
+  "floor_protection": [
+    [
+      35,
+      39,
+      50,
+      41
+    ],
+    [
+      84,
+      58,
+      8,
+      16
+    ],
+    [
+      114,
+      20,
+      28,
+      49
+    ],
+    [
+      163,
+      39,
+      38,
+      32
+    ],
+    [
+      122,
+      100,
+      66,
+      28
+    ],
+    [
+      139,
+      81,
+      34,
+      18
+    ],
+    [
+      21,
+      93,
+      24,
+      51
+    ],
+    [
+      44,
+      115,
+      45,
+      28
+    ],
+    [
+      245,
+      50,
+      35,
+      63
+    ],
+    [
+      228,
+      47,
+      16,
+      30
+    ],
+    [
+      285,
+      48,
+      16,
+      68
+    ],
+    [
+      285,
+      113,
+      16,
+      18
+    ],
+    [
+      248,
+      122,
+      30,
+      20
+    ]
+  ],
+  "wall_regions": [
+    [
+      27,
+      19,
+      177,
+      41
+    ],
+    [
+      214,
+      19,
+      80,
+      41
+    ]
+  ],
+  "wall_protection": [
+    [
+      35,
+      39,
+      50,
+      41
+    ],
+    [
+      84,
+      58,
+      8,
+      16
+    ],
+    [
+      114,
+      20,
+      28,
+      49
+    ],
+    [
+      163,
+      39,
+      38,
+      32
+    ],
+    [
+      122,
+      100,
+      66,
+      28
+    ],
+    [
+      139,
+      81,
+      34,
+      18
+    ],
+    [
+      21,
+      93,
+      24,
+      51
+    ],
+    [
+      44,
+      115,
+      45,
+      28
+    ],
+    [
+      245,
+      50,
+      35,
+      63
+    ],
+    [
+      228,
+      47,
+      16,
+      30
+    ],
+    [
+      285,
+      48,
+      16,
+      68
+    ],
+    [
+      285,
+      113,
+      16,
+      18
+    ],
+    [
+      248,
+      122,
+      30,
+      20
+    ],
+    [
+      31,
+      18,
+      73,
+      36
+    ],
+    [
+      217,
+      18,
+      72,
+      36
+    ],
+    [
+      149,
+      20,
+      25,
+      26
+    ]
+  ],
+  "decor": [
+    {
+      "id": "worn_rug",
+      "rect": [
+        133,
+        80,
+        47,
+        23
+      ]
+    },
+    {
+      "id": "table_clutter",
+      "rect": [
+        145,
+        80,
+        15,
+        9
+      ]
+    },
+    {
+      "id": "faded_poster",
+      "rect": [
+        178,
+        20,
+        14,
+        16
+      ]
+    },
+    {
+      "id": "sofa_throw",
+      "rect": [
+        132,
+        103,
+        35,
+        12
+      ]
+    }
+  ],
+  "floor_pixels": 14161,
+  "wall_pixels": 2267,
+  "protected_screens_and_empty_frame": "unchanged"
+}

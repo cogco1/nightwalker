@@ -81,6 +81,8 @@ func refresh_context(next_world: Node2D, next_hero: CharacterBody2D, next_contex
 	if String(context.get("profile", "home")) == "home":
 		for item in _profile.get("screens", []):
 			_add_source(item, "screen", holder, fixture_holder, background)
+		for item in _profile.get("lamps", []):
+			_add_source(item, "lamp", holder, fixture_holder, background)
 	else:
 		for item in layout.get("fluorescents", []):
 			_add_source(item, "fluorescent", holder, fixture_holder, background)

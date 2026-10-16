@@ -16,7 +16,7 @@
     104
   ],
   "facing": "up",
-  "background": "res://assets/home_601/home_601_native.png",
+  "background": "res://assets/home_601/home_601_furnished_native.png",
   "collider_mode": "full_visible_prop_bounds",
   "colliders": [
     {
@@ -180,6 +180,51 @@
         22,
         13
       ]
+    },
+    {
+      "id": "bookshelf",
+      "rect": [
+        90,
+        24,
+        18,
+        34
+      ]
+    },
+    {
+      "id": "repair_desk",
+      "rect": [
+        94,
+        64,
+        25,
+        20
+      ]
+    },
+    {
+      "id": "stool",
+      "rect": [
+        96,
+        126,
+        12,
+        14
+      ]
+    },
+    {
+      "id": "storage_box",
+      "rect": [
+        219,
+        132,
+        16,
+        14
+      ]
+    },
+    {
+      "id": "folding_chair",
+      "rect": [
+        229,
+        82,
+        12,
+        18
+      ]
     }
   ],
   "interactions": [
@@ -281,6 +326,42 @@
       "lines": [
         "601。门外是C区的老楼走廊。"
       ]
+    },
+    {
+      "id": "bookshelf",
+      "name": "旧书柜",
+      "anchor": [
+        96,
+        68
+      ],
+      "radius": 26,
+      "lines": [
+        "书脊已经磨白了。"
+      ]
+    },
+    {
+      "id": "repair_desk",
+      "name": "维修桌",
+      "anchor": [
+        107,
+        94
+      ],
+      "radius": 13,
+      "lines": [
+        "工具擦过，刀刃还需要再磨一遍。"
+      ]
+    },
+    {
+      "id": "storage_box",
+      "name": "收纳箱",
+      "anchor": [
+        227,
+        128
+      ],
+      "radius": 13,
+      "lines": [
+        "空箱子。暂时还用得上。"
+      ]
     }
   ],
   "source_notes": "SK firsthome:day12:00,C district oldbuilding601,topdown,onebedroomliving,dimanti-surveillance,emptyentryframe,TVPCbedfridgedumbbells. Flavor lines adapt setting; no shop/quest/economy state is implied.",
@@ -290,7 +371,7 @@
   ],
   "camera_zoom": 1,
   "background_scale": 1,
-  "presentation": "Coldhome on exact original character1:1pixelgrid;short downwardcones",
+  "presentation": "Worn warm timber floor and faded plum plaster, cyan CRTs versus amber task lamps; original native character pixel grid and short downward screen cones",
   "fx": {
     "tv_screen": [
       89,
@@ -333,6 +414,18 @@
       47,
       11,
       24
+    ],
+    "repair_desk_glint_native": [
+      105,
+      72,
+      4,
+      1
+    ],
+    "storage_box_lid_native": [
+      220,
+      133,
+      14,
+      3
     ]
   },
   "fx_design_size": [
