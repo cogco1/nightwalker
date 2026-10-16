@@ -28,7 +28,12 @@ extends RefCounted
 ##   special      special_kind name the move reports (tests, HUD, hit_resolved kind)
 ##   pierce       dash: travels DASH_DISTANCE through targets on its first active frame
 ##   dive         dive slash: falls at DIVE_SPEED, holds its last air frame, lands into a short recovery
-##   shockwave    dive landing wave {half_width, launch, crit, crit_stop}: hits grounded targets near the feet
+##   lands        ends on touching the floor like a dive (landing pose, recovery, shockwave) but falls normally;
+##                hold_frame is the frame held if the clip runs out in the air (default 11)
+##   carry        horizontal speed (px/s, along the facing) while the move is airborne
+##   shockwave    landing wave {half_width, launch, crit, dmg_mult, stop, crit_stop, again, ring}: hits grounded
+##                targets near the feet; again = false spares targets the move already hit; ring adds a ring and
+##                dust columns to the shock lines
 ##   launcher     rising slash: jumps and spawns rising airflow
 ##   ghosts       frames that leave an afterimage
 ##   rehit        frames from which every target can be hit again (multi-hit swings)
@@ -41,7 +46,7 @@ extends RefCounted
 ##   resumes      dodge offset: counts as the next light hit of the string the dash interrupted
 ##   as           counts as this move in the combo graph (its follow-ups and stage)
 ##   side_only    side view only; ground / air_only: only started from the combo graph on the floor / in the air
-##   swing        &"light" | &"heavy" swing sound; pitch scales it
+##   swing        &"light" | &"heavy" | &"none" swing sound; pitch scales it
 
 const CRIT_CHANCE := 0.30
 const CRIT_MULT := 3
@@ -128,6 +133,18 @@ const MOVES := {
 		"box": SPIN_BOX, "crit": &"always", "crit_stop": &"critical", "juggle": true,
 		"air": {"hold": 0.25, "fall": 6.0, "end_hold": 0.30}, "ghosts": [8], "arc": {"from": -210.0, "to": -320.0},
 		"side_only": true, "swing": &"heavy", "pitch": 1.1},
+
+	# W + right click on the floor (player.request_leap_cleave): a forward leap of about 52 px and 15 px high with the
+	# blade raised overhead, an overhead chop on the way down, and a shockwave along the floor on landing. Unlike
+	# rift_hop (straight up at the end of the light string) and dive_slash (air S, straight down) it travels forward.
+	&"leap_cleave": {"stage": 1, "anim": "air_attack2", "fps": 36.0, "start_frame": 2, "end": 10, "jump": -136.0,
+		"carry": 118.0, "then": &"leap_cleave_chop", "ghosts": [6], "special": "leap_cleave", "side_only": true,
+		"swing": &"heavy", "pitch": 0.85},
+	&"leap_cleave_chop": {"stage": 1, "anim": "air_attack2", "fps": 30.0, "start_frame": 9, "active": Vector2i(10, -1),
+		"box": {"rect": Rect2(-16, -34, 32, 38), "forward": 14.0}, "crit": &"none", "stop": &"heavy", "dmg_mult": 2,
+		"launch": true, "carry": 118.0, "lands": true, "hold_frame": 15, "recovery": 0.16, "ghosts": [11],
+		"shockwave": {"half_width": 24.0, "launch": true, "dmg_mult": 2, "stop": &"heavy", "again": false, "ring": true},
+		"special": "leap_cleave", "side_only": true, "swing": &"none"},
 
 	# Perfect-dodge counter (player._start_counter): a sure critical with the heavy freeze, 3x damage.
 	&"counter_slash": {"stage": 3, "anim": "attack3", "air_anim": "air_attack3", "fps": 48.0, "start_frame": 3,

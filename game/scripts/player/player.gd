@@ -261,7 +261,12 @@ func _physics_process(delta: float) -> void:
 		if _mouse_attack_pending:
 			_intents.erase(&"light")
 	if _intent_stage(&"heavy") == &"raw":
-		request_attack(&"heavy")
+		# W + right click on the floor leaps (as W + left click rises); otherwise the combo graph decides.
+		var leapt := false
+		if not is_attacking and _recovery_left <= 0.0 and view_mode == ViewMode.SIDE_VIEW and was_grounded and Input.is_action_pressed("rising_modifier"):
+			leapt = request_leap_cleave()
+		if not leapt:
+			request_attack(&"heavy")
 		if _intent_stage(&"heavy") == &"raw":
 			_intents.erase(&"heavy")
 	for input in ATTACK_INPUTS:
@@ -278,7 +283,7 @@ func _physics_process(delta: float) -> void:
 		if view_mode == ViewMode.TOP_DOWN:
 			velocity = attack_direction * impulse
 		else:
-			velocity.x = direction.x * crouch_speed if not was_grounded and move.get("steer", false) else attack_direction.x * impulse
+			velocity.x = direction.x * crouch_speed if not was_grounded and move.get("steer", false) else attack_direction.x * (impulse if was_grounded else float(move.get("carry", 0.0)))
 	elif state == State.HURT:
 		# Knocked back, braking to a stop inside the stun; the hero blinks red.
 		if view_mode == ViewMode.TOP_DOWN:
@@ -328,7 +333,7 @@ func _physics_process(delta: float) -> void:
 		_update_blade_trail()
 		if move.get("launcher", false) and airflow_count == 0:
 			_spawn_airflow(global_position, true)
-	if move.get("dive", false) and is_on_floor():
+	if (move.get("dive", false) or move.get("lands", false)) and is_on_floor():
 		var landed := move
 		if landed.has("shockwave"):
 			_shockwave(landed["shockwave"])
@@ -826,6 +831,15 @@ func _resolve_hit(target: Node, point: Vector2, row: Dictionary = {}) -> bool:
 	return true
 
 
+## W + right click on the floor: leap_cleave, a forward leap that chops down and lands with a shockwave.
+func request_leap_cleave() -> bool:
+	if view_mode != ViewMode.SIDE_VIEW or is_attacking or _recovery_left > 0.0 or is_crouching or not is_on_floor() or state == State.HURT:
+		return false
+	_crouch_exiting = false
+	_start_special("leap_cleave")
+	return true
+
+
 func request_rising_slash() -> bool:
 	if view_mode != ViewMode.SIDE_VIEW or is_attacking or _recovery_left > 0.0 or is_crouching or not is_on_floor():
 		return false
@@ -925,8 +939,8 @@ func _try_end_dash_phasing() -> void:
 func _on_animation_finished() -> void:
 	if not is_attacking:
 		return
-	if move.get("dive", false) and not is_on_floor():
-		_set_manual_frame(String(move["anim"]) + "_" + facing, 11)
+	if (move.get("dive", false) or move.get("lands", false)) and not is_on_floor():
+		_set_manual_frame(String(move["anim"]) + "_" + facing, int(move.get("hold_frame", 11)))
 		return
 	if move.has("then"):
 		_start_move(move["then"])
@@ -1175,7 +1189,8 @@ func _impact_weight(row: Dictionary = {}) -> StringName:
 
 ## Landing wave of a dive move: hits every grounded target within half_width of the feet once more.
 func _shockwave(wave: Dictionary) -> void:
-	hit_targets.clear()
+	if wave.get("again", true):
+		hit_targets.clear()
 	_normal_stop_emitted = false
 	_critical_stop_emitted = false
 	stage_is_critical = wave.get("crit", false)
@@ -1201,6 +1216,16 @@ func _shockwave(wave: Dictionary) -> void:
 		for lane in range(3):
 			fx.add({"position": global_position + Vector2(side * 6.0, -1.0 - lane * 2.0), "velocity": Vector2(side * (240.0 - lane * 50.0), -lane * 10.0),
 				"tail": Vector2(side * 5.0, 0), "life": 0.15, "color": PLAYER_FX.WHITE if lane == 0 else PLAYER_FX.BLUE})
+	if wave.get("ring", false):
+		# A flat ring running out along the floor and columns of dust thrown up on both sides.
+		for index in range(16):
+			var out := Vector2(cos(TAU * index / 16.0), sin(TAU * index / 16.0) * 0.3)
+			fx.add({"position": global_position + out * 4.0 + Vector2(0, -2), "velocity": out * 150.0, "tail": out * 4.0,
+				"life": 0.16, "color": PLAYER_FX.WHITE if index % 2 == 0 else PLAYER_FX.BLUE})
+		for x in [-20.0, -11.0, 11.0, 20.0]:
+			for step in range(3):
+				fx.add({"position": global_position + Vector2(x, -1.0), "velocity": Vector2(0, -45.0 - step * 25.0),
+					"life": 0.2 + step * 0.04, "color": PLAYER_FX.DUST})
 
 
 ## Code-drawn blade circle of spinning moves: the move's arc {from, to} (degrees from forward, negative is up) is

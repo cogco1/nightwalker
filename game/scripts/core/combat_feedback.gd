@@ -66,6 +66,8 @@ func play(sound: String, pitch := 1.0) -> void:
 
 func _on_move_started(move: StringName) -> void:
 	var row: Dictionary = MOVESET.MOVES.get(move, {})
+	if row.get("swing", &"light") == &"none":
+		return
 	if row.get("swing", &"light") == &"heavy":
 		play("swing_heavy", float(row.get("pitch", 1.0)))
 	else:
