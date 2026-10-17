@@ -1,13 +1,15 @@
 extends "res://tests/support/isolated_suite.gd"
-## Chapter 1, milestone 1, played start to finish with real input: the boot scene starts the story, the title
-## card and the opening play in 601 at 12:00, the computer takes Coburn's job, the door leaves for the hospital,
-## light locks the hero on, the breaker darkens the clinic, the roster gives the door code, Coburn falls from
-## behind, the exit returns home at 14:50, the shop takes an order, the bed sleeps to the 22:00 rampage, the
-## night hospital (side view) ends at its exit in the held-breath interlude, and day 2 wakes at 11:00 with the
-## 7/27 news and Morwen's job. Every walk is held WASD along a route found on the real colliders; nothing is
-## teleported. F7 / F8 / Tab stay inert inside the chapter.
+## Chapter 1, milestones 1 and 2, played start to finish with real input: the boot scene starts the story, the
+## title card and the opening play in 601 at 12:00, the computer takes Coburn's job, the door leaves for the
+## hospital, light locks the hero on, the breaker darkens the clinic, the roster gives the door code, Coburn falls
+## from behind, the exit returns home at 14:50, the shop takes an order, the bed sleeps to the 22:00 rampage, the
+## first night (side view) is fought through by tests/support/night_bot.gd (held A / D, clicks, Shift dodges and
+## counters, every lesson, both floors, the last doctor's three lines and his execution) into the held-breath
+## interlude, and day 2 wakes at 11:00 with the 7/27 news and Morwen's job. Every day walk is held WASD along a
+## route found on the real colliders; nothing is teleported. F7 / F8 / Tab stay inert inside the chapter.
 
 const STORY_STATE = preload("res://scripts/core/story_state.gd")
+const NIGHT_BOT = preload("res://tests/support/night_bot.gd")
 const BOOT := "res://scenes/boot.tscn"
 const MAIN := "res://scenes/main.tscn"
 const HOME := "res://scenes/home_601.tscn"
@@ -435,33 +437,38 @@ func night_one() -> void:
 	var hospital := current_scene
 	var chapter: Node = hospital.chapter
 	check(story.step == "d1_night" and story.is_night() and hospital.view_mode == 1 and hospital.floor_id == 1, "the night is side view in the hospital")
-	check(chapter.chapter_hud.clock_label.text == "22:00" and chapter.chapter_hud.goal_label.text == "▸ 出口", "the night status plate shows 22:00 and the exit")
+	var hud: Node = chapter.chapter_hud
+	check(hud.clock_label.text == "22:00" and hud.goal_label.text == "", "the night status plate shows 22:00 and no words of a goal")
 	check(not chapter.hud.plate.visible and not chapter.stealth(), "the night has no stealth meter")
+	var fight: Node = chapter.fight
+	check(fight != null and fight.health.plate.visible and fight.vitals.hp == fight.vitals.max_hp, "the night shows the hero's full health")
+	check(fight.enemies.size() == 11 and fight.tutorial.lesson == "move", "the organ trade is on and the first lesson shows")
 	await tap(KEY_TAB)
 	check(hospital.view_mode == 1, "Tab does not switch the night projection")
-	var flight: Dictionary = hospital.base_layout["stairs"]["side_flight"]
-	var entry: Array = flight["lower_entry_x"]
-	await side_walk(KEY_D, (float(entry[0]) + float(entry[1])) * 0.5)
-	await tap(KEY_W)
-	await side_walk(KEY_A, float(flight["upper_exit_x"]) - 2.0)
-	await frames(10)
-	check(hospital.floor_id == 2 and absf(hospital.player.position.y - 164.0) < 1.0, "the night stairs climb to floor 2")
-	await side_walk(KEY_D, 585.0)
-	await frames(4)
-	check(hospital.interactions.nearest_id == "exit_panel", "the night exit is in reach")
-	await tap(KEY_E)
-
-
-func side_walk(code: int, destination: float) -> void:
-	var right := code == KEY_D
-	key(code, true)
-	for _index in range(900):
-		await frames(1)
-		var x: float = player().position.x
-		if (right and x >= destination) or (not right and x <= destination):
-			break
-	key(code, false)
-	await frames(6)
+	var bot: RefCounted = NIGHT_BOT.new(self)
+	bot.bind(hospital)
+	var lessons_seen: Array[String] = []
+	var marks := {"execution": false, "freezes_after_words": []}
+	hospital.get_node("GameSession").hit_stop_finished.connect(func(count: int) -> void:
+		if is_instance_valid(fight) and fight.words_heard:
+			marks["freezes_after_words"].append(count))
+	var watch := func() -> bool:
+		if is_instance_valid(chapter) and chapter.overlay.shown.has("execution"):
+			marks["execution"] = true
+		if not is_instance_valid(fight) or story.step == "d1_breath":
+			return true
+		if fight.tutorial.lesson != "" and (lessons_seen.is_empty() or lessons_seen[-1] != fight.tutorial.lesson):
+			lessons_seen.append(fight.tutorial.lesson)
+		return false
+	var words: Array = []
+	hospital.interactions.dialogue.closed.connect(func() -> void: words.append_array(hospital.interactions.dialogue.pages), CONNECT_ONE_SHOT)
+	var finished: bool = await bot.play(watch, 9000)
+	check(finished and story.step == "d1_breath", "real keys fight through the night into the held breath")
+	check(str(lessons_seen) == str(["move", "light", "heavy", "dodge", "perfect"]), "every lesson shows in order: " + str(lessons_seen))
+	check(bot.tally["perfect"] >= 2 and bot.tally["counters"] >= 2, "perfect dodges and counters were made with Shift and a click")
+	check(str(words) == str(story.chapter["nights"]["night1"]["last_words"]["lines"]), "the last doctor says his three lines: " + str(words))
+	check(marks["execution"] and marks["freezes_after_words"].has(10), "the execution is a heavy freeze, a white frame and black: " + str(marks))
+	observations["night"] = {"frames": bot.frames_run, "seconds": snappedf(bot.frames_run / 60.0, 0.1), "tally": bot.tally}
 
 
 func breath() -> void:

@@ -331,6 +331,12 @@ func _finish_hit_stop() -> void:
 	hit_stop_active = false
 
 
+## A freeze the story asks for (the execution), run like an impact's unless one is already running.
+func hit_stop(weight: StringName, direction := Vector2.RIGHT) -> void:
+	if not hit_stop_active:
+		_run_hit_stop(direction, weight)
+
+
 func cancel_hit_stop() -> void:
 	_token += 1
 	if hit_stop_active:

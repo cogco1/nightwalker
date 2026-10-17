@@ -4,13 +4,15 @@ extends Node
 ## lights themselves: the hero's feet are read against interior_lighting.light_level() every physics frame,
 ## standing in light fills the exposure meter, a full meter locks on and sends the hero back to where they
 ## entered this floor. Coburn waits at his office desk and can only be taken from behind, in the dark.
-## The exit panel leaves for home by day and for the held-breath interlude at night.
+## The exit panel leaves for home by day. A night that names a fight (night_fight.gd) has no exit: it ends in the
+## execution, straight into the held-breath interlude.
 
 const STORY_STATE = preload("res://scripts/core/story_state.gd")
 const STORY_OVERLAY = preload("res://scripts/ui/story_overlay.gd")
 const EXPOSURE_HUD = preload("res://scripts/ui/exposure_hud.gd")
 const STORY_TARGET = preload("res://scripts/levels/hospital/story_target.gd")
 const CHAPTER_HUD = preload("res://scripts/ui/chapter_hud.gd")
+const NIGHT_FIGHT = preload("res://scripts/levels/hospital/night_fight.gd")
 ## Light level at the feet that counts as lit: inside about 0.73 of a ceiling lamp's radius, half a screen's.
 const LIT_THRESHOLD := 0.06
 ## Exposure per second in light / out of it; 1.0 locks on.
@@ -25,6 +27,8 @@ var overlay: CanvasLayer
 var hud: Node
 var chapter_hud: Node
 var target: Node2D
+## The night's fight when the step names one (chapter1.json nights.*).
+var fight: Node
 var exposure := 0.0
 var in_light := false
 var light_level := 0.0
@@ -63,6 +67,12 @@ func _ready() -> void:
 	hud.build(canvas)
 	hud.marked_text = "已锁定"
 	story.step_changed.connect(func(_step: String) -> void: refresh())
+	var fight_id := String(story.step_data().get("fight", ""))
+	if not fight_id.is_empty() and hospital.view_mode == 1:
+		var night: Dictionary = story.chapter.get("nights", {}).get(fight_id, {}).duplicate(true)
+		night["id"] = fight_id
+		fight = NIGHT_FIGHT.new(self, night)
+		add_child(fight)
 	if stealth():
 		chapter_hud.toast(String(story.chapter.get("hospital", {}).get("tip", "")))
 	hospital.refresh_ui()
@@ -95,6 +105,8 @@ func on_view_activated() -> void:
 		target.setup(hospital.world, Vector2(feet[0], feet[1]))
 		if story.has_flag("coburn_dead"):
 			target.kill()
+	if is_instance_valid(fight):
+		fight.on_view_activated()
 	if is_inside_tree():
 		refresh()
 
@@ -145,11 +157,28 @@ func _prompt_title() -> String:
 		return ""
 	if is_instance_valid(security) and security.keypad_active:
 		return ""
+	if is_instance_valid(fight) and fight.busy:
+		return ""
 	var door: String = security.nearest_door_title() if is_instance_valid(security) else ""
 	if not door.is_empty():
 		return door
 	var item: Dictionary = interactions._find_interaction(interactions.nearest_id)
+	if String(item.get("kind", "")) == "stairs" and not stairs_open():
+		return ""
 	return String(item.get("title", ""))
+
+
+## Whether the stairs take the hero now (always, except on a fight night before floor 1 is clear).
+func stairs_open() -> bool:
+	return not is_instance_valid(fight) or fight.stairs_open()
+
+
+## The hospital's interactions inside the chapter: Coburn joins them while he lives; a fight night has nothing to read
+## ("全程无字幕") and keeps only the stairs.
+func interactions(items: Array) -> Array:
+	if is_instance_valid(fight):
+		return items.filter(func(item: Variant) -> bool: return item is Dictionary and String(item.get("kind", "")) == "stairs")
+	return items + story_targets()
 
 
 ## Extra interaction points for hospital_interactions: Coburn while he is alive.

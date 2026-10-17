@@ -3,7 +3,7 @@
 	"id": "chapter1",
 	"title": "第一章",
 	"source_document": "SK(1).txt（2026-10-17 用户批准台词入库）",
-	"notes": "M1 范围：第 1 天到第 2 天早上。第一夜战斗（M2）、商店扣钱和物品效果（M3）、金域大厦（M4/M5）还没做；原文第 3 天“信息（主线）：”之后断了，等用户补。台词按原文，省略号统一为“……”。",
+	"notes": "M1 范围：第 1 天到第 2 天早上；M2 加上第一夜的器官交易战斗、按键图标教学和最后一个医生的三句台词（nights.night1，全程无字幕，只有这三句）。商店扣钱和物品效果（M3）、金域大厦（M4/M5）还没做；原文第 3 天“信息（主线）：”之后断了，等用户补。台词按原文，省略号统一为“……”。",
 	"start_step": "d1_wake",
 	"days": {
 		"1": {"date": "2040-07-27"},
@@ -17,7 +17,7 @@
 		"d1_target_down": {"objective": "离开 · 二楼走廊尽头的出口", "stealth": true, "exit": "d1_return"},
 		"d1_return": {"time": "14:50", "scene": "home", "objective": "电脑 · 暗网购物", "shop_next": "d1_shopped"},
 		"d1_shopped": {"objective": "床 · 睡觉", "bed": "d1_night"},
-		"d1_night": {"time": "22:00", "scene": "hospital", "view": "side_view", "phase": "night", "objective": "出口", "exit": "d1_breath"},
+		"d1_night": {"time": "22:00", "scene": "hospital", "view": "side_view", "phase": "night", "fight": "night1"},
 		"d1_breath": {"phase": "night", "scene": "breath", "breath_round": 0, "next": "d2_wake"},
 		"d2_wake": {"day": 2, "time": "11:00", "scene": "home", "objective": "电脑", "enter_sequence": "wake2", "computer": "d2_contract"},
 		"d2_contract": {"objective": "莫温 · 金域大厦顶层（M4 制作中）"}
@@ -77,6 +77,30 @@
 		"kill_too_bright": ["太亮了。微光粒子会拍到我。"],
 		"kill_from_front": ["从正面过去，他会看见我。得绕到他身后。"],
 		"exit_not_yet": ["科伯恩还在办公室。"]
+	},
+	"nights": {
+		"night1": {
+			"next": "d1_breath",
+			"floors": {"1": {"start": [60, 286]}, "2": {"start": [40, 164]}},
+			"enemies": [
+				{"id": "ward_guard_1", "kind": "guard", "floor": 1, "x": 236},
+				{"id": "ward_doctor", "kind": "doctor", "floor": 1, "x": 280, "faces": 1},
+				{"id": "ward_guard_2", "kind": "guard", "floor": 1, "x": 372},
+				{"id": "storage_guard", "kind": "guard", "floor": 1, "x": 468},
+				{"id": "storage_buyer", "kind": "buyer", "floor": 1, "x": 524, "faces": 1},
+				{"id": "storage_gunner", "kind": "gunner", "floor": 1, "x": 586},
+				{"id": "reception_gunner", "kind": "gunner", "floor": 2, "x": 196},
+				{"id": "treatment_doctor", "kind": "doctor", "floor": 2, "x": 296, "faces": 1},
+				{"id": "treatment_buyer", "kind": "buyer", "floor": 2, "x": 338},
+				{"id": "treatment_gunner", "kind": "gunner", "floor": 2, "x": 392},
+				{"id": "office_doctor", "kind": "doctor", "floor": 2, "x": 540, "last": true}
+			],
+			"last_words": {
+				"context": "地下医院",
+				"lines": ["你是……SK！！！", "别杀我……我什么都没做！！！", "为什么……你想要钱我可以……"],
+				"speakers": ["doctor", "doctor", "doctor"]
+			}
+		}
 	},
 	"breath": [
 		["反…3%￥*#&……", "#对*%￥…%@&…", "把…%￥*（…*￥%"],

@@ -1095,6 +1095,11 @@ func receive_attack(attack: Dictionary) -> int:
 	return result
 
 
+## Seconds on the combat clock since the last dash started (INF before the first).
+func seconds_since_dash() -> float:
+	return combat_time - _dash_started_at
+
+
 ## GameSession opens the counter on a perfect dodge (the enemy that missed) and closes it when the slow motion ends.
 func open_counter(enemy: Node2D) -> void:
 	_counter_target = enemy

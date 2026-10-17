@@ -291,6 +291,9 @@ func _set_stair_surface(id: String, enabled: bool) -> void:
 func _begin_stairs(descending: bool) -> void:
 	if _using_stairs or not player.is_on_floor() or player.is_attacking:
 		return
+	# A fight night keeps them shut until floor 1 is clear (hospital_chapter.stairs_open).
+	if chapter != null and not chapter.stairs_open():
+		return
 	var point := player.position
 	var landing := "upper" if descending else "lower"
 	var on_landing := absf(point.y - float(_flight[landing + "_landing_y"])) < STAIR_ENTRY_SLACK
