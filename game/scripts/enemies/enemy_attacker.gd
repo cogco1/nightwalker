@@ -8,6 +8,10 @@ extends Node
 ##
 ## Time runs on the world clock: delta times GameSession.world_time_scale, and the paused tree of a hit-stop
 ## stops it.
+##
+## Floor-bound bodies (the chapter's guards, scripts/enemies/guard.gd) set horizontal (the lunge keeps to the
+## floor), standoff (it stops short of the hero), returns = false (no drift back: the post is where it stopped),
+## mirror_hitbox (the box is drawn facing right) and damage; armed = false holds the next attack back.
 
 signal telegraph_started
 signal lunge_started(aim: Vector2)
@@ -31,6 +35,18 @@ enum Phase { IDLE, TELEGRAPH, LUNGE, RECOVER, RETURN, COOLDOWN }
 @export var aim_offset := Vector2(0, -13)
 @export var knockback := 20.0
 @export var warning_color := Color(1.0, 0.25, 0.25)
+## The lunge keeps the body's height instead of aiming at the hero's.
+@export var horizontal := false
+## The lunge stops this far short of the aim point (before the overshoot).
+@export var standoff := 0.0
+## After the recovery the body drifts back to its post; false leaves it where the lunge ended.
+@export var returns := true
+## hitbox is drawn facing right and is mirrored for a lunge to the left.
+@export var mirror_hitbox := false
+## Hit points a HIT takes from the hero (attack.damage); the sandbox hero has none.
+@export var damage := 0
+## While false a hero in reach does not start a telegraph (the host's own state: staggered, airborne, held).
+var armed := true
 
 var phase := Phase.IDLE
 var phase_time := 0.0
@@ -82,12 +98,14 @@ func _physics_process(delta: float) -> void:
 		Phase.IDLE:
 			# The post follows the body while it idles, so a scene can still move or bob the enemy.
 			post = _body.global_position
-			if _in_reach():
+			if armed and _in_reach():
 				_enter(Phase.TELEGRAPH)
 				telegraph_started.emit()
 		Phase.TELEGRAPH:
 			if phase_time <= telegraph_seconds - lock_lead:
 				aim = target.global_position + aim_offset
+				if horizontal:
+					aim.y = _body.global_position.y
 			_body.modulate = warning_color if int(phase_time / 0.06) % 2 == 0 else _base_modulate
 			if phase_time >= telegraph_seconds:
 				_body.modulate = _base_modulate
@@ -96,7 +114,10 @@ func _physics_process(delta: float) -> void:
 				_enter(Phase.LUNGE)
 				lunge_started.emit(aim)
 		Phase.LUNGE:
-			var goal := aim + (aim - _start).normalized() * lunge_overshoot
+			var heading := (aim - _start).normalized()
+			var goal := aim + heading * (lunge_overshoot - standoff)
+			if (goal - _start).dot(heading) < 0.0:
+				goal = _start
 			_body.global_position = _start.lerp(goal, minf(1.0, phase_time / lunge_seconds))
 			if not resolved and window_age() >= 0.0:
 				if hit_rect().intersects(target.call("hurtbox")):
@@ -107,7 +128,11 @@ func _physics_process(delta: float) -> void:
 				_enter(Phase.RECOVER)
 		Phase.RECOVER:
 			if phase_time >= recover_seconds:
-				_enter(Phase.RETURN)
+				if returns:
+					_enter(Phase.RETURN)
+				else:
+					post = _body.global_position
+					_enter(Phase.COOLDOWN)
 		Phase.RETURN:
 			_body.global_position = _body.global_position.move_toward(post, return_speed * delta * world_scale())
 			if _body.global_position.distance_to(post) < 0.5:
@@ -118,7 +143,24 @@ func _physics_process(delta: float) -> void:
 
 
 func hit_rect() -> Rect2:
-	return Rect2(_body.global_position + hitbox.position, hitbox.size)
+	var box := hitbox
+	if mirror_hitbox and lunge_heading() < 0.0:
+		box.position.x = -box.end.x
+	return Rect2(_body.global_position + box.position, box.size)
+
+
+## -1 when the current (or last) lunge goes left, else 1.
+func lunge_heading() -> float:
+	return -1.0 if aim.x < _start.x else 1.0
+
+
+## The body was hit while winding up: the telegraph is called off and the next one waits `seconds`. A lunge in
+## progress is committed and carries on.
+func stagger(seconds: float) -> void:
+	if phase == Phase.TELEGRAPH:
+		_body.modulate = _base_modulate
+		_enter(Phase.COOLDOWN)
+		phase_time = maxf(0.0, cooldown_seconds - seconds)
 
 
 ## Calls off any attack in progress and puts the body back on its post (destroyed, reset or countered).
@@ -144,5 +186,5 @@ func _resolve(contact: bool) -> void:
 	if direction.x == 0.0:
 		direction.x = 1.0
 	last_result = int(target.call("receive_attack", {"source": _body, "direction": direction, "contact": contact,
-		"window_age": clampf(window_age(), 0.0, active_seconds), "knockback": knockback}))
+		"window_age": clampf(window_age(), 0.0, active_seconds), "knockback": knockback, "damage": damage}))
 	attack_resolved.emit(last_result)

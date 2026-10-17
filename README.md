@@ -1,10 +1,10 @@
 # 夜行者 Nightwalker
 
-**最新版本：[v2026.10.18](https://github.com/cogco1/nightwalker/releases/latest)** · [本版更新](docs/releases/v2026.10.18.md) · 后续开发以 `main` 分支为准。
+**当前开发基线：`main`（含第一章 M2 与最新战斗动作）**。已发布包：[v2026.10.18](https://github.com/cogco1/nightwalker/releases/tag/v2026.10.18) · [该包更新说明](docs/releases/v2026.10.18.md)。
 
 当前进度、待完成事项与最近验证见 [PROJECT_STATUS.md](PROJECT_STATUS.md)。
 
-Godot 4.7.2 像素动作游戏（SK 项目）。设定在 2040 年的佩特拉新城：白天俯视潜行，夜晚侧视长刀战斗。在 **v14** 人物与场景基线上继续开发：601 安全屋、地下医院（俯视/侧视双视角）、C 区夜街，以及 76 个动作入口、1152 张独立人物帧图（含重击、蓄力拔刀、左右空中突刺、蹲行和翻滚）。第一章正在按里程碑制作，M1（昼夜、家枢纽、俯视暗处潜行的最小闭环）见下文“第一章”。
+Godot 4.7.2 像素动作游戏（SK 项目）。设定在 2040 年的佩特拉新城：白天俯视潜行，夜晚侧视长刀战斗。在 **v14** 人物与场景基线上继续开发：601 安全屋、地下医院（俯视/侧视双视角）、C 区夜街，以及 76 个动作入口、1152 张独立人物帧图（含重击、蓄力拔刀、左右空中突刺、蹲行和翻滚）。第一章正在按里程碑制作，M1（昼夜、家枢纽、俯视暗处潜行的最小闭环）和 M2（第一夜的器官交易战斗、血量、按键图标教学和处决）见下文“第一章”。
 
 普通地面左键短按期间保持待机／行走姿势，松开直接出轻击；持续超过0.24秒才确认蓄力，轻击本身的抬刀改为约0.11秒；从按下到蓄满仍为0.55秒。蓄力斩计作第一段，收势直接经过专用动作接左键轻击二段或右键重击二段，空格追跃后也从空中第二段继续。
 
@@ -13,7 +13,7 @@ Godot 4.7.2 像素动作游戏（SK 项目）。设定在 2040 年的佩特拉�
 ## 快速开始
 
 1. 把 `godot-path.example.txt` 复制成 `godot-path.txt`，写入本机 Godot 4.7.2 的路径（这个文件不入库）。也可以设环境变量 `NIGHTWALKER_GODOT`。
-2. 双击 `Run-Demo.cmd` 从第一章开始（601，7 月 27 日 12:00）；章节里 F7、F8、Tab 是调试键，要用就运行 `powershell -File tools\Run-Game.ps1 -DebugKeys`。双击 `Run-Sandbox.cmd` 进原来的自由模式：从安全屋开始，F7 往返安全屋与医院，F8 进入夜街、再按返回来源室内。`Open-Editor.cmd` 打开编辑器，`Test-Game.cmd` 跑完整回归；`Run-NightStreet.cmd` 仍可直接进夜街。
+2. 双击 `Run-Demo.cmd` 从第一章开始（601，7 月 27 日 12:00）；章节里 F7、F8、Tab 是调试键，要用就运行 `powershell -File tools\Run-Game.ps1 -DebugKeys`；`-Step d1_night` 直接从第一夜开始。双击 `Run-Sandbox.cmd` 进原来的自由模式：从安全屋开始，F7 往返安全屋与医院，F8 进入夜街、再按返回来源室内。`Open-Editor.cmd` 打开编辑器，`Test-Game.cmd` 跑完整回归；`Run-NightStreet.cmd` 仍可直接进夜街。
 3. 操作见 [docs/操作说明.txt](docs/操作说明.txt) 和 [docs/游戏内改键说明.txt](docs/游戏内改键说明.txt)。
 
 已验证引擎版本：`4.7.2.stable.official.ed1daf0bf`，GL Compatibility 渲染器。
@@ -34,13 +34,14 @@ Nightwalker/
 │  ├─ scripts/
 │  │  ├─ core/        boot · controls · game_session · scene_routes · story_state（物品、标记、章节进度）
 │  │  ├─ player/      player.gd（移动、轻击连招、蓄力重斩、突刺、空战、顿帧信号）
+│  │  ├─ enemies/     enemy_attacker（预警突袭）· humanoid（第一章人形敌人：guard · gunner · buyer · doctor，代码画的占位）· enemy_bullet
 │  │  ├─ ui/          pixel_ui · keybindings_menu · dialogue_box · hud_style · chapter_hud · exposure_hud ·
-│  │  │               terminal_menu · story_overlay（第一章的“冷光终端”UI）
+│  │  │               terminal_menu · story_overlay · health_hud · tutorial_plate（第一章的“冷光终端”UI）
 │  │  └─ levels/
 │  │     ├─ level_kit.gd 关卡共用：碰撞体、镜头跟随
 │  │     ├─ interior_lighting.gd 安全屋与医院共用的像素灯光、辉光、薄雾与人物轮廓光
 │  │     ├─ home_601/   home_601 · home_prop_fx
-│  │     ├─ hospital/   underground_hospital · hospital_interactions · hospital_security
+│  │     ├─ hospital/   underground_hospital · hospital_interactions · hospital_security · hospital_chapter · night_fight（第一夜）
 │  │     └─ night_street/ night_street · beam_drone · hover_target · rain（原型）
 │  ├─ assets/                                       SpriteFrames、刀尖路径、场景底图与 layout.json、字体、立绘；
 │  │                                                fx/ 人物查找表、材质和义体锚点，night_street/ 夜街分层底图和灯光表；
@@ -66,11 +67,11 @@ Nightwalker/
 
 ## 测试
 
-`Test-Game.cmd` 先做一次素材导入，再依次跑 27 组套件，日志写到 `game/evidence/logs/`，最后打印每组检查数和总数，有失败时返回非零退出码。套件清单以 `tools/Test-Game.ps1` 为准，最近实际执行结果见 [项目进度](PROJECT_STATUS.md#最近验证)。
+`Test-Game.cmd` 先做一次素材导入，再依次跑 43 组套件，日志写到 `game/evidence/logs/`，最后打印每组检查数和总数，有失败时返回非零退出码。套件清单以 `tools/Test-Game.ps1` 为准，最近实际执行结果见 [项目进度](PROJECT_STATUS.md#最近验证)。
 
 | 套件 | 内容 |
 |---|---|
-| core_v07 | 移动、三连击、暴击、顿帧、Shift 点按无伤害闪避、长按奔跑、Shift+方向+新左键突刺、上挑、1088 帧资源 |
+| core_v07 | 移动、三连击、暴击、顿帧、Shift 点按无伤害闪避、长按奔跑、Shift+方向+新左键突刺、上挑、1152 帧资源 |
 | keybindings / keybindings_reload | 改键保存、冲突（闪避/突刺与奔跑允许共用）、旧默认Caps/Shift迁移至v4、重启读取 |
 | air_combat / air_dash_animation_v14 | 二段跳、空中三连、下劈、空中突刺 |
 | scene_integration_v14 | 安全屋与医院里的实际玩家、顿帧和改键 |
@@ -99,15 +100,17 @@ Nightwalker/
 | perfect_counter | 完美闪避慢动作、反击落点与伤害、顿帧和时钟恢复 |
 | night_street_proto | 人物材质覆盖所有场景、光束暴露与标记、无人机连击和顿帧、原型专用按键、F8 场景入口 |
 | light_sense | 第一章俯视潜行：每盏灯只照自己的房间或走廊、贴图和判定亮度一致、断电变暗（含底图光斑遮罩）、暴露条涨落、锁定和 R 回本层入口、自由模式不受影响 |
-| chapter_flow | 从正式入口用真实按键走完第一章 M1：开场、接单、医院锁定、拉闸、密码、背后暗杀、回家购物、睡觉暴走、侧视夜晚、屏息、第 2 天；章节 HUD 和调试键 |
+| chapter_flow | 从正式入口用真实按键走完第一章 M1 和 M2：开场、接单、医院锁定、拉闸、密码、背后暗杀、回家购物、睡觉暴走、第一夜（真实键鼠打完五课、两层、三句台词和处决）、屏息、第 2 天；章节 HUD 和调试键 |
+| night_fight | 从 `boot.tscn` 以 `-Step d1_night` 的方式进第一夜，逐项查：人员和生命条、五课按键图标和学会条件、安保一棍、过量生命、死亡后本层重来、楼梯在一楼清空前不开、枪手瞄准线和子弹（命中、跳过、蹲过、完美闪避和反击）、买家逃跑、医生求饶、最后一个医生的保护、三句台词和处决、自由模式医院不受影响 |
 
 ## 第一章
 
-策划原文、拍板记录、里程碑和 M1 实现情况见 [docs/design/第一章_实现计划.md](docs/design/第一章_实现计划.md)，台词和流程数据在 `game/assets/story/chapter1.json`。
+策划原文、拍板记录、里程碑和 M1、M2 实现情况见 [docs/design/第一章_实现计划.md](docs/design/第一章_实现计划.md)，台词和流程数据在 `game/assets/story/chapter1.json`。
 
-- 流程：601 12:00 开场（“第一章”标题卡、电视新闻、敲门声）→ 电脑接乔伦的单 → 地下医院（俯视）暗杀科伯恩 → 14:50 回家暗网购物 → 睡觉，22:00 暴走 → 地下医院（侧视）第一夜 → 屏息 → 7 月 28 日 11:00 醒来，接莫温的单。第一夜的战斗是 M2，金域大厦是 M4/M5。
+- 流程：601 12:00 开场（“第一章”标题卡、电视新闻、敲门声）→ 电脑接乔伦的单 → 地下医院（俯视）暗杀科伯恩 → 14:50 回家暗网购物 → 睡觉，22:00 暴走 → 地下医院（侧视）第一夜的器官交易战斗 → 最后一个医生的三句台词和处决 → 屏息 → 7 月 28 日 11:00 醒来，接莫温的单。金域大厦是 M4/M5。
 - 潜行：灯下会暴露。站在光里右上角暴露条上涨（约 1.25 秒满），满了“微光粒子监控已锁定”，回到本层入口；一楼入口的配电箱可以切断二楼走廊和诊疗区的电。只有在暗处、从科伯恩背后才能按 E 暗杀。
-- 界面：“冷光终端”方案（左上状态牌、底部交互键帽、右上暴露条、洋红的暗网终端），对比图见 [docs/design/第一章_UI冷光终端_对比.png](docs/design/第一章_UI冷光终端_对比.png)。
+- 第一夜（M2）：近战安保（举棍闪红）、持枪保镖（开枪前红色激光瞄准线，子弹能冲刺穿过、跳过、蹲过，也能完美闪避后反击）、逃跑的买家、求饶的医生，都是代码画的占位剪影。全程无字幕，教学只用按键图标（移动、轻击连段、重击、闪避、完美闪避反击）。主角 100 点生命，掉到 0 从本层开头重来；一楼清空才能上楼；最后一个医生说完三句，一刀处决（顿帧、闪白、黑场）后进屏息。
+- 界面：“冷光终端”方案（左上状态牌、底部交互键帽、右上暴露条或夜里的生命条、底部按键图标教学、洋红的暗网终端），对比图见 [docs/design/第一章_UI冷光终端_对比.png](docs/design/第一章_UI冷光终端_对比.png)。
 
 ## 赛博朋克视觉原型（夜街）
 
@@ -130,7 +133,7 @@ Nightwalker/
 - `project.godot` 里的项目名仍带 v07：`user://` 改键配置目录跟着项目名走，改名会丢掉玩家已有的改键。
 - 输入动作 `reset_arena` 现在的意思是“重置位置”，为了兼容已有改键配置保留原名。
 - 原画、提示词和校验记录在 `art_metadata/`，不要只留导出帧。
-- 安全屋和医院不放训练木桩；剧情 NPC 按第一章原文放（2026-10-17 用户定，目前只有占位的科伯恩）。夜街保留已有悬浮无人机。`tests/fixtures` 只供回归。
+- 安全屋和医院不放训练木桩；剧情 NPC 按第一章原文放（2026-10-17 用户定，目前是占位的科伯恩和第一夜的安保、保镖、买家、医生）。夜街保留已有悬浮无人机。`tests/fixtures` 只供回归。
 
 ## 和 v14 交接包的对应关系
 

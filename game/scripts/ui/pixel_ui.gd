@@ -97,4 +97,5 @@ static func set_speaker(portrait: TextureRect, title: Label, body: Label, footer
 		"terminal": speaker_name = "终端"
 		"sk_reply": speaker_name = "我 · 回复"
 		"sound": speaker_name = "声音"
+		"doctor": speaker_name = "医生"
 	title.text = speaker_name + " · " + context

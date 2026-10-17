@@ -168,11 +168,11 @@ func _find_interaction(id: String) -> Dictionary:
 	return {}
 
 
-## Layout interactions plus the chapter's story targets (Coburn) while the story runs.
+## Layout interactions, as the chapter sees them while the story runs (Coburn added; a fight night keeps the stairs).
 func _all_interactions() -> Array:
 	var items: Array = _base_layout.get("interactions", [])
 	var chapter: Variant = _host.get("chapter") if is_instance_valid(_host) else null
-	return items + chapter.story_targets() if chapter != null else items
+	return chapter.interactions(items) if chapter != null else items
 
 
 func interact_nearest() -> String:
