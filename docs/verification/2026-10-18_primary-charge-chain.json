@@ -1,0 +1,328 @@
+{
+  "date": "2026-10-18",
+  "base": "9bf54492939955bc4146558fcb1145636db8d457",
+  "branch": "fix/light-tap-charge-followups-20261018",
+  "status": "passed",
+  "total_suites": 40,
+  "checks_passed": 4445,
+  "suites": [
+    {
+      "suite": "core_v07",
+      "checks": 545,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings",
+      "checks": 69,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings_reload",
+      "checks": 21,
+      "status": "passed"
+    },
+    {
+      "suite": "air_combat",
+      "checks": 116,
+      "status": "passed"
+    },
+    {
+      "suite": "air_dash_animation_v14",
+      "checks": 174,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_integration_v14",
+      "checks": 106,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_routes",
+      "checks": 69,
+      "status": "passed"
+    },
+    {
+      "suite": "interior_lighting",
+      "checks": 192,
+      "status": "passed"
+    },
+    {
+      "suite": "home_furniture",
+      "checks": 84,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_interactions",
+      "checks": 23,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_environment",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_physical_stairs",
+      "checks": 54,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_ward_layout",
+      "checks": 22,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_security",
+      "checks": 104,
+      "status": "passed"
+    },
+    {
+      "suite": "level_shared",
+      "checks": 38,
+      "status": "passed"
+    },
+    {
+      "suite": "contact_refresh_v07",
+      "checks": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_slash",
+      "checks": 52,
+      "status": "passed"
+    },
+    {
+      "suite": "moveset",
+      "checks": 1014,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_state",
+      "checks": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rhythm_combat",
+      "checks": 94,
+      "status": "passed"
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "status": "passed"
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "status": "passed"
+    },
+    {
+      "suite": "night_street_proto",
+      "checks": 50,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_impact_v2",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_impact_v2_144",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "thrust_path",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "jump_chase",
+      "checks": 66,
+      "status": "passed"
+    },
+    {
+      "suite": "jump_chase_144",
+      "checks": 66,
+      "status": "passed"
+    },
+    {
+      "suite": "primary_charge_chain",
+      "checks": 108,
+      "status": "passed"
+    },
+    {
+      "suite": "primary_charge_chain_144",
+      "checks": 119,
+      "status": "passed"
+    },
+    {
+      "suite": "direct_charge",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "direct_charge_144",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_draw",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_draw_144",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "heavy_cleave",
+      "checks": 67,
+      "status": "passed"
+    },
+    {
+      "suite": "roll_thrust_motion",
+      "checks": 80,
+      "status": "passed"
+    },
+    {
+      "suite": "shift_controls",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "locomotion_blade",
+      "checks": 260,
+      "status": "passed"
+    },
+    {
+      "suite": "light_sense",
+      "checks": 132,
+      "status": "passed"
+    },
+    {
+      "suite": "chapter_flow",
+      "checks": 117,
+      "status": "passed"
+    }
+  ],
+  "existing_pngs_preserved": 1152,
+  "render": {
+    "status": "passed",
+    "checks": {
+      "short_tap_has_no_charge_state_or_pose": true,
+      "tap_release_starts_light_directly": true,
+      "short_tap_has_no_charge_cue": true,
+      "exact_light_and_heavy_continuation_sequence": true,
+      "charge_counts_as_first_then_second_third": true,
+      "two_confirmed_full_charges": true,
+      "dedicated_second_light_animation": true,
+      "dedicated_second_heavy_animation": true,
+      "charged_visual_release_retained": true,
+      "settles_cleanly": true,
+      "audible_no_clipping": true,
+      "video_and_audio": true
+    },
+    "action_frames": 328,
+    "audio": {
+      "seconds": 5.766666666666667,
+      "peak": 0.46929931640625,
+      "rms": 0.03923210550954906,
+      "channels": 2,
+      "sample_rate": 48000
+    },
+    "events": [
+      {
+        "event": "move",
+        "frame": 20,
+        "move": "attack1",
+        "section": "tap_light",
+        "stage": 1
+      },
+      {
+        "event": "charge_started",
+        "frame": 72,
+        "section": "light_charge"
+      },
+      {
+        "event": "charge_ready",
+        "frame": 97,
+        "section": "light_charge"
+      },
+      {
+        "event": "move",
+        "frame": 101,
+        "move": "heavy_slash",
+        "section": "light_charge",
+        "stage": 1
+      },
+      {
+        "event": "move",
+        "frame": 111,
+        "move": "attack2",
+        "section": "light_second",
+        "stage": 2
+      },
+      {
+        "event": "move",
+        "frame": 135,
+        "move": "attack3",
+        "section": "light_third",
+        "stage": 3
+      },
+      {
+        "event": "charge_started",
+        "frame": 183,
+        "section": "heavy_charge"
+      },
+      {
+        "event": "charge_ready",
+        "frame": 208,
+        "section": "heavy_charge"
+      },
+      {
+        "event": "move",
+        "frame": 212,
+        "move": "heavy_slash",
+        "section": "heavy_charge",
+        "stage": 1
+      },
+      {
+        "event": "move",
+        "frame": 222,
+        "move": "rush_cleave",
+        "section": "heavy_second",
+        "stage": 2
+      },
+      {
+        "event": "move",
+        "frame": 254,
+        "move": "launch_slash",
+        "section": "heavy_third",
+        "stage": 3
+      }
+    ],
+    "preview": "nightwalker_primary_charge_chain.mp4",
+    "scope": "Real-input animation demonstration in the shipped night-street scene; damage, launch and hit-stop continuation are covered separately by the gameplay suites."
+  },
+  "changes": {
+    "tap_pose": "locomotion only, no charge state/animation/cue before the hold threshold",
+    "hold_threshold_seconds": 0.14,
+    "full_charge_seconds": 0.55,
+    "charged_combo_stage": 1,
+    "light_second": "attack2",
+    "heavy_second": "rush_cleave",
+    "cancel_frame": 12,
+    "extra_followup_seconds_after_recovery": 0.25,
+    "jump_chase_first_air_slash": "attack2"
+  },
+  "source_sha256": {
+    "game/scripts/player/player.gd": "6616a06bb49d14453ee21fde56953f9196998a173ca5384662875ee3fd779c4a",
+    "game/scripts/player/moves_long_blade.gd": "fe129fdc3d0604e60fe9b1b75aeb1c1cfafb1d9f7c99cd44fdfe03c50692c87b",
+    "game/tests/test_primary_charge_chain.gd": "92b71f95ce1031d02eeba118f55bba0baf8505a68fe63c85ae5e56f5e59729fd",
+    "game/tests/test_jump_chase.gd": "e394c16f2477f430642d94574c6b73ee2ec4327966a703f3c33ce1fbd9b66ce1",
+    "game/tests/recorders/record_primary_charge_chain.gd": "4fac257dae01bf2de0913e2263feffe6a50c32c2ac4563242a626ffbb038fb2b"
+  },
+  "execution_note": "All 40 suites passed in one final full run; new primary-charge-chain cases use real mouse events at 60 and 144 rendered Hz."
+}

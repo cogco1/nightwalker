@@ -1,0 +1,418 @@
+{
+  "generator": "built-in image_gen",
+  "native_canvas": [
+    112,
+    96
+  ],
+  "pivot": [
+    56,
+    84
+  ],
+  "fps": 14,
+  "frames": [
+    {
+      "frame": 0,
+      "source_box": [
+        56,
+        0,
+        311,
+        207
+      ],
+      "source_wrist": [
+        277.0416666666667,
+        108.025
+      ],
+      "native_wrist": [
+        63,
+        77
+      ],
+      "body_bbox": [
+        48,
+        70,
+        65,
+        84
+      ],
+      "body_height": 14,
+      "sha256": "2deb8cdb499d0a1d1df6a5fb8de0b42aebe1169b67ee9eb4c7031f5d81c69f00"
+    },
+    {
+      "frame": 1,
+      "source_box": [
+        32,
+        0,
+        298,
+        207
+      ],
+      "source_wrist": [
+        266.95081967213116,
+        107.95901639344262
+      ],
+      "native_wrist": [
+        63,
+        77
+      ],
+      "body_bbox": [
+        47,
+        70,
+        65,
+        84
+      ],
+      "body_height": 14,
+      "sha256": "ec3b84a1f8e499964f00ffa0e8136d51b2541d802d6126e5176c80dfe23a22a2"
+    },
+    {
+      "frame": 2,
+      "source_box": [
+        14,
+        0,
+        288,
+        207
+      ],
+      "source_wrist": [
+        250.0,
+        108.0
+      ],
+      "native_wrist": [
+        63,
+        77
+      ],
+      "body_bbox": [
+        47,
+        70,
+        66,
+        84
+      ],
+      "body_height": 14,
+      "sha256": "5384c4896000c803c2781e847f8e80b490cb02ace1e9d4048eb096786815bf37"
+    },
+    {
+      "frame": 3,
+      "source_box": [
+        8,
+        0,
+        281,
+        207
+      ],
+      "source_wrist": [
+        247.62790697674419,
+        107.90697674418605
+      ],
+      "native_wrist": [
+        63,
+        77
+      ],
+      "body_bbox": [
+        47,
+        70,
+        65,
+        84
+      ],
+      "body_height": 14,
+      "sha256": "5e3a79a3dbe6b44205763e4c15988deadceb0daa830d652126bf872814af0bed"
+    },
+    {
+      "frame": 4,
+      "source_box": [
+        49,
+        0,
+        331,
+        216
+      ],
+      "source_wrist": [
+        300.0,
+        107.0
+      ],
+      "native_wrist": [
+        63,
+        76
+      ],
+      "body_bbox": [
+        46,
+        69,
+        65,
+        84
+      ],
+      "body_height": 15,
+      "sha256": "b9d957d3ab79f1f37e8076460c341baf704413dd33aa32bad838afdebefa9f3d"
+    },
+    {
+      "frame": 5,
+      "source_box": [
+        40,
+        0,
+        325,
+        212
+      ],
+      "source_wrist": [
+        295.5,
+        107.0
+      ],
+      "native_wrist": [
+        63,
+        77
+      ],
+      "body_bbox": [
+        45,
+        69,
+        65,
+        84
+      ],
+      "body_height": 15,
+      "sha256": "2b4c5d8773bd147fedec43ae3ad45a367bb87795c91271394ef80af6290d5b4a"
+    },
+    {
+      "frame": 6,
+      "source_box": [
+        23,
+        0,
+        302,
+        217
+      ],
+      "source_wrist": [
+        273.2608695652174,
+        107.48550724637681
+      ],
+      "native_wrist": [
+        63,
+        76
+      ],
+      "body_bbox": [
+        46,
+        69,
+        65,
+        84
+      ],
+      "body_height": 15,
+      "sha256": "28c0c9126baa66d4cca6e6ab934d0d161bd33b14b2ec214cf2fd3accab5bb8df"
+    },
+    {
+      "frame": 7,
+      "source_box": [
+        21,
+        0,
+        296,
+        217
+      ],
+      "source_wrist": [
+        264.55970149253733,
+        107.08955223880596
+      ],
+      "native_wrist": [
+        63,
+        76
+      ],
+      "body_bbox": [
+        46,
+        69,
+        65,
+        84
+      ],
+      "body_height": 15,
+      "sha256": "542802744a998b70a5ec350974afc9c0ae75d521f413bc7867629d63d3e33fb8"
+    },
+    {
+      "frame": 8,
+      "source_box": [
+        44,
+        0,
+        320,
+        220
+      ],
+      "source_wrist": [
+        291.23809523809524,
+        105.97619047619048
+      ],
+      "native_wrist": [
+        63,
+        76
+      ],
+      "body_bbox": [
+        46,
+        69,
+        65,
+        84
+      ],
+      "body_height": 15,
+      "sha256": "0a94fe036c8157c90363455a3e9c48f16269acf56aeeedc3d47953e0fd072102"
+    },
+    {
+      "frame": 9,
+      "source_box": [
+        27,
+        0,
+        305,
+        220
+      ],
+      "source_wrist": [
+        276.38235294117646,
+        105.17647058823529
+      ],
+      "native_wrist": [
+        63,
+        76
+      ],
+      "body_bbox": [
+        46,
+        69,
+        65,
+        84
+      ],
+      "body_height": 15,
+      "sha256": "1985eff7e1dadd717fdbc12d964fc241544c8d2176263bb594e99cbb6399b3c0"
+    },
+    {
+      "frame": 10,
+      "source_box": [
+        23,
+        0,
+        296,
+        219
+      ],
+      "source_wrist": [
+        269.0,
+        106.09756097560975
+      ],
+      "native_wrist": [
+        63,
+        76
+      ],
+      "body_bbox": [
+        46,
+        69,
+        65,
+        84
+      ],
+      "body_height": 15,
+      "sha256": "9194c82cf3160e7931c13d69884f17d3630a054aafbfedc78df6b847fccfe819"
+    },
+    {
+      "frame": 11,
+      "source_box": [
+        19,
+        0,
+        296,
+        220
+      ],
+      "source_wrist": [
+        267.0,
+        111.0
+      ],
+      "native_wrist": [
+        63,
+        76
+      ],
+      "body_bbox": [
+        46,
+        69,
+        65,
+        84
+      ],
+      "body_height": 15,
+      "sha256": "13354723340cd72c13ba1523c5a436158630aa4c28fa916f01862ed9e19ce7b1"
+    },
+    {
+      "frame": 12,
+      "source_box": [
+        43,
+        0,
+        323,
+        216
+      ],
+      "source_wrist": [
+        287.7906976744186,
+        109.20930232558139
+      ],
+      "native_wrist": [
+        63,
+        77
+      ],
+      "body_bbox": [
+        46,
+        69,
+        65,
+        84
+      ],
+      "body_height": 15,
+      "sha256": "bdd27b3ce4821064132557c1aa3209bc4eddce3b201903cdd28f953eab31e278"
+    },
+    {
+      "frame": 13,
+      "source_box": [
+        31,
+        0,
+        318,
+        216
+      ],
+      "source_wrist": [
+        277.328125,
+        109.046875
+      ],
+      "native_wrist": [
+        63,
+        77
+      ],
+      "body_bbox": [
+        46,
+        69,
+        66,
+        84
+      ],
+      "body_height": 15,
+      "sha256": "f3c45877a68ba3dd680820ad14dd15d0469eba33dae889376a6976312c99c252"
+    },
+    {
+      "frame": 14,
+      "source_box": [
+        23,
+        1,
+        301,
+        216
+      ],
+      "source_wrist": [
+        267.17164179104475,
+        110.44776119402985
+      ],
+      "native_wrist": [
+        63,
+        77
+      ],
+      "body_bbox": [
+        46,
+        69,
+        65,
+        84
+      ],
+      "body_height": 15,
+      "sha256": "0826fd54e185fdf692aeae1b182f04d7013ed0c92836fffdc37bd8f97ef3de24"
+    },
+    {
+      "frame": 15,
+      "source_box": [
+        15,
+        0,
+        293,
+        216
+      ],
+      "source_wrist": [
+        258.4661654135338,
+        109.04511278195488
+      ],
+      "native_wrist": [
+        63,
+        77
+      ],
+      "body_bbox": [
+        46,
+        69,
+        65,
+        84
+      ],
+      "body_height": 15,
+      "sha256": "4e36231add2648186ab82a3774fc1b6f435a668e398389fe0bd146d895c661cf"
+    }
+  ],
+  "single_global_scale": 0.06944444444444445,
+  "total_new_png_frames": 32,
+  "registration_marker_removed": true,
+  "blade_source": "../locomotion_blade_20261017/carry_blade_native.png"
+}

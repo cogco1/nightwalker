@@ -50,6 +50,12 @@ func take_damage(amount: int) -> bool:
 	return true
 
 
+func suppress_contact_feedback() -> void:
+	flash_left = 0.0
+	slash_flash_left = 0.0
+	queue_redraw()
+
+
 func knock_up(direction: Vector2) -> void:
 	if not side_view:
 		return
@@ -57,6 +63,13 @@ func knock_up(direction: Vector2) -> void:
 	velocity = Vector2(signf(direction.x) * 55.0, -300.0)
 	last_knock_velocity = velocity
 	knock_count += 1
+
+
+func receive_charged_launch(direction: Vector2) -> void:
+	receive_hit_reaction(direction,true,false)
+	if side_view:
+		velocity=Vector2(signf(direction.x)*105.0,-300.0)
+		last_knock_velocity=velocity
 
 
 func receive_hit_reaction(direction: Vector2, strong: bool = false, air_combo: bool = false) -> void:

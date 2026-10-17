@@ -44,10 +44,10 @@ func run() -> void:
 	check(arena.completed_stop_requests.size() == 3, "high-refresh chain groups one pause per attack stage")
 	if arena.completed_stop_requests.size() == 3:
 		for index in range(3):
-			var required_frames := 6 if index == 2 else 4
+			var required_frames := 6 if index == 2 else 2
 			var required_seconds := required_frames/60.0
-			check(arena.completed_stop_requests[index] >= required_frames and arena.completed_stop_durations[index]+0.00001 >= required_seconds,
-				"high-refresh pause keeps minimum frames AND visible duration, stage " + str(index+1))
+			check(arena.completed_stop_requests[index] >= required_frames and arena.completed_stop_durations[index]+0.00001 >= required_seconds and (index==2 or arena.completed_stop_durations[index]<0.05),
+				"high-refresh pause keeps its minimum duration and light contact stays under 50ms, stage " + str(index+1))
 	var result := {"status":"passed" if failures.is_empty() else "failed","checks":checks,"failures":failures,
 		"stop_frames":arena.completed_stop_requests,"stop_durations_seconds":arena.completed_stop_durations,
 		"engine":Engine.get_version_info()["string"],"execution":"Headless, fixed 144 process frames/sec; normal 60 physics ticks/sec"}

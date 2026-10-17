@@ -1,0 +1,454 @@
+{
+  "date": "2026-10-18",
+  "base": "48faf58290f6300a1f9186836920f9c34d11c782",
+  "branch": "feature/combat-impact-feel-20261018",
+  "status": "passed",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "total_suites": 30,
+  "checks_passed": 3718,
+  "suites": [
+    {
+      "suite": "core_v07",
+      "checks": 535,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings",
+      "checks": 68,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings_reload",
+      "checks": 20,
+      "status": "passed"
+    },
+    {
+      "suite": "air_combat",
+      "checks": 115,
+      "status": "passed"
+    },
+    {
+      "suite": "air_dash_animation_v14",
+      "checks": 174,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_integration_v14",
+      "checks": 106,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_routes",
+      "checks": 69,
+      "status": "passed"
+    },
+    {
+      "suite": "interior_lighting",
+      "checks": 192,
+      "status": "passed"
+    },
+    {
+      "suite": "home_furniture",
+      "checks": 84,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_interactions",
+      "checks": 23,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_environment",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_physical_stairs",
+      "checks": 54,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_ward_layout",
+      "checks": 22,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_security",
+      "checks": 104,
+      "status": "passed"
+    },
+    {
+      "suite": "level_shared",
+      "checks": 38,
+      "status": "passed"
+    },
+    {
+      "suite": "contact_refresh_v07",
+      "checks": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_slash",
+      "checks": 52,
+      "status": "passed"
+    },
+    {
+      "suite": "moveset",
+      "checks": 1013,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_state",
+      "checks": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rhythm_combat",
+      "checks": 94,
+      "status": "passed"
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "status": "passed"
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "status": "passed"
+    },
+    {
+      "suite": "night_street_proto",
+      "checks": 49,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_impact_v2",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_impact_v2_144",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "roll_thrust_motion",
+      "checks": 80,
+      "status": "passed"
+    },
+    {
+      "suite": "shift_controls",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "locomotion_blade",
+      "checks": 260,
+      "status": "passed"
+    },
+    {
+      "suite": "light_sense",
+      "checks": 132,
+      "status": "passed"
+    },
+    {
+      "suite": "chapter_flow",
+      "checks": 117,
+      "status": "passed"
+    }
+  ],
+  "execution_note": "Full 30-suite run followed by focused reruns: special-move cues stay at take-off/commit, ordinary cues use swing release; new kill-wave cases and camera checks passed at 60 and 144 fps, rhythm_combat 94 also passed.",
+  "changes": {
+    "thrust_contact_feedback": false,
+    "thrust_damage_and_reaction_preserved": true,
+    "roll_seconds": 0.3,
+    "frame_duration_units": [
+      1.14,
+      1.14,
+      1.14,
+      1.14,
+      1.14,
+      1.14,
+      0.85,
+      0.85,
+      0.85,
+      0.85,
+      1.05,
+      1.05,
+      1.05,
+      0.95,
+      0.95,
+      0.95
+    ],
+    "light_lunge_pixels": [
+      8,
+      8,
+      10
+    ],
+    "heavy_lunge_pixels": 36,
+    "contact_life_seconds": [
+      0.045,
+      0.065,
+      0.075,
+      0.085,
+      0.09
+    ],
+    "hit_stop_frames": {
+      "tick": 2,
+      "light": 4,
+      "critical": 6,
+      "heavy": 10,
+      "kill": 10
+    },
+    "camera_max_offset_pixels": 3
+  },
+  "assets": {
+    "status": "passed",
+    "baseline": "48faf58290f6300a1f9186836920f9c34d11c782",
+    "preserved": {
+      "animation_pngs": 1088,
+      "previous_audio": 11
+    },
+    "legacy_source_files": 4,
+    "new_sounds": {
+      "hit_critical.wav": {
+        "seconds": 0.19,
+        "peak_dbfs": -3.500513027412635,
+        "rms_dbfs": -15.082355629386814
+      },
+      "hit_heavy.wav": {
+        "seconds": 0.23,
+        "peak_dbfs": -3.500513027412635,
+        "rms_dbfs": -15.675740567202425
+      },
+      "hit_kill.wav": {
+        "seconds": 0.25,
+        "peak_dbfs": -3.500513027412635,
+        "rms_dbfs": -14.613278770116175
+      },
+      "hit_light.wav": {
+        "seconds": 0.14,
+        "peak_dbfs": -3.500513027412635,
+        "rms_dbfs": -14.888449295484687
+      },
+      "swing_heavy.wav": {
+        "seconds": 0.19,
+        "peak_dbfs": -3.500513027412635,
+        "rms_dbfs": -17.257890129522014
+      },
+      "swing_light.wav": {
+        "seconds": 0.12,
+        "peak_dbfs": -3.500513027412635,
+        "rms_dbfs": -17.949450836081464
+      }
+    },
+    "failures": []
+  },
+  "render": {
+    "status": "passed",
+    "rendered_frames": 552,
+    "movie_frames": 570,
+    "fps": 60,
+    "movie_seconds": 9.5,
+    "checks": {
+      "light_hits": true,
+      "critical_hit": true,
+      "heavy_kill": true,
+      "silent_thrust_kills": true,
+      "silent_thrust_has_no_impact": true,
+      "flesh_kill": true,
+      "particle_splatter": true,
+      "camera_returns": true,
+      "camera_bounded": true,
+      "white_coverage_bounded": true,
+      "mixed_audio_non_silent": true,
+      "mixed_audio_not_clipped": true
+    },
+    "maximum_near_white_screen_fraction": 0.0044444444444444444,
+    "maximum_camera_offset": 3,
+    "audio_recording": {
+      "channels": 2,
+      "rate": 48000,
+      "bits": 16,
+      "seconds": 9.5,
+      "peak": 0.54034423828125,
+      "rms": 0.03623376609889142
+    },
+    "preview": "nightwalker_combat_impact_v2.mp4",
+    "events": [
+      {
+        "event": "release",
+        "frame": 24,
+        "move": "attack1",
+        "section": "light_combo"
+      },
+      {
+        "damage": 1,
+        "event": "damage",
+        "frame": 25,
+        "hp": 7,
+        "kind": "",
+        "section": "light_combo"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 25,
+        "section": "light_combo",
+        "weight": "light"
+      },
+      {
+        "event": "release",
+        "frame": 53,
+        "move": "attack2",
+        "section": "light_combo"
+      },
+      {
+        "damage": 1,
+        "event": "damage",
+        "frame": 55,
+        "hp": 6,
+        "kind": "",
+        "section": "light_combo"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 55,
+        "section": "light_combo",
+        "weight": "light"
+      },
+      {
+        "event": "release",
+        "frame": 82,
+        "move": "attack3",
+        "section": "light_combo"
+      },
+      {
+        "damage": 3,
+        "event": "damage",
+        "frame": 83,
+        "hp": 3,
+        "kind": "",
+        "section": "light_combo"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 83,
+        "section": "light_combo",
+        "weight": "critical"
+      },
+      {
+        "event": "release",
+        "frame": 156,
+        "move": "attack1",
+        "section": "heavy_charge"
+      },
+      {
+        "damage": 1,
+        "event": "damage",
+        "frame": 157,
+        "hp": 2,
+        "kind": "",
+        "section": "heavy_charge"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 157,
+        "section": "heavy_charge",
+        "weight": "light"
+      },
+      {
+        "event": "release",
+        "frame": 213,
+        "move": "heavy_slash",
+        "section": "heavy_kill"
+      },
+      {
+        "damage": 3,
+        "event": "damage",
+        "frame": 215,
+        "hp": 0,
+        "kind": "heavy_slash",
+        "section": "heavy_kill"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 215,
+        "section": "heavy_kill",
+        "weight": "kill"
+      },
+      {
+        "event": "release",
+        "frame": 355,
+        "move": "dash_stab",
+        "section": "silent_thrust"
+      },
+      {
+        "damage": 1,
+        "event": "damage",
+        "frame": 361,
+        "hp": 0,
+        "kind": "dash_stab",
+        "section": "silent_thrust"
+      },
+      {
+        "event": "release",
+        "frame": 487,
+        "move": "attack1",
+        "section": "flesh_kill"
+      },
+      {
+        "damage": 1,
+        "event": "damage",
+        "frame": 488,
+        "hp": 0,
+        "kind": "",
+        "section": "flesh_kill"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 488,
+        "section": "flesh_kill",
+        "weight": "kill"
+      }
+    ],
+    "note": "Recorder disables AI and stages targets only in its own instance. Its flesh test fixture is not added to shipped levels."
+  },
+  "source_sha256": {
+    "game/scripts/player/player.gd": "cedac71613856e5b95acc29767729180cfd0b85855c4aea892859e0bd46a24cf",
+    "game/scripts/player/player_fx.gd": "5c735d02a36e82877667c816ffaaa61b70114d9e885bf25454dac39effa622e0",
+    "game/scripts/player/impact_v2.gd": "26b3b997140d73d8f429885f5c977e3b79647ba61bc9ca2cfbfed470e3b04814",
+    "game/scripts/player/legacy_dash_hit_feedback.gd": "f0e1e443dbe8d76260a64aa3c4619b793d28443b073e58cac41caea8b2d6a04c",
+    "game/scripts/player/moves_long_blade.gd": "d97d76d9929f331d325265405db9622a9b1a7002bd4e56155621bbd425e95692",
+    "game/scripts/core/game_session.gd": "653a5b68ba419ac7b01dcd9fa18dfd923c4a8e558b8d76212c52ec64e9b0d303",
+    "game/scripts/core/combat_feedback.gd": "c214abb61605ccc2312713036db7edb09ab7abfd17627a711ffa4e540f6713ac",
+    "game/assets/side_view.tres": "23c7d00ea86f1a1f4c90c8cdc70f68693eafcc766b964ed37dad3d56fad367a1",
+    "game/assets/top_down.tres": "29131aa997db36ee9de9f9de35191aa0b4504a25e5e9a8368f246203dc0ba8bd",
+    "game/tests/test_combat_impact_v2.gd": "eeeda29215223c5ee012677ff31275126aea7e061c8c73ceac9caceb7bddace0",
+    "game/tests/recorders/record_combat_impact_v2.gd": "5c0224b052df5a7c2fbf846912fdee9d67e9ccb1b3084b99428c97f256af30f3"
+  }
+}

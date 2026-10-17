@@ -38,7 +38,7 @@ func key(code: Key, pressed: bool) -> void:
 
 func release_keys() -> void:
 	mouse(false)
-	for code in [KEY_W, KEY_S, KEY_A, KEY_D, KEY_J, KEY_SHIFT, KEY_SPACE, KEY_CAPSLOCK, KEY_TAB, KEY_R]:
+	for code in [KEY_W, KEY_S, KEY_A, KEY_D, KEY_J, KEY_SHIFT, KEY_SPACE, KEY_SHIFT, KEY_TAB, KEY_R]:
 		key(code, false)
 
 func tap(code: Key) -> void:
@@ -116,7 +116,7 @@ func run_tests() -> void:
 		completed_stop_durations.append(arena.hit_stop_elapsed_seconds)
 	)
 	await tick(8)
-	for mapping in [[KEY_W,"move_up"], [KEY_S,"move_down"], [KEY_A,"move_left"], [KEY_D,"move_right"], [KEY_SPACE,"jump"], [KEY_CAPSLOCK,"run"]]:
+	for mapping in [[KEY_W,"move_up"], [KEY_S,"move_down"], [KEY_A,"move_left"], [KEY_D,"move_right"], [KEY_SPACE,"jump"], [KEY_SHIFT,"run"]]:
 		var event := InputEventKey.new()
 		event.physical_keycode = mapping[0]
 		check(InputMap.event_is_action(event, mapping[1]), "physical key mapping: " + mapping[1])
@@ -197,21 +197,22 @@ func run_tests() -> void:
 	await reset(0)
 	key(KEY_D, true)
 	await tick(21)
+	key(KEY_SHIFT, true)
+	await tick(10)
 	var phase_before := animation_phase()
-	key(KEY_CAPSLOCK, true)
 	await tick(1)
 	var phase_after := animation_phase()
 	check(phase_distance(phase_before, phase_after) < 0.12, "walk-to-run keeps leg cycle phase")
 	await tick(7)
-	check(arena.player.is_running and arena.player.sprite.animation == "run_right", "held Caps runs")
+	check(arena.player.is_running and arena.player.sprite.animation == "run_right", "held Shift runs")
 	check(arena.player.velocity.x > 130.0, "running reaches faster speed")
 	phase_before = animation_phase()
-	key(KEY_CAPSLOCK, false)
+	key(KEY_SHIFT, false)
 	await tick(1)
 	phase_after = animation_phase()
 	check(phase_distance(phase_before, phase_after) < 0.12, "run-to-walk keeps leg cycle phase")
 	await tick(6)
-	check(not arena.player.is_running and absf(arena.player.velocity.x - 60.0) < 0.1, "Caps release settles to walking speed")
+	check(not arena.player.is_running and absf(arena.player.velocity.x - 60.0) < 0.1, "Shift release settles to walking speed")
 	phase_before = animation_phase()
 	key(KEY_D, false)
 	key(KEY_S, true)
@@ -243,8 +244,8 @@ func run_tests() -> void:
 	await prepare_target(0)
 	mouse(true)
 	await tick(95)
-	check(arena.targets[0].hp == 2 and arena.hits == 1, "holding attack does not create an infinite chain")
-	check(not arena.player.is_attacking, "held attack finishes after one strike")
+	check(arena.targets[0].hp == 3 and arena.hits == 0, "holding primary directly charges without an opening hit")
+	check(arena.player.is_charging and not arena.player.is_attacking, "held primary stays in charge without an automatic light chain")
 	await prepare_target(0)
 	await mouse_tap()
 	await mouse_tap()
@@ -340,7 +341,7 @@ func run_tests() -> void:
 	Input.parse_input_event(mouse)
 	Input.flush_buffered_events()
 	await tick(2)
-	check(arena.player.is_attacking, "left mouse starts strike")
+	check(not arena.player.is_charging and not arena.player.is_attacking, "possible short ground tap stays out of charge anticipation")
 	mouse = InputEventMouseButton.new()
 	mouse.button_index = MOUSE_BUTTON_LEFT
 	mouse.pressed = false
@@ -417,12 +418,12 @@ func run_tests() -> void:
 	check(arena.player.is_on_floor() and absf(arena.player.position.y - 122.0) < 0.3, "jump reaches elevated platform")
 	await reset(1)
 	key(KEY_D, true)
-	key(KEY_CAPSLOCK, true)
-	await tick(10)
+	key(KEY_SHIFT, true)
+	await tick(22)
 	check(arena.player.is_running and arena.player.velocity.x > 130.0, "side running reaches run speed")
-	key(KEY_CAPSLOCK, false)
+	key(KEY_SHIFT, false)
 	await tick(7)
-	check(not arena.player.is_running and absf(arena.player.velocity.x - 60.0) < 0.1, "side Caps release returns to walking")
+	check(not arena.player.is_running and absf(arena.player.velocity.x - 60.0) < 0.1, "side Shift release returns to walking")
 	await prepare_target(1)
 	await mouse_tap()
 	await wait_attack_frame(9)
@@ -477,7 +478,7 @@ func run_tests() -> void:
 				check(idle_has_drawn_motion, "cloth/shoulder breathing is drawn inside sprite: " + animation)
 				check(idle_face_is_fixed, "breathing keeps exposed face pixels fixed: " + animation)
 				check(first_face.size() <= 3 and (first_face.is_empty() if String(animation).ends_with("_up") else not first_face.is_empty()), "hood exposes only a few face pixels: " + animation)
-	check(clip_count == 64 and frame_count == 1024, "64 clips and1024 imported frames including separate aerial and dive poses")
+	check(clip_count == 76 and frame_count == 1216, "76 clips reference1216 frames including four charge links, with1152 unique original PNGs")
 	check(root.content_scale_size == Vector2i(320,180), "320x180 native viewport")
 	check(arena.player.sprite.scale == Vector2.ONE, "character native scale")
 	check(arena.player.sprite.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST or arena.player.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST, "nearest pixel filtering")
@@ -513,7 +514,9 @@ func double_tap(code: Key) -> void:
 
 func dash_press(code: Key) -> void:
 	key(code,true)
-	await tap(KEY_SHIFT)
+	key(KEY_SHIFT,true)
+	await mouse_tap()
+	key(KEY_SHIFT,false)
 	key(code,false)
 
 func observe_hits() -> Array[Dictionary]:
@@ -570,7 +573,7 @@ func run_feature_tests() -> void:
 			check(events[2]["damage"] == (3 if roll < 0.30 else 1), "third damage is3x only on crit: " + str(roll))
 		check(arena.targets[0].hp == (7 if roll < 0.30 else 9), "critical health delta matches damage: " + str(roll))
 		check(hit_stop_events - stop_before == 3, "one contact stop per confirmed attack stage: " + str(roll))
-		check(completed_stops.slice(completion_start) == [4,4,6 if roll < 0.30 else 4], "normal and critical contact stop arbitration: " + str(roll))
+		check(completed_stops.slice(completion_start) == [2,2,6 if roll < 0.30 else 2], "normal and critical contact stop arbitration: " + str(roll))
 		check(not arena.hit_stop_active and not paused, "hit stop resumes gameplay: " + str(roll))
 		if roll < 0.30:
 			check(arena.hit_stop_displayed_frames == 6, "headless critical stop completes six display steps")
@@ -676,7 +679,7 @@ func run_feature_tests() -> void:
 	await reset(1)
 	var facing_x := 1.0 if arena.player.facing == "right" else -1.0
 	await tap(KEY_SHIFT)
-	check(arena.player.special_kind == "dash_stab" and arena.player.attack_direction.x == facing_x, "Shift alone dashes towards the current facing")
+	check(arena.player.is_dodging and arena.player._dodge_direction.x == facing_x and not arena.player.is_attacking, "Shift alone evades towards the facing without attacking")
 	await reset(1)
 	key(KEY_D,true)
 	await mouse_tap()
@@ -684,8 +687,8 @@ func run_feature_tests() -> void:
 	await reset(1)
 	key(KEY_D,true)
 	key(KEY_SHIFT,true)
-	await tick(2)
-	check(arena.player.special_kind == "dash_stab" and arena.player.attack_direction.x == 1.0, "Shift with a held direction dashes at once, without a click")
+	await mouse_tap()
+	check(arena.player.special_kind == "dash_stab" and arena.player.attack_direction.x == 1.0, "Shift with a held direction and fresh click thrusts immediately")
 	key(KEY_SHIFT,false)
 	key(KEY_D,false)
 	for _index in range(60):
@@ -699,7 +702,7 @@ func run_feature_tests() -> void:
 	key(KEY_A,true)
 	key(KEY_D,true)
 	await tap(KEY_SHIFT)
-	check(arena.player.special_kind == "dash_stab" and arena.player.attack_direction.x == facing_x, "opposing held directions dash towards the facing")
+	check(arena.player.is_dodging and arena.player._dodge_direction.x == facing_x, "opposing held directions leave a tapped evade using the facing")
 	await reset(1)
 	mouse(true)
 	await tick(45)
@@ -714,10 +717,11 @@ func run_feature_tests() -> void:
 	await reset(1)
 	key(KEY_W,true)
 	await tap(KEY_SHIFT)
-	check(arena.player.special_kind == "dash_stab", "holding W does not block the Shift dash")
+	check(arena.player.is_dodging and not arena.player.is_attacking, "holding W does not block a tapped Shift evade")
 	await reset(0)
 	await tap(KEY_SHIFT)
-	check(not arena.player.is_attacking and arena.player.special_kind == "", "top view Shift does not dash")
+	check(arena.player.is_dodging and not arena.player.is_attacking, "top view Shift evades without a weapon attack")
+	await tick(16)
 	await mouse_tap()
 	check(arena.player.is_attacking and arena.player.special_kind == "", "top view click stays an ordinary attack")
 	var dash_cases: Array[Dictionary] = []
@@ -729,9 +733,11 @@ func run_feature_tests() -> void:
 		arena.player.facing = "right" if direction < 0 else "left"
 		await dash_press(KEY_A if direction < 0 else KEY_D)
 		check(arena.player.special_kind == "dash_stab" and arena.player.attack_direction.x == direction, "dash uses the held direction rather than stale facing: " + str(direction))
-		await tick(12)
+		for _i in range(35):
+			if arena.player.dash_executed: break
+			await tick(1)
 		var displacement: float = arena.player.dash_end.x-arena.player.dash_start.x
-		check(arena.player.dash_executed and absf(displacement-direction*48.0) < 0.1, "dash moves48px in one swept step: " + str(direction))
+		check(arena.player.dash_executed and absf(displacement-direction*48.0) < 0.1, "dash completes its continuous48px rush: " + str(direction))
 		check(not arena.player.request_dash_stab(direction), "active dash cannot restart itself: " + str(direction))
 		check(arena.player.airflow_count >= 3, "dash has airflow and afterimage generation")
 		await tick(28)
@@ -745,13 +751,13 @@ func run_feature_tests() -> void:
 	var victims: Array[CharacterBody2D] = []
 	for index in range(22):
 		victims.append(add_target(Vector2(78+index,160),6))
-	var outside := add_target(Vector2(149,160),6)
+	var outside := add_target(Vector2(180,160),6)
 	await tick(3)
 	var dash_stop_start := hit_stop_events
 	var dash_completion_start := completed_stops.size()
 	await dash_press(KEY_D)
 	await tick(35)
-	check(hit_stop_events-dash_stop_start == 1 and completed_stops.slice(dash_completion_start) == [4], "22 simultaneous pierced targets share one normal contact freeze")
+	check(hit_stop_events-dash_stop_start == 1 and completed_stops.slice(dash_completion_start)==[2], "22 pierced targets share one brief contact pause")
 	check(victims.all(func(victim: CharacterBody2D) -> bool: return victim.hp == 5), "dash pierces every one of22 targets, beyond a16-result cap")
 	check(arena.hits == 22 and outside.hp == 6, "dash hits swept segment once each and leaves distant target unchanged")
 	check(arena.player.critical_rolls == 0, "dash cannot critically roll")
@@ -819,7 +825,7 @@ func run_contact_tests() -> void:
 			var target_start := target.global_position
 			var stop_start := hit_stop_events
 			var completion_start := completed_stops.size()
-			mouse(true)
+			await mouse_tap()
 			var found := false
 			for _index in range(40):
 				await tick(1)
@@ -844,8 +850,8 @@ func run_contact_tests() -> void:
 				check(min_y < target_start.y-0.2 and min_y > target_start.y-8.0, "ordinary side contact makes a small physical hop")
 				check(absf(target.global_position.y-160.0) < 0.1 and target.is_on_floor(), "weakly hit enemy lands on the real floor")
 			check(target.slash_flash_left <= 0.0 and target.slash_flash_pixels().is_empty(), "brief enemy slashlight expires")
-			check(target.hp == 5 and hit_stop_events-stop_start == 1, "held attack and repeated overlap do not repeat damage or freeze")
-			check(completed_stops.slice(completion_start) == [4] and not paused, "ordinary hit completes four display steps and resumes")
+			check(target.hp == 5 and hit_stop_events-stop_start == 1, "one released click and repeated overlap do not repeat damage or freeze")
+			check(completed_stops.slice(completion_start) == [2] and not paused, "ordinary hit completes two display steps and resumes")
 			cases.append({"mode":mode,"direction":direction,"displacement_forward":max_forward,"upward_displacement":target_start.y-min_y,"initial_slash_flash_left":peak_flash,"stop_frames":completed_stops.slice(completion_start)})
 			mouse(false)
 	await reset(1)
@@ -912,7 +918,7 @@ func run_contact_tests() -> void:
 	check(paused and (arena.player.queued_attack or pending), "fresh press/release within hit stop is buffered")
 	await tick(85)
 	check(buffered_target.hp == 10 and hit_stop_events-stop_start == 2, "paused fresh input causes one second strike without extra repeats")
-	check(completed_stops.slice(completion_start) == [4,4], "buffered normal follow-up uses two separate four-frame stops")
+	check(completed_stops.slice(completion_start) == [2,2], "buffered normal follow-up uses two separate two-frame stops")
 	for index in range(completed_stops.size()):
 		check(completed_stop_durations[index]+0.00001 >= completed_stops[index]/60.0, "contact pause has minimum visible time at fixed60: " + str(index))
 	observations["ordinary_contact_cases"] = cases

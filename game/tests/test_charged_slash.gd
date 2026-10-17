@@ -1,6 +1,5 @@
 extends "res://tests/support/isolated_suite.gd"
-## Light / heavy attacks: a tap is the unchanged light chain; holding the attack button after a ground
-## swing coils into a charge, and releasing it full fires a heavy slash (3x damage, critical hit-stop).
+## Light / heavy attacks: a tap is the unchanged light chain; holding the primary button directly coils into a charge without an opening light swing, and releasing it full fires a heavy slash (6x damage, heavy hit-stop).
 
 const MAIN = preload("res://tests/fixtures/combat_lab.tscn")
 const HOSPITAL = preload("res://scenes/underground_hospital.tscn")
@@ -99,7 +98,8 @@ func verify_tap_stays_light() -> void:
 	mouse(true)
 	await frames(1)
 	mouse(false)
-	check(player.is_attacking and player.combo_stage == 1, "A tap still starts the light chain on the press")
+	await frames(1)
+	check(player.is_attacking and player.combo_stage == 1, "A short release starts the light chain once")
 	await wait_until(func() -> bool: return not player.is_attacking, 90)
 	await frames(20)
 	check(not player.is_charging and player.charge_time == 0.0, "A tap never enters the charge")
@@ -116,13 +116,13 @@ func verify_charge_and_heavy(mode: int) -> void:
 	player.charge_ready.connect(func() -> void: ready[0] += 1)
 	var target: Node = arena.targets[0]
 	var hp_before: int = target.hp
-	check(await hold_into_charge(player), label + ": holding after the swing coils into a charge")
-	check(String(player.sprite.animation).begins_with("attack3_") and player.sprite.frame <= 1, label + ": the charge starts at the beginning of the attack3 wind-up")
+	check(await hold_into_charge(player), label + ": holding directly coils into a charge")
+	check(String(player.sprite.animation)==player._charge_animation() and player.sprite.frame <= 1, label + ": the charge starts at its dedicated wind-up")
 	var coil_start: Vector2 = player.global_position
 	var hp_after_light: int = target.hp
 	await frames(int(ceil(player.CHARGE_FULL_SECONDS * 60.0)) + 4)
 	check(player.is_charging and player.charge_time >= player.CHARGE_FULL_SECONDS, label + ": the charge fills while held")
-	check(player.sprite.frame == player.CHARGE_POSE_FRAME, label + ": a full charge holds the attack3 wind-up pose")
+	check(player.sprite.frame == player._charge_pose_limit(), label + ": a full charge holds its coiled ready pose")
 	var backstep: float = (coil_start - player.global_position).dot(player.call("_facing_vector"))
 	observations[label + "_backstep"] = snappedf(backstep, 0.1)
 	check(backstep > 1.5 and backstep < 4.5, label + ": coiling settles back about three pixels")
@@ -142,7 +142,7 @@ func verify_charge_and_heavy(mode: int) -> void:
 	observations[label + "_light_damage"] = hp_before - hp_after_light
 	observations[label + "_heavy_lunge"] = snappedf(player.global_position.distance_to(before_release), 0.1)
 	check(player.global_position.distance_to(before_release) >= 24.0, label + ": the heavy slash lunges well past a light swing")
-	check(hp_after_light - target.hp == 3, label + ": the heavy slash deals three times the light damage")
+	check(hp_after_light - target.hp == 6, label + ": the full charged draw deals six times the light damage")
 	check(arena.critical_events == criticals_before + 1, label + ": the heavy hit raises one critical event")
 	var stops: Array = arena.completed_stop_requests
 	check(not stops.is_empty() and int(stops[stops.size() - 1]) >= 6, label + ": the heavy hit uses the critical hit-stop")
@@ -154,7 +154,7 @@ func verify_early_release_cancels() -> void:
 	check(await hold_into_charge(player), "Early release case reaches the charge")
 	var target: Node = arena.targets[0]
 	var hp_coiled: int = target.hp
-	await frames(10)
+	await frames(15)
 	mouse(false)
 	await frames(2)
 	check(not player.is_charging and not player.is_attacking and player.special_kind == "", "Releasing before full cancels without an attack")
@@ -251,7 +251,7 @@ func verify_session_feedback() -> void:
 	await wait_until(func() -> bool: return not player.is_attacking, 90)
 	await frames(20)
 	observations["session_light_stops"] = session.completed_stop_frames.duplicate()
-	check(target.hp == 29 and session.completed_stop_frames == [4], "A light hit in a real scene keeps the 4-frame stop")
+	check(target.hp == 29 and session.completed_stop_frames == [2], "A light hit in a real scene uses the shorter 2-frame stop")
 	check(feedback.played.has("swing_light") and feedback.played.has("hit_light"), "A light hit plays the light swing and hit sounds")
 	feedback.played.clear()
 	player.position = target.global_position - Vector2(46, 0)

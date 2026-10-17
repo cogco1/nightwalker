@@ -8,7 +8,9 @@ extends Node2D
 ## It listens to the player's public move_started signal to size the blade arcs; it never reads player state.
 ## Decorative randomness has its own generator, so effects never shift the player's critical-hit rolls.
 
-const MAX_BLADE_PIXELS := 260
+const IMPACT_V2 = preload("res://scripts/player/impact_v2.gd")
+const CHARGED_DRAW = preload("res://scripts/player/charged_draw.gd")
+const MAX_BLADE_PIXELS := 330
 const WHITE := Color("f2f8ff")
 const BLUE := Color("8ebce8")
 const CYAN := Color("5fd8ff")
@@ -21,7 +23,7 @@ const IMPACT := {
 	&"heavy": {"rays": 16, "reach": 22.0, "life": 0.17, "rows": 4, "rings": [[34.0, 0.0], [24.0, 0.05], [14.0, 0.1]], "shards": 16, "embers": 14, "focus": 36},
 }
 # Blade arc width (layers outside the white core) by move.
-const ARC_WIDTH := {&"heavy_slash": 4, &"attack3": 2, &"rising_slash": 3, &"dive_slash": 3, &"dash_stab": 2, &"air_attack3": 2}
+const ARC_WIDTH := {&"attack1": 2, &"attack2": 3, &"heavy_slash": 4, &"attack3": 3, &"rising_slash": 3, &"dive_slash": 3, &"dash_stab": 2, &"air_attack3": 2}
 
 var effects: Array[Dictionary] = []
 var bursts: Array[Dictionary] = []
@@ -30,6 +32,8 @@ var afterimages: Array[Dictionary] = []
 var rng := RandomNumberGenerator.new()
 var arc_width := 1
 var _glow: Node2D
+var contact_fx: Node2D
+var draw_cut: Node2D
 
 
 func _ready() -> void:
@@ -42,6 +46,12 @@ func _ready() -> void:
 	_glow.material = additive
 	add_child(_glow)
 	_glow.draw.connect(_draw_glow)
+	contact_fx = IMPACT_V2.new()
+	contact_fx.name = "ContactInk"
+	add_child(contact_fx)
+	draw_cut=CHARGED_DRAW.new()
+	draw_cut.name="ChargedDraw"
+	add_child(draw_cut)
 	var owner_player := get_parent()
 	if owner_player != null and owner_player.has_signal("move_started"):
 		owner_player.move_started.connect(_on_move_started)
@@ -49,8 +59,8 @@ func _ready() -> void:
 
 func _on_move_started(move: StringName) -> void:
 	arc_width = int(ARC_WIDTH.get(move, 1))
-	if move == &"heavy_slash" or move == &"dash_stab":
-		speed_lines(global_position, Vector2.RIGHT if get_parent().get("facing") != "left" else Vector2.LEFT, move == &"heavy_slash")
+	if move == &"dash_stab":
+		speed_lines(global_position, Vector2.RIGHT if get_parent().get("facing") != "left" else Vector2.LEFT, false)
 
 
 func add(effect: Dictionary) -> void:
@@ -69,7 +79,12 @@ func sparks(point: Vector2) -> void:
 
 # Slash mark across the target along the swing, rays bursting from the contact, shockwave rings, shards,
 # embers and (critical / heavy) focus lines. The hit-stop freezes on the frame these are spawned in.
-func impact(point: Vector2, weight: StringName, direction: Vector2, feet: Vector2) -> void:
+func impact(point: Vector2, weight: StringName, direction: Vector2, _feet: Vector2, killed := false, substance: StringName = &"flesh", crimson := false) -> void:
+	contact_fx.contact(point, weight, direction, killed, substance, crimson)
+
+
+## Preserved v1 hit shapes, callable from legacy_dash_hit_feedback.gd; disabled for thrusts by default.
+func legacy_impact(point: Vector2, weight: StringName, direction: Vector2, feet: Vector2) -> void:
 	var look: Dictionary = IMPACT.get(weight, IMPACT[&"light"])
 	var rays: int = look["rays"]
 	var reach: float = look["reach"]
@@ -160,6 +175,8 @@ func ghost(texture: Texture2D, at: Vector2, life: float) -> void:
 
 
 func step(delta: float) -> void:
+	contact_fx.step(delta)
+	draw_cut.step(delta)
 	for index in range(afterimages.size() - 1, -1, -1):
 		afterimages[index]["life"] = float(afterimages[index]["life"]) - delta
 		if float(afterimages[index]["life"]) <= 0.0:

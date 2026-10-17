@@ -5,7 +5,10 @@ extends RefCounted
 ##
 ## Fields (anim and fps are required):
 ##   stage        combo stage reported through combo_changed / combo_stage (1-5)
+##   followup_seconds  extra continuation window after recovery; retains this move's combo identity
 ##   anim         animation prefix; "_<facing>" is appended
+##   charge_link  side-view continuation with authored charged recovery poses at its beginning
+##   side_anim    dedicated side-view prefix (anim remains the top-down fallback)
 ##   air_anim     prefix used instead when the move starts airborne
 ##   fps          playback rate
 ##   start_frame  first frame shown
@@ -15,6 +18,7 @@ extends RefCounted
 ##   lunge        {px, from}: forward advance eased over frames from..active.y, on the ground only
 ##   crit         &"none" | &"roll" (CRIT_CHANCE) | &"always"; a critical hit deals CRIT_MULT damage
 ##   stop         impact weight of a normal hit; crit_stop of a critical hit (default &"critical")
+##   hit_feedback false suppresses contact VFX, sound, camera and hit-stop; damage and motion still resolve
 ##   dmg_mult     damage multiplier before the critical multiplier (default 1)
 ##   launch       the hit launches the target
 ##   knockback    the hit pushes a grounded target this many native px away
@@ -26,7 +30,7 @@ extends RefCounted
 ##   air          {hold, fall} hang time when started airborne; end_hold after finishing airborne
 ##   jump         vertical speed given on the start frame when the move starts on the floor
 ##   special      special_kind name the move reports (tests, HUD, hit_resolved kind)
-##   pierce       dash: travels DASH_DISTANCE through targets on its first active frame
+##   pierce       dash: continuously travels DASH_DISTANCE through targets during its active rush
 ##   dive         dive slash: falls at DIVE_SPEED, holds its last air frame, lands into a short recovery
 ##   lands        ends on touching the floor like a dive (landing pose, recovery, shockwave) but falls normally;
 ##                hold_frame is the frame held if the clip runs out in the air (default 11)
@@ -64,13 +68,13 @@ const SPIN_AIR := {"hold": 0.25, "fall": 6.0}
 const MOVES := {
 	&"attack1": {"stage": 1, "anim": "attack1", "air_anim": "air_attack1", "fps": 36.0, "active": Vector2i(6, 9),
 		# The long blade is still behind the shoulder in side-view frame 6; frame 7 crosses forward.
-		"side_first": 7, "box": BLADE, "lunge": {"px": 5.5, "from": 6}, "crit": &"none", "stop": &"light",
+		"side_first": 7, "box": BLADE, "lunge": {"px": 8.0, "from": 6}, "crit": &"none", "stop": &"light",
 		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR, "dash_cancel": 7},
-	&"attack2": {"stage": 2, "anim": "attack2", "air_anim": "air_attack2", "fps": 40.0, "active": Vector2i(6, 9),
-		"box": BLADE, "lunge": {"px": 5.5, "from": 6}, "crit": &"none", "stop": &"light",
+	&"attack2": {"stage": 2, "anim": "attack2", "charge_link": "charge_link_light", "air_anim": "air_attack2", "fps": 40.0, "active": Vector2i(6, 9),
+		"box": BLADE, "lunge": {"px": 8.0, "from": 6}, "crit": &"none", "stop": &"light",
 		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR, "dash_cancel": 6},
 	&"attack3": {"stage": 3, "anim": "attack3", "air_anim": "air_attack3", "fps": 42.0, "active": Vector2i(6, 9),
-		"box": BLADE, "lunge": {"px": 6.8, "from": 6}, "crit": &"roll", "stop": &"light",
+		"box": BLADE, "lunge": {"px": 10.0, "from": 6}, "crit": &"roll", "stop": &"light",
 		"juggle": true, "steer": true, "chain": true, "air": LIGHT_AIR, "dash_cancel": 6},
 	&"crouch_stab": {"stage": 1, "anim": "crouch_stab", "fps": 40.0, "active": Vector2i(6, 9),
 		"box": {"length": 27.0, "width": 16.0, "reach": 17.0, "height": 9.0}, "crit": &"none", "stop": &"light",
@@ -80,13 +84,14 @@ const MOVES := {
 		"launch": true, "special": "rising_slash", "launcher": true, "jump": -280.0},
 	&"dive_slash": {"stage": 1, "anim": "dive_slash", "fps": 40.0, "active": Vector2i(0, -1),
 		"box": DIVE_BOX, "crit": &"none", "stop": &"light", "special": "dive_slash", "dive": true},
-	&"dash_stab": {"stage": 1, "anim": "dash_stab", "air_anim": "air_dash_stab", "fps": 40.0, "active": Vector2i(6, 9),
-		"crit": &"none", "stop": &"light", "juggle": true, "special": "dash_stab", "pierce": true,
-		"air": {"hold": 0.55, "fall": 6.0, "end_hold": 0.30}, "dodge": true, "cancel": 10},
-	# The charged slash: released from the charge pose, it plays attack3 from frame 4.
-	&"heavy_slash": {"stage": 3, "anim": "attack3", "fps": 46.0, "start_frame": 4, "active": Vector2i(6, 9),
-		"box": BIG_BLADE, "lunge": {"px": 32.0, "from": 4}, "crit": &"always", "crit_stop": &"heavy", "recovery": 0.18,
-		"special": "heavy_slash", "ghosts": [5, 7], "swing": &"heavy"},
+	&"dash_stab": {"stage": 1, "anim": "dash_stab", "air_anim": "air_dash_stab", "fps": 40.0, "active": Vector2i(6, 13),
+		"crit": &"none", "stop": &"tick", "juggle": true, "special": "dash_stab", "pierce": true, "hit_feedback": true,
+		"air": {"hold": 0.55, "fall": 6.0, "end_hold": 0.30}, "dodge": true, "cancel": 14},
+	# Fully charged draw: twice the old reach and damage, paid for by the stationary coil and recovery.
+	&"heavy_slash": {"stage": 1, "as": &"attack1", "cancel": 11, "followup_seconds": 0.25, "anim": "attack3", "side_anim": "charged_draw", "fps": 40.0, "start_frame": 6, "active": Vector2i(8, 10),
+		"box": {"length": 108.0, "width": 56.0, "reach": 48.0, "height": ORIGIN_HEIGHT},
+		"lunge": {"px": 36.0, "from": 7}, "crit": &"always", "dmg_mult": 2, "crit_stop": &"heavy", "launch": true, "charged_launch": true, "knockback": 20.0, "recovery": 0.22,
+		"special": "heavy_slash", "draw_cut": true, "ghosts": [8], "swing": &"heavy", "pitch": 0.78},
 
 	# Light string 4-5 (side view, on the ground): a quick thrust, then a two-part spin with a full blade circle.
 	&"thrust4": {"stage": 4, "anim": "stab", "fps": 48.0, "active": Vector2i(6, 9),
@@ -100,10 +105,12 @@ const MOVES := {
 		"arc": {"from": -180.0, "to": -330.0}, "dash_cancel": 7, "side_only": true, "ground": true, "pitch": 1.1},
 
 	# Heavy finishers: right button after light 0-4 (0 = on its own), and H H.
-	&"rush_cleave": {"stage": 2, "anim": "attack3", "fps": 34.0, "start_frame": 2, "active": Vector2i(5, 9),
-		"box": BIG_BLADE, "lunge": {"px": 20.0, "from": 3}, "crit": &"none", "stop": &"critical", "dmg_mult": 2,
-		"knockback": 10.0, "ghosts": [6], "cancel": 11, "recovery": 0.12, "side_only": true, "ground": true,
-		"swing": &"heavy", "pitch": 1.1},
+	&"rush_cleave": {"stage": 2, "anim": "heavy_cleave", "charge_link": "charge_link_heavy", "fps": 32.0, "active": Vector2i(8, 10),
+		# A readable coil before a fast release. No dodge cancel or armour: committing can be punished.
+		"box": {"length": 50.0, "width": 32.0, "reach": 24.0, "height": ORIGIN_HEIGHT},
+		"lunge": {"px": 24.0, "from": 8}, "crit": &"none", "stop": &"heavy", "dmg_mult": 3,
+		"knockback": 14.0, "ghosts": [8], "cancel": 13, "recovery": 0.16, "side_only": true, "ground": true,
+		"swing": &"heavy", "pitch": 0.93},
 	&"launch_slash": {"stage": 3, "anim": "rising_slash", "fps": 40.0, "active": Vector2i(3, 9),
 		"box": {"rect": Rect2(-18, -36, 36, 48), "forward": 19.0}, "crit": &"none", "stop": &"light",
 		"launch": true, "launcher": true, "jump": -280.0, "side_only": true, "ground": true, "pitch": 0.95},

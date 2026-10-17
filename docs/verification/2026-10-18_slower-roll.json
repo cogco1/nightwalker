@@ -1,0 +1,140 @@
+{
+  "date": "2026-10-18",
+  "base": "7c30cd8e5004e7350f9b7e8776b0ce9e0f98bc98",
+  "branch": "feature/slower-roll-20261018",
+  "status": "passed",
+  "side_roll_seconds": 0.3,
+  "previous_side_roll_seconds": 0.22,
+  "distance_pixels": 36,
+  "side_roll_speed": 120,
+  "speed_reduced_percent": 26.6666666667,
+  "top_evade_seconds": 0.22,
+  "suites": [
+    {
+      "suite": "roll_thrust_motion",
+      "checks": 80,
+      "status": "passed"
+    },
+    {
+      "suite": "shift_controls",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "core_v07",
+      "checks": 539,
+      "status": "passed"
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "status": "passed"
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "status": "passed"
+    }
+  ],
+  "checks_passed": 719,
+  "observed_rolls": {
+    "roll air -1": {
+      "distance": -36.0,
+      "duration_seconds": 0.316666666666667,
+      "largest_step": 2.0,
+      "poses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "roll air 1": {
+      "distance": 36.0,
+      "duration_seconds": 0.316666666666667,
+      "largest_step": 2.0,
+      "poses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "roll ground -1": {
+      "distance": -36.0,
+      "duration_seconds": 0.316666666666667,
+      "largest_step": 2.0,
+      "poses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "roll ground 1": {
+      "distance": 36.0,
+      "duration_seconds": 0.316666666666667,
+      "largest_step": 2.0,
+      "poses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    }
+  },
+  "rendered_input_frames": 268,
+  "source_sha256": {
+    "game/scripts/player/player.gd": "81792aebd23a600121c8a867bdeede8dff43bd38e5700c692f1ad0719aec4f60",
+    "game/assets/side_view.tres": "ce104aaddb4d1abec38197c7b2de6c4d925a12212d3837d249bfcb843cbeb84e",
+    "game/tests/test_roll_thrust_motion.gd": "3465e995230fad3cacdc5144478c668b8412b8a84f1980edc44c81c7471caa18"
+  }
+}

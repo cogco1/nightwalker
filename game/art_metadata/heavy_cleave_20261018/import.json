@@ -1,0 +1,327 @@
+{
+  "mode": "built-in image_gen",
+  "native_canvas": [
+    112,
+    96
+  ],
+  "pivot": [
+    56,
+    84
+  ],
+  "uniform_scale": 0.14507772020725387,
+  "palette": 18,
+  "frame_duration_units": [
+    1,
+    1,
+    1.2,
+    1.4,
+    1.8,
+    2,
+    2,
+    1.2,
+    0.6,
+    0.7,
+    0.9,
+    1.8,
+    1.6,
+    1.3,
+    1.05,
+    0.9
+  ],
+  "fps": 32,
+  "windup_seconds": 0.3625,
+  "stroke_seconds": 0.06875,
+  "clip_seconds": 0.6390625,
+  "new_frames": 32,
+  "left_mirror_axis": 56,
+  "frames": [
+    {
+      "frame": 0,
+      "source_anchor": [
+        180.5,
+        230
+      ],
+      "native_bbox": [
+        44,
+        56,
+        65,
+        84
+      ],
+      "tip_from_pivot": [
+        7,
+        -2
+      ],
+      "sha256": "a069fcebb34d4eb5bfffc3c39ec8c8751bb43a76c65282984d49fa4159592d84"
+    },
+    {
+      "frame": 1,
+      "source_anchor": [
+        191.45,
+        230
+      ],
+      "native_bbox": [
+        41,
+        57,
+        69,
+        84
+      ],
+      "tip_from_pivot": [
+        11,
+        -2
+      ],
+      "sha256": "fd79cf9b86f919f1f516c427bbf378b28318d3024242aff27876fc69e79a23c5"
+    },
+    {
+      "frame": 2,
+      "source_anchor": [
+        207.7,
+        230
+      ],
+      "native_bbox": [
+        38,
+        58,
+        65,
+        84
+      ],
+      "tip_from_pivot": [
+        -17,
+        -11
+      ],
+      "sha256": "f83e7f2892a25923e7e250e49c8f2430bf5733290a827be2e5b110d0fb272a9c"
+    },
+    {
+      "frame": 3,
+      "source_anchor": [
+        187.0,
+        230
+      ],
+      "native_bbox": [
+        45,
+        51,
+        66,
+        84
+      ],
+      "tip_from_pivot": [
+        1,
+        -33
+      ],
+      "sha256": "98578505e3ad8e91f25b7eb116dd91500e627c0b3fadfeea7d45bacce582255f"
+    },
+    {
+      "frame": 4,
+      "source_anchor": [
+        183.0,
+        220
+      ],
+      "native_bbox": [
+        38,
+        53,
+        66,
+        84
+      ],
+      "tip_from_pivot": [
+        -17,
+        -21
+      ],
+      "sha256": "94cb306551dee88b42f0105f70e3b2e64cd7b07403fe7a8c42ce3b4cf8ddee8e"
+    },
+    {
+      "frame": 5,
+      "source_anchor": [
+        183.29999999999998,
+        220
+      ],
+      "native_bbox": [
+        38,
+        55,
+        67,
+        84
+      ],
+      "tip_from_pivot": [
+        -16,
+        -21
+      ],
+      "sha256": "68348edb3ef7fc472b26a44863ccfb1acbfd7cd0dbf430136b4857d3fca3e888"
+    },
+    {
+      "frame": 6,
+      "source_anchor": [
+        189.375,
+        220
+      ],
+      "native_bbox": [
+        39,
+        55,
+        67,
+        84
+      ],
+      "tip_from_pivot": [
+        -16,
+        -20
+      ],
+      "sha256": "0ea88ab7e1e2ef58b64513e688f7e0950c89c2886c2979588254df3f468e5208"
+    },
+    {
+      "frame": 7,
+      "source_anchor": [
+        163.42499999999998,
+        220
+      ],
+      "native_bbox": [
+        43,
+        52,
+        69,
+        84
+      ],
+      "tip_from_pivot": [
+        -2,
+        -31
+      ],
+      "sha256": "0223b1f05333d436311bae53bc012fe31b326e15f13ed502ca898f614f6bc6d8"
+    },
+    {
+      "frame": 8,
+      "source_anchor": [
+        131.0,
+        167
+      ],
+      "native_bbox": [
+        44,
+        60,
+        82,
+        84
+      ],
+      "tip_from_pivot": [
+        24,
+        -3
+      ],
+      "sha256": "5c81d8e37d2b7e0b4ab1f9fbfd5783c8a16bc4b7dcb662569eddf5010f2692b2"
+    },
+    {
+      "frame": 9,
+      "source_anchor": [
+        152.5,
+        167
+      ],
+      "native_bbox": [
+        42,
+        62,
+        83,
+        84
+      ],
+      "tip_from_pivot": [
+        24,
+        -3
+      ],
+      "sha256": "e1899751d6664a70f5d97f0d8dd29a5aea5982607931aa7f90d618073e9dd5ea"
+    },
+    {
+      "frame": 10,
+      "source_anchor": [
+        197.5,
+        167
+      ],
+      "native_bbox": [
+        35,
+        64,
+        76,
+        84
+      ],
+      "tip_from_pivot": [
+        17,
+        -2
+      ],
+      "sha256": "e0332fcd71fb91fee0142ff02d93795ecb321fbf4dd92c1b32df49e4270f30b5"
+    },
+    {
+      "frame": 11,
+      "source_anchor": [
+        192.0,
+        167
+      ],
+      "native_bbox": [
+        37,
+        63,
+        74,
+        84
+      ],
+      "tip_from_pivot": [
+        17,
+        -2
+      ],
+      "sha256": "1c5f56ac1eee212f52c37aa5c88a00299c170991964782b0a7f575c21f2e0f3f"
+    },
+    {
+      "frame": 12,
+      "source_anchor": [
+        159.0,
+        175
+      ],
+      "native_bbox": [
+        45,
+        59,
+        78,
+        84
+      ],
+      "tip_from_pivot": [
+        20,
+        -4
+      ],
+      "sha256": "6a300a44ec6ecdb260a2e5de4f73df791a662451af595a2425046749f934bf60"
+    },
+    {
+      "frame": 13,
+      "source_anchor": [
+        169.5,
+        178
+      ],
+      "native_bbox": [
+        45,
+        59,
+        75,
+        84
+      ],
+      "tip_from_pivot": [
+        16,
+        -3
+      ],
+      "sha256": "efae99ce3894a0b0fc0e58e81f859bc5fd7b537a4090262fa08646a12c49f55b"
+    },
+    {
+      "frame": 14,
+      "source_anchor": [
+        188.5,
+        186
+      ],
+      "native_bbox": [
+        46,
+        57,
+        71,
+        84
+      ],
+      "tip_from_pivot": [
+        12,
+        -3
+      ],
+      "sha256": "2c8c61f685e448bf28cb4e3494a000957720a2c761401c0ee19685b94ae621d4"
+    },
+    {
+      "frame": 15,
+      "source_anchor": [
+        199.3,
+        187
+      ],
+      "native_bbox": [
+        44,
+        57,
+        65,
+        84
+      ],
+      "tip_from_pivot": [
+        7,
+        -2
+      ],
+      "sha256": "bfbff1f2d5e094e1b59f9cafb25cd38746425163e07f11de2af3e401052f7fac"
+    }
+  ]
+}

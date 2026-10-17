@@ -1,0 +1,343 @@
+{
+  "date": "2026-10-18",
+  "base": "dbac54cd3f6f8e5dfba07a1c31f7677452ed37ca",
+  "branch": "feature/charged-draw-reward-20261018",
+  "status": "passed",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "total_suites": 33,
+  "checks_passed": 3934,
+  "suites": [
+    {
+      "suite": "core_v07",
+      "checks": 543,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings",
+      "checks": 68,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings_reload",
+      "checks": 20,
+      "status": "passed"
+    },
+    {
+      "suite": "air_combat",
+      "checks": 116,
+      "status": "passed"
+    },
+    {
+      "suite": "air_dash_animation_v14",
+      "checks": 174,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_integration_v14",
+      "checks": 106,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_routes",
+      "checks": 69,
+      "status": "passed"
+    },
+    {
+      "suite": "interior_lighting",
+      "checks": 192,
+      "status": "passed"
+    },
+    {
+      "suite": "home_furniture",
+      "checks": 84,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_interactions",
+      "checks": 23,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_environment",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_physical_stairs",
+      "checks": 54,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_ward_layout",
+      "checks": 22,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_security",
+      "checks": 104,
+      "status": "passed"
+    },
+    {
+      "suite": "level_shared",
+      "checks": 38,
+      "status": "passed"
+    },
+    {
+      "suite": "contact_refresh_v07",
+      "checks": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_slash",
+      "checks": 52,
+      "status": "passed"
+    },
+    {
+      "suite": "moveset",
+      "checks": 1007,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_state",
+      "checks": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rhythm_combat",
+      "checks": 94,
+      "status": "passed"
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "status": "passed"
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "status": "passed"
+    },
+    {
+      "suite": "night_street_proto",
+      "checks": 49,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_impact_v2",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_impact_v2_144",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_draw",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_draw_144",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "heavy_cleave",
+      "checks": 67,
+      "status": "passed"
+    },
+    {
+      "suite": "roll_thrust_motion",
+      "checks": 80,
+      "status": "passed"
+    },
+    {
+      "suite": "shift_controls",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "locomotion_blade",
+      "checks": 260,
+      "status": "passed"
+    },
+    {
+      "suite": "light_sense",
+      "checks": 132,
+      "status": "passed"
+    },
+    {
+      "suite": "chapter_flow",
+      "checks": 117,
+      "status": "passed"
+    }
+  ],
+  "changes": {
+    "charged_damage_multiplier": [
+      3,
+      6
+    ],
+    "side_box_before": [
+      56,
+      28
+    ],
+    "side_box_after": [
+      120,
+      56
+    ],
+    "side_front_reach_pixels": 114,
+    "charge_seconds": 0.55,
+    "release_to_hit_seconds": [
+      0.05,
+      0.0833333333
+    ],
+    "recovery_seconds": 0.22,
+    "ink_life_seconds": 0.14,
+    "heavy_stop_frames": 10,
+    "light_stop_frames": 2,
+    "right_click_damage_multiplier": 3
+  },
+  "assets": {
+    "status": "passed",
+    "previous_pngs_preserved": 1120,
+    "new_native_frames": 32,
+    "total_native_frames": 1152,
+    "mirror_pairs": 16,
+    "single_global_scale": true
+  },
+  "render": {
+    "status": "passed",
+    "action_frames": 313,
+    "movie_frames": 331,
+    "fps": 60,
+    "movie_seconds": 5.516666666666667,
+    "checks": {
+      "new_coil_all_poses": true,
+      "release_uses_new_clip": true,
+      "six_damage_both_materials": true,
+      "large_ink_cut_on_release": true,
+      "no_premature_ink": true,
+      "kill_feedback": true,
+      "strong_ten_frame_pause": true,
+      "effects_expire": true,
+      "camera_recenters": true,
+      "camera_bounded": true,
+      "white_area_bounded": true,
+      "audible_no_clipping": true,
+      "mp4_video_and_audio": true
+    },
+    "maximum_near_white_fraction": 0.0011979166666666666,
+    "audio": {
+      "channels": 2,
+      "sample_rate": 48000,
+      "bits": 16,
+      "seconds": 5.516666666666667,
+      "peak": 0.519287109375,
+      "rms": 0.05118433948321906
+    },
+    "events": [
+      {
+        "event": "release",
+        "frame": 28,
+        "move": "attack1",
+        "section": "first_charge"
+      },
+      {
+        "event": "release",
+        "frame": 94,
+        "move": "heavy_slash",
+        "section": "first_draw"
+      },
+      {
+        "critical": true,
+        "damage": 6,
+        "event": "damage",
+        "frame": 96,
+        "hp": 6,
+        "kind": "heavy_slash",
+        "section": "first_draw",
+        "target": "metal"
+      },
+      {
+        "event": "impact",
+        "frame": 96,
+        "section": "first_draw",
+        "weight": "heavy"
+      },
+      {
+        "critical": true,
+        "damage": 6,
+        "event": "damage",
+        "frame": 96,
+        "hp": 0,
+        "kind": "heavy_slash",
+        "section": "first_draw",
+        "target": "flesh"
+      },
+      {
+        "event": "impact",
+        "frame": 96,
+        "section": "first_draw",
+        "weight": "kill"
+      },
+      {
+        "event": "release",
+        "frame": 169,
+        "move": "attack1",
+        "section": "second_charge"
+      },
+      {
+        "critical": false,
+        "damage": 1,
+        "event": "damage",
+        "frame": 170,
+        "hp": 5,
+        "kind": "",
+        "section": "second_charge",
+        "target": "metal"
+      },
+      {
+        "event": "impact",
+        "frame": 170,
+        "section": "second_charge",
+        "weight": "light"
+      },
+      {
+        "event": "release",
+        "frame": 225,
+        "move": "heavy_slash",
+        "section": "second_draw"
+      },
+      {
+        "critical": true,
+        "damage": 6,
+        "event": "damage",
+        "frame": 227,
+        "hp": 0,
+        "kind": "heavy_slash",
+        "section": "second_draw",
+        "target": "metal"
+      },
+      {
+        "event": "impact",
+        "frame": 227,
+        "section": "second_draw",
+        "weight": "kill"
+      }
+    ],
+    "preview": "nightwalker_charged_draw.mp4"
+  },
+  "source_sha256": {
+    "game/scripts/player/player.gd": "81e445fc08e5a272890d0346748770685c620af4288c1485f7ed063d77328492",
+    "game/scripts/player/player_fx.gd": "f918bfece8fc493492180deab387f333d7bc8e63e3ff6a1c6f5c3cb05585acaf",
+    "game/scripts/player/charged_draw.gd": "66ab650d391377ccc7d4b4e7d882c86dd3a8ead55bd802dc95b9832532141230",
+    "game/scripts/player/impact_v2.gd": "b2de2da78ff99b2a925031afa44f380893a1460bdb50a3f9fe270591b6ec550e",
+    "game/scripts/player/moves_long_blade.gd": "083b39e2967d8e12ac6080f92444b5e4d63e4ca7c971c0fa154c847aae26cffb",
+    "game/assets/side_view.tres": "9f6b9108e8192ac98842fbc264dcd3901d84fd1c52cabc7557e54349534c5b41",
+    "game/assets/blade_paths.json": "d35753f07eb6dee69126da708528332ae6b1501bb23ffbbab769e1bc75baf119",
+    "game/tests/test_charged_draw.gd": "dfb385e69c41a55f59336713e619fb9533414928364c9592ab8ecea3e22ce034",
+    "game/tests/recorders/record_charged_draw.gd": "2e6905da445144e69f87ae345034b2d96998c1a8296ce86bedc8c39caadcaae4",
+    "tools/art/import_charged_draw.py": "633533a58d07e447b9fea603f334a70049fe923cb29961481d250604fd9e7eec"
+  }
+}

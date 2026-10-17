@@ -1,0 +1,33 @@
+name: Publish latest Nightwalker
+
+on:
+  push:
+    branches: [main]
+    paths: [VERSION]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightwalker-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'cogco1/nightwalker' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fetch the exact source commit
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          git init .
+          git remote add origin https://github.com/cogco1/nightwalker.git
+          git fetch --no-tags origin "$SOURCE_SHA"
+          git checkout --detach "$SOURCE_SHA"
+      - name: Verify, package, publish Latest, and retire included branches
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 tools/release/publish_github.py

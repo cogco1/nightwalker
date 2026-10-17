@@ -232,10 +232,10 @@ func validate_impact_timing(hospital: Node2D) -> void:
 	if session == null:
 		check(false, "The hospital exposes its shared impact feedback component")
 		return
-	for requested in [4, 6]:
-		var label := "normal" if requested == 4 else "critical"
-		hospital.player.impact.emit(&"light" if requested == 4 else &"critical", Vector2.RIGHT)
-		await frames(2)
+	for requested in [2, 6]:
+		var label := "normal" if requested == 2 else "critical"
+		hospital.player.impact.emit(&"light" if requested == 2 else &"critical", Vector2.RIGHT)
+		await frames(1)
 		check(bool(session.get("hit_stop_active")) and paused, "The reusable hospital " + label + " impact produces a real visible-time pause")
 		for _index in range(30):
 			if not bool(session.get("hit_stop_active")):
@@ -288,7 +288,9 @@ func validate_air_dash(hospital: Node2D, direction: int) -> void:
 	check(player._jumps_used == 2 and player.velocity.y < 0.0, "Hospital " + side + " allows the original fresh-input double jump")
 	key(KEY_D if direction > 0 else KEY_A, true)
 	key(KEY_SHIFT, true)
+	mouse(true)
 	await frames(2)
+	mouse(false)
 	key(KEY_SHIFT, false)
 	key(KEY_D if direction > 0 else KEY_A, false)
 	check(player.special_kind == "dash_stab" and player.sprite.animation == new_animation, "Hospital " + side + " airborne Shift press plays its independent dash animation")
@@ -373,7 +375,7 @@ func run() -> void:
 	validate_player(home, false, "Safehouse")
 	var top: SpriteFrames = load("res://assets/top_down.tres")
 	var side: SpriteFrames = load("res://assets/side_view.tres")
-	check(top.get_animation_names().size() == 28 and side.get_animation_names().size() == 36, "All 62 baseline animation states remain with exactly two new aerial dash states")
+	check(top.get_animation_names().size() == 28 and side.get_animation_names().size() == 48, "All baseline animation states remain with the dedicated charged draw")
 	var originals_present := true
 	for name in SIDE_BASE_ANIMATIONS:
 		originals_present = originals_present and side.has_animation(name)

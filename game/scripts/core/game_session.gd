@@ -7,19 +7,20 @@ const MENU = preload("res://scripts/ui/keybindings_menu.gd")
 const COMBAT_FEEDBACK = preload("res://scripts/core/combat_feedback.gd")
 const IMPACT_FRAME = preload("res://shaders/impact_frame.gdshader")
 const PLAYER = preload("res://scripts/player/player.gd")
-# Impact weight -> displayed frames held (and at least frames/60 s), shake in native px, how the frozen frame
-# looks (negative frames first, then flash frames) and the camera after-shock once it resumes; after-shock x
-# follows the attack direction, so the camera is kicked along the blow. light 4 / critical 6 are the source
-# game's guarantees; only the look is added on top.
+# Impact weight -> displayed frames held (and at least frames/60 s), native-pixel shift and camera recoil.
+# Light contact uses a brief two-frame catch for flowing strings; heavy blows and kills retain ten frames.
+# Recoil x follows the attack direction, then returns exactly to the camera's resting offset.
 const STOPS := {
-	# The middle hits of the aerial spin: a short tick that keeps the spin flowing.
-	&"tick": {"frames": 2, "shake": 0},
-	&"light": {"frames": 4, "shake": 1},
-	&"critical": {"frames": 6, "shake": 1, "flash": Color(1.5, 1.5, 1.6), "flash_frames": 1,
-		"aftershock": [Vector2(2, 0), Vector2(-2, 0), Vector2(1, 0), Vector2.ZERO]},
-	&"heavy": {"frames": 10, "shake": 2, "negative_frames": 1, "flash": Color(1.8, 1.8, 2.0), "flash_frames": 2,
-		"aftershock": [Vector2(4, 1), Vector2(-3, -1), Vector2(3, 1), Vector2(-2, 0), Vector2(1, 0), Vector2(-1, 0), Vector2.ZERO]},
+	&"tick": {"frames": 2, "shake": 1, "aftershock": [Vector2(1,0), Vector2.ZERO]},
+	&"light": {"frames": 2, "shake": 1, "aftershock": [Vector2(1,0), Vector2.ZERO]},
+	&"critical": {"frames": 6, "shake": 2,
+		"aftershock": [Vector2(2,0), Vector2(-1,0), Vector2(1,0), Vector2.ZERO]},
+	&"heavy": {"frames": 10, "shake": 3,
+		"aftershock": [Vector2(3,1), Vector2(-2,-1), Vector2(1,0), Vector2.ZERO]},
+	&"kill": {"frames": 10, "shake": 3,
+		"aftershock": [Vector2(3,1), Vector2(-2,0), Vector2(1,0), Vector2.ZERO]},
 }
+const IMPACT_PRIORITY := {&"tick": 0, &"light": 1, &"critical": 2, &"heavy": 3, &"kill": 4}
 const HEAVY_STOP_FRAMES := 10
 # Perfect dodge: the world runs at SLOWMO_SCALE for SLOWMO_SECONDS of real time while the hero keeps full speed
 # (enemies scale their delta by world_time_scale; Engine.time_scale stays 1). The clock stands still during hit-stops
@@ -67,6 +68,11 @@ var _menu_saved_pause := false
 var _saved_canvas := Transform2D.IDENTITY
 var _layer_offsets: Dictionary = {}
 var _token := 0
+var _active_stop: Dictionary = {}
+var _active_weight: StringName = &"light"
+var _shock_camera: Camera2D
+var _shock_rest := Vector2.ZERO
+var _shock_id := 0
 # Open story modals (dialogue boxes, keypads) by instance id -> weakref; while any is open, Esc / F1 belong to it.
 var _modals: Dictionary = {}
 
@@ -238,6 +244,14 @@ func _on_impact(weight: StringName, direction: Vector2) -> void:
 		end_slowmo()
 	if not hit_stop_active:
 		_run_hit_stop(direction, weight)
+	elif int(IMPACT_PRIORITY.get(weight,1)) > int(IMPACT_PRIORITY.get(_active_weight,1)):
+		# A kill later in the same swept hit upgrades the current pause, never stacks a second one.
+		_active_weight = weight
+		_active_stop.merge(STOPS.get(weight,STOPS[&"light"]), true)
+		hit_stop_requested_frames = maxi(hit_stop_requested_frames, int(_active_stop.frames))
+		hit_stop_min_seconds = hit_stop_requested_frames/60.0
+		var unit := Vector2i(int(signf(direction.x)),0) if direction.x!=0.0 else Vector2i(0,int(signf(direction.y)))
+		_apply_stop_shift(unit*int(_active_stop.shake))
 
 
 func _display_frame() -> void:
@@ -248,7 +262,10 @@ func _display_frame() -> void:
 
 
 func _run_hit_stop(direction: Vector2, weight: StringName) -> void:
-	var stop: Dictionary = STOPS.get(weight, STOPS[&"light"])
+	_clear_camera_kick()
+	var stop: Dictionary = STOPS.get(weight, STOPS[&"light"]).duplicate(true)
+	_active_stop = stop
+	_active_weight = weight
 	_token += 1
 	var token := _token
 	hit_stop_active = true
@@ -260,14 +277,11 @@ func _run_hit_stop(direction: Vector2, weight: StringName) -> void:
 	hit_stop_shake = unit * int(stop["shake"])
 	_saved_pause = get_tree().paused
 	_saved_canvas = get_viewport().canvas_transform
-	var shifted := _saved_canvas
-	shifted.origin += Vector2(hit_stop_shake)
-	get_viewport().canvas_transform = shifted
 	_layer_offsets.clear()
 	for layer in _host.find_children("*", "CanvasLayer", true, false):
 		if layer != _overlay_layer and layer != _slowmo_layer:
 			_layer_offsets[layer] = layer.offset
-			layer.offset += Vector2(hit_stop_shake)
+	_apply_stop_shift(hit_stop_shake)
 	get_tree().paused = true
 	hit_stop_started.emit()
 	# The first displayed freeze frame already holds the impact and the shared shift.
@@ -306,18 +320,39 @@ func _frozen_look(stop: Dictionary, frame: int) -> void:
 	hit_stop_overlay.modulate = stop.get("flash", Color.WHITE) if frame > negative_frames and frame <= flash_until else Color.WHITE
 
 
+func _apply_stop_shift(shift: Vector2i) -> void:
+	hit_stop_shake = shift
+	var canvas := _saved_canvas
+	canvas.origin += Vector2(shift)
+	get_viewport().canvas_transform = canvas
+	for layer in _layer_offsets:
+		if is_instance_valid(layer): layer.offset = _layer_offsets[layer]+Vector2(shift)
+
+
+func _clear_camera_kick() -> void:
+	_shock_id += 1
+	if is_instance_valid(_shock_camera):
+		_shock_camera.offset = _shock_rest
+		_shock_camera.force_update_scroll()
+	_shock_camera = null
+
+
 func _aftershock(offsets: Array, token: int, side: float) -> void:
+	_clear_camera_kick()
 	var camera := get_viewport().get_camera_2d()
-	if camera == null:
-		return
-	var rest := camera.offset
-	for offset in offsets:
-		if token != _token or not is_instance_valid(camera):
-			break
-		camera.offset = rest + Vector2(offset.x * side, offset.y)
+	if camera == null: return
+	_shock_camera = camera
+	_shock_rest = camera.offset
+	var id := _shock_id
+	var elapsed := 0.0
+	while elapsed < offsets.size()/60.0:
+		if token != _token or id != _shock_id or not is_instance_valid(camera): return
+		var offset: Vector2 = offsets[mini(offsets.size()-1,int(elapsed*60.0))]
+		camera.offset = _shock_rest+Vector2(offset.x*side,offset.y)
+		camera.force_update_scroll()
 		await get_tree().process_frame
-	if is_instance_valid(camera):
-		camera.offset = rest
+		elapsed += get_process_delta_time()
+	if id == _shock_id: _clear_camera_kick()
 
 
 func _finish_hit_stop() -> void:
@@ -332,6 +367,7 @@ func _finish_hit_stop() -> void:
 
 
 func cancel_hit_stop() -> void:
+	_clear_camera_kick()
 	_token += 1
 	if hit_stop_active:
 		_finish_hit_stop()

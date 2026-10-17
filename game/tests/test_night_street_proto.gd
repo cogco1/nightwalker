@@ -99,15 +99,16 @@ func verify_layout_and_hint() -> void:
 	var placed := drones.map(func(node: Node2D) -> Vector2: return node.position)
 	check(spots.size() == 3 and placed == spots.map(func(spot: Array) -> Vector2: return Vector2(spot[0], spot[1])),
 		"Hover drones stand where layout.json targets puts them")
+	check(drones[0].max_hp==9 and drones[0].hp==9 and drones[1].max_hp==3 and drones[2].max_hp==3,"First street drone can survive a charged launch for the jump chase")
 	check(layout is Dictionary and layout.get("fallback_lights", []).size() == 3, "The fallback street lights live in layout.json")
 	var hint: Label = street._hint
-	check(hint.text == "AD走 左键斩 右键重击 W+右键跃劈 Shift闪避 R重置", "The default bindings give the default controls hint")
+	check(hint.text == "AD走 S蹲行 Shift点滚/长跑 Shift+方向+左键突刺", "The default bindings give the default controls hint")
 	var profile := CONTROLS.defaults()
 	profile.merge({"move_left": KEY_J, "move_right": KEY_L, "dash_modifier": KEY_CTRL, "heavy_mouse": MOUSE_BUTTON_MIDDLE}, true)
 	CONTROLS.current = profile
 	CONTROLS.install(false)
 	street.refresh_hint()
-	check(hint.text == "JL走 左键斩 中键重击 W+中键跃劈 Ctrl闪避 R重置", "The controls hint follows rebound keys")
+	check(hint.text == "JL走 S蹲行 Ctrl点滚 Shift跑 Ctrl+方向+左键突刺", "The controls hint follows rebound keys")
 	CONTROLS.current = CONTROLS.defaults()
 	CONTROLS.install(false)
 	street.refresh_hint()
@@ -255,8 +256,8 @@ func verify_drone_attack(player: CharacterBody2D) -> void:
 	await frames(20)
 	check(attacker.phase == attacker.Phase.COOLDOWN, "A destroyed hover drone stands down")
 	# the controls hint fits the screen
-	var hint: Label = street.get_node("StreetUI").find_children("*", "Label", true, false).filter(func(label: Label) -> bool: return label.text.contains("右键重击"))[0]
-	check(hint.get_theme_font("font").get_string_size(hint.text, HORIZONTAL_ALIGNMENT_LEFT, -1, hint.get_theme_font_size("font_size")).x <= 310.0, "The controls hint names the heavy button and fits the screen")
+	var hint: Label = street._hint
+	check(hint.text.contains("点滚") and hint.text.contains("突刺") and hint.get_theme_font("font").get_string_size(hint.text, HORIZONTAL_ALIGNMENT_LEFT, -1, hint.get_theme_font_size("font_size")).x <= 310.0, "The controls hint names tap/hold and thrust and fits the screen")
 
 
 func verify_prototype_keys(player: CharacterBody2D, material: ShaderMaterial) -> void:

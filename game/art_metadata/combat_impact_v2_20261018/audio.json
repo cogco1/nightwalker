@@ -1,0 +1,37 @@
+{
+  "mode": "deterministic synthesis; no external recordings",
+  "sample_rate": 44100,
+  "format": "mono PCM16",
+  "sounds": {
+    "hit_light": {
+      "seconds": 0.14,
+      "peak_dbfs": -3.500000000973838,
+      "rms_dbfs": -14.887723926502705
+    },
+    "hit_critical": {
+      "seconds": 0.19,
+      "peak_dbfs": -3.500000000911026,
+      "rms_dbfs": -15.081629964891633
+    },
+    "hit_heavy": {
+      "seconds": 0.23,
+      "peak_dbfs": -3.5000000009016174,
+      "rms_dbfs": -15.674989124815566
+    },
+    "hit_kill": {
+      "seconds": 0.25,
+      "peak_dbfs": -3.5000000009145293,
+      "rms_dbfs": -14.612593076131844
+    },
+    "swing_light": {
+      "seconds": 0.12,
+      "peak_dbfs": -3.500000001659668,
+      "rms_dbfs": -17.948491107813997
+    },
+    "swing_heavy": {
+      "seconds": 0.19,
+      "peak_dbfs": -3.5000000033359724,
+      "rms_dbfs": -17.257015541845306
+    }
+  }
+}

@@ -71,6 +71,7 @@ func tap(button: MouseButton) -> void:
 	mouse(button, true)
 	await frames(1)
 	mouse(button, false)
+	if button==LIGHT:await frames(1)
 
 
 func wait_until(condition: Callable, limit := 120) -> bool:
@@ -159,7 +160,7 @@ func verify_light_string() -> void:
 	check(hits_by([&"spin5a", &"spin5b"]).size() == 2, "the spin hits the same target twice")
 	check(hits_by([&"thrust4"]).size() == 1 and hits_by([&"attack1", &"attack2", &"attack3"]).size() == 3, "every light hit of the string connects once")
 	check(arc_pixels >= 8, "the spin draws a blade circle")
-	check(arena.completed_stop_requests == [4, 4, 4, 4, 4, 6], "light hits stop 4 frames, the spin's last hit 6")
+	check(arena.completed_stop_requests == [2, 2, 2, 2, 2, 6], "light hits stop 2 frames, the spin's last hit 6")
 	observations["light_string_stops"] = arena.completed_stop_requests.duplicate()
 	observations["thrust_last_frame"] = last_frame.get(&"thrust4", -1)
 	observations["arc_pixels"] = arc_pixels
@@ -172,13 +173,13 @@ func verify_heavy_alone_and_twice() -> void:
 	var start_x := player.position.x
 	await tap(HEAVY)
 	check(player.move_id == &"rush_cleave", "a right click on its own starts the rush cleave at once")
-	check(arena.session.combat_feedback.played.back() == "swing_heavy", "the rush cleave plays the heavy swing")
+	check(not arena.session.combat_feedback.played.has("swing_heavy"), "the heavy swing cue waits for the cleave release")
 	await wait_until(func() -> bool: return player.state == player.State.FREE, 120)
 	check(player.position.x - start_x >= 14.0, "the rush cleave lunges forward")
 	var cleave := hits_by([&"rush_cleave"])
-	check(cleave.size() == 1 and cleave[0]["damage"] == 2 and not cleave[0]["critical"], "the rush cleave hits once for double damage")
+	check(cleave.size() == 1 and cleave[0]["damage"] == 3 and not cleave[0]["critical"], "the committed rush cleave hits once for triple damage")
 	check(target.knock_back_count == 1, "the rush cleave knocks the target back")
-	check(arena.completed_stop_requests == [6], "the rush cleave stops 6 frames")
+	check(arena.completed_stop_requests == [10] and arena.session.combat_feedback.played.count("swing_heavy")==1, "the cleave retains 10-frame heavy contact and one release sound")
 	observations["rush_lunge_px"] = snappedf(player.position.x - start_x, 0.1)
 	observations["rush_target_x"] = snappedf(target.position.x, 0.1)
 	# H H: the second right click follows into the launch slash
@@ -207,7 +208,7 @@ func verify_finishers() -> void:
 	var spin := hits_by([&"spin_cleave_a", &"spin_cleave_b"])
 	check(spin.size() == 3, "the spin cleave hits three times")
 	check(spin.size() == 3 and not spin[0]["critical"] and not spin[1]["critical"] and spin[2]["critical"] and spin[2]["damage"] == 3, "only the last spin cleave hit is a critical")
-	check(arena.completed_stop_requests.slice(-3) == [4, 4, 6], "the spin cleave stops 4, 4 and 6 frames")
+	check(arena.completed_stop_requests.slice(-3) == [2, 2, 6], "the spin cleave stops 2, 2 and 6 frames")
 	check(arc_pixels >= 8, "the spin cleave draws a blade circle")
 	observations["spin_cleave_stops"] = arena.completed_stop_requests.duplicate()
 
@@ -262,9 +263,14 @@ func verify_latest_press_wins() -> void:
 
 
 func dash() -> void:
+	var direction := KEY_D if arena.player.facing == "right" else KEY_A
+	key(direction, true)
 	key(KEY_SHIFT, true)
+	mouse(LIGHT, true)
 	await frames(1)
+	mouse(LIGHT, false)
 	key(KEY_SHIFT, false)
+	key(direction, false)
 
 
 func verify_dodge_offset() -> void:
@@ -295,7 +301,7 @@ func verify_dodge_offset() -> void:
 	await frames(3)
 	await tap(LIGHT)
 	check(await wait_until(func() -> bool: return player.move_id == &"shadow_slash", 40), "a click during the dash follows with the shadow slash")
-	check(int(last_frame.get(&"dash_stab", -1)) == 10, "the shadow slash starts on the dash's cancel frame")
+	check(int(last_frame.get(&"dash_stab", -1)) == int(MOVESET.MOVES[&"dash_stab"]["cancel"]), "the shadow slash starts on the dash's cancel frame")
 	# right button after the dash: the chase cleave, then H gives the launch slash
 	await stage(Vector2(40, 160), Vector2(300, 160))
 	await dash()
@@ -329,7 +335,7 @@ func verify_dash_cancel() -> void:
 	await stage(Vector2(40, 160), Vector2(300, 160))
 	check(await play_string([LIGHT, LIGHT], [&"attack1", &"attack2"]), "L L plays two hits")
 	await dash()
-	check(await wait_until(func() -> bool: return player.move_id == &"dash_stab", 30), "Shift during hit 2 dashes")
+	check(await wait_until(func() -> bool: return player.move_id == &"dash_stab", 30), "Shift + direction + fresh click during hit 2 thrusts")
 	var cut := int(last_frame.get(&"attack2", -1))
 	check(cut >= 6 and cut < 15, "the dash cuts hit 2 after its hit frame and before its clip ends")
 	await wait_until(func() -> bool: return player.state != player.State.ATTACK, 60)
@@ -344,7 +350,7 @@ func verify_dash_cancel() -> void:
 	await tap(LIGHT)
 	await frames(1)
 	await dash()
-	check(await wait_until(func() -> bool: return player.move_id == &"dash_stab", 40), "an early Shift still dashes")
+	check(await wait_until(func() -> bool: return player.move_id == &"dash_stab", 40), "an early modifier thrust waits for its cancel window")
 	var waited := int(last_frame.get(&"attack1", -1))
 	check(waited >= 7 and waited < 15, "an early Shift waits for hit 1's dodge window")
 	# heavy swings are not cut by the dash

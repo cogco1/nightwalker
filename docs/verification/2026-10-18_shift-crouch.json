@@ -1,0 +1,226 @@
+{
+  "date": "2026-10-18",
+  "timezone": "Asia/Tokyo",
+  "base_commit": "aca1c28f38a0e40cd32cec39f2cc849783bd5f0a",
+  "branch": "feature/shift-dodge-run-crouch-20261018",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "suite_count": 27,
+  "total_checks": 3518,
+  "failed_suites": 0,
+  "suites": [
+    {
+      "suite": "core_v07",
+      "checks": 535,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "keybindings",
+      "checks": 68,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "keybindings_reload",
+      "checks": 20,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "air_combat",
+      "checks": 115,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "air_dash_animation_v14",
+      "checks": 174,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "scene_integration_v14",
+      "checks": 106,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "scene_routes",
+      "checks": 69,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "interior_lighting",
+      "checks": 192,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "home_furniture",
+      "checks": 84,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "hospital_interactions",
+      "checks": 23,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "hospital_environment",
+      "checks": 73,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "hospital_physical_stairs",
+      "checks": 54,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "hospital_ward_layout",
+      "checks": 22,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "hospital_security",
+      "checks": 104,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "level_shared",
+      "checks": 38,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "contact_refresh_v07",
+      "checks": 6,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "charged_slash",
+      "checks": 52,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "moveset",
+      "checks": 1013,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "combat_state",
+      "checks": 18,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "rhythm_combat",
+      "checks": 94,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "night_street_proto",
+      "checks": 49,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "shift_controls",
+      "checks": 40,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "locomotion_blade",
+      "checks": 260,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "light_sense",
+      "checks": 132,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "chapter_flow",
+      "checks": 117,
+      "status": "passed",
+      "error_log_bytes": 0
+    }
+  ],
+  "art_qa": {
+    "status": "passed",
+    "baseline": "aca1c28f38a0e40cd32cec39f2cc849783bd5f0a",
+    "original_animation_pngs_unchanged": 1024,
+    "new_crouch_frames": 32,
+    "total_animation_pngs": 1056,
+    "unique_new_poses_per_facing": {
+      "right": 16,
+      "left": 16
+    },
+    "native_canvas": [
+      112,
+      96
+    ],
+    "foot_pivot": [
+      56,
+      84
+    ],
+    "binary_alpha": true,
+    "existing_palette_only": true,
+    "failures": []
+  },
+  "rendered_inputs": {
+    "rendered_input_frames": 247,
+    "checks": {
+      "hold_runs": true,
+      "release_after_run_does_not_evade": true,
+      "tap_evades": true,
+      "chord_thrusts": true,
+      "crouch_right": true,
+      "crouch_left": true
+    },
+    "status": "passed"
+  },
+  "mechanics": {
+    "tap_release_threshold_seconds": 0.18,
+    "dodge_seconds": 0.22,
+    "dodge_distance": 36,
+    "dodge_weapon_damage": false,
+    "thrust_chord": "modifier + exactly one horizontal direction + fresh attack mouse press",
+    "thrust_distance": 48,
+    "crouch_speed": 20,
+    "crouch_collider": [
+      12,
+      14
+    ],
+    "crouch_walk_fps": 14,
+    "old_config_version": 3,
+    "new_config_version": 4
+  },
+  "validation": "Full 27-suite runner passed; the final single-line hint was then checked by rerunning night_street_proto (49 checks).",
+  "known_preexisting_issue": "Normal chapter boot reports add_child during boot._ready at story_state.gd:33. This task did not change chapter boot."
+}

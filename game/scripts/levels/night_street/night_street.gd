@@ -152,6 +152,7 @@ func _build_world() -> void:
 	var hover_targets: Array = []
 	for spot in layout.get("targets", []):
 		var target := HOVER_TARGET.new()
+		target.max_hp = int(spot[2]) if spot.size() > 2 else 3
 		target.position = Vector2(spot[0], spot[1])
 		target.z_index = 1
 		world.add_child(target)
@@ -275,7 +276,7 @@ func _create_ui() -> void:
 	title.modulate = Color("c9b8e8")
 	_route_hint = PIXEL_UI.label(canvas, Vector2(168, 3), Vector2(66, 16), "")
 	_route_hint.modulate = Color("c9b8e8")
-	_hint = PIXEL_UI.label(canvas, Vector2(5, 162), Vector2(310, 16))
+	_hint = PIXEL_UI.label(canvas, Vector2(5, 164), Vector2(310, 14), "", 10, true, PIXEL_UI.small_font())
 	_hint.modulate = Color("9d8fc0")
 	refresh_hint()
 	_status = PIXEL_UI.label(canvas, Vector2(206, 16), Vector2(110, 16))
@@ -288,13 +289,15 @@ func _create_ui() -> void:
 	_scan_label = _exposure_hud.scan_label
 
 
-## Control hint from the current bindings; the defaults read "AD走 左键斩 右键重击 W+右键跃劈 Shift闪避 R重置"
-## (the charge, a held left click, no longer fits on the line once the leap cleave is named).
+## Compact control hint from the current bindings: walk, crouch, tap/hold modifier and directional thrust.
+## The single 10px line stays below the play area so the low crouch pose remains unobscured.
 func refresh_hint() -> void:
 	_route_hint.text = "" if CONTROLS.current.values().has(KEY_F8) else "F8返回"
-	_hint.text = "%s%s走 %s斩 %s重击 %s+%s跃劈 %s闪避 %s重置" % [CONTROLS.hint_text("move_left"), CONTROLS.hint_text("move_right"),
-		CONTROLS.hint_text("attack_mouse"), CONTROLS.hint_text("heavy_mouse"), CONTROLS.hint_text("rising_modifier"),
-		CONTROLS.hint_text("heavy_mouse"), CONTROLS.hint_text("dash_modifier"), CONTROLS.hint_text("reset_arena")]
+	var modifier := CONTROLS.hint_text("dash_modifier")
+	var run_key := CONTROLS.hint_text("run")
+	var gesture := "%s点滚/长跑" % modifier if modifier == run_key else "%s点滚 %s跑" % [modifier, run_key]
+	_hint.text = "%s%s走 %s蹲行 %s %s+方向+%s突刺" % [CONTROLS.hint_text("move_left"), CONTROLS.hint_text("move_right"),
+		CONTROLS.hint_text("crouch"), gesture, modifier, CONTROLS.hint_text("attack_mouse")]
 
 
 func _physics_process(delta: float) -> void:

@@ -469,5 +469,5 @@ func refresh_ui() -> void:
 	elif _using_stairs:
 		_hint.text = "楼梯：%s上行 %s下行 %s跳 %s蹲 %s视角" % [left, right, jump, crouch, view]
 	else:
-		_hint.text = "%s%s直走 %s上楼 %s蹲/下楼 %s交互 %s跳 %s视角" % [left, right, CONTROLS.hint_text("move_up"),
+		_hint.text = "%s%s直走 %s上楼 %s蹲行/下楼 %s交互 %s跳 %s视角" % [left, right, CONTROLS.hint_text("move_up"),
 			crouch, interact, jump, view]

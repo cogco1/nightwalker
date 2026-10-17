@@ -200,20 +200,20 @@ func control_hint(hospital: Node2D) -> String:
 func check_hospital(hospital: Node2D) -> void:
 	var interactions: Node2D = hospital.interactions
 	check(interactions.dialogue.page_characters == 32 and is_equal_approx(interactions.dialogue.type_speed, 36.0), "the hospital keeps 32 characters per page at 36 per second")
-	check(control_hint(hospital) == "WASD移动 E交互/楼梯 Tab视角 Caps跑 F7家中", "the default top-down hint reads as before")
+	check(control_hint(hospital) == "WASD移动 E交互/楼梯 Tab视角 Shift跑 F7家中", "the default top-down hint reads as before")
 	use_bindings({"move_left": KEY_J, "jump": KEY_K})
 	hospital.get_node("GameSession").keybindings_closed.emit(true)
-	check(control_hint(hospital) == "WJSD移动 E交互/楼梯 Tab视角 Caps跑 F7家中", "the top-down hint follows a remapped key once the settings menu closes")
+	check(control_hint(hospital) == "WJSD移动 E交互/楼梯 Tab视角 Shift跑 F7家中", "the top-down hint follows a remapped key once the settings menu closes")
 	hospital.activate_view(1, "entry", Vector2(110, 286))
 	await frames(4)
-	check(control_hint(hospital) == "JD直走 W上楼 S蹲/下楼 E交互 K跳 Tab视角", "the side-view hint follows remapped keys")
+	check(control_hint(hospital) == "JD直走 W上楼 S蹲行/下楼 E交互 K跳 Tab视角", "the side-view hint follows remapped keys")
 	use_bindings({"reset_arena": KEY_F7})
 	hospital.activate_view(0, "entry", Vector2(110, 300))
 	await frames(4)
 	check(not control_hint(hospital).contains("F7"), "the F7 home shortcut leaves the hint while F7 is bound to an action")
 	use_bindings({})
 	hospital.refresh_ui()
-	check(control_hint(hospital) == "WASD移动 E交互/楼梯 Tab视角 Caps跑 F7家中", "default bindings restore the original hint")
+	check(control_hint(hospital) == "WASD移动 E交互/楼梯 Tab视角 Shift跑 F7家中", "default bindings restore the original hint")
 	var flight: Dictionary = hospital.base_layout["stairs"]["side_flight"]
 	check(flight.get("upper_landing_y") == 164.0 and flight.get("lower_landing_y") == 286.0, "stair landings come from layout.json stairs")
 	var security: Node2D = hospital.security

@@ -1,0 +1,377 @@
+{
+  "date": "2026-10-18",
+  "base": "03d740f06bfb114daa426b4f60acae7a2d413871",
+  "branch": "fix/smooth-charge-links-and-light-startup-20261018",
+  "status": "passed",
+  "total_suites": 42,
+  "checks_passed": 4657,
+  "suites": [
+    {
+      "suite": "core_v07",
+      "checks": 553,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings",
+      "checks": 69,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings_reload",
+      "checks": 21,
+      "status": "passed"
+    },
+    {
+      "suite": "air_combat",
+      "checks": 116,
+      "status": "passed"
+    },
+    {
+      "suite": "air_dash_animation_v14",
+      "checks": 174,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_integration_v14",
+      "checks": 106,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_routes",
+      "checks": 69,
+      "status": "passed"
+    },
+    {
+      "suite": "interior_lighting",
+      "checks": 192,
+      "status": "passed"
+    },
+    {
+      "suite": "home_furniture",
+      "checks": 84,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_interactions",
+      "checks": 23,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_environment",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_physical_stairs",
+      "checks": 54,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_ward_layout",
+      "checks": 22,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_security",
+      "checks": 104,
+      "status": "passed"
+    },
+    {
+      "suite": "level_shared",
+      "checks": 38,
+      "status": "passed"
+    },
+    {
+      "suite": "contact_refresh_v07",
+      "checks": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_slash",
+      "checks": 52,
+      "status": "passed"
+    },
+    {
+      "suite": "moveset",
+      "checks": 1014,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_state",
+      "checks": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rhythm_combat",
+      "checks": 94,
+      "status": "passed"
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "status": "passed"
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "status": "passed"
+    },
+    {
+      "suite": "night_street_proto",
+      "checks": 50,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_impact_v2",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_impact_v2_144",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "thrust_path",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "jump_chase",
+      "checks": 66,
+      "status": "passed"
+    },
+    {
+      "suite": "jump_chase_144",
+      "checks": 66,
+      "status": "passed"
+    },
+    {
+      "suite": "smooth_charge_links",
+      "checks": 92,
+      "status": "passed"
+    },
+    {
+      "suite": "smooth_charge_links_144",
+      "checks": 92,
+      "status": "passed"
+    },
+    {
+      "suite": "primary_charge_chain",
+      "checks": 114,
+      "status": "passed"
+    },
+    {
+      "suite": "primary_charge_chain_144",
+      "checks": 133,
+      "status": "passed"
+    },
+    {
+      "suite": "direct_charge",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "direct_charge_144",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_draw",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_draw_144",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "heavy_cleave",
+      "checks": 67,
+      "status": "passed"
+    },
+    {
+      "suite": "roll_thrust_motion",
+      "checks": 80,
+      "status": "passed"
+    },
+    {
+      "suite": "shift_controls",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "locomotion_blade",
+      "checks": 260,
+      "status": "passed"
+    },
+    {
+      "suite": "light_sense",
+      "checks": 132,
+      "status": "passed"
+    },
+    {
+      "suite": "chapter_flow",
+      "checks": 117,
+      "status": "passed"
+    }
+  ],
+  "existing_pngs_preserved": 1152,
+  "unique_png_count": 1152,
+  "animation_entries": 76,
+  "render": {
+    "status": "passed",
+    "checks": {
+      "ordinary_11_frame_click_never_charges": true,
+      "ordinary_click_releases_one_light": true,
+      "ordinary_click_has_no_charge_cue": true,
+      "light_startup_actually_shorter": true,
+      "charge_light_link_actually_faster": true,
+      "charge_heavy_link_actually_faster": true,
+      "exact_light_and_heavy_sequence": true,
+      "stages_continue_one_two_three": true,
+      "grounded_links_selected": true,
+      "two_full_charge_announcements": true,
+      "settles_cleanly": true,
+      "light_carries_visible_recovery_poses": true,
+      "heavy_carries_visible_recovery_poses": true,
+      "audible_no_clipping": true,
+      "video_and_audio": true
+    },
+    "action_frames": 304,
+    "audio": {
+      "seconds": 5.366666666666666,
+      "peak": 0.471893310546875,
+      "rms": 0.03839544428029414,
+      "channels": 2,
+      "sample_rate": 48000
+    },
+    "before_after_combat_seconds": {
+      "light_startup": {
+        "before": 0.20000000000000095,
+        "after": 0.09999999999999998
+      },
+      "charge_to_light": {
+        "before": 0.2833333333333301,
+        "after": 0.15000000000000013
+      },
+      "charge_to_heavy": {
+        "before": 0.46666666666667034,
+        "after": 0.21666666666665968
+      }
+    },
+    "events": [
+      {
+        "animation": "attack1_right",
+        "event": "move",
+        "frame": 26,
+        "move": "attack1",
+        "pose": 0,
+        "section": "tap_light",
+        "stage": 1
+      },
+      {
+        "event": "charge_started",
+        "frame": 77,
+        "section": "light_charge"
+      },
+      {
+        "event": "charge_ready",
+        "frame": 96,
+        "section": "light_charge"
+      },
+      {
+        "animation": "charged_draw_right",
+        "event": "move",
+        "frame": 100,
+        "move": "heavy_slash",
+        "pose": 6,
+        "section": "light_charge",
+        "stage": 1
+      },
+      {
+        "animation": "charge_link_light_right",
+        "event": "move",
+        "frame": 107,
+        "move": "attack2",
+        "pose": 0,
+        "section": "light_second",
+        "stage": 2
+      },
+      {
+        "animation": "attack3_right",
+        "event": "move",
+        "frame": 126,
+        "move": "attack3",
+        "pose": 0,
+        "section": "light_third",
+        "stage": 3
+      },
+      {
+        "event": "charge_started",
+        "frame": 180,
+        "section": "heavy_charge"
+      },
+      {
+        "event": "charge_ready",
+        "frame": 199,
+        "section": "heavy_charge"
+      },
+      {
+        "animation": "charged_draw_right",
+        "event": "move",
+        "frame": 203,
+        "move": "heavy_slash",
+        "pose": 6,
+        "section": "heavy_charge",
+        "stage": 1
+      },
+      {
+        "animation": "charge_link_heavy_right",
+        "event": "move",
+        "frame": 210,
+        "move": "rush_cleave",
+        "pose": 0,
+        "section": "heavy_second",
+        "stage": 2
+      },
+      {
+        "animation": "rising_slash_right",
+        "event": "move",
+        "frame": 230,
+        "move": "launch_slash",
+        "pose": 0,
+        "section": "heavy_third",
+        "stage": 3
+      }
+    ],
+    "preview": "nightwalker_smooth_combat.mp4",
+    "scope": "Real-input animation comparison with prior recorded version; contacts and hit-stop validated separately in gameplay suites."
+  },
+  "changes": {
+    "hold_threshold_seconds": 0.24,
+    "full_charge_seconds": 0.55,
+    "light_first_contact_theoretical_seconds": 0.1097222222,
+    "linked_light_windup_seconds": 0.0975,
+    "linked_heavy_windup_seconds": 0.1671875,
+    "charged_cancel_frame": 11,
+    "early_link_entry_poses": [
+      11,
+      12
+    ],
+    "later_recovery_entry": 2,
+    "idle_uses_normal_entry": true
+  },
+  "source_sha256": {
+    "game/scripts/player/player.gd": "596ae70e56b723d51c13ff368e7dba10f4ff0068979c6ae1cc0b577d68e313ba",
+    "game/scripts/player/moves_long_blade.gd": "081f011bda66b83a8a8d498d9d23523e6364b8439d42b6fa0875923a67f21346",
+    "game/assets/side_view.tres": "709745894f4ed8b6c1a2cf828306a2d00c1ee73ae2701587d295b6b1ada84c41",
+    "game/assets/top_down.tres": "98a28e25394f38bb2ba1f3a1906e3fd82ddda660613a4bff08ae277ecfa51bc5",
+    "game/assets/blade_paths.json": "f668bbd97a63221256b375a7cf8de1cae08d25054c081627008310251c30f20d",
+    "tools/art/build_combat_links.py": "25922c9e2c754d0d894c492dc353704f1bf2e0e9f33144fb0ea83847e5320195",
+    "game/tests/test_smooth_charge_links.gd": "068b167e61b412ac578986d1ea6dd1be6f8c596e6ab82e3ab8b709ed48f21dd9",
+    "game/tests/recorders/record_smooth_combat.gd": "0e1187dc7bf7b0d1411da7337c158a8903dbfbd0797d87f0a3784eb42a8cb9cd"
+  },
+  "execution_note": "Full 42-suite run passed, then focused smooth_charge_links at 60/144, primary_charge_chain at 60/144 and scene_integration_v14 passed after completing the later-recovery entry. Final suite log counts include the eight new late-recovery assertions."
+}

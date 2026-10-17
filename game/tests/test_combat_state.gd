@@ -76,6 +76,7 @@ func verify_states(player: CharacterBody2D) -> void:
 	mouse(true)
 	await frames(1)
 	mouse(false)
+	await frames(1)
 	check(player.state == player.State.ATTACK and player.is_attacking and player.combo_stage == 1 and player.move_id == &"attack1", "a tap starts attack1 in ATTACK")
 	var ticks_before: int = player.move_ticks
 	await frames(5)
@@ -102,11 +103,9 @@ func verify_clock_and_hit_stop(player: CharacterBody2D) -> void:
 	var time_frozen: float = player.combat_time
 	var tick_frozen: int = player.combat_tick
 	mouse(true)
-	await process_frame
 	mouse(false)
 	await process_frame
-	await process_frame
-	check(player.combat_time == time_frozen and player.combat_tick == tick_frozen, "the combat clock stands still during the hit-stop")
+	check(arena.hit_stop_active and player.combat_time == time_frozen and player.combat_tick == tick_frozen, "the combat clock stands still during the hit-stop")
 	check(player._mouse_attack_pending, "a click during the hit-stop is recorded, not acted on")
 	observations["clock_frozen_at"] = time_frozen
 	await wait_until(func() -> bool: return not arena.hit_stop_active, 30)
@@ -149,6 +148,7 @@ func verify_buffer_expiry(player: CharacterBody2D) -> void:
 	mouse(true)
 	await frames(1)
 	mouse(false)
+	await frames(1)
 	check(player.queued_attack and player.attack_buffer_left > 0.0, "a second tap during attack1 queues one follow-up")
 	var buffer: float = player.attack_buffer_left
 	check(buffer >= player.ATTACK_BUFFER_SECONDS - 0.001 and buffer <= 0.55 + 0.001, "the follow-up buffer lies between 0.22 s and 0.55 s")
@@ -164,6 +164,7 @@ func verify_buffer_expiry(player: CharacterBody2D) -> void:
 	mouse(true)
 	await frames(1)
 	mouse(false)
+	await frames(1)
 	player.sprite.pause()
 	var expires_after: float = player.attack_buffer_left
 	await frames(int(ceil(expires_after * 60.0)) + 2)

@@ -78,12 +78,18 @@ func target_at(point: Vector2, health := 30) -> CharacterBody2D:
 	target.position = point
 	arena.world.add_child(target)
 	arena.targets.append(target)
+	# Air-combo fixtures start in the existing suspended state. A continuous rush arrives later than a blink.
+	if point.y < 150.0:
+		target._air_hold_left = 0.55
+		target.velocity.y = 6.0
 	return target
 
 
 func dash_input(direction: int) -> void:
 	key(KEY_D if direction > 0 else KEY_A, true)
-	await tap(KEY_SHIFT)
+	key(KEY_SHIFT, true)
+	await attack()
+	key(KEY_SHIFT, false)
 	key(KEY_D if direction > 0 else KEY_A, false)
 
 
@@ -148,7 +154,7 @@ func ground_checks(direction: int) -> void:
 	check(not arena.player.dash_executed and arena.player.sprite.frame < 6, "ground dash retains its anticipation: " + facing)
 	check_body("ground dash " + facing)
 	check(await wait_dash(), "ground dash reaches its swept movement: " + facing)
-	check(arena.player.sprite.frame >= 6 and arena.player.sprite.frame <= 9, "ground dash executes inside the original active frames: " + facing)
+	check(arena.player.sprite.frame >= 6 and arena.player.sprite.frame <= 14, "ground dash completes its sustained active rush: " + facing)
 	check(absf(arena.player.dash_end.x - arena.player.dash_start.x - direction * 48.0) < 0.1, "ground dash still travels forty-eight pixels: " + facing)
 	check(await wait_stage(0), "ground dash completes once: " + facing)
 	await tick(5)
@@ -172,7 +178,7 @@ func air_chain_checks(direction: int) -> void:
 	check(arena.player.velocity.y == 6.0 and arena.player._attack_active_start() == 6, "air dash preserves slow fall and frame-six activation: " + facing)
 	check_body("air dash " + facing)
 	check(await wait_dash(), "air dash executes its swept movement: " + facing)
-	check(arena.player.sprite.frame >= 6 and arena.player.sprite.frame <= 9, "air dash does not execute outside active frames: " + facing)
+	check(arena.player.sprite.frame >= 6 and arena.player.sprite.frame <= 14, "air dash completes its sustained active rush: " + facing)
 	check(absf(arena.player.dash_end.x - arena.player.dash_start.x - direction * 48.0) < 0.1, "air dash travels forty-eight pixels: " + facing)
 	check(enemy.hp == 29 and enemy._air_hold_left > 0.0, "air dash damages and suspends its pierced target: " + facing)
 	check(arena.player._jumps_used == jumps and arena.player.critical_rolls == 0, "air dash never replenishes jumps or consumes a critical roll: " + facing)
@@ -193,7 +199,7 @@ func air_chain_checks(direction: int) -> void:
 	check(await wait_stage(3), "air dash connects into aerial strike three: " + facing)
 	await tick(22)
 	check(enemy.hp == 24 and arena.player.critical_rolls == 1, "piercing dash plus three hits keeps triple critical damage: " + facing)
-	check(arena.completed_stop_requests.has(4) and arena.completed_stop_requests.has(6), "ordinary and critical hit stops survive the air chain: " + facing)
+	check(arena.completed_stop_requests.has(2) and arena.completed_stop_requests.has(6), "ordinary and critical hit stops survive the air chain: " + facing)
 	await tap(KEY_S)
 	check(arena.player.special_kind == "dive_slash" and arena.player.sprite.animation == "dive_slash_" + facing, "S cancels the follow-up into the separate downward strike: " + facing)
 	check(arena.player._air_hold_left == 0.0 and arena.player.velocity.y == 360.0, "downward strike clears hover and retains its speed: " + facing)
@@ -233,13 +239,13 @@ func many_target_checks() -> void:
 	var victims: Array[CharacterBody2D] = []
 	for index in range(22):
 		victims.append(target_at(Vector2(78 + index, 90), 6))
-	var outside := target_at(Vector2(149, 90), 6)
+	var outside := target_at(Vector2(180, 90), 6)
 	await tick(2)
 	await dash_input(1)
 	check(await wait_stage(0), "crowded airborne dash completes")
 	check(victims.all(func(target: CharacterBody2D) -> bool: return target.hp == 5), "air dash still pierces all twenty-two swept targets exactly once")
 	check(outside.hp == 6 and arena.hits == 22, "air dash preserves finite reach and once-per-target damage")
-	check(arena.completed_stop_requests == [4], "all pierced targets share one ordinary hit stop")
+	check(arena.completed_stop_requests == [2], "twenty-two contacts share one short pause without repeatedly stopping the rush")
 
 
 func run_tests() -> void:

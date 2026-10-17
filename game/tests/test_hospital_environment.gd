@@ -40,7 +40,7 @@ func key(code: Key, pressed: bool) -> void:
 
 
 func release() -> void:
-	for code in [KEY_W, KEY_A, KEY_S, KEY_D, KEY_CAPSLOCK, KEY_SPACE, KEY_R, KEY_TAB, KEY_F7]:
+	for code in [KEY_W, KEY_A, KEY_S, KEY_D, KEY_SHIFT, KEY_SPACE, KEY_R, KEY_TAB, KEY_F7]:
 		key(code, false)
 
 
@@ -193,12 +193,13 @@ func run() -> void:
 		var walked: float = environment.player.position.x - run_fixture.x
 		place(run_fixture)
 		await frames(2)
-		key(KEY_CAPSLOCK, true)
+		key(KEY_SHIFT, true)
+		await frames(12)
 		key(KEY_D, true)
 		await frames(16)
 		release()
 		var ran: float = environment.player.position.x - run_fixture.x
-		check(ran > walked * 1.5, "holding CapsLock keeps the approved faster run")
+		check(ran > walked * 1.5, "holding Shift keeps the approved faster run")
 		observations["walk_run_distance"] = [walked, ran]
 	var boundary := west_wall_fixture()
 	check(not boundary.is_empty(), "a safe fixture exists beside the outer west wall")

@@ -1,0 +1,420 @@
+{
+  "date": "2026-10-18",
+  "base": "00d7057b75736b54a464bf1faf1875803c5d377c",
+  "branch": "feature/roll-continuous-thrust-20261018",
+  "status": "passed",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "suites": [
+    {
+      "suite": "core_v07",
+      "checks": 539,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings",
+      "checks": 68,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings_reload",
+      "checks": 20,
+      "status": "passed"
+    },
+    {
+      "suite": "air_combat",
+      "checks": 115,
+      "status": "passed"
+    },
+    {
+      "suite": "air_dash_animation_v14",
+      "checks": 174,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_integration_v14",
+      "checks": 106,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_routes",
+      "checks": 69,
+      "status": "passed"
+    },
+    {
+      "suite": "interior_lighting",
+      "checks": 192,
+      "status": "passed"
+    },
+    {
+      "suite": "home_furniture",
+      "checks": 84,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_interactions",
+      "checks": 23,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_environment",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_physical_stairs",
+      "checks": 54,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_ward_layout",
+      "checks": 22,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_security",
+      "checks": 104,
+      "status": "passed"
+    },
+    {
+      "suite": "level_shared",
+      "checks": 38,
+      "status": "passed"
+    },
+    {
+      "suite": "contact_refresh_v07",
+      "checks": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_slash",
+      "checks": 52,
+      "status": "passed"
+    },
+    {
+      "suite": "moveset",
+      "checks": 1013,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_state",
+      "checks": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rhythm_combat",
+      "checks": 94,
+      "status": "passed"
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "status": "passed"
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "status": "passed"
+    },
+    {
+      "suite": "night_street_proto",
+      "checks": 49,
+      "status": "passed"
+    },
+    {
+      "suite": "roll_thrust_motion",
+      "checks": 72,
+      "status": "passed"
+    },
+    {
+      "suite": "shift_controls",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "locomotion_blade",
+      "checks": 260,
+      "status": "passed"
+    },
+    {
+      "suite": "light_sense",
+      "checks": 132,
+      "status": "passed"
+    },
+    {
+      "suite": "chapter_flow",
+      "checks": 117,
+      "status": "passed"
+    }
+  ],
+  "total_suites": 28,
+  "checks_passed": 3594,
+  "execution_note": "Complete 28-suite run, then rhythm_combat 94 checks rerun after replacing obsolete frame-10 assertion with the current moveset cancel frame (14). Final night_street_proto 49 checks rerun after wording-only hint update.",
+  "fixture_note": "Suspended target setups verify continuous aerial contact and combos. A separate falling target case verifies no damage after it leaves the path. Original damage/distance/critical/wall/multi-target assertions retained.",
+  "art": {
+    "status": "passed",
+    "baseline": "00d7057b75736b54a464bf1faf1875803c5d377c",
+    "previous_animation_pngs_unchanged": 1056,
+    "new_roll_frames": 32,
+    "total_animation_pngs": 1088,
+    "unique_poses": {
+      "left": 16,
+      "right": 16
+    },
+    "native_canvas": [
+      112,
+      96
+    ],
+    "pivot": [
+      56,
+      84
+    ],
+    "binary_alpha": true,
+    "palette_colors": 18,
+    "right_bounds": [
+      [
+        42,
+        55,
+        73,
+        84
+      ],
+      [
+        43,
+        62,
+        74,
+        84
+      ],
+      [
+        44,
+        67,
+        75,
+        84
+      ],
+      [
+        45,
+        64,
+        70,
+        84
+      ],
+      [
+        44,
+        64,
+        68,
+        84
+      ],
+      [
+        46,
+        62,
+        68,
+        84
+      ],
+      [
+        48,
+        57,
+        70,
+        84
+      ],
+      [
+        47,
+        57,
+        66,
+        84
+      ],
+      [
+        46,
+        58,
+        69,
+        84
+      ],
+      [
+        48,
+        61,
+        69,
+        84
+      ],
+      [
+        46,
+        64,
+        73,
+        84
+      ],
+      [
+        43,
+        66,
+        74,
+        84
+      ],
+      [
+        43,
+        61,
+        75,
+        84
+      ],
+      [
+        42,
+        58,
+        74,
+        84
+      ],
+      [
+        44,
+        58,
+        78,
+        84
+      ],
+      [
+        45,
+        56,
+        75,
+        84
+      ]
+    ],
+    "failures": []
+  },
+  "motion": {
+    "air 60Hz -1": {
+      "distance": -48.0000076293945,
+      "largest_step": 6.64533233642578,
+      "moving_steps": 11
+    },
+    "air 60Hz 1": {
+      "distance": 47.9999923706055,
+      "largest_step": 6.64532470703125,
+      "moving_steps": 11
+    },
+    "ground 120Hz -1": {
+      "distance": -47.9999847412109,
+      "largest_step": 3.32837677001953,
+      "moving_steps": 22
+    },
+    "ground 120Hz 1": {
+      "distance": 47.9999847412109,
+      "largest_step": 3.32837677001953,
+      "moving_steps": 22
+    },
+    "ground 30Hz -1": {
+      "distance": -47.9999923706055,
+      "largest_step": 13.1077575683594,
+      "moving_steps": 6
+    },
+    "ground 30Hz 1": {
+      "distance": 47.9999923706055,
+      "largest_step": 13.1077575683594,
+      "moving_steps": 6
+    },
+    "ground 60Hz -1": {
+      "distance": -48.0000076293945,
+      "largest_step": 6.64533233642578,
+      "moving_steps": 11
+    },
+    "ground 60Hz 1": {
+      "distance": 47.9999923706055,
+      "largest_step": 6.64532470703125,
+      "moving_steps": 11
+    },
+    "roll air -1": {
+      "distance": -35.9999923706055,
+      "poses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "roll air 1": {
+      "distance": 35.9999923706055,
+      "poses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "roll ground -1": {
+      "distance": -35.9999923706055,
+      "poses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "roll ground 1": {
+      "distance": 35.9999923706055,
+      "poses_seen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15
+      ]
+    }
+  },
+  "render": {
+    "status": "passed",
+    "rendered_frames": 268,
+    "physics_samples": 268,
+    "largest_thrust_body_step": 6.64533233642571,
+    "largest_thrust_camera_step": 7.0,
+    "checks": {
+      "ground_roll_right": true,
+      "ground_roll_left": true,
+      "air_roll": true,
+      "air_rush": true,
+      "right_thrust": true,
+      "left_thrust": true,
+      "body_step_bounded": true,
+      "camera_step_bounded": true
+    },
+    "gif_playback": "all rendered frames, 20ms each; approximately 1.2x slow playback"
+  },
+  "source_sha256": {
+    "game/scripts/player/player.gd": "5ea96686ebce307ac843b2d4e09772ac3703bdcbf8c3a873595ee773b07b8d42",
+    "game/scripts/player/moves_long_blade.gd": "3e8e1f14a86321a159629e8a43362437d80e7a485cdb109bdbf40a268279ed63",
+    "game/assets/side_view.tres": "929dcf4b06a491dab887307bfc3aa8b76f77b80b4447b0d0635162da5989f766",
+    "game/scripts/levels/night_street/night_street.gd": "d1bf3c53e5025baf9bb3f4f7fb82f45dab828a5d2b25a2d24db90efb026c5996",
+    "game/tests/test_roll_thrust_motion.gd": "0299ca117d6816046687571d2534b778fe413c2cd42bb913f074243f5f2229dc",
+    "game/tests/test_rhythm_combat.gd": "2dbc51ffa9cb803f347f14e50304e5eb37ef678f94e2707dca56164c6e1c8e50",
+    "game/tests/test_air_combat.gd": "a8ac8127336144c9b72fb12c8482ba91ccdac99246b1793dead796572cb3b07d",
+    "game/tests/test_air_dash_animation_v14.gd": "49700305651bdccff5f843e87c29f20a86f889bf4b08340ccadd050a7ff3ed7c",
+    "game/tests/recorders/record_roll_thrust.gd": "105fcaf3348da72dbd01da31524cf5d2ef0348193d99e3e89cced20b411ccb08"
+  }
+}

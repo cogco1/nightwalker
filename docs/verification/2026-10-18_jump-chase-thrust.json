@@ -1,0 +1,380 @@
+{
+  "date": "2026-10-18",
+  "base": "3729caecebebe6c8d9949441c910688e76671e74",
+  "branch": "feature/jump-chase-and-thrust-impact-20261018",
+  "status": "passed",
+  "total_suites": 38,
+  "checks_passed": 4211,
+  "suites": [
+    {
+      "suite": "core_v07",
+      "checks": 545,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings",
+      "checks": 69,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings_reload",
+      "checks": 21,
+      "status": "passed"
+    },
+    {
+      "suite": "air_combat",
+      "checks": 116,
+      "status": "passed"
+    },
+    {
+      "suite": "air_dash_animation_v14",
+      "checks": 174,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_integration_v14",
+      "checks": 106,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_routes",
+      "checks": 69,
+      "status": "passed"
+    },
+    {
+      "suite": "interior_lighting",
+      "checks": 192,
+      "status": "passed"
+    },
+    {
+      "suite": "home_furniture",
+      "checks": 84,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_interactions",
+      "checks": 23,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_environment",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_physical_stairs",
+      "checks": 54,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_ward_layout",
+      "checks": 22,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_security",
+      "checks": 104,
+      "status": "passed"
+    },
+    {
+      "suite": "level_shared",
+      "checks": 38,
+      "status": "passed"
+    },
+    {
+      "suite": "contact_refresh_v07",
+      "checks": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_slash",
+      "checks": 52,
+      "status": "passed"
+    },
+    {
+      "suite": "moveset",
+      "checks": 1007,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_state",
+      "checks": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rhythm_combat",
+      "checks": 94,
+      "status": "passed"
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "status": "passed"
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "status": "passed"
+    },
+    {
+      "suite": "night_street_proto",
+      "checks": 50,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_impact_v2",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_impact_v2_144",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "thrust_path",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "jump_chase",
+      "checks": 66,
+      "status": "passed"
+    },
+    {
+      "suite": "jump_chase_144",
+      "checks": 66,
+      "status": "passed"
+    },
+    {
+      "suite": "direct_charge",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "direct_charge_144",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_draw",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_draw_144",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "heavy_cleave",
+      "checks": 67,
+      "status": "passed"
+    },
+    {
+      "suite": "roll_thrust_motion",
+      "checks": 80,
+      "status": "passed"
+    },
+    {
+      "suite": "shift_controls",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "locomotion_blade",
+      "checks": 260,
+      "status": "passed"
+    },
+    {
+      "suite": "light_sense",
+      "checks": 132,
+      "status": "passed"
+    },
+    {
+      "suite": "chapter_flow",
+      "checks": 117,
+      "status": "passed"
+    }
+  ],
+  "changes": {
+    "chase_window_seconds": 0.5,
+    "chase_assist_seconds": 0.6,
+    "chase_max_horizontal_speed": 280,
+    "chase_acceleration": 1400,
+    "chase_max_vertical_matching_acceleration": 1800,
+    "dash_blade_forward_reach": 35,
+    "dash_distance": 48,
+    "dash_seconds": 0.18,
+    "dash_first_contact_stop_frames": 2,
+    "kill_stop_frames": 10,
+    "first_street_drone_hp": 9
+  },
+  "existing_pngs_preserved": 1152,
+  "legacy_and_audio_files_preserved": 31,
+  "render": {
+    "status": "passed",
+    "checks": {
+      "direct_charge_has_no_opening_light": true,
+      "charged_chase_three_hit_air_kill": true,
+      "one_physical_chase": true,
+      "continuous_chase_without_teleport": true,
+      "authored_jump_and_all_three_air_clips": true,
+      "four_path_targets_each_hit_once": true,
+      "path_damage_and_kill": true,
+      "contact_ink_and_splatter": true,
+      "thrust_tick_and_kill_feedback": true,
+      "effects_expire": true,
+      "camera_moves_then_recenters": true,
+      "camera_is_bounded": true,
+      "audible_no_clipping": true,
+      "video_and_audio": true
+    },
+    "action_frames": 339,
+    "movie_seconds": 5.95,
+    "audio": {
+      "seconds": 5.95,
+      "peak": 0.488861083984375,
+      "rms": 0.04505325604765952,
+      "channels": 2,
+      "sample_rate": 48000
+    },
+    "largest_chase_step_pixels": 6.636995370865319,
+    "events": [
+      {
+        "critical": true,
+        "damage": 6,
+        "event": "damage",
+        "frame": 60,
+        "hp": 3,
+        "kind": "heavy_slash",
+        "section": "charged_hit",
+        "target": "metal"
+      },
+      {
+        "event": "impact",
+        "frame": 60,
+        "section": "charged_hit",
+        "weight": "heavy"
+      },
+      {
+        "event": "jump_chase",
+        "frame": 70,
+        "section": "jump_chase",
+        "target": "@StaticBody2D@84"
+      },
+      {
+        "critical": false,
+        "damage": 1,
+        "event": "damage",
+        "frame": 94,
+        "hp": 2,
+        "kind": "",
+        "section": "air_combo_1",
+        "target": "metal"
+      },
+      {
+        "event": "impact",
+        "frame": 94,
+        "section": "air_combo_1",
+        "weight": "light"
+      },
+      {
+        "critical": false,
+        "damage": 1,
+        "event": "damage",
+        "frame": 122,
+        "hp": 1,
+        "kind": "",
+        "section": "air_combo_2",
+        "target": "metal"
+      },
+      {
+        "event": "impact",
+        "frame": 122,
+        "section": "air_combo_2",
+        "weight": "light"
+      },
+      {
+        "critical": false,
+        "damage": 1,
+        "event": "damage",
+        "frame": 148,
+        "hp": 0,
+        "kind": "",
+        "section": "air_combo_3",
+        "target": "metal"
+      },
+      {
+        "event": "impact",
+        "frame": 148,
+        "section": "air_combo_3",
+        "weight": "kill"
+      },
+      {
+        "critical": false,
+        "damage": 1,
+        "event": "damage",
+        "frame": 251,
+        "hp": 2,
+        "kind": "dash_stab",
+        "section": "thrust",
+        "target": "PathTarget2"
+      },
+      {
+        "event": "impact",
+        "frame": 251,
+        "section": "thrust",
+        "weight": "tick"
+      },
+      {
+        "critical": false,
+        "damage": 1,
+        "event": "damage",
+        "frame": 251,
+        "hp": 2,
+        "kind": "dash_stab",
+        "section": "thrust",
+        "target": "PathTarget1"
+      },
+      {
+        "critical": false,
+        "damage": 1,
+        "event": "damage",
+        "frame": 256,
+        "hp": 2,
+        "kind": "dash_stab",
+        "section": "thrust",
+        "target": "PathTarget3"
+      },
+      {
+        "critical": false,
+        "damage": 1,
+        "event": "damage",
+        "frame": 259,
+        "hp": 0,
+        "kind": "dash_stab",
+        "section": "thrust",
+        "target": "PathTarget4"
+      },
+      {
+        "event": "impact",
+        "frame": 259,
+        "section": "thrust",
+        "weight": "kill"
+      }
+    ],
+    "preview": "nightwalker_jump_chase.mp4"
+  },
+  "source_sha256": {
+    "game/scripts/player/player.gd": "36ae5c47a3c8017a36c7f2676d6f6f992057865f010f65baba7fe0dca508cb27",
+    "game/scripts/player/moves_long_blade.gd": "8bc33434de4c13b56bdd29133c34657c3dcb1025577c4475b7cc434f49d8a3a1",
+    "game/scripts/levels/night_street/hover_target.gd": "cae028cb75ef10726dd59e1d83bd17e36bde49de7e862349598a0a37fde34796",
+    "game/scripts/levels/night_street/night_street.gd": "4dfd45887a74394c80367fb8406230ca11ec2fc07c98c50fb886634dd7435fb2",
+    "game/assets/night_street/layout.json": "63dd75d4d3e359ebac284c7b6d478b29b98a9bdfc5a1fc08225cdbb1a0b46aad",
+    "game/tests/test_jump_chase.gd": "efdaa6a1d5343a6638ddac1a1999b3d1893bdad5d1a0f7310060475448a75588",
+    "game/tests/test_thrust_path.gd": "e04bca88ef4b3599a61f17ac80046e888cee25e041257b14fb604bcca9aa8525",
+    "game/tests/recorders/record_jump_chase.gd": "7ac5ba4bc32701dd7fde16925bcc34f5023beb39b4b2e7b70ae42987ceefd6f9"
+  },
+  "execution_note": "Final full 38-suite regression after the playable durable drone and late-chase refinements."
+}

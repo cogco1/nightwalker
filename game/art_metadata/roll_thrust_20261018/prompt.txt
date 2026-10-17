@@ -1,0 +1,25 @@
+Use case: stylized-concept
+Asset type: a production pixel-art sprite sheet for the existing Godot side-view game Nightwalker.
+Input image 1 is a CHARACTER AND PIXEL SCALE reference only: three existing right-facing poses, each on a 112 by 96 native-pixel cell, displayed at 4x nearest-neighbor. Preserve this exact small hooded protagonist: slate blue hood and worn long coat, brown coat lining/belt, dark gloves and boots, tiny warm face, single steel katana. Do not redesign him or enlarge his head.
+Primary request: draw a new RIGHTWARD FORWARD DODGE ROLL animation. A clearly readable full forward somersault, with knees tucked to chest and spine curled, shoulder contacting the floor, boots passing over the hood, then uncurl into a low balanced right-facing stance. This must visibly rotate the curled body through 360 degrees. It must not be a sequence of crouch-walking poses or a rigidly rotated standing sprite.
+Layout: EXACTLY 16 frames, chronological reading order left-to-right, top-to-bottom, a 4-column by 4-row atlas. Every cell represents 112 x 96 native pixels. Whole atlas 448 x 384 native pixels, shown at crisp exactly 3x nearest-neighbor enlargement (1344 x 1152). Same fixed native pixel grid, same scale in all frames. Existing standing character is about 28 native pixels high with 5-pixel hood. During the tight roll the curled ball diameter is about 17-21 native pixels. Lots of clear transparent padding around each small sprite. No scene, no lighting effects.
+Registration: root point at native cell coordinate (56,84). The bottom of the sprite contacts native y=83 in EVERY cell; do not translate across cells to show travel, the engine handles horizontal movement. At (56,88) in EVERY cell put one single 1-native-pixel pure magenta (#ff00ff) square as an import registration mark, isolated below the feet/coat with transparent gap. This is the only mark, exactly 16 magenta registration squares. No grid, no frame numbers or lettering.
+Frame progression:
+0 lean forward, knees bending, katana held close;
+1 deep crouch, shoulders moving forward;
+2 head down and back rounded, rear boot leaving ground;
+3 compact tuck, hands and shoulder near ground;
+4 curled forward about 60 degrees;
+5 curled 100 degrees, hood near bottom/front;
+6 curled 140 degrees, boots starting overhead;
+7 fully inverted compact ball, boots above hood;
+8 rotate past inversion;
+9 curled about 240 degrees, boots swinging forward;
+10 curled 280 degrees, coat following;
+11 uncurl at 320 degrees, boots reaching ground in front;
+12 both boots meet ground in a low squat facing right;
+13 rise into low stance;
+14 balanced ready stance;
+15 recover to the original small right-facing ready stance.
+Keep the single sword tucked alongside the body through the roll, never floating, never multiple swords, never sticking below the floor. The coat wraps around knees, its short trailing edge follows the clockwise turn. No motion blur, no streaks, no ghost copies, no smoke, no ground shadow.
+Style: faithful tiny game sprite with hard square pixel clusters, one-pixel dark outline, flat stepped shading in muted original slate-blue/brown/steel palette, not painterly, not antialiased, no gradients. Genuinely transparent background.

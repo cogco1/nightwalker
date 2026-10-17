@@ -152,7 +152,8 @@ func run_tests() -> void:
 	key(KEY_W, true)
 	await attack()
 	key(KEY_W, false)
-	await tick(27)
+	# Follow the actual launcher end: lighter contact no longer adds the old four-frame delay.
+	check(await wait_for_stage(0), "launcher completes before its airborne follow-up")
 	check(enemy.knock_count == 1 and enemy.last_knock_velocity.y == -300.0 and enemy.position.y < 105.0, "rising slash launches the enemy substantially higher")
 	observations["launcher_enemy_y"] = enemy.position.y
 	observations["launcher_player_y"] = arena.player.position.y
@@ -247,9 +248,8 @@ func impact_checks() -> void:
 		check(impacts.size() == impact_count + 1 and arena.player.fx.effects.filter(func(effect: Dictionary) -> bool: return effect.has("tail")).is_empty(), "impact waves expire and never repeat while airborne: " + direction)
 	await reset()
 	await tap(KEY_SPACE)
-	key(KEY_D, true)
-	await tap(KEY_SHIFT)
-	check(arena.player.special_kind == "dash_stab", "a Shift press with a held direction also starts a piercing dash in the air")
+	await dash_input(1)
+	check(arena.player.special_kind == "dash_stab", "Shift plus direction plus a fresh attack click starts the airborne piercing thrust")
 	key(KEY_D, false)
 
 
@@ -263,7 +263,9 @@ func wait_for_stage(stage: int, limit: int = 60) -> bool:
 
 func dash_input(direction: int) -> void:
 	key(KEY_D if direction > 0 else KEY_A, true)
-	await tap(KEY_SHIFT)
+	key(KEY_SHIFT, true)
+	await attack()
+	key(KEY_SHIFT, false)
 	key(KEY_D if direction > 0 else KEY_A, false)
 
 
@@ -276,13 +278,18 @@ func air_dash_checks() -> void:
 		arena.player.position = Vector2(start_x, 90)
 		arena.player.velocity.y = 80.0
 		var enemy := target_at(Vector2(start_x + direction * 56, 90))
+		# Already airborne combo targets use their normal suspension, so the slower rush can physically reach them.
+		enemy._air_hold_left = 0.55
+		enemy.velocity.y = 6.0
 		await tick(2)
 		var jumps: int = arena.player._jumps_used
 		var start_y: float = arena.player.position.y
 		await dash_input(direction)
 		check(arena.player.special_kind == "dash_stab" and arena.player.attack_direction.x == direction, "air dash locks the requested horizontal direction: " + str(direction))
 		check(arena.player.velocity.y == 6.0, "air dash arrests falling at the existing slow descent speed: " + str(direction))
-		await tick(12)
+		for _i in range(40):
+			if arena.player.dash_executed: break
+			await tick(1)
 		check(arena.player.dash_executed and absf(arena.player.dash_end.x - arena.player.dash_start.x - direction * 48.0) < 0.1, "air dash performs the same real 48px sweep: " + str(direction))
 		check(enemy.hp == 29 and enemy._air_hold_left > 0.0 and enemy.last_knock_velocity == Vector2(0, 6), "pierced airborne enemy takes one hit and remains available for an air combo: " + str(direction))
 		check(arena.player._jumps_used == jumps and arena.player.critical_rolls == 0, "air dash neither refills jumps nor rolls a critical: " + str(direction))

@@ -59,7 +59,7 @@ func run() -> void:
 		check(float(data.get("fps", 0.0)) > 0.0, "%s plays at a positive rate" % id)
 		check(data.get("crit", &"none") in CRITS, "%s uses a known critical rule" % id)
 		check(SESSION.STOPS.has(data.get("stop", &"light")) and SESSION.STOPS.has(data.get("crit_stop", &"critical")), "%s uses hit-stop weights GameSession knows" % id)
-		for prefix in [data["anim"]] + ([data["air_anim"]] if data.has("air_anim") else []):
+		for prefix in [data.get("side_anim",data["anim"])] + ([data["air_anim"]] if data.has("air_anim") else []):
 			for facing in ["left", "right"]:
 				verify_clip(SIDE, "%s_%s" % [prefix, facing], data, paths.get("side_view", {}), id)
 		if id in TOP_MOVES:
@@ -109,7 +109,7 @@ func verify_playback_rates() -> void:
 					player.facing = facing
 					player.call("_start_move", id)
 					var sprite: AnimatedSprite2D = player.sprite
-					var clip := "%s_%s" % [data["air_anim"] if airborne else data["anim"], facing]
+					var clip := "%s_%s" % [data["air_anim"] if airborne else (data.get("side_anim",data["anim"]) if mode==1 else data["anim"]), facing]
 					var rate := sprite.sprite_frames.get_animation_speed(sprite.animation) * sprite.speed_scale
 					check(String(sprite.animation) == clip and absf(rate - float(data["fps"])) < RATE_TOLERANCE,
 						"%s plays %s at its %s fps (view %d, playing %s at %.4f)" % [id, clip, data["fps"], mode, sprite.animation, rate])

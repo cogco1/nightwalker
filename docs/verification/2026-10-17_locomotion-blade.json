@@ -1,0 +1,194 @@
+{
+  "date": "2026-10-18",
+  "timezone": "Asia/Tokyo",
+  "baseline_commit": "a6ccf514ecfeb8503c7cfc354cb594e8742f25c0",
+  "branch": "fix/locomotion-blade-20261017",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "rendering_method": "GL Compatibility",
+  "change": "Side-view walk always carries forward; run always trails behind. Original gloved wrist motion and body pixels retained.",
+  "suite_count": 26,
+  "total_checks": 3475,
+  "failed_suites": 0,
+  "execution": "25 existing suites passed in the full runner; the new 260-check suite passed after correcting the comparison of invisible imported RGB.",
+  "suites": [
+    {
+      "suite": "core_v07",
+      "checks": 532,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "keybindings",
+      "checks": 68,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "keybindings_reload",
+      "checks": 20,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "air_combat",
+      "checks": 115,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "air_dash_animation_v14",
+      "checks": 174,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "scene_integration_v14",
+      "checks": 106,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "scene_routes",
+      "checks": 69,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "interior_lighting",
+      "checks": 192,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "home_furniture",
+      "checks": 84,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "hospital_interactions",
+      "checks": 23,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "hospital_environment",
+      "checks": 73,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "hospital_physical_stairs",
+      "checks": 54,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "hospital_ward_layout",
+      "checks": 22,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "hospital_security",
+      "checks": 104,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "level_shared",
+      "checks": 38,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "contact_refresh_v07",
+      "checks": 6,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "charged_slash",
+      "checks": 52,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "moveset",
+      "checks": 1013,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "combat_state",
+      "checks": 18,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "rhythm_combat",
+      "checks": 94,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "night_street_proto",
+      "checks": 49,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "light_sense",
+      "checks": 132,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "chapter_flow",
+      "checks": 117,
+      "status": "passed",
+      "error_log_bytes": 0
+    },
+    {
+      "suite": "locomotion_blade",
+      "checks": 260,
+      "status": "passed",
+      "error_log_bytes": 0
+    }
+  ],
+  "art_qa": {
+    "status": "passed",
+    "baseline": "a6ccf514ecfeb8503c7cfc354cb594e8742f25c0",
+    "protected_body_pixels_verified": 14976,
+    "changed_locomotion_frames": 64,
+    "unchanged_other_animation_frames": 960,
+    "wrong_carry_frames_before": 16,
+    "wrong_carry_frames_after": 0,
+    "failures": []
+  },
+  "rendered_preview": {
+    "frames": 64,
+    "all_16_frames_seen_in_each_of_4_clips": true
+  },
+  "preserved": [
+    "all runtime controller and combat code",
+    "all original body pixels",
+    "960 other animation PNGs",
+    "SpriteFrames order and speed",
+    "320x180 resolution and integer nearest-neighbor scale"
+  ],
+  "known_preexisting_issue": "Normal chapter boot still reports root.add_child during boot._ready (story_state.gd:33); outside this sprite fix."
+}

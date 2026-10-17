@@ -159,13 +159,17 @@ func verify_counter(button: MouseButton) -> void:
 	check(await perfect_dodge(100), "a perfect dodge before the counter")
 	var hp_before: int = drone.hp
 	var stops_before: int = session.completed_stop_frames.size()
+	var blink_snapshot: Dictionary = {}
+	player.counter_started.connect(func(enemy: Node2D) -> void:
+		blink_snapshot["distance"] = absf(player.global_position.x - enemy.global_position.x)
+	, CONNECT_ONE_SHOT)
 	await frames(3)
 	mouse(button, true)
 	await frames(1)
 	mouse(button, false)
 	check(player.move_id == &"counter_slash" and player.special_kind == "counter", "a click in the slow motion starts the counter")
 	var side := signf(player.global_position.x - drone.global_position.x)
-	check(absf(absf(player.global_position.x - drone.global_position.x) - player.COUNTER_BEHIND) < 0.5, "the counter blinks the hero next to the drone")
+	check(absf(float(blink_snapshot.get("distance", INF)) - player.COUNTER_BEHIND) < 0.5, "the counter lands at the correct offset at its blink event, before the moving drone advances")
 	check(player.attack_direction.x == -side, "the hero faces the drone after the blink")
 	check(await wait_until(func() -> bool: return drone.hp < hp_before, 40), "the counter hits the drone")
 	check(hp_before - drone.hp == 3, "the counter deals triple damage")
@@ -184,6 +188,7 @@ func verify_no_counter_without_dodge() -> void:
 	mouse(MOUSE_BUTTON_LEFT, true)
 	await frames(1)
 	mouse(MOUSE_BUTTON_LEFT, false)
+	await frames(1)
 	check(player.move_id == &"attack1" and absf(player.global_position.x - x) < 2.0, "without a perfect dodge a click is an ordinary swing")
 
 

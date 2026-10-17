@@ -1,0 +1,443 @@
+{
+  "date": "2026-10-18",
+  "base": "f10057bac981a28fd416e0e60da544377aa486ba",
+  "branch": "feature/heavy-cleave-and-light-hitstop-20261018",
+  "status": "passed",
+  "total_suites": 31,
+  "checks_passed": 3790,
+  "suites": [
+    {
+      "suite": "core_v07",
+      "checks": 539,
+      "status": "passed",
+      "log": "core_v07_heavy_final.log"
+    },
+    {
+      "suite": "keybindings",
+      "checks": 68,
+      "status": "passed",
+      "log": "keybindings.log"
+    },
+    {
+      "suite": "keybindings_reload",
+      "checks": 20,
+      "status": "passed",
+      "log": "keybindings_reload.log"
+    },
+    {
+      "suite": "air_combat",
+      "checks": 116,
+      "status": "passed",
+      "log": "air_combat.log"
+    },
+    {
+      "suite": "air_dash_animation_v14",
+      "checks": 174,
+      "status": "passed",
+      "log": "air_dash_animation_v14.log"
+    },
+    {
+      "suite": "scene_integration_v14",
+      "checks": 106,
+      "status": "passed",
+      "log": "scene_integration_v14_heavy_final.log"
+    },
+    {
+      "suite": "scene_routes",
+      "checks": 69,
+      "status": "passed",
+      "log": "scene_routes.log"
+    },
+    {
+      "suite": "interior_lighting",
+      "checks": 192,
+      "status": "passed",
+      "log": "interior_lighting.log"
+    },
+    {
+      "suite": "home_furniture",
+      "checks": 84,
+      "status": "passed",
+      "log": "home_furniture.log"
+    },
+    {
+      "suite": "hospital_interactions",
+      "checks": 23,
+      "status": "passed",
+      "log": "hospital_interactions.log"
+    },
+    {
+      "suite": "hospital_environment",
+      "checks": 73,
+      "status": "passed",
+      "log": "hospital_environment.log"
+    },
+    {
+      "suite": "hospital_physical_stairs",
+      "checks": 54,
+      "status": "passed",
+      "log": "hospital_physical_stairs.log"
+    },
+    {
+      "suite": "hospital_ward_layout",
+      "checks": 22,
+      "status": "passed",
+      "log": "hospital_ward_layout.log"
+    },
+    {
+      "suite": "hospital_security",
+      "checks": 104,
+      "status": "passed",
+      "log": "hospital_security.log"
+    },
+    {
+      "suite": "level_shared",
+      "checks": 38,
+      "status": "passed",
+      "log": "level_shared.log"
+    },
+    {
+      "suite": "contact_refresh_v07",
+      "checks": 6,
+      "status": "passed",
+      "log": "contact_refresh_v07.log"
+    },
+    {
+      "suite": "charged_slash",
+      "checks": 52,
+      "status": "passed",
+      "log": "charged_slash.log"
+    },
+    {
+      "suite": "moveset",
+      "checks": 1013,
+      "status": "passed",
+      "log": "moveset.log"
+    },
+    {
+      "suite": "combat_state",
+      "checks": 18,
+      "status": "passed",
+      "log": "combat_state.log"
+    },
+    {
+      "suite": "rhythm_combat",
+      "checks": 94,
+      "status": "passed",
+      "log": "rhythm_combat.log"
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "status": "passed",
+      "log": "enemy_attack.log"
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "status": "passed",
+      "log": "perfect_counter.log"
+    },
+    {
+      "suite": "night_street_proto",
+      "checks": 49,
+      "status": "passed",
+      "log": "night_street_proto.log"
+    },
+    {
+      "suite": "combat_impact_v2",
+      "checks": 60,
+      "status": "passed",
+      "log": "combat_impact_v2.log"
+    },
+    {
+      "suite": "combat_impact_v2_144",
+      "checks": 60,
+      "status": "passed",
+      "log": "combat_impact_v2_144.log"
+    },
+    {
+      "suite": "heavy_cleave",
+      "checks": 67,
+      "status": "passed",
+      "log": "heavy_cleave.log"
+    },
+    {
+      "suite": "roll_thrust_motion",
+      "checks": 80,
+      "status": "passed",
+      "log": "roll_thrust_motion.log"
+    },
+    {
+      "suite": "shift_controls",
+      "checks": 40,
+      "status": "passed",
+      "log": "shift_controls.log"
+    },
+    {
+      "suite": "locomotion_blade",
+      "checks": 260,
+      "status": "passed",
+      "log": "locomotion_blade.log"
+    },
+    {
+      "suite": "light_sense",
+      "checks": 132,
+      "status": "passed",
+      "log": "light_sense.log"
+    },
+    {
+      "suite": "chapter_flow",
+      "checks": 117,
+      "status": "passed",
+      "log": "chapter_flow.log"
+    }
+  ],
+  "changes": {
+    "light_hit_stop_frames": 2,
+    "light_seconds_60": 0.03333333333333333,
+    "light_camera_pixels": 1,
+    "heavy_kill_hit_stop_frames": 10,
+    "right_heavy_damage_multiplier": 3,
+    "right_heavy_nominal_windup_seconds": 0.3625,
+    "right_heavy_observed_contact_seconds": 0.3833333333,
+    "heavy_recovery_seconds": 0.16
+  },
+  "assets": {
+    "status": "passed",
+    "previous_pngs_preserved": 1088,
+    "new_native_frames": 32,
+    "total_native_frames": 1120,
+    "left_right_mirror_pairs": 16,
+    "single_global_scale": true
+  },
+  "render": {
+    "status": "passed",
+    "action_frames": 630,
+    "movie_frames": 648,
+    "fps": 60,
+    "movie_seconds": 10.8,
+    "checks": {
+      "dedicated_heavy_all_poses": true,
+      "heavy_hit_three": true,
+      "heavy_ten_frame_pause": true,
+      "heavy_weight": true,
+      "early_heavy_no_damage": true,
+      "light_two_frame_request": true,
+      "critical_retained": true,
+      "kill_retained": true,
+      "silent_thrust_kills": true,
+      "silent_thrust_no_impact": true,
+      "camera_returns": true,
+      "camera_bounded": true,
+      "white_coverage_bounded": true,
+      "audible_no_clipping": true,
+      "mp4_has_video_audio": true
+    },
+    "maximum_near_white_fraction": 0.004027777777777778,
+    "audio": {
+      "channels": 2,
+      "sample_rate": 48000,
+      "bits": 16,
+      "seconds": 10.8,
+      "peak": 0.574554443359375,
+      "rms": 0.036851921427916656
+    },
+    "preview": "nightwalker_heavy_cleave.mp4",
+    "heavy_hit_frame": 164,
+    "events": [
+      {
+        "event": "release",
+        "frame": 24,
+        "move": "attack1",
+        "section": "light_combo"
+      },
+      {
+        "damage": 1,
+        "event": "damage",
+        "frame": 25,
+        "hp": 9,
+        "kind": "",
+        "section": "light_combo"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 25,
+        "section": "light_combo",
+        "weight": "light"
+      },
+      {
+        "event": "release",
+        "frame": 51,
+        "move": "attack2",
+        "section": "light_combo"
+      },
+      {
+        "damage": 1,
+        "event": "damage",
+        "frame": 53,
+        "hp": 8,
+        "kind": "",
+        "section": "light_combo"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 53,
+        "section": "light_combo",
+        "weight": "light"
+      },
+      {
+        "event": "release",
+        "frame": 78,
+        "move": "attack3",
+        "section": "light_combo"
+      },
+      {
+        "damage": 3,
+        "event": "damage",
+        "frame": 79,
+        "hp": 5,
+        "kind": "",
+        "section": "light_combo"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 79,
+        "section": "light_combo",
+        "weight": "critical"
+      },
+      {
+        "event": "release",
+        "frame": 162,
+        "move": "rush_cleave",
+        "section": "right_heavy"
+      },
+      {
+        "damage": 3,
+        "event": "damage",
+        "frame": 164,
+        "hp": 2,
+        "kind": "",
+        "section": "right_heavy"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 164,
+        "section": "right_heavy",
+        "weight": "heavy"
+      },
+      {
+        "event": "release",
+        "frame": 236,
+        "move": "attack1",
+        "section": "heavy_charge"
+      },
+      {
+        "damage": 1,
+        "event": "damage",
+        "frame": 237,
+        "hp": 1,
+        "kind": "",
+        "section": "heavy_charge"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 237,
+        "section": "heavy_charge",
+        "weight": "light"
+      },
+      {
+        "event": "release",
+        "frame": 291,
+        "move": "heavy_slash",
+        "section": "heavy_kill"
+      },
+      {
+        "damage": 3,
+        "event": "damage",
+        "frame": 293,
+        "hp": 0,
+        "kind": "heavy_slash",
+        "section": "heavy_kill"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 293,
+        "section": "heavy_kill",
+        "weight": "kill"
+      },
+      {
+        "event": "release",
+        "frame": 433,
+        "move": "dash_stab",
+        "section": "silent_thrust"
+      },
+      {
+        "damage": 1,
+        "event": "damage",
+        "frame": 439,
+        "hp": 0,
+        "kind": "dash_stab",
+        "section": "silent_thrust"
+      },
+      {
+        "event": "release",
+        "frame": 565,
+        "move": "attack1",
+        "section": "flesh_kill"
+      },
+      {
+        "damage": 1,
+        "event": "damage",
+        "frame": 566,
+        "hp": 0,
+        "kind": "",
+        "section": "flesh_kill"
+      },
+      {
+        "direction": [
+          1.0,
+          0.0
+        ],
+        "event": "impact",
+        "frame": 566,
+        "section": "flesh_kill",
+        "weight": "kill"
+      }
+    ]
+  },
+  "source_sha256": {
+    "game/scripts/core/game_session.gd": "a1c1ae9c29143ea34927e68594f7338ab34e80f3d20024c705c7c448910c0f22",
+    "game/scripts/core/combat_feedback.gd": "2c2e0a2aa2abeeb769b6d0de46b5ec61d542caa31bcf70c17276ce1f55d933b7",
+    "game/scripts/player/moves_long_blade.gd": "6462de7f63f734246ea36254ba86b14e2e183822438166c94d253b6f9bc8d680",
+    "game/assets/side_view.tres": "35e1d37741e3b51c7782cf788aa2eb13b4560ecb579368ede1fd2091e03848a8",
+    "game/assets/blade_paths.json": "7f55052828dbbe48b6ee3ee5eca0560c814f17854b04f0fb991947e5ff4637bc",
+    "game/tests/test_heavy_cleave.gd": "4111ec59a18ef9d84f1b128ab5177a0e853bafeaa2fe0183141ecd943e1f85e9",
+    "tools/art/import_heavy_cleave.py": "34ad450455056e214b8f1b8546957977f55b46365204fbf6940ff118dab09a15"
+  },
+  "execution_note": "Full 31-suite run, then core and scene integration rerun after updating expected animation totals from 68/1088 to 70/1120. Both focused reruns passed. Air follow-up now waits for the real launcher end instead of old pause timing; frozen-input check samples inside the shorter two-frame stop."
+}

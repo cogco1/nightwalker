@@ -1,0 +1,54 @@
+[
+  {
+    "branch": "codex/f8-interior-lighting-20261016",
+    "expected_sha": "8a4483dc4b6c40020697893612cde5c3b955e3c6"
+  },
+  {
+    "branch": "codex/home-furniture-warm-light-20261016",
+    "expected_sha": "6c16affb6c645fb39220e0f107d83eb70b563ac2"
+  },
+  {
+    "branch": "codex/shared-progress-20261016",
+    "expected_sha": "d5f41f2109b07405e2a18207c757e9e6aa8def3e"
+  },
+  {
+    "branch": "feat/chapter1-m1",
+    "expected_sha": "8bd58793e6e209ae749189042d3c20d46f1c24da"
+  },
+  {
+    "branch": "feat/charged-slash",
+    "expected_sha": "bfb846b4894993207f0891203510d2131b73b8e3"
+  },
+  {
+    "branch": "feat/fx-boost",
+    "expected_sha": "c4a0e5192754529f3faf220ead6042970051b9e1"
+  },
+  {
+    "branch": "feat/nier-rhythm",
+    "expected_sha": "4f32557882856a60ee81b12d354520b8d9bcc101"
+  },
+  {
+    "branch": "merge/night-street-into-main",
+    "expected_sha": "622c7cb3c1a4b4ca307ae1e428c91be75879aba0"
+  },
+  {
+    "branch": "proto/night-street-cyber",
+    "expected_sha": "4b5046e962d391d71d278f0e92ea67b30b79c574"
+  },
+  {
+    "branch": "refactor/level-kit",
+    "expected_sha": "78267d96b298e10edbea847feb54f9544534a168"
+  },
+  {
+    "branch": "refactor/level-standardize",
+    "expected_sha": "01f7c0ae643ffa3a4e66e07e847f1100322b767a"
+  },
+  {
+    "branch": "sync/proto-kit",
+    "expected_sha": "8b43252d53c6aecf626acebc4178862fcb38b12e"
+  },
+  {
+    "branch": "sync/proto-rhythm",
+    "expected_sha": "ea819f0b0ddc5d7bfb5880b3363f3cba8945d5da"
+  }
+]

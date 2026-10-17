@@ -1,0 +1,299 @@
+{
+  "date": "2026-10-18",
+  "base": "fa91cc45844ba40125b161106429bf87726a95c2",
+  "branch": "fix/direct-charge-and-launch-20261018",
+  "status": "passed",
+  "total_suites": 35,
+  "checks_passed": 4014,
+  "suites": [
+    {
+      "suite": "core_v07",
+      "checks": 541,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings",
+      "checks": 69,
+      "status": "passed"
+    },
+    {
+      "suite": "keybindings_reload",
+      "checks": 21,
+      "status": "passed"
+    },
+    {
+      "suite": "air_combat",
+      "checks": 116,
+      "status": "passed"
+    },
+    {
+      "suite": "air_dash_animation_v14",
+      "checks": 174,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_integration_v14",
+      "checks": 106,
+      "status": "passed"
+    },
+    {
+      "suite": "scene_routes",
+      "checks": 69,
+      "status": "passed"
+    },
+    {
+      "suite": "interior_lighting",
+      "checks": 192,
+      "status": "passed"
+    },
+    {
+      "suite": "home_furniture",
+      "checks": 84,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_interactions",
+      "checks": 23,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_environment",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_physical_stairs",
+      "checks": 54,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_ward_layout",
+      "checks": 22,
+      "status": "passed"
+    },
+    {
+      "suite": "hospital_security",
+      "checks": 104,
+      "status": "passed"
+    },
+    {
+      "suite": "level_shared",
+      "checks": 38,
+      "status": "passed"
+    },
+    {
+      "suite": "contact_refresh_v07",
+      "checks": 6,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_slash",
+      "checks": 52,
+      "status": "passed"
+    },
+    {
+      "suite": "moveset",
+      "checks": 1007,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_state",
+      "checks": 18,
+      "status": "passed"
+    },
+    {
+      "suite": "rhythm_combat",
+      "checks": 94,
+      "status": "passed"
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "status": "passed"
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "status": "passed"
+    },
+    {
+      "suite": "night_street_proto",
+      "checks": 49,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_impact_v2",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "combat_impact_v2_144",
+      "checks": 60,
+      "status": "passed"
+    },
+    {
+      "suite": "direct_charge",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "direct_charge_144",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_draw",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "charged_draw_144",
+      "checks": 73,
+      "status": "passed"
+    },
+    {
+      "suite": "heavy_cleave",
+      "checks": 67,
+      "status": "passed"
+    },
+    {
+      "suite": "roll_thrust_motion",
+      "checks": 80,
+      "status": "passed"
+    },
+    {
+      "suite": "shift_controls",
+      "checks": 40,
+      "status": "passed"
+    },
+    {
+      "suite": "locomotion_blade",
+      "checks": 260,
+      "status": "passed"
+    },
+    {
+      "suite": "light_sense",
+      "checks": 132,
+      "status": "passed"
+    },
+    {
+      "suite": "chapter_flow",
+      "checks": 117,
+      "status": "passed"
+    }
+  ],
+  "changes": {
+    "hold_directly_charges": true,
+    "pre_charge_light_damage": 0,
+    "charge_seconds": 0.55,
+    "short_release_is_light": true,
+    "tap_threshold_seconds": 0.14,
+    "damage_multiplier": 6,
+    "charged_launch_velocity": [
+      105,
+      -300
+    ],
+    "heavy_stop_frames": 10,
+    "light_stop_frames": 2
+  },
+  "existing_pngs_preserved": 1152,
+  "render": {
+    "status": "passed",
+    "checks": {
+      "no_opening_light_move": true,
+      "no_opening_light_sound": true,
+      "no_pre_release_damage": true,
+      "charged_damage_only": true,
+      "real_drone_flight": true,
+      "flight_has_horizontal_travel": true,
+      "heavy_and_kill_feedback": true,
+      "effects_expire": true,
+      "camera_recenters": true,
+      "audible_no_clipping": true,
+      "video_and_audio": true
+    },
+    "action_frames": 255,
+    "movie_frames": 273,
+    "movie_seconds": 4.55,
+    "audio": {
+      "seconds": 4.55,
+      "peak": 0.49737548828125,
+      "rms": 0.05221963463773215,
+      "channels": 2,
+      "sample_rate": 48000
+    },
+    "drone_upward_pixels": 70.0833053588867,
+    "events": [
+      {
+        "event": "release",
+        "frame": 66,
+        "move": "heavy_slash",
+        "section": "first_draw"
+      },
+      {
+        "critical": true,
+        "damage": 6,
+        "event": "damage",
+        "frame": 68,
+        "hp": 6,
+        "kind": "heavy_slash",
+        "section": "first_draw",
+        "target": "metal"
+      },
+      {
+        "event": "impact",
+        "frame": 68,
+        "section": "first_draw",
+        "weight": "heavy"
+      },
+      {
+        "critical": true,
+        "damage": 6,
+        "event": "damage",
+        "frame": 68,
+        "hp": 0,
+        "kind": "heavy_slash",
+        "section": "first_draw",
+        "target": "flesh"
+      },
+      {
+        "event": "impact",
+        "frame": 68,
+        "section": "first_draw",
+        "weight": "kill"
+      },
+      {
+        "event": "release",
+        "frame": 167,
+        "move": "heavy_slash",
+        "section": "second_draw"
+      },
+      {
+        "critical": true,
+        "damage": 6,
+        "event": "damage",
+        "frame": 169,
+        "hp": 0,
+        "kind": "heavy_slash",
+        "section": "second_draw",
+        "target": "metal"
+      },
+      {
+        "event": "impact",
+        "frame": 169,
+        "section": "second_draw",
+        "weight": "kill"
+      }
+    ],
+    "preview": "nightwalker_direct_charge_launch.mp4"
+  },
+  "source_sha256": {
+    "game/scripts/player/player.gd": "d207b651539659bbad4b8e20ddf6a26763540dbf3d58f2bef5c3f465a8170562",
+    "game/scripts/player/moves_long_blade.gd": "ca91077f301cfad9ff89f6d1e791468488dd6608c580da9de8e34cf5ab98a53d",
+    "game/scripts/levels/night_street/hover_target.gd": "2307b206121ac37f7a2f03f96694fe072a1e6bfdc1ca5abeda7a55c1ca47b968",
+    "game/tests/fixtures/training_target.gd": "c6d37c550bf5a58ef80dcb2a01ec2a576c87253f57e627272ad2bb25ef9a395d",
+    "game/tests/test_direct_charge.gd": "5941660e89894b77b87db88de418abda86b29e4ce8534339bfdb4174df0e7ccc",
+    "game/tests/recorders/record_direct_charge.gd": "54eff4c4f35748956d51e19778e14a34c16d359d16f481f5954c3c2cc88b3246"
+  },
+  "execution_note": "Full 35-suite run followed by focused keybindings/reload, perfect_counter and shift_controls reruns after adapting old press-time assertions to released clicks; all final suite logs passed."
+}

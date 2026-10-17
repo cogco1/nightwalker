@@ -41,8 +41,8 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 - **pixel_ui.gd**：`label()` 是所有关卡文字标签的唯一入口；`shrink_dialogue()`、`add_portrait()`、`set_speaker()` 给对话框用。
 - **LevelKit**（`scripts/levels/level_kit.gd`）：关卡共用的静态函数。`add_box` 建矩形静态碰撞体，`add_layout_collider` 按 layout.json 条目建碰撞体（矩形或多边形，`one_way`、`stair_only`），`follow` 把镜头放到取整后的主角位置并限制在世界范围内。安全屋、医院、医院门禁和测试场 arena 都用它，新关卡不要再自己写一份。
 
-- **GameSession**：所有有玩家的场景共用，测试夹具 combat_lab 也挂同一个（夹具里原来那份顿帧副本已删除，测到的就是正式代码）。负责 F1/Esc 改键菜单（关闭后发 `keybindings_closed`，场景据此重写带按键名的提示）；对话框、密码门这类剧情弹窗用 `push_modal(owner)` / `pop_modal(owner)` 登记，有弹窗时 F1/Esc 归弹窗；监听玩家的 `impact(档位, 方向)` 信号，按 `STOPS` 表做全屏顿帧：light 4 帧 / 至少 0.0667 秒、critical 6 帧 / 至少 0.1 秒（这两档是原作保证）、heavy 10 帧偏移 2 像素并闪白，critical 和 heavy 结束后镜头有几帧余震。对外有 `hit_stop_started / hit_stop_frame / hit_stop_finished` 信号和帧数、时长等观测字段。
-- **CombatFeedback**（`scripts/core/combat_feedback.gd`）：GameSession 的子节点，`PROCESS_MODE_ALWAYS`，所以顿帧暂停时命中声不被截断。只听玩家主动发的信号：`move_started(招式)` 决定挥刀声，`impact(档位)` 决定命中声，`charge_started / charge_ready / charge_ended` 决定蓄力声，不读玩家内部字段；`played` 记录播放顺序供测试和录屏使用。音效是 `tools/audio/gen_combat_sfx.py` 合成的占位 WAV（`assets/audio/sfx/`），同名替换即可换成正式音效。无头模式下只记录不播放。
+- **GameSession**：所有有玩家的场景共用，测试夹具 combat_lab 也挂同一个（夹具里原来那份顿帧副本已删除，测到的就是正式代码）。负责 F1/Esc 改键菜单（关闭后发 `keybindings_closed`，场景据此重写带按键名的提示）；对话框、密码门这类剧情弹窗用 `push_modal(owner)` / `pop_modal(owner)` 登记，有弹窗时 F1/Esc 归弹窗；监听玩家的 `impact(档位, 方向)` 信号，按 `STOPS` 表做全屏顿帧：light 2 帧 / 至少 0.0333 秒、critical 6 帧 / 至少 0.1 秒、heavy/kill 10帧偏移3像素；所有档位结束后都有按60Hz时间轴采样的小幅镜头回弹，不使用全屏闪白或反相。对外有 `hit_stop_started / hit_stop_frame / hit_stop_finished` 信号和帧数、时长等观测字段。
+- **CombatFeedback**（`scripts/core/combat_feedback.gd`）：GameSession 的子节点，`PROCESS_MODE_ALWAYS`，所以顿帧暂停时命中声不被截断。只听玩家主动发的信号：普通攻击由 `swing_released(招式)` 决定挥刀声，特殊招式由 `move_started` 在起跳/动作提交时发声，`impact(档位)` 决定命中声，`charge_started / charge_ready / charge_ended` 决定蓄力声，不读玩家内部字段；`played` 记录播放顺序供测试和录屏使用。新6段短合成WAV由 `tools/audio/gen_impact_sfx_v2.py` 生成到 `assets/audio/sfx/impact_v2/`，原音频保留。单次同帧多目标只播放最强命中档位，击杀优先；每路3复音和音量余量减少截尾与叠加削顶。无头模式下只记录不播放。
 - **NightwalkerStoryState**（`scripts/core/story_state.gd`）：用 `ensure(tree)` 按需挂到 `/root`，存放本次进程内的物品和标记（`grant_item`、`has_item`、`set_flag`、`has_flag`），以及章节进度：`start_chapter()` 读 `assets/story/chapter1.json`，`set_step(id)` 按步骤数据设天数和时钟并发 `step_changed`；`chapter_active` 为假就是自由模式，`allows_debug_routes()` 决定 F7 / F8 / Tab。没有存档，退出游戏就清空。
 - **Controls**（`scripts/core/controls.gd`）：静态类，持有当前按键方案，读写 `user://keybindings.cfg`，把方案应用到 InputMap。各脚本通过 `CONTROLS.binding_pressed(slot)` 读输入。交互键 E（`INTERACT_KEY`）是保留键，不在改键表里，`validate` 不允许其他动作用它；场景用 `is_interact(event)` 判断，提示文字用 `binding_text` / `hint_text` 按当前键位生成（场景提示用 `hint_text`：空格写成「空格」，鼠标键写成「左键 / 右键 / 中键 / 侧键1 / 侧键2」；改键界面用 `binding_text`，是 Space、LMB 这类英文名）。
 
@@ -54,7 +54,7 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 - `scripts/player/moves_long_blade.gd`：**招式表**。每个招式的动画、帧速、起始帧、判定帧、判定框、前冲、暴击规则、顿帧档位、命中反应、空中滞空、收招等都写在 `MOVES` 里，连段图写在 `STRINGS` 里（当前招式 → 输入 light / heavy → 下一招，或按优先顺序排的几个候选，玩家取第一个当前允许的：`side_only` 只在侧视、`ground` 只在地面、`air_only` 只在空中）。多段招式用 `then` 串起下一段，`end` 截掉片段后半，`rehit` 让同一目标在一招里再被打一次，`cancel` 是新招式命中后提前接下一招的帧，`arc` 是代码画的整圈刀光，`shockwave` 是下劈落地冲击波，`knockback` 击退，`dmg_mult` 伤害倍数，`jump` 起跳速度，`swing`/`pitch` 挥刀音效，`dash_cancel` 是轻击可被突刺取消的起始帧，`dodge` 标出突刺本身，`resumes`/`as` 让一个招式在连段图里顶替另一个。字段说明在文件头。加新招式只在这里加数据，`tests/test_moveset.gd` 会检查动画、判定帧和刀尖路径是否齐全。招式表的 fps 才是实际帧率：player.gd 出招时把 `speed_scale` 设成 fps ÷ 动画在 tres 里的速度，所以 tres 里的数（例如 attack1/2/3 写的 40/44/40，实际播放是 36/40/42）只是被约掉的除数，改它不会改出招速度。不要动 tres 里这些数：`speed_scale` 是 float32，改了会让帧边界移动 1 个物理帧，判定时机跟着变。test_moveset 会让每个招式在两个视角、各个朝向下各起一次（有空中动画的再起一次空中），检查精灵的实际播放速度等于招式 fps。
 - `scripts/player/player_fx.gd`：特效层（尘土、火花、斩痕和冲击线、气流、蓄力光粒、刀光轨迹、残影），玩家的第一个子节点，画在人物身后，由玩家的物理帧驱动，装饰随机数和暴击判定分开。
 
-状态：`state` 是一个枚举 FREE / ATTACK / CHARGE / RECOVERY / HURT；`move_id`、`move` 是当前招式，`move_ticks` 是它走过的物理帧数。`is_attacking`、`is_charging`、`special_kind`、`combo_stage` 都是从 `state` 和 `move` 算出来的只读值。
+状态：`state` 是一个枚举 FREE / ATTACK / CHARGE / RECOVERY / HURT / DODGE；`move_id`、`move` 是当前招式，`move_ticks` 是它走过的物理帧数。`is_attacking`、`is_charging`、`special_kind`、`combo_stage` 都是从 `state` 和 `move` 算出来的只读值。
 
 按键意图：每次按键记成一条意图（`_intents`），时间按玩家自己的战斗时钟 `combat_time` 计，这个时钟只在玩家的物理帧里走，所以顿帧期间不走。左键（light）和右键（heavy）按下先记为"刚按下"，下一个物理帧按原规则转成"排队的下一段"（缓冲 0.22 秒，最长延到这一刀结束、上限 0.55 秒）、"收招后开新连段"，或者丢掉；按住不会自动连段。轻重两种排队的下一段只留一个，后按的算数。原三连仍在这一刀播完时接下一招，新招式到 `cancel` 帧就接。突刺键记 0.15 秒缓冲。顿帧期间转发进来的 S 只记意图，冻结结束后才下劈。`queued_attack`、`pending_new_attack`、`attack_buffer_left`、`_mouse_attack_pending` 是从意图表算出来的只读值。
 
@@ -64,16 +64,32 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 - 地面连段（侧视）：左键五连（原三连 + 四段刺 + 两段回旋），任一段后按右键出终结技：第 0/1 段后突进重劈（击退）、第 2 段后挑空斩、第 3 段后回旋重斩（三段判定，末段暴击）、第 4 段后裂地斩（小跳下劈，落地冲击波）；突进重劈后再按右键接挑空斩。俯视只有原三连，没有重击。
 - 跃步劈（侧视，10-16 用户定）：地面按住 W（上挑修饰键）再按右键。和 W+左键上挑对应：上挑是往上挑，跃步劈是向前跃起、落下时劈砍。前跃约 53 像素，最高约 16 像素，滞空约 0.45 秒。起跳时 air_attack2 举刀过顶，过顶点后同一套帧往下劈；落地用 dive_slash 第 14 帧，落地时沿地面放冲击波（左右各 24 像素）。劈砍和冲击波都是 2 倍伤害、10 帧重顿帧，并把目标挑起；劈砍已经打中的目标，冲击波不再打一次。落地时的冲击线、圆环和尘柱没打中也照样出。招式表新字段：`lands`（像下劈一样落地结束，但按正常重力下落）、`carry`（空中水平速度）、冲击波的 `again` / `ring`、`swing: none`。
 - 空中旋转斩（侧视）：空中按右键，或空中三连后再按左键：air_attack1 → air_attack2 → air_attack1 以 60 fps 连播，三段判定，每段重新给 0.25 秒滞空，一共约 0.6 秒，整圈刀光；中间两段用 2 帧的 `tick` 顿帧，末段必暴击、6 帧顿帧；结束后再滞空 0.3 秒，可以接 S 下劈。
-- 闪避派生（侧视）：轻击从判定帧起按突刺键会取消剩下的收招直接突刺（攻击前段按下的突刺会等到这一帧）；突刺中按键在突刺第 10 帧接出，突刺结束 0.25 秒（`DODGE_OFFSET_SECONDS`）内按键也算：左键是穿影斩（attack1 52 fps，判定长 8 像素，带残影），顶替被打断的连段的下一段，之后接着原连段走；右键是追影重斩（前冲 24 像素，算作突进重劈，可再接挑空斩）。玩家用 `_string_id` 记当前招式在连段图里算哪一招。按键槽 `heavy_mouse`（默认右键），旧存档读入时自动补上，和攻击键冲突就换一个鼠标键；改键界面里两个鼠标槽互抢按键时互换。
-- 地面：步行/跑步加减速、三连击（第三刀 30% 三倍暴击）、W+左键上挑、按一下突刺键（`dash_modifier`，默认 Shift）朝按住的方向或面向突刺 48 像素（攻击中按下有 `DASH_BUFFER_SECONDS` 0.15 秒缓冲）、下蹲。`dash_modifier` 这个 slot 名为兼容旧存档保留，现在是单按键；读档时它若和跑步键相同，`controls.gd` 只把它挪到空闲键。
-- 蓄力重斩：一段地面轻击结束时左键仍按着，就进入 `is_charging`：前 60%（`CHARGE_COIL_PORTION`）从 attack3 第 0 帧逐帧收到第 3 帧并后撤 `CHARGE_BACKSTEP` 3 像素，之后原地不动，蓄满后 sprite 左右 1 像素微颤；`charge_time` 到 `CHARGE_FULL_SECONDS` 发 `charge_ready`；松开时蓄满就以 `special_kind = "heavy_slash"` 从第 4 帧播 attack3（46 fps，第 4–9 帧前冲 `HEAVY_LUNGE` 32 像素并留 2 个残影，判定加长 10、加宽 8，固定暴击、不掷骰），否则取消。离地、`clear_input_buffer()` 都会取消蓄力。
+- 闪避派生（侧视）：轻击从判定帧起按突刺键会取消剩下的收招直接突刺（攻击前段按下的突刺会等到这一帧）；突刺中按键在突刺第 14 帧且连续位移完成后接出，突刺结束 0.25 秒（`DODGE_OFFSET_SECONDS`）内按键也算：左键是穿影斩（attack1 52 fps，判定长 8 像素，带残影），顶替被打断的连段的下一段，之后接着原连段走；右键是追影重斩（前冲 24 像素，算作突进重劈，可再接挑空斩）。玩家用 `_string_id` 记当前招式在连段图里算哪一招。按键槽 `heavy_mouse`（默认右键），旧存档读入时自动补上，和攻击键冲突就换一个鼠标键；改键界面里两个鼠标槽互抢按键时互换。
+- 地面：步行/跑步加减速、点按闪避、左右蹲行、三连击（第三刀 30% 三倍暴击）、W+左键上挑、按住修饰键（`dash_modifier`，默认 Shift）和左右方向后，新点击攻击键突刺 48 像素（攻击中按下有 `DASH_BUFFER_SECONDS` 0.15 秒缓冲）、下蹲。`dash_modifier` 这个 slot 名为兼容旧存档保留，现在是修饰键；v4 允许与跑步共享，并通过点按/长按/新点击手势区分。
+- 蓄力重斩：地面按下普通左键先进入无伤害蓄势；0.14秒内松开转换为轻击，继续按住直接蓄力，无需预先轻击；0.55秒蓄满，前60%后撤约3像素并收刀。侧视使用独立charged_draw左右各16帧，0–6帧蓄势，满蓄力停在6；松开从6开始、8–10判定，40fps配独立时长，释放后约0.05–0.083秒命中。固定暴击并叠加dmg_mult=2，共6倍伤害，不掷骰；侧视判定从56×28增至120×56、前方最远114像素（未计前冲），前冲参数36、击退20、收招0.22秒，保留10帧卡肉。黑红刀气0.14秒、普通非加法混合，按墙体射线缩短；逐目标射线继续阻止隔墙伤害。离地、受击、clear_input_buffer或未满松开都取消蓄力，未增加霸体和无敌。
 - 空中：二段跳、空中三连、S 下劈和落地冲击、空中突刺（结束接 `air_idle`，0.30 秒、6 像素/秒缓降）。
 - 刀尖命中区按 `assets/blade_paths.json` 逐帧取刀刃位置，和画面上的钢刃一致。
-- 顿帧档位（GameSession `STOPS`）：tick 2 帧（空中旋转斩中段）、light 4 帧、critical 6 帧、heavy 10 帧。
+- 顿帧档位（GameSession `STOPS`）：tick 2 帧（空中旋转斩中段）、light 2 帧、critical 6 帧、heavy 10帧、kill 10帧；同帧击杀只升级现有暂停，独立后续命中波次重新允许击杀反馈。普攻镜头回弹缩短为单次1像素偏移后归位，不往返摇晃，保持连段输入缓存和原有挥刀／收势时序。
 - 对外信号：`impact(档位, 方向)`（每段攻击第一次命中时发一次）、`move_started(招式)`、`attack_started`、`attack_hit`、`combo_changed`、`hit_resolved`、`critical_hit`、`normal_contact_stop`、`special_started`、`landing_impact`、`charge_started`、`charge_ready`、`charge_ended(released)`。外部输入走 `handle_input(event)`，回到待机用 `show_idle()`。对话框、密码门和改键菜单用 `freeze(owner)` / `unfreeze(owner)` 暂停玩家，按持有者计数，最后一个持有者释放时才恢复；改键菜单冻结时不清速度。
-- 命中特效分三档（轻、暴击、重斩）：沿挥刀方向的斩痕、放射冲击线、火花；顿帧会冻结在这一帧上。
+- 命中特效 v2：`impact_v2.gd` 是普通无光照混合的 ContactInk 层。宽幅弯月刀光主体0.045–0.09秒，白核只在接触点附近；肉身用暗红小滴、机械用暖金碎屑和深色润滑液，击杀追加断环。最多8个刀光、96颗飞溅，避免密集目标淹没画面。旧 `player_fx.legacy_impact` 和 `legacy_dash_hit_feedback.gd` 可独立调用。
+- 动作节奏：24个普通／空中三连动画按帧时长调整（0–5:1.14，6–9:0.85，10–12:1.05，13–15:0.95），不改原PNG或tres基础fps。`_attack_lunge_speed` 按各帧实际时长加权相位，普攻前冲8/8/10像素、刀光沿原刀尖轨迹扩大20%，蓄力重斩36像素。保留原足点、比例、碰撞与逐帧姿势。
+- 突刺反馈：`dash_stab.hit_feedback=true`、stop=tick。每次有效伤害生成新版ContactInk材质刀痕与飞溅；整招首次接触发2帧轻顿帧、1像素镜头和命中声，击杀升级为10帧并有专用音效，同一波不反复叠加。旧视觉仍可调用legacy_dash_hit_feedback.emit_visual，旧音频与四份完整旧源码继续保留。
 - 受击：敌人调用 `receive_attack(attack)`，返回 `AttackResult` HIT / EVADE / PERFECT，同时发 `attack_received(result, attack)`。突刺开始不早于敌人判定生效前 `PERFECT_LEAD_SECONDS` 0.2 秒（或在判定期间）算完美闪避；突刺中的无敌或人已不在攻击线上算 EVADE；否则 HIT：打断招式和蓄力，进入 HURT，0.25 秒内滑退约 20 像素，0.3 秒硬直、红闪，硬直中的按键等硬直结束再出。v1 不扣血。`hurtbox()` 是身体矩形。
 - 完美闪避反击：GameSession 收到 PERFECT 就进入慢动作（`start_slowmo`）：`world_time_scale` 0.25，持续 `SLOWMO_SECONDS` 1.2 秒实际时间，顿帧和改键菜单期间计时不走，`Engine.time_scale` 始终是 1；画面边缘泛青（单独一层 CanvasLayer，在顿帧快照层下面），主角 `invulnerable`。慢动作中按左键或右键是反击：瞬移到那台敌人的另一侧 18 像素（那边是墙就落在这一侧），面向它出 `counter_slash`（必暴击 3 倍、10 帧顿帧），反击命中时慢动作结束。玩家只认 `open_counter(敌人)` / `close_counter()`，不知道世界时钟。
+
+## Shift 手势与蹲行（2026-10-18）
+
+`scripts/player/shift_gesture.gd` 只记录一次修饰键手势，使用玩家的 combat_time：松开前短于 0.18 秒是闪避，保持超过阈值是奔跑。默认 run 与 dash_modifier 均为 Shift，v4 允许共享并迁移旧默认 Caps/Shift；自定义键仍由 controls.gd 提供。
+
+新左键按下时，侧视有修饰键和非零左右方向才记录突刺意图，并消耗本次点按；已经按住的鼠标不补造点击。完美闪避反击优先于突刺组合。菜单冻结与 clear_input_buffer 清理未完成手势，顿帧只冻结 combat_time 而不改变点按/长按类别。
+
+无伤害闪避使用独立 DODGE 状态，侧视 ROLL_SECONDS=0.30 秒、俯视 DODGE_SECONDS=0.22 秒内沿实际碰撞移动36像素，只暂时忽略敌人碰撞，保留墙和地板；不发送攻击开始或伤害信号。结束时恢复安全站姿或保持必要的蹲姿；保留原完美闪避与连段偏移接口。侧视使用 roll_left/right 的16帧翻滚，按已流逝时间取帧，地面沿用低碰撞体，空中保持原重力；原 dash_stab 使用连续48像素突刺及其独立空中动画。
+
+S+A/D 使用 crouch_walk_left/right，各 16 帧、14 fps，速度 20 像素/秒，碰撞盒 12×14；无方向时沿用原蹲姿，头顶受阻时不恢复 12×26 站姿。新32帧独立增加，原1024帧未改。原画、提示词和单一全局尺度导入记录在 art_metadata/crouch_walk_20261018，导入入口 tools/art/import_crouch_walk.py。
+
+连续突刺：`DASH_SECONDS=0.18`，从动画第6帧起，取 smoothstep 累计距离的相邻差分计算 velocity.x，只用正常 move_and_slide 移动；每个物理帧将本段起止点交给 `_apply_dash_hits`。hit_targets 跨整招去重、射线阻挡墙后目标；撞墙或累计时间达到时才置 dash_executed。第14帧派生还要求位移已完成，防止排队攻击截断最后一段。顿帧暂停物理与动画，所以没有补跳；S空中下劈等中断离开pierce招式后不再执行残留位移。空中QA使用已浮空的目标检查后续连段，并另测自由下落目标提前离开路径不会被打中。
+
+翻滚32帧来自内置image_gen，原画与提示词随工程保存。`tools/art/import_roll.py`按统一比例缩回原生像素、量化原18色、移除洋红导入标记并对齐足点，左向绕x=56镜像；不按各姿势高度分别缩放。素材校验入口 `tools/art_qa/validate_roll_art.py`。
 
 ## 敌人
 
@@ -117,7 +133,7 @@ NightStreetProto
 
 | 位置 | 内容 |
 |---|---|
-| `frames/<视角>_<方向>_<动作>/NN.png` | 64 个动作 × 16 帧。原 992 帧保持原字节，v14 新增 `air_dash_stab_*` 32 帧（112×96 画布，足点 56,84） |
+| `frames/<视角>_<方向>_<动作>/NN.png` | 68 个动作 × 16 帧。含历史64组、crouch_walk_left/right和roll_left/right，新增翻滚32帧（112×96画布，足点56,84）；本轮原1056帧保持原字节 |
 | `assets/side_view.tres`、`top_down.tres` | 把 frames 组装成 SpriteFrames |
 | `assets/home_601/layout.json` | 安全屋碰撞、可交互物、对话文本 |
 | `assets/home_601/home_601_furnished_native.png` | 当前安全屋底图；旧图 `home_601_native.png` 保留，场景和 PropEffects 统一读取 layout.background |
@@ -167,3 +183,53 @@ NightStreetProto
 - `main.tscn` 和 `home_601.tscn` 内容相同，只是节点名不同。
 - 门锁、物品、电源状态只在当前进程内有效，还没有存档系统。
 - `art_metadata/` 里的流水线脚本写死了原开发机路径。
+
+### 2026-10-18 右键重击与轻顿帧
+
+`rush_cleave` 改用专用 `heavy_cleave_left/right`，每侧16帧，112×96画布、足点56/84；以同一比例导入生成姿势，旧1088帧不改，现70动作/1120帧。32fps配独立帧时长：前8帧11.6单位约0.3625秒，8–10帧2.2单位约0.06875秒，11–15帧顺势收刀，整段约0.639秒。实际物理命中约0.383秒；挥刀声由 `swing_released` 在第7帧释放时发出，不在按键瞬间播放。
+
+收益：3倍伤害（原2倍），50×32的宽判定、reach24；前冲参数24像素（60Hz实际约20.7），击退14像素（原10），`stop=heavy` 保留10帧命中卡肉。风险：不增加霸体、无敌或闪避取消；朝向锁定，前摇可被实际敌人攻击打断，挥空仍走0.16秒恢复。第二次右键可在输入缓存内等待第13帧派生上挑，不能跳过蓄势和出刀。普攻改为2帧并保留1像素短回弹，暴击6帧、重击／击杀10帧。
+
+`tests/test_heavy_cleave.gd` 覆盖双向真实右键输入、前摇无伤害/无滑步、方向承诺、受击打断、单次3倍伤害、声音释放、10帧卡肉、挥空恢复与恢复期间输入缓存，以及完整原生帧。原画、提示词、独立刀尖轨迹与导入报告保存于 `art_metadata/heavy_cleave_20261018`；可运行 `tools/art/import_heavy_cleave.py` 重建。录制器 `record_heavy_cleave.gd` 仅在独立实例摆放受控目标，不改正式关卡。
+
+### 蓄力拔刀斩（2026-10-18）
+
+借鉴“不死斩”的蓄势反差与黑红斩痕，角色与武器沿用本工程形象，新增独立32帧而不改此前1120帧。招式表 `side_anim` 为侧视动画，`anim` 保留俯视兼容；俯视也使用增强伤害与108×56判定，仍使用原attack3帧。`_charge_animation/_charge_pose_limit` 将蓄势与释放的同一第6帧衔接，避免满蓄力释放时跳回旧攻击。
+
+`charged_draw.gd` 是独立普通混合特效层，首个实际判定帧且完成本帧物理移动后只释放一次，未命中也有刀气；墙体缩短视觉延伸，命中受击斩痕切为深红，飞溅/击杀仍按材质与击杀档位。上限2道刀气，无满屏闪白，不改变普攻2帧、右键重击3倍伤害及10帧卡肉。测试 `test_charged_draw.gd` 在60/144Hz覆盖双向、远近/高位多目标、各目标只伤一次、一次卡肉、墙体阻挡、提前松开/受击取消及全16姿势。
+
+生成原画、完整提示词、单一全局比例与刀尖注册记录在 `game/art_metadata/charged_draw_20261018/`，导入入口 `tools/art/import_charged_draw.py`。透明原画按连通人物提取，避免越过名义网格的刀尖被截断或混入相邻动作；保留原图。当前72动作/1152帧。
+
+### 直接蓄力与击飞（2026-10-18）
+
+`_primary_press` 保存按下的战斗时钟和连段来源。普通地面左键按下只记录蓄势；持续达到PRIMARY_TAP_SECONDS后物理帧进入CHARGE，短按松开转成带primary_tap的轻击意图，满蓄力松开出heavy_slash。短按不播放蓄力声音/特效，也不发生蓄力后撤；长按的声音/后撤在0.14秒确认后开始，蓄满时间仍从直接蓄势开始计0.55秒。未满长按松开取消。当前攻击期间的新短按保留连段，跨越收招的短按仍使用保存的连段来源；长按可以在原刀结束后蓄力，不补一刀。特殊组合键、空中、蹲姿和反击继续即时处理，顿帧只记录边沿，菜单/受击清理手势。
+
+`heavy_slash.launch=true, charged_launch=true`。玩家优先调用receive_charged_launch，且强上挑不再被普通knock_back覆盖垂直速度。侧视实体目标使用(±105,-300)速度并按真实重力/碰撞飞行，卡肉冻结后再续行。正式hover_target使用相同初速移动实际节点，身体、碰撞盒和damage_point同步；水平与竖直墙/地面射线限制位移，必要时回到原悬浮平面。起飞将敌人攻击置冷却并暂时停用AI，落地恢复此前的process_mode，避免强行启用本来禁用的AI。
+
+test_direct_charge在60/144Hz覆盖贴脸蓄力0预伤害、0轻击动作、一次6伤害、双向实体/正式无人机击飞与落地、卡肉冻结、同帧点击、轻连段、取消后无残留攻击。没有修改人物帧图、武器图或原有近战特效。
+
+### 蓄力追跃与突刺扫掠（2026-10-18）
+
+`_offer_jump_chase`只接纳受蓄力真实击飞且存活的目标，以WeakRef保留最近对象，资格随combat_time计0.50秒。`chase_jump`意图可在命中前或顿帧期间记录；物理恢复后才处理，菜单、受击、落地和闪避清理。`request_jump_chase`取消已命中的蓄力收招，设定弹道相遇初速度（-360至-225）、最多280水平速度和1400加速度；位置始终只经move_and_slide前进。0.60秒内缓和追近23像素间隔，反方向输入取消辅助；不会追踪尸体、释放对象或穿越障碍。
+
+起跳当帧延后攻击意图一帧，使后续选中空中动画。第一刀前保留上升速度，避免空中攻击刚启动就打断追跃；与选定目标第一次juggle接触后转为0.55秒、6px/s的共同浮空。正式hover_target持有_charged_air_hold_left，飞行期间与测试实体一样可续击，落地仍恢复原AI模式。空中突刺/下劈开始时先清理追跃，使用各自原有空战规则。
+
+`_apply_dash_hits`取整段前后刀刃矩形的凸包，前伸35、后伸4、高20原生像素，也覆盖每帧的纵向位移；查询容量随场景节点数，hit_targets跨招去重，世界层射线拦截墙后目标。30/60/120Hz和双向64目标实测只命中一次，48像素/0.18秒smoothstep位移不变。
+
+夜街layout.json目标位置可有可选第三数值max_hp，默认3；第一只配置9生命和金色装甲条，便于正式试玩追跃。生命显示最多三段，各代表max_hp/3，避免高生命目标的提示铺满画面。test_jump_chase（60/144Hz）和test_thrust_path纳入完整回归；实机录制器为record_jump_chase.gd。
+
+### 轻点分流与蓄力首段（2026-10-18）
+
+`_primary_press.at`先记录战斗时钟；0.14秒之前不改变状态、动画或移动，release直接转成带primary_tap的轻击意图。确认长按才调用_begin_charge(held_seconds)，通过_charge_started_at保留最初按下时刻，_update_charge读取战斗时钟差，因此满蓄力仍为0.55秒、顿帧不会偷跑。蓄势姿势从确认长按后0开始，到0.33秒完成6帧收刀，再保持至蓄满；声音、后撤与粒子均只在确认后开始。
+
+heavy_slash使用stage=1、as=attack1、cancel=12、followup_seconds=0.25，实际伤害、暴击、动画、特效和击飞仍来自自己的数据行。_string_id仅决定连段图与段数，后续左键attack2、右键rush_cleave；第12帧取消不早于8至10帧有效斩击。结束时保存_followup_from/_followup_until，允许在原收招及结束后0.25秒内续接同一连段，_start_move一次性消费资格；没有继续输入时保留原收招。清理输入、受击、闪避、新蓄力清除资格。
+
+request_jump_chase继承attack1身份，保留CHASE_ASSIST_SECONDS的首段衔接；起跳当帧延后处理，下一帧正确选择air_attack2，再接air_attack3。原先缓存在蓄力招式中的queued输入在追跃起跳时转为raw，防止丢失第一次空中续击。test_primary_charge_chain在60/144Hz覆盖短按逐物理帧、待机/走路/改键、完整计时、左右/俯视、轻重二三段、收招/宽限期、命中顿帧、伤害及资格清理；test_jump_chase同步验证段数连续。
+
+### 连贯衔接与轻击剩余蓄势修复（2026-10-18）
+
+上轮仅避免极短点击进入CHARGE，未解决0.14秒阈值过短和attack1自身约0.25秒的抬刀停留。PRIMARY_TAP_SECONDS改为0.24，CHARGE_COIL_PORTION改为0.82，使确认长按后至0.451秒完成收刀，0.55秒蓄满不变；六条地面attack1的前七帧时长改为[.45,.45,.55,.6,.6,.6,.7]单位，侧视第7帧实斩的理论前摇0.10972秒，俯视第6帧0.09028秒。没有删除必要转身／抬臂姿势或修改PNG。
+
+build_combat_links.py构建左右charge_link_light/heavy四条16帧动作，前两张直接引用charged_draw的11、12帧，再引用原attack2或heavy_cleave的连贯姿势及正确刀尖路径。轻准备0.0975秒，重准备0.1671875秒，首两张各至少一个60Hz显示周期。heavy_slash.cancel=11，_start_move在仍处于蓄力斩收势或其收招、侧视地面时选择move.charge_link，11/12帧从相同收势帧开始，稍晚收招从直立第2帧进入；move_id、段数、有效帧、伤害与音效释放接口不变。迟按至完全收招时和追跃空中时使用普通／空中动作，避免逆播低姿收刀。原来28+44动画改为28+48，共1216次帧引用，独立PNG仍1152张。
+
+test_smooth_charge_links在60/144Hz覆盖0.08/0.18/0.22秒点击、左右与俯视、真实前摇、过渡首帧与刀尖路径、足点、实际两次命中间隔和正确伤害、顿帧及迟按分流；record_smooth_combat用约0.18秒普通点击和左右键连段录制正式夜街动画。

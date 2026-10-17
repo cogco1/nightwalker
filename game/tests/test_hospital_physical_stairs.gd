@@ -46,7 +46,7 @@ func key(code: Key, pressed: bool) -> void:
 
 
 func release() -> void:
-	for code in [KEY_W, KEY_A, KEY_D, KEY_S, KEY_E, KEY_SPACE, KEY_CAPSLOCK]:
+	for code in [KEY_W, KEY_A, KEY_D, KEY_S, KEY_E, KEY_SPACE, KEY_SHIFT]:
 		key(code, false)
 
 
@@ -222,12 +222,13 @@ func run() -> void:
 	await fixture(Vector2(166, 286))
 	await enter(KEY_W)
 	var run_origin: Vector2 = environment.player.position
-	key(KEY_CAPSLOCK, true)
+	key(KEY_SHIFT, true)
+	await frames(12)
 	key(KEY_A, true)
 	await frames(28)
 	release()
 	var ran: float = run_origin.x - environment.player.position.x
-	check(ran > walked * 1.5 and environment.player.is_on_floor() and environment.player.position.y < 275.0, "CapsLock running remains faster and supported on the same stair surface")
+	check(ran > walked * 1.5 and environment.player.is_on_floor() and environment.player.position.y < 275.0, "Shift running remains faster and supported on the same stair surface")
 	observations["stair_walk_run_distance"] = [walked, ran]
 	check(greatest_drawn_foot_drop <= 1.0, "stair movement never pushes the sprite feet downward by the old six-pixel correction")
 	check(greatest_route_step < 6.0, "every walked route advances continuously without teleport-sized steps")

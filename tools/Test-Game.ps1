@@ -1,4 +1,4 @@
-﻿# Full regression: asset import, then every suite in game/tests. Logs: game/evidence/logs.
+# Full regression: asset import, then every suite in game/tests. Logs: game/evidence/logs.
 param([string]$GodotPath = '')
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'common.ps1')
@@ -30,6 +30,23 @@ $suites = @(
     @{ Name = 'enemy_attack';             Script = 'test_enemy_attack' },
     @{ Name = 'perfect_counter';          Script = 'test_perfect_counter' },
     @{ Name = 'night_street_proto';       Script = 'test_night_street_proto' },
+    @{ Name = 'combat_impact_v2';         Script = 'test_combat_impact_v2' },
+    @{ Name = 'combat_impact_v2_144';     Script = 'test_combat_impact_v2'; Fps = 144 },
+    @{ Name = 'thrust_path';              Script = 'test_thrust_path' },
+    @{ Name = 'jump_chase';               Script = 'test_jump_chase' },
+    @{ Name = 'jump_chase_144';           Script = 'test_jump_chase'; Fps = 144 },
+    @{ Name = 'smooth_charge_links';     Script = 'test_smooth_charge_links' },
+    @{ Name = 'smooth_charge_links_144'; Script = 'test_smooth_charge_links'; Fps = 144 },
+    @{ Name = 'primary_charge_chain';     Script = 'test_primary_charge_chain' },
+    @{ Name = 'primary_charge_chain_144'; Script = 'test_primary_charge_chain'; Fps = 144 },
+    @{ Name = 'direct_charge';             Script = 'test_direct_charge' },
+    @{ Name = 'direct_charge_144';         Script = 'test_direct_charge'; Fps = 144 },
+    @{ Name = 'charged_draw';              Script = 'test_charged_draw' },
+    @{ Name = 'charged_draw_144';          Script = 'test_charged_draw'; Fps = 144 },
+    @{ Name = 'heavy_cleave';             Script = 'test_heavy_cleave' },
+    @{ Name = 'roll_thrust_motion';       Script = 'test_roll_thrust_motion' },
+    @{ Name = 'shift_controls';            Script = 'test_shift_controls' },
+    @{ Name = 'locomotion_blade';          Script = 'test_locomotion_blade' },
     @{ Name = 'light_sense';              Script = 'test_light_sense' },
     @{ Name = 'chapter_flow';             Script = 'test_chapter_flow' }
 )
