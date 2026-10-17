@@ -11,6 +11,7 @@ const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
 const BEAM_DRONE = preload("res://scripts/levels/night_street/beam_drone.gd")
 const HOVER_TARGET = preload("res://scripts/levels/night_street/hover_target.gd")
 const RAIN = preload("res://scripts/levels/night_street/rain.gd")
+const EXPOSURE_HUD = preload("res://scripts/ui/exposure_hud.gd")
 const EMISSIVE = preload("res://shaders/emissive_add.gdshader")
 const WET = preload("res://shaders/wet_reflection.gdshader")
 const FOG = preload("res://shaders/low_fog.gdshader")
@@ -52,12 +53,11 @@ var _wet: ShaderMaterial
 var _fog: ShaderMaterial
 var _post: ShaderMaterial
 var _rain: Node2D
-var _hud: Node2D
+var _exposure_hud: Node
 var _status: Label
 var _hint: Label
 var _route_hint: Label
 var _implants: Node2D
-var _scan: Node2D
 var _scan_label: Label
 var _notice_left := 0.0
 var _clock := 0.0
@@ -280,19 +280,12 @@ func _create_ui() -> void:
 	refresh_hint()
 	_status = PIXEL_UI.label(canvas, Vector2(206, 16), Vector2(110, 16))
 	_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	var meter_label := PIXEL_UI.label(canvas, Vector2(236, 1), Vector2(310, 16), "暴露")
-	meter_label.modulate = Color("9ff6ff")
-	_hud = Node2D.new()
-	_hud.name = "ExposureMeter"
-	canvas.add_child(_hud)
-	_hud.draw.connect(_draw_meter)
-	# Scanner readout above the hero while the beam is on them: the scratched serial never resolves.
-	_scan = Node2D.new()
-	_scan.name = "ScanReadout"
-	canvas.add_child(_scan)
-	_scan.draw.connect(_draw_scan)
-	_scan_label = PIXEL_UI.label(canvas, Vector2.ZERO, Vector2(72, 16))
-	_scan_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	# Exposure meter and the scanner readout above the hero while the beam is on them (shared with stealth).
+	_exposure_hud = EXPOSURE_HUD.new()
+	_exposure_hud.name = "ExposureHud"
+	add_child(_exposure_hud)
+	_exposure_hud.build(canvas)
+	_scan_label = _exposure_hud.scan_label
 
 
 ## Control hint from the current bindings; the defaults read "AD走 左键斩 右键重击 W+右键跃劈 Shift闪避 R重置"
@@ -342,13 +335,7 @@ func _process(delta: float) -> void:
 			_status.modulate = Color("9ff6ff")
 		else:
 			_status.text = ""
-	_hud.queue_redraw()
-	_scan.queue_redraw()
-	_scan_label.visible = in_beam
-	if in_beam:
-		_scan_label.position = _scan_panel(left).position + Vector2(0, 9)
-		_scan_label.text = "已标记" if marked else ("ID 无法识别" if fmod(_clock, 0.6) < 0.45 else "ID ？？？？")
-		_scan_label.modulate = Color("ff4f7e") if marked else Color("9ff6ff")
+	_exposure_hud.update(delta, exposure, marked, in_beam, player.global_position - Vector2(left, 0))
 
 
 func _follow_player() -> void:
@@ -381,53 +368,6 @@ func _update_hero_light() -> void:
 	_hero_material.set_shader_parameter("reflect_strength", clampf(0.12 + float(strongest[0]) * 0.7, 0.12, 1.0))
 	_hero_material.set_shader_parameter("reflect_color", Color(strongest[2]).lightened(0.35))
 	_implants.scanned = 1.0 if in_beam else 0.0
-
-
-func _draw_meter() -> void:
-	var origin := Vector2(262, 6)
-	var colour := Color("ff4f7e") if marked else Color("ff3d9a") if exposure >= 0.7 else Color("4ff0ff")
-	_hud.draw_rect(Rect2(origin + Vector2(-4, 0), Vector2(2, 5)), colour)
-	var lit := int(ceilf(exposure * 10.0 - 0.001))
-	for index in range(10):
-		var on := index < lit and not (marked and fmod(_clock, 0.5) > 0.3)
-		_hud.draw_rect(Rect2(origin + Vector2(index * 5, 1), Vector2(4, 3)), colour if on else Color("2a2a4a"))
-
-
-const SCAN_BARS := [2, 1, 1, 3, 1, 2, 1, 1, 2, 3, 1, 1, 2, 1]
-
-
-# Panel above the hero's head, kept on screen: magnified serial on top, verdict underneath.
-func _scan_panel(left: float) -> Rect2:
-	var head := (player.global_position - Vector2(left, 0)).round() + Vector2(0, -34)
-	var origin := Vector2(clampf(head.x - 36.0, 2.0, VIEWPORT_SIZE.x - 74.0), maxf(head.y - 26.0, 22.0))
-	return Rect2(origin, Vector2(72, 24))
-
-
-func _draw_scan() -> void:
-	if not in_beam:
-		return
-	var left := camera.get_screen_center_position().x - VIEWPORT_SIZE.x * 0.5
-	var panel := _scan_panel(left)
-	var colour := Color("ff4f7e") if marked else Color("4ff0ff")
-	_scan.draw_rect(panel, Color(0.02, 0.02, 0.06, 0.82))
-	_scan.draw_rect(panel, Color(colour, 0.9), false)
-	# magnified serial: a scratched-out band shifts every tick, so it never reads
-	var bars_width := 0
-	for width in SCAN_BARS:
-		bars_width += width
-	var x := panel.position.x + floorf((panel.size.x - bars_width) * 0.5)
-	var top := panel.position.y + 2.0
-	var glitch := int(_clock * 9.0)
-	var bar_index := 0
-	for width in SCAN_BARS:
-		var scratched := (bar_index + glitch) % 5 < 2
-		if bar_index % 2 == 0:
-			_scan.draw_rect(Rect2(Vector2(x, top), Vector2(width, 6)), Color("6a2032") if scratched else Color(colour, 0.95))
-		x += width
-		bar_index += 1
-	for scratch in range(2):
-		var sx := panel.position.x + 24.0 + scratch * 9.0 + float(glitch % 3)
-		_scan.draw_line(Vector2(sx, top), Vector2(sx + 4.0, top + 6.0), Color("ff3d6e"), 1.0)
 
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -279,7 +279,8 @@
                 36,
                 22,
                 3
-              ]
+              ],
+              "zone": "corridor"
             },
             {
               "id": "lower_lamp_1",
@@ -288,7 +289,8 @@
                 36,
                 19,
                 3
-              ]
+              ],
+              "zone": "corridor"
             },
             {
               "id": "lower_lamp_2",
@@ -297,7 +299,8 @@
                 36,
                 21,
                 3
-              ]
+              ],
+              "zone": "corridor"
             },
             {
               "id": "lower_lamp_3",
@@ -306,6 +309,45 @@
                 36,
                 20,
                 3
+              ],
+              "zone": "corridor"
+            }
+          ],
+          "light_zones": [
+            {
+              "id": "corridor",
+              "rect": [
+                20,
+                44,
+                600,
+                38
+              ]
+            },
+            {
+              "id": "entry",
+              "rect": [
+                20,
+                92,
+                110,
+                98
+              ]
+            },
+            {
+              "id": "ward",
+              "rect": [
+                140,
+                92,
+                252,
+                98
+              ]
+            },
+            {
+              "id": "storage",
+              "rect": [
+                404,
+                92,
+                216,
+                98
               ]
             }
           ]
@@ -557,7 +599,15 @@
                 144,
                 20,
                 3
-              ]
+              ],
+              "zone": "corridor",
+              "off_cover": {
+                "texture": "res://assets/underground_hospital/lamp_off/upper_lamp_0.png",
+                "position": [
+                  79,
+                  147
+                ]
+              }
             },
             {
               "id": "upper_lamp_1",
@@ -566,7 +616,15 @@
                 144,
                 22,
                 3
-              ]
+              ],
+              "zone": "corridor",
+              "off_cover": {
+                "texture": "res://assets/underground_hospital/lamp_off/upper_lamp_1.png",
+                "position": [
+                  213,
+                  147
+                ]
+              }
             },
             {
               "id": "upper_lamp_2",
@@ -575,7 +633,15 @@
                 144,
                 20,
                 3
-              ]
+              ],
+              "zone": "corridor",
+              "off_cover": {
+                "texture": "res://assets/underground_hospital/lamp_off/upper_lamp_2.png",
+                "position": [
+                  340,
+                  147
+                ]
+              }
             },
             {
               "id": "upper_lamp_3",
@@ -584,6 +650,52 @@
                 144,
                 22,
                 3
+              ],
+              "zone": "corridor",
+              "off_cover": {
+                "texture": "res://assets/underground_hospital/lamp_off/upper_lamp_3.png",
+                "position": [
+                  475,
+                  147
+                ]
+              }
+            }
+          ],
+          "light_zones": [
+            {
+              "id": "reception",
+              "rect": [
+                20,
+                43,
+                171,
+                92
+              ]
+            },
+            {
+              "id": "treatment",
+              "rect": [
+                203,
+                43,
+                207,
+                92
+              ]
+            },
+            {
+              "id": "office",
+              "rect": [
+                422,
+                43,
+                198,
+                92
+              ]
+            },
+            {
+              "id": "corridor",
+              "rect": [
+                20,
+                145,
+                600,
+                47
               ]
             }
           ]

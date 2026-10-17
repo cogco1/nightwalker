@@ -8,6 +8,8 @@ const GAME_SESSION = preload("res://scripts/core/game_session.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
 const INTERIOR_LIGHTING = preload("res://scripts/levels/interior_lighting.gd")
+const STORY_STATE = preload("res://scripts/core/story_state.gd")
+const HOSPITAL_CHAPTER = preload("res://scripts/levels/hospital/hospital_chapter.gd")
 const LAYOUT_PATH := "res://assets/underground_hospital/layout.json"
 const DEFAULT_BACKGROUND := "res://assets/underground_hospital/hospital_native.png"
 const VIEWPORT_SIZE := Vector2i(320, 180)
@@ -30,6 +32,8 @@ var camera: Camera2D
 var interactions: Node2D
 var security: Node2D
 var lighting: Node2D
+## Chapter mode (scripts/levels/hospital/hospital_chapter.gd) when the story runs; null in the sandbox.
+var chapter: Node
 var world_size := DEFAULT_WORLD_SIZE
 var view_mode := 0
 var floor_id := 1
@@ -73,7 +77,12 @@ func _ready() -> void:
 	lighting = INTERIOR_LIGHTING.new()
 	lighting.name = "InteriorLighting"
 	add_child(lighting)
-	activate_view(0)
+	var start := {"view": 0, "room": ""}
+	if STORY_STATE.ensure(get_tree()).chapter_active:
+		chapter = HOSPITAL_CHAPTER.new(self)
+		start = chapter.start_context()
+		floor_id = int(start.get("floor", floor_id))
+	activate_view(int(start["view"]), String(start["room"]))
 	interactions = INTERACTIONS.new()
 	interactions.name = "HospitalInteractions"
 	interactions.call("configure", self, base_layout)
@@ -89,6 +98,8 @@ func _ready() -> void:
 	session.name = "GameSession"
 	add_child(session)
 	session.keybindings_closed.connect(func(_saved: bool) -> void: refresh_ui())
+	if chapter != null:
+		add_child(chapter)
 	queue_redraw()
 
 
@@ -125,7 +136,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.is_action_pressed("switch_view"):
-			switch_view()
+			# Inside the chapter the step fixes the projection; Tab is a developer key (-- --nw-debug).
+			if STORY_STATE.ensure(get_tree()).allows_debug_routes():
+				switch_view()
 			get_viewport().set_input_as_handled()
 		elif event.is_action_pressed("reset_arena"):
 			reset_view()
@@ -213,6 +226,8 @@ func activate_view(mode: int, room_id := "", forced_position: Variant = null) ->
 	if is_instance_valid(interactions):
 		lighting.call("set_power_states", interactions.power_states)
 	follow_player()
+	if chapter != null:
+		chapter.on_view_activated()
 	refresh_ui()
 	queue_redraw()
 
@@ -233,7 +248,8 @@ func reset_view() -> void:
 		return
 	if is_instance_valid(interactions):
 		interactions.call("close_dialogue")
-	player.position = start_position()
+	# Inside the chapter R goes back to where this floor was entered (the start point may be in the light).
+	player.position = chapter.checkpoint if chapter != null else start_position()
 	player.velocity = Vector2.ZERO
 	_finish_stairs()
 	shared_room_id = room_for_position(player.global_position, view_mode)
@@ -427,6 +443,13 @@ func _create_ui() -> void:
 ## Floor / view title and the control hint, written from the current key bindings.
 func refresh_ui() -> void:
 	if _title == null:
+		return
+	if chapter != null:
+		# The chapter HUD replaces the sandbox title and control line (hospital_chapter.gd).
+		for item: Label in [_title, _route_hint, _hint]:
+			item.hide()
+		if chapter.is_inside_tree():
+			chapter.refresh()
 		return
 	_route_hint.text = "" if CONTROLS.current.values().has(KEY_F8) else "F8夜街"
 	_hint.visible = not ((is_instance_valid(interactions) and interactions.dialogue_active)

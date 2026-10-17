@@ -2,25 +2,41 @@ extends RefCounted
 ## Shared native 12px text and 48x64 portrait for the 320x180 dialogue canvas.
 
 const PIXEL_FONT = preload("res://assets/fonts/fusion-pixel-12px-proportional-zh_hans.otf")
+const SMALL_PIXEL_FONT = preload("res://assets/fonts/fusion-pixel-10px-proportional-zh_hans.otf")
 const HERO_PORTRAIT = preload("res://assets/ui/hero_portrait.png")
 const FONT_SIZE := 12
+## HUD text (status, objective, prompts, hints) in the chapter UI.
+const SMALL_FONT_SIZE := 10
 const DIALOGUE_SCALE := 0.8
 static var _font: FontFile
+static var _small_font: FontFile
 
 
 static func font() -> FontFile:
 	if _font == null:
-		_font = PIXEL_FONT.duplicate() as FontFile
-		_font.antialiasing = TextServer.FONT_ANTIALIASING_NONE
-		_font.generate_mipmaps = false
-		_font.multichannel_signed_distance_field = false
-		_font.allow_system_fallback = false
-		_font.force_autohinter = false
-		_font.hinting = TextServer.HINTING_NONE
-		_font.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED
-		_font.oversampling = 0.0
-		_font.fixed_size = FONT_SIZE
+		_font = _pixel_copy(PIXEL_FONT, FONT_SIZE)
 	return _font
+
+
+## The 10px face of the same pixel family, for the HUD.
+static func small_font() -> FontFile:
+	if _small_font == null:
+		_small_font = _pixel_copy(SMALL_PIXEL_FONT, SMALL_FONT_SIZE)
+	return _small_font
+
+
+static func _pixel_copy(source: FontFile, size: int) -> FontFile:
+	var copy := source.duplicate() as FontFile
+	copy.antialiasing = TextServer.FONT_ANTIALIASING_NONE
+	copy.generate_mipmaps = false
+	copy.multichannel_signed_distance_field = false
+	copy.allow_system_fallback = false
+	copy.force_autohinter = false
+	copy.hinting = TextServer.HINTING_NONE
+	copy.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED
+	copy.oversampling = 0.0
+	copy.fixed_size = size
+	return copy
 
 
 ## Label on the native grid with the 12px pixel font (or custom_font) that ignores the mouse. dimensions ZERO
@@ -79,4 +95,6 @@ static func set_speaker(portrait: TextureRect, title: Label, body: Label, footer
 		"television": speaker_name = "电视播报"
 		"qiaolun": speaker_name = "乔伦 · 留言"
 		"terminal": speaker_name = "终端"
+		"sk_reply": speaker_name = "我 · 回复"
+		"sound": speaker_name = "声音"
 	title.text = speaker_name + " · " + context
