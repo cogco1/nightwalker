@@ -2,12 +2,12 @@
 
 当前进度、待完成事项与最近验证见 [PROJECT_STATUS.md](PROJECT_STATUS.md)。
 
-Godot 4.7.2 像素动作游戏（SK 项目）。设定在 2040 年的佩特拉新城：白天俯视潜行，夜晚侧视长刀战斗。在 **v14** 人物与场景基线上继续开发：601 安全屋、地下医院（俯视/侧视双视角）、C 区夜街，以及 64 个动作、1024 帧人物动画（含左右空中突刺）。
+Godot 4.7.2 像素动作游戏（SK 项目）。设定在 2040 年的佩特拉新城：白天俯视潜行，夜晚侧视长刀战斗。在 **v14** 人物与场景基线上继续开发：601 安全屋、地下医院（俯视/侧视双视角）、C 区夜街，以及 64 个动作、1024 帧人物动画（含左右空中突刺）。第一章正在按里程碑制作，M1（昼夜、家枢纽、俯视暗处潜行的最小闭环）见下文“第一章”。
 
 ## 快速开始
 
 1. 把 `godot-path.example.txt` 复制成 `godot-path.txt`，写入本机 Godot 4.7.2 的路径（这个文件不入库）。也可以设环境变量 `NIGHTWALKER_GODOT`。
-2. 双击 `Run-Demo.cmd` 从安全屋开始；F7 往返安全屋与医院，F8 进入夜街、再按返回来源室内。`Open-Editor.cmd` 打开编辑器，`Test-Game.cmd` 跑完整回归；`Run-NightStreet.cmd` 仍可直接进夜街。
+2. 双击 `Run-Demo.cmd` 从第一章开始（601，7 月 27 日 12:00）；章节里 F7、F8、Tab 是调试键，要用就运行 `powershell -File tools\Run-Game.ps1 -DebugKeys`。双击 `Run-Sandbox.cmd` 进原来的自由模式：从安全屋开始，F7 往返安全屋与医院，F8 进入夜街、再按返回来源室内。`Open-Editor.cmd` 打开编辑器，`Test-Game.cmd` 跑完整回归；`Run-NightStreet.cmd` 仍可直接进夜街。
 3. 操作见 [docs/操作说明.txt](docs/操作说明.txt) 和 [docs/游戏内改键说明.txt](docs/游戏内改键说明.txt)。
 
 已验证引擎版本：`4.7.2.stable.official.ed1daf0bf`，GL Compatibility 渲染器。
@@ -18,15 +18,18 @@ Godot 4.7.2 像素动作游戏（SK 项目）。设定在 2040 年的佩特拉�
 Nightwalker/
 ├─ Run-Demo.cmd / Open-Editor.cmd / Test-Game.cmd   双击入口，都调用 tools/ 里的脚本
 ├─ Run-NightStreet.cmd                              直接启动夜街原型场景
+├─ Run-Sandbox.cmd                                  自由模式（不开第一章，F7 / F8 / Tab 照旧）
 ├─ godot-path.example.txt                           本机 Godot 路径模板
 ├─ game/                                            Godot 工程（res:// 根目录）
 │  ├─ project.godot                                 320×180 原生分辨率，整数缩放；autoload：SceneRoutes
-│  ├─ scenes/                                       main / home_601 / underground_hospital / player / night_street_proto
+│  ├─ scenes/                                       boot（正式入口，开第一章）/ main / home_601 / underground_hospital /
+│  │                                                breath_interlude（屏息）/ player / night_street_proto
 │  ├─ shaders/                                      人物赛博配色、发光层、湿地反光、低雾、暴露度色差
 │  ├─ scripts/
-│  │  ├─ core/        controls · game_session · scene_routes · story_state
+│  │  ├─ core/        boot · controls · game_session · scene_routes · story_state（物品、标记、章节进度）
 │  │  ├─ player/      player.gd（移动、轻击连招、蓄力重斩、突刺、空战、顿帧信号）
-│  │  ├─ ui/          pixel_ui · keybindings_menu
+│  │  ├─ ui/          pixel_ui · keybindings_menu · dialogue_box · hud_style · chapter_hud · exposure_hud ·
+│  │  │               terminal_menu · story_overlay（第一章的“冷光终端”UI）
 │  │  └─ levels/
 │  │     ├─ level_kit.gd 关卡共用：碰撞体、镜头跟随
 │  │     ├─ interior_lighting.gd 安全屋与医院共用的像素灯光、辉光、薄雾与人物轮廓光
@@ -57,7 +60,7 @@ Nightwalker/
 
 ## 测试
 
-`Test-Game.cmd` 先做一次素材导入，再依次跑 23 组套件，日志写到 `game/evidence/logs/`，最后打印每组检查数和总数，有失败时返回非零退出码。套件清单以 `tools/Test-Game.ps1` 为准，最近实际执行结果见 [项目进度](PROJECT_STATUS.md#最近验证)。
+`Test-Game.cmd` 先做一次素材导入，再依次跑 25 组套件，日志写到 `game/evidence/logs/`，最后打印每组检查数和总数，有失败时返回非零退出码。套件清单以 `tools/Test-Game.ps1` 为准，最近实际执行结果见 [项目进度](PROJECT_STATUS.md#最近验证)。
 
 | 套件 | 内容 |
 |---|---|
@@ -78,6 +81,16 @@ Nightwalker/
 | enemy_attack | 敌人预警与攻击、玩家受击、闪避和完美闪避判定 |
 | perfect_counter | 完美闪避慢动作、反击落点与伤害、顿帧和时钟恢复 |
 | night_street_proto | 人物材质覆盖所有场景、光束暴露与标记、无人机连击和顿帧、原型专用按键、F8 场景入口 |
+| light_sense | 第一章俯视潜行：每盏灯只照自己的房间或走廊、贴图和判定亮度一致、断电变暗（含底图光斑遮罩）、暴露条涨落、锁定和 R 回本层入口、自由模式不受影响 |
+| chapter_flow | 从正式入口用真实按键走完第一章 M1：开场、接单、医院锁定、拉闸、密码、背后暗杀、回家购物、睡觉暴走、侧视夜晚、屏息、第 2 天；章节 HUD 和调试键 |
+
+## 第一章
+
+策划原文、拍板记录、里程碑和 M1 实现情况见 [docs/design/第一章_实现计划.md](docs/design/第一章_实现计划.md)，台词和流程数据在 `game/assets/story/chapter1.json`。
+
+- 流程：601 12:00 开场（“第一章”标题卡、电视新闻、敲门声）→ 电脑接乔伦的单 → 地下医院（俯视）暗杀科伯恩 → 14:50 回家暗网购物 → 睡觉，22:00 暴走 → 地下医院（侧视）第一夜 → 屏息 → 7 月 28 日 11:00 醒来，接莫温的单。第一夜的战斗是 M2，金域大厦是 M4/M5。
+- 潜行：灯下会暴露。站在光里右上角暴露条上涨（约 1.25 秒满），满了“微光粒子监控已锁定”，回到本层入口；一楼入口的配电箱可以切断二楼走廊和诊疗区的电。只有在暗处、从科伯恩背后才能按 E 暗杀。
+- 界面：“冷光终端”方案（左上状态牌、底部交互键帽、右上暴露条、洋红的暗网终端），对比图见 [docs/design/第一章_UI冷光终端_对比.png](docs/design/第一章_UI冷光终端_对比.png)。
 
 ## 赛博朋克视觉原型（夜街）
 
@@ -100,7 +113,7 @@ Nightwalker/
 - `project.godot` 里的项目名仍带 v07：`user://` 改键配置目录跟着项目名走，改名会丢掉玩家已有的改键。
 - 输入动作 `reset_arena` 现在的意思是“重置位置”，为了兼容已有改键配置保留原名。
 - 原画、提示词和校验记录在 `art_metadata/`，不要只留导出帧。
-- 安全屋和医院不放 NPC 和训练木桩；夜街保留已有悬浮无人机。`tests/fixtures` 只供回归。
+- 安全屋和医院不放训练木桩；剧情 NPC 按第一章原文放（2026-10-17 用户定，目前只有占位的科伯恩）。夜街保留已有悬浮无人机。`tests/fixtures` 只供回归。
 
 ## 和 v14 交接包的对应关系
 
