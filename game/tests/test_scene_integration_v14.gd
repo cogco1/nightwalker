@@ -363,7 +363,10 @@ func run() -> void:
 	root.add_child(home)
 	current_scene = home
 	await frames(8)
-	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/main.tscn" and is_home(), "The public game entry now opens the safehouse instead of the training arena")
+	# Since chapter 1 the entry is boot.tscn, which starts the story and opens this same safehouse scene.
+	var entry := String(ProjectSettings.get_setting("application/run/main_scene"))
+	check(entry == "res://scenes/boot.tscn" and load("res://scripts/core/boot.gd").MAIN_PATH == "res://scenes/main.tscn" and is_home(),
+		"The public game entry now opens the safehouse instead of the training arena")
 	if not is_home():
 		finish()
 		return

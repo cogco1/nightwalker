@@ -8,6 +8,8 @@ const GAME_SESSION = preload("res://scripts/core/game_session.gd")
 const DIALOGUE_BOX = preload("res://scripts/ui/dialogue_box.gd")
 const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
 const INTERIOR_LIGHTING = preload("res://scripts/levels/interior_lighting.gd")
+const STORY_STATE = preload("res://scripts/core/story_state.gd")
+const HOME_CHAPTER = preload("res://scripts/levels/home_601/home_chapter.gd")
 # Safehouse reading pace; the hospital keeps its own 32 / 36.
 const PAGE_CHARACTERS := 24
 const TYPE_SPEED := 28.0
@@ -21,6 +23,9 @@ var dialogue: Panel
 var dialogue_active: bool:
 	get: return dialogue != null and dialogue.active
 var current_interaction := ""
+## Chapter mode (scripts/levels/home_601/home_chapter.gd) when the story runs; null in the sandbox.
+var chapter: Node
+var title_label: Label
 var nearest_interaction := ""
 var _hint: Label
 var _route_hint: Label
@@ -75,10 +80,17 @@ func _ready() -> void:
 	session.name = "GameSession"
 	add_child(session)
 	session.keybindings_closed.connect(func(_saved: bool) -> void: _refresh_nearest())
+	if STORY_STATE.ensure(get_tree()).chapter_active:
+		chapter = HOME_CHAPTER.new()
+		chapter.name = "HomeChapter"
+		add_child(chapter)
 	_refresh_nearest()
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if chapter != null and chapter.handle_input(event):
+		get_viewport().set_input_as_handled()
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.physical_keycode == KEY_ESCAPE or event.keycode == KEY_ESCAPE:
 			if dialogue_active:
@@ -107,7 +119,8 @@ func _process(_delta: float) -> void:
 
 func _refresh_nearest() -> void:
 	if _route_hint != null:
-		_route_hint.text = "" if CONTROLS.current.values().has(KEY_F8) else "F8夜街"
+		var free_routes: bool = STORY_STATE.ensure(get_tree()).allows_debug_routes()
+		_route_hint.text = "" if CONTROLS.current.values().has(KEY_F8) or not free_routes else "F8夜街"
 	nearest_interaction = ""
 	var best := INF
 	for item in layout.get("interactions", []):
@@ -147,22 +160,35 @@ func _open_interaction(id: String) -> void:
 	var item := _find_item(id)
 	if item.is_empty():
 		return
+	if chapter != null and chapter.open_interaction(id):
+		current_interaction = id
+		return
 	if id == "door":
 		get_tree().root.get_node("SceneRoutes").call("switch_to", "res://scenes/underground_hospital.tscn")
 		return
 	current_interaction = id
 	prop_effects.call("play_interaction", id)
-	# Props low in the room read at the top so the box never covers them.
-	dialogue.position.y = 16 if id in ["fridge", "bed", "dumbbells", "storage_box"] else 116
+	dialogue.position.y = dialogue_top(id)
 	dialogue.open(item.get("lines", []), String(item["name"]), player, item.get("speakers", []))
-	_hint.hide()
+	set_hint_visible(false)
+
+
+## Props low in the room read at the top so the box never covers them.
+func dialogue_top(id: String) -> float:
+	return 16.0 if id in ["fridge", "bed", "dumbbells", "storage_box"] else 116.0
 
 
 func close_dialogue() -> void:
 	dialogue.close()
 	current_interaction = ""
-	_hint.show()
+	set_hint_visible(true)
 	_refresh_nearest()
+
+
+## The sandbox's bottom hint line; the chapter shows its own HUD instead.
+func set_hint_visible(shown: bool) -> void:
+	if _hint != null:
+		_hint.visible = shown and chapter == null
 
 
 func reset_home() -> void:
@@ -189,8 +215,8 @@ func _create_ui() -> void:
 	canvas.name = "HomeUI"
 	canvas.layer = 20
 	add_child(canvas)
-	var title := PIXEL_UI.label(canvas, Vector2(6, 3), Vector2(308, 16), "C区 · 601  12:00", PIXEL_UI.FONT_SIZE, true)
-	title.modulate = Color("98adb9")
+	title_label = PIXEL_UI.label(canvas, Vector2(6, 3), Vector2(308, 16), "C区 · 601  12:00", PIXEL_UI.FONT_SIZE, true)
+	title_label.modulate = Color("98adb9")
 	_route_hint = PIXEL_UI.label(canvas, Vector2(252, 3), Vector2(62, 16), "F8夜街", PIXEL_UI.FONT_SIZE, true)
 	_route_hint.modulate = Color("98adb9")
 	_hint = PIXEL_UI.label(canvas, Vector2(6, 162), Vector2(308, 16), "", PIXEL_UI.FONT_SIZE, true)

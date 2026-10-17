@@ -295,9 +295,11 @@ func try_unlock_breaker() -> bool:
 	if is_breaker_unlocked():
 		return true
 	var breaker: Dictionary = _settings.get("breaker", {})
-	if not has_item(String(breaker.get("required_item", "breaker_key"))):
-		return false
 	var state := _ensure_story_state()
+	# Chapter 1 cuts the lights with this breaker, so the story opens the cabinet without the key.
+	var chapter := state != null and bool(state.get("chapter_active"))
+	if not chapter and not has_item(String(breaker.get("required_item", "breaker_key"))):
+		return false
 	if state == null:
 		return false
 	state.call("set_flag", "breaker_unlocked", true)
@@ -416,9 +418,16 @@ func _refresh_hint() -> void:
 	if _hint == null:
 		return
 	var id := _nearest_locked_door()
-	_hint.visible = not id.is_empty() and not keypad_active
+	# Inside the chapter the HUD key cap names the door (hospital_chapter.gd reads nearest_door_title()).
+	_hint.visible = not id.is_empty() and not keypad_active and _host.get("chapter") == null
 	if _hint.visible:
 		_hint.text = CONTROLS.interact_text() + " · " + String(_door(id).get("title", "密码门"))
+
+
+## The locked door E would open a keypad for, or "".
+func nearest_door_title() -> String:
+	var id := _nearest_locked_door()
+	return "" if id.is_empty() else String(_door(id).get("title", "密码门"))
 
 
 func _draw() -> void:

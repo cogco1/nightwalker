@@ -142,10 +142,14 @@ func _add_source(item: Dictionary, kind: String, holder: Node2D, fixture_holder:
 	light.position = at
 	var source_floor := int(context.get("floor_id", 1))
 	var vertical_span := Vector2(-10000, 10000)
+	var reach := Rect2(-10000, -10000, 20000, 20000)
 	if side:
 		source_floor = 2 if at.y < 170.0 else 1
 		vertical_span = Vector2(64, 164) if source_floor == 2 else Vector2(176, 287)
-	light.texture = _banded_texture(roundi(radius), vertical_span - Vector2.ONE * at.y)
+		reach = Rect2(-10000, vertical_span.x, 20000, vertical_span.y - vertical_span.x)
+	else:
+		reach = _zone_rect(item, at, reach)
+	light.texture = _banded_texture(roundi(radius), Rect2(reach.position - at, reach.size))
 	light.texture_scale = 1.0
 	light.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	light.color = colour
@@ -157,6 +161,7 @@ func _add_source(item: Dictionary, kind: String, holder: Node2D, fixture_holder:
 	light.set_meta("radius", radius)
 	light.set_meta("floor_id", source_floor)
 	light.set_meta("vertical_span", vertical_span)
+	light.set_meta("reach", reach)
 	var section := "" if kind == "emergency" else _power_section(rectangle, at)
 	light.set_meta("power_section", section)
 	holder.add_child(light)
@@ -186,6 +191,23 @@ func _add_source(item: Dictionary, kind: String, holder: Node2D, fixture_holder:
 		cover.color = Color(0.025, 0.045, 0.065, 0.94)
 		cover.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		fixture_holder.add_child(cover)
+	# The floor-2 corridor paints each lamp's pool into the floor art; off, a generated cover takes it away
+	# (tools/art/gen_lamp_off_covers.py) so the picture agrees with the stealth light test.
+	var pool: Sprite2D
+	var off_cover: Dictionary = item.get("off_cover", {})
+	if not off_cover.is_empty() and ResourceLoader.exists(String(off_cover["texture"])):
+		var covers := rig.get_node_or_null("LampOffCovers") as Node2D
+		if covers == null:
+			covers = Node2D.new()
+			covers.name = "LampOffCovers"
+			covers.z_index = -9
+			rig.add_child(covers)
+		pool = Sprite2D.new()
+		pool.name = "PoolOff_" + id
+		pool.centered = false
+		pool.texture = load(String(off_cover["texture"]))
+		pool.position = Vector2(off_cover["position"][0], off_cover["position"][1])
+		covers.add_child(pool)
 	if emission != null:
 		emission.name = "Emission_" + id
 		var material := ShaderMaterial.new()
@@ -195,7 +217,37 @@ func _add_source(item: Dictionary, kind: String, holder: Node2D, fixture_holder:
 		emission.material = material
 		fixture_holder.add_child(emission)
 	_sources.append({"id": id, "kind": kind, "light": light, "emission": emission, "cover": cover,
-		"section": section, "energy": energy})
+		"section": section, "energy": energy, "radius": radius, "reach": reach, "pool": pool})
+
+
+## Top-down walls stop light: a source lights only its room or corridor (layout light_zones). A lamp on a wall
+## names its zone; screens and emergency lights sit inside theirs. No zones (the safehouse): unbounded.
+func _zone_rect(item: Dictionary, at: Vector2, unbounded: Rect2) -> Rect2:
+	var zones: Array = context.get("layout", {}).get("light_zones", [])
+	var wanted := String(item.get("zone", ""))
+	for zone: Dictionary in zones:
+		var values: Array = zone["rect"]
+		var area := Rect2(values[0], values[1], values[2], values[3])
+		if String(zone["id"]) == wanted or (wanted.is_empty() and area.has_point(at)):
+			return area
+	return unbounded
+
+
+## How strongly the powered sources light a world point, with the same bands and reach the light textures
+## are drawn with: a fluorescent core reads 0.34, a dim emergency light's core 0.14, darkness 0.
+func light_level(point: Vector2) -> float:
+	var level := 0.0
+	for entry in _sources:
+		var light: PointLight2D = entry["light"]
+		if not light.enabled or not Rect2(entry["reach"]).has_point(point):
+			continue
+		level += float(entry["energy"]) * band(point.distance_to(light.global_position) / float(entry["radius"]))
+	return level
+
+
+## Discrete falloff of every interior light (centre to rim), shared by the textures and light_level().
+static func band(distance: float) -> float:
+	return 1.0 if distance < 0.26 else 0.55 if distance < 0.50 else 0.24 if distance < 0.73 else 0.08 if distance < 0.94 else 0.0
 
 
 func _power_section(rectangle: Rect2, at: Vector2) -> String:
@@ -225,6 +277,8 @@ func _update_sources() -> void:
 			entry["emission"].visible = powered
 		if is_instance_valid(entry["cover"]):
 			entry["cover"].visible = not powered
+		if is_instance_valid(entry["pool"]):
+			entry["pool"].visible = not powered
 
 
 func _process(delta: float) -> void:
@@ -252,6 +306,8 @@ func _update_hero_light() -> void:
 			var hero_floor := 2 if hero.global_position.y <= 164.0 else 1
 			if int(light.get_meta("floor_id")) != hero_floor:
 				continue
+		elif not Rect2(light.get_meta("reach")).has_point(hero.global_position):
+			continue
 		var offset := light.global_position - chest
 		var influence := light.energy * clampf(1.0 - offset.length() / float(light.get_meta("radius")), 0.0, 1.0)
 		if influence > 0.003:
@@ -300,20 +356,20 @@ func _build_fog(_layout: Dictionary) -> void:
 		holder.add_child(fog)
 
 
-func _banded_texture(radius: int, relative_span: Vector2) -> ImageTexture:
-	var key := "%d:%d:%d" % [radius, int(relative_span.x), int(relative_span.y)]
+## relative_reach: the light's reach relative to its centre; texels outside it stay black.
+func _banded_texture(radius: int, relative_reach: Rect2) -> ImageTexture:
+	var key := "%d:%s" % [radius, relative_reach]
 	if _light_textures.has(key):
 		return _light_textures[key]
 	var size := radius * 2
 	var image := Image.create(size, size, false, Image.FORMAT_RGBA8)
 	for y in range(size):
 		for x in range(size):
-			var local_y := y + 0.5 - radius
-			if local_y < relative_span.x or local_y >= relative_span.y:
+			var local := Vector2(x + 0.5 - radius, y + 0.5 - radius)
+			if not relative_reach.has_point(local):
 				image.set_pixel(x, y, Color(0, 0, 0, 1))
 				continue
-			var distance := Vector2(x + 0.5 - radius, y + 0.5 - radius).length() / float(radius)
-			var level := 1.0 if distance < 0.26 else 0.55 if distance < 0.50 else 0.24 if distance < 0.73 else 0.08 if distance < 0.94 else 0.0
+			var level := band(local.length() / float(radius))
 			image.set_pixel(x, y, Color(level, level, level, 1.0))
 	var texture := ImageTexture.create_from_image(image)
 	_light_textures[key] = texture

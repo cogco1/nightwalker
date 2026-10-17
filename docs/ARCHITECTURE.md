@@ -5,10 +5,10 @@
 ## 场景流转
 
 ```
-启动 → scenes/main.tscn（NightwalkerHome，脚本同 home_601.gd）
-          │  门口 E / F7
+启动 → scenes/boot.tscn（开始第一章；-- --sandbox 则不开章节）→ scenes/main.tscn
+          │  章节：剧情步骤 SceneRoutes.travel(step)   自由模式：门口 E / F7
           ▼
-SceneRoutes.switch_to()  ←── autoload，登记安全屋、医院和夜街
+SceneRoutes.switch_to()  ←── autoload，登记安全屋、医院、夜街和屏息
           │
    ┌──────┴───────┐
 home_601.tscn   underground_hospital.tscn
@@ -17,6 +17,7 @@ home_601.tscn   underground_hospital.tscn
        night_street_proto.tscn
 ```
 
+- 正式入口是 `boot.tscn`（`scripts/core/boot.gd`）：开始第一章后打开 `main.tscn`；`Run-Sandbox.cmd` 直接打开 `main.tscn`，没有章节，就是原来的自由模式（回归测试也在这个模式下）。章节里按剧情步骤走：`SceneRoutes.travel(step)` 进入步骤并打开它的 `scene`（home / hospital / breath），不受玩家冻结影响；章节里 F7、F8 和医院的 Tab 是调试键，只有带 `-- --nw-debug` 启动才起作用。
 - `SceneRoutes`（`scripts/core/scene_routes.gd`）是唯一的 autoload。F7 保留安全屋/医院往返，F8 从两处室内进入夜街并返回来源楼层、视角和安全脚点；直接启动夜街则返回安全屋。快捷键被改键占用时不抢键；设置、剧情弹窗和楼梯过渡拦截切场。切场景前取消顿帧、清空攻击缓冲、恢复暂停和画布变换。侧视空中离开医院时返回该楼层既有安全出生点。
 - `main.tscn` 和 `home_601.tscn` 都挂 `home_601.gd`。`main.tscn` 是项目入口，切回安全屋时用 `home_601.tscn`。
 - `night_street_proto.tscn`（夜街原型）已接入 F8 路由，也可以用 `Run-NightStreet.cmd` 直接启动，或在编辑器里打开后按 F6。
@@ -42,7 +43,7 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 
 - **GameSession**：所有有玩家的场景共用，测试夹具 combat_lab 也挂同一个（夹具里原来那份顿帧副本已删除，测到的就是正式代码）。负责 F1/Esc 改键菜单（关闭后发 `keybindings_closed`，场景据此重写带按键名的提示）；对话框、密码门这类剧情弹窗用 `push_modal(owner)` / `pop_modal(owner)` 登记，有弹窗时 F1/Esc 归弹窗；监听玩家的 `impact(档位, 方向)` 信号，按 `STOPS` 表做全屏顿帧：light 4 帧 / 至少 0.0667 秒、critical 6 帧 / 至少 0.1 秒（这两档是原作保证）、heavy 10 帧偏移 2 像素并闪白，critical 和 heavy 结束后镜头有几帧余震。对外有 `hit_stop_started / hit_stop_frame / hit_stop_finished` 信号和帧数、时长等观测字段。
 - **CombatFeedback**（`scripts/core/combat_feedback.gd`）：GameSession 的子节点，`PROCESS_MODE_ALWAYS`，所以顿帧暂停时命中声不被截断。只听玩家主动发的信号：`move_started(招式)` 决定挥刀声，`impact(档位)` 决定命中声，`charge_started / charge_ready / charge_ended` 决定蓄力声，不读玩家内部字段；`played` 记录播放顺序供测试和录屏使用。音效是 `tools/audio/gen_combat_sfx.py` 合成的占位 WAV（`assets/audio/sfx/`），同名替换即可换成正式音效。无头模式下只记录不播放。
-- **NightwalkerStoryState**（`scripts/core/story_state.gd`）：由 `hospital_security.gd` 按需挂到 `/root`，存放本次进程内的物品和标记（`grant_item`、`has_item`、`set_flag`、`has_flag`）。没有存档，退出游戏就清空。
+- **NightwalkerStoryState**（`scripts/core/story_state.gd`）：用 `ensure(tree)` 按需挂到 `/root`，存放本次进程内的物品和标记（`grant_item`、`has_item`、`set_flag`、`has_flag`），以及章节进度：`start_chapter()` 读 `assets/story/chapter1.json`，`set_step(id)` 按步骤数据设天数和时钟并发 `step_changed`；`chapter_active` 为假就是自由模式，`allows_debug_routes()` 决定 F7 / F8 / Tab。没有存档，退出游戏就清空。
 - **Controls**（`scripts/core/controls.gd`）：静态类，持有当前按键方案，读写 `user://keybindings.cfg`，把方案应用到 InputMap。各脚本通过 `CONTROLS.binding_pressed(slot)` 读输入。交互键 E（`INTERACT_KEY`）是保留键，不在改键表里，`validate` 不允许其他动作用它；场景用 `is_interact(event)` 判断，提示文字用 `binding_text` / `hint_text` 按当前键位生成（场景提示用 `hint_text`：空格写成「空格」，鼠标键写成「左键 / 右键 / 中键 / 侧键1 / 侧键2」；改键界面用 `binding_text`，是 Space、LMB 这类英文名）。
 
 ## 玩家
@@ -131,6 +132,8 @@ NightStreetProto
 - 改键测试使用独立的 `settings_path`，不会覆盖玩家真实的 `user://keybindings.cfg`。
 - `tests/test_perfect_counter.gd` 覆盖慢动作和反击：世界时钟是主角的 1/4、主角全速、无敌、1.2 秒实际时间、顿帧时计时不走且仍冻结满帧、左右键反击的落点和朝向、3 倍伤害、10 帧顿帧、反击命中结束慢动作。
 - `tests/test_enemy_attack.gd` 覆盖敌人攻击和受击：预警红闪和时长、HIT 的击退距离和硬直、打断挥刀和蓄力、过早突刺和跳过是 EVADE、判定前 0.14 秒和判定中的突刺是 PERFECT、被打坏的无人机不再攻击。
+- `tests/test_chapter_flow.gd` 从 `boot.tscn` 开始，用真实按键（在实际碰撞体上寻路后按住 WASD）走完第一章 M1 全程：开场、接单、医院锁定一次、拉闸、读密码、开门、背后暗杀、回家购物、睡觉暴走、侧视夜晚、屏息、第 2 天，并检查章节 HUD 和调试键。`tests/test_light_sense.gd` 逐盏灯检查照亮自己的房间、不穿墙、贴图和判定的亮度一致、断电变暗和遮罩、暴露条涨落、锁定回检查点、R 回检查点和自由模式不受影响。
+- `tests/recorders/capture_chapter1.gd` 用真实渲染截 23 张第一章画面到 `evidence/chapter1/`。
 - `tests/test_level_shared.gd` 覆盖关卡共用部分：冻结计数、剧情弹窗、对话框参数和说话人、E 键保留与旧配置迁移、提示文字跟随改键。
 - `tests/recorders/capture_levels.gd` 在窗口模式下截安全屋、医院俯视和侧视、每一页对话、密码门和楼梯提示（88 张），改关卡代码前后各跑一次逐像素比对，就能确认画面没变。
 - `tests/recorders/capture_interior_lighting.gd` 记录 19 张室内灯光对照：屏幕动画两时刻、开关屏、人物近光、清晰对话、真实 F8 往返、医院两层/双视角的供电切换。用非无头模式运行，图与渲染尺寸报告写入 `evidence/interior_lighting/`；测试与录制都使用隔离改键配置。
@@ -146,6 +149,17 @@ NightStreetProto
 - **新关卡**：脚本放 `scripts/levels/<名字>/`，场景放 `scenes/<名字>.tscn`，素材放 `assets/<名字>/`；在 `scene_routes.gd` 里登记路径；关卡里实例化 `player.tscn` 并挂一个 `GameSession`，就能拿到改键和顿帧。
 - **剧情物品**：NPC 对话完成后调用 `/root/NightwalkerStoryState.grant_item("breaker_key")`，医院电闸就能打开。
 - **新动作**：帧放 `frames/`，在 `side_view.tres`/`top_down.tres` 登记，原画和提示词放 `art_metadata/<版本>/`，刀刃路径更新到 `blade_paths.json`。
+
+## 第一章（章节模式）
+
+只在 `chapter_active` 时挂上，自由模式的安全屋和医院不变。台词、时间点、商店和屏息文字都在 `assets/story/chapter1.json`；计划和拍板记录见 [第一章_实现计划](design/第一章_实现计划.md)。
+
+- `home_601/home_chapter.gd`：安全屋的章节逻辑。进入步骤时播 `enter_sequence`（标题卡、醒来、音效、对白，按顺序）；电视按天播新闻；电脑打开暗网终端（`scripts/ui/terminal_menu.gd`：信息推进剧情，购物记下订单）；冰箱、哑铃记当晚标记；床在允许的步骤睡到 22:00 并播暴走转场；门按步骤的 `door` 出发。
+- `hospital/hospital_chapter.gd`：医院的章节逻辑。步骤决定视角（白天俯视、夜晚侧视）和出生房间；白天潜行时每个物理帧用 `interior_lighting.light_level(脚下)` 判亮暗（阈值 `LIT_THRESHOLD` 0.06），暴露条每秒 +0.8 / -0.3，满了锁定、回本层入口（`checkpoint`，R 也回这里）；科伯恩是 `story_target.gd` 画的占位剪影，作为额外交互点交给 `hospital_interactions`，只有在暗处、从背后按 E 才能暗杀；出口面板白天回家、夜晚进屏息。章节里配电箱不要钥匙，接待电脑的值班表换成带密码的版本（`line_overrides`）。
+- 光照判定和画面一致：`interior_lighting.gd` 给每个光源记 `reach`（俯视医院按 `layout.json` 的 `light_zones`，墙上的灯用 `zone` 指明照哪边；侧视是楼层上下界），光照贴图在 `reach` 外是黑的，`light_level()` 用同一套 `band()` 衰减和 `reach` 算亮度。二楼走廊的光斑画在底图里，断电时显示 `assets/underground_hospital/lamp_off/` 的遮罩（`tools/art/gen_lamp_off_covers.py` 生成并写进 layout 的 `off_cover`）。
+- `levels/breath_interlude.gd`（`scenes/breath_interlude.tscn`）：屏息过场，黑屏、呼吸声，按步骤的 `breath_round` 逐行打出乱码口号，然后进 `next` 步骤。
+- `ui/story_overlay.gd`：标题卡、淡入淡出、22:00 暴走、锁定提示和剧情音效（`assets/audio/story/`，`tools/audio/gen_story_sfx.py` 合成的占位）。
+- UI“冷光终端”：`ui/hud_style.gd` 是颜色和底板；`ui/chapter_hud.gd` 是状态牌（左上）、交互键帽（底部居中）、提示气泡和操作提示（6 秒后淡出）；`ui/exposure_hud.gd` 是暴露条和扫描牌（夜街也用）。章节模式下安全屋和医院原来的标题、操作提示、交互提示都隐藏，由这些组件代替。HUD 用 10px 像素字体（`pixel_ui.small_font()`），对白仍是 12px。
 
 ## 已知问题
 

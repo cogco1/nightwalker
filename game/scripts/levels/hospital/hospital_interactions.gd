@@ -115,7 +115,7 @@ func _refresh_nearest() -> void:
 	if _host.has_method("room_for_position"):
 		room_id = String(_host.room_for_position(player.global_position, int(_host.get("view_mode"))))
 	var best := INF
-	for item in _base_layout.get("interactions", []):
+	for item in _all_interactions():
 		if not item is Dictionary:
 			continue
 		if item.has("floor_id") and int(item["floor_id"]) != int(_host.get("floor_id")):
@@ -148,7 +148,8 @@ func _refresh_nearest() -> void:
 func _update_hint() -> void:
 	if _hint == null:
 		return
-	_hint.visible = not dialogue_active and not nearest_id.is_empty()
+	# Inside the chapter the HUD key cap shows it instead (hospital_chapter.gd).
+	_hint.visible = not dialogue_active and not nearest_id.is_empty() and _host.get("chapter") == null
 	if _hint.visible:
 		var item := _find_interaction(nearest_id)
 		_hint.text = CONTROLS.interact_text() + " · " + String(item.get("title", nearest_id))
@@ -161,10 +162,17 @@ func hide_hint() -> void:
 
 
 func _find_interaction(id: String) -> Dictionary:
-	for item in _base_layout.get("interactions", []):
+	for item in _all_interactions():
 		if item is Dictionary and String(item.get("id", "")) == id:
 			return item
 	return {}
+
+
+## Layout interactions plus the chapter's story targets (Coburn) while the story runs.
+func _all_interactions() -> Array:
+	var items: Array = _base_layout.get("interactions", [])
+	var chapter: Variant = _host.get("chapter") if is_instance_valid(_host) else null
+	return items + chapter.story_targets() if chapter != null else items
 
 
 func interact_nearest() -> String:
@@ -184,9 +192,19 @@ func _open_interaction(item: Dictionary) -> void:
 	var player := _player()
 	if item.is_empty() or player == null or dialogue == null:
 		return
+	var chapter: Variant = _host.get("chapter")
+	var story_lines: Array = []
 	if String(item.get("id", "")) == "exit_panel":
-		get_tree().root.get_node("SceneRoutes").call("switch_to", "res://scenes/home_601.tscn")
-		return
+		if chapter == null:
+			get_tree().root.get_node("SceneRoutes").call("switch_to", "res://scenes/home_601.tscn")
+			return
+		story_lines = chapter.exit_requested()
+		if story_lines.is_empty():
+			return
+	elif String(item.get("kind", "")) == "story":
+		story_lines = chapter.story_interact(String(item["id"]))
+		if story_lines.is_empty():
+			return
 	current_interaction = String(item["id"])
 	last_interaction = current_interaction
 	interaction_counts[current_interaction] = int(interaction_counts.get(current_interaction, 0)) + 1
@@ -198,9 +216,11 @@ func _open_interaction(item: Dictionary) -> void:
 	if point is Vector2:
 		_feedback_position = point.round()
 		_feedback_remaining = 0.3
-	var lines: Array = []
+	var lines: Array = story_lines.duplicate()
 	var raw_lines: Variant = item.get("lines", [])
-	if raw_lines is Array:
+	if chapter != null and chapter.line_override(current_interaction) is Array:
+		raw_lines = chapter.line_override(current_interaction)
+	if raw_lines is Array and lines.is_empty():
 		lines = raw_lines.duplicate()
 	if String(item.get("kind", "inspect")) == "toggle_power":
 		var locked := false

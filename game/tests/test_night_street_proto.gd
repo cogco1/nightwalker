@@ -139,7 +139,8 @@ func verify_route_entry() -> void:
 	var routes := root.get_node_or_null("SceneRoutes")
 	check(routes != null and routes.STREET_PATH == STREET.resource_path, "SceneRoutes registers the night-street scene")
 	check(routes != null and routes.has_method("toggle_street"), "The shared router exposes F8 street travel")
-	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/main.tscn", "The game still starts in the safe house")
+	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/boot.tscn"
+		and load("res://scripts/core/boot.gd").MAIN_PATH == "res://scenes/main.tscn", "The game still starts in the safe house (through the chapter boot)")
 
 
 func verify_exposure(player: CharacterBody2D) -> void:
