@@ -150,3 +150,29 @@ func strike_flash() -> void:
 	shown.append("strike")
 	tint.color = Color(0.45, 0.02, 0.06, 0.5)
 	_fade(tint, 0.0, 0.3)
+
+
+## The hero goes down at night: a red wash, then black. The caller restarts the floor behind the black and fades in.
+func death() -> void:
+	busy = true
+	shown.append("death")
+	play("heartbeat")
+	tint.color = Color(LOCKED, 0.5)
+	_fade(tint, 0.0, 0.7)
+	await _wait(0.35)
+	await _fade(shade, 1.0, 0.45)
+	tint.color.a = 0.0
+	busy = false
+
+
+## The execution, standing in for the animation to come: after the hit's freeze, a white frame, then black that
+## stays for the travel on.
+func execution() -> void:
+	busy = true
+	shown.append("execution")
+	tint.color = Color(1.0, 1.0, 1.0, 1.0)
+	await _wait(0.1)
+	tint.color = Color(1.0, 1.0, 1.0, 0.0)
+	shade.color.a = 1.0
+	await _wait(1.2)
+	busy = false

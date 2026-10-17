@@ -19,6 +19,8 @@ var chapter: Dictionary = {}
 var step := ""
 var day := 1
 var minutes := 0
+## The hero's full health at night (night_fight.gd); milestone 3's hunger takes it down.
+var hero_max_hp := 100
 
 
 ## The shared node, created on first use; null outside a running tree.

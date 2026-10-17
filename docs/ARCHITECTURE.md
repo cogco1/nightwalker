@@ -17,7 +17,7 @@ home_601.tscn   underground_hospital.tscn
        night_street_proto.tscn
 ```
 
-- 正式入口是 `boot.tscn`（`scripts/core/boot.gd`）：开始第一章后打开 `main.tscn`；`Run-Sandbox.cmd` 直接打开 `main.tscn`，没有章节，就是原来的自由模式（回归测试也在这个模式下）。章节里按剧情步骤走：`SceneRoutes.travel(step)` 进入步骤并打开它的 `scene`（home / hospital / breath），不受玩家冻结影响；章节里 F7、F8 和医院的 Tab 是调试键，只有带 `-- --nw-debug` 启动才起作用。
+- 正式入口是 `boot.tscn`（`scripts/core/boot.gd`）：开始第一章后打开 `main.tscn`；`Run-Sandbox.cmd` 直接打开 `main.tscn`，没有章节，就是原来的自由模式（回归测试也在这个模式下）。章节里按剧情步骤走：`SceneRoutes.travel(step)` 进入步骤并打开它的 `scene`（home / hospital / breath），不受玩家冻结影响；章节里 F7、F8 和医院的 Tab 是调试键，只有带 `-- --nw-debug` 启动才起作用；带 `-- --nw-step=<步骤>`（`Run-Game.ps1 -Step d1_night`）时章节直接从那个步骤开始（只认写了 `scene` 的步骤）。
 - `SceneRoutes`（`scripts/core/scene_routes.gd`）是唯一的 autoload。F7 保留安全屋/医院往返，F8 从两处室内进入夜街并返回来源楼层、视角和安全脚点；直接启动夜街则返回安全屋。快捷键被改键占用时不抢键；设置、剧情弹窗和楼梯过渡拦截切场。切场景前取消顿帧、清空攻击缓冲、恢复暂停和画布变换。侧视空中离开医院时返回该楼层既有安全出生点。
 - `main.tscn` 和 `home_601.tscn` 都挂 `home_601.gd`。`main.tscn` 是项目入口，切回安全屋时用 `home_601.tscn`。
 - `night_street_proto.tscn`（夜街原型）已接入 F8 路由，也可以用 `Run-NightStreet.cmd` 直接启动，或在编辑器里打开后按 F6。
@@ -74,7 +74,7 @@ Home601 / UndergroundHospital (Node2D, 关卡脚本)
 - 命中特效 v2：`impact_v2.gd` 是普通无光照混合的 ContactInk 层。宽幅弯月刀光主体0.045–0.09秒，白核只在接触点附近；肉身用暗红小滴、机械用暖金碎屑和深色润滑液，击杀追加断环。最多8个刀光、96颗飞溅，避免密集目标淹没画面。旧 `player_fx.legacy_impact` 和 `legacy_dash_hit_feedback.gd` 可独立调用。
 - 动作节奏：24个普通／空中三连动画按帧时长调整（0–5:1.14，6–9:0.85，10–12:1.05，13–15:0.95），不改原PNG或tres基础fps。`_attack_lunge_speed` 按各帧实际时长加权相位，普攻前冲8/8/10像素、刀光沿原刀尖轨迹扩大20%，蓄力重斩36像素。保留原足点、比例、碰撞与逐帧姿势。
 - 突刺反馈：`dash_stab.hit_feedback=true`、stop=tick。每次有效伤害生成新版ContactInk材质刀痕与飞溅；整招首次接触发2帧轻顿帧、1像素镜头和命中声，击杀升级为10帧并有专用音效，同一波不反复叠加。旧视觉仍可调用legacy_dash_hit_feedback.emit_visual，旧音频与四份完整旧源码继续保留。
-- 受击：敌人调用 `receive_attack(attack)`，返回 `AttackResult` HIT / EVADE / PERFECT，同时发 `attack_received(result, attack)`。突刺开始不早于敌人判定生效前 `PERFECT_LEAD_SECONDS` 0.2 秒（或在判定期间）算完美闪避；突刺中的无敌或人已不在攻击线上算 EVADE；否则 HIT：打断招式和蓄力，进入 HURT，0.25 秒内滑退约 20 像素，0.3 秒硬直、红闪，硬直中的按键等硬直结束再出。v1 不扣血。`hurtbox()` 是身体矩形。
+- 受击：敌人调用 `receive_attack(attack)`，返回 `AttackResult` HIT / EVADE / PERFECT，同时发 `attack_received(result, attack)`。突刺开始不早于敌人判定生效前 `PERFECT_LEAD_SECONDS` 0.2 秒（或在判定期间）算完美闪避；突刺中的无敌或人已不在攻击线上算 EVADE；否则 HIT：打断招式和蓄力，进入 HURT，0.25 秒内滑退约 20 像素，0.3 秒硬直、红闪，硬直中的按键等硬直结束再出。玩家本身不记血：章节的战斗夜晚由 `night_fight.gd` 听 `attack_received`，按 `attack.damage` 扣 `hero_vitals`；自由模式和测试夹具照旧不扣血。`hurtbox()` 是身体矩形，`seconds_since_dash()` 是距上次突刺开始的战斗时钟秒数。
 - 完美闪避反击：GameSession 收到 PERFECT 就进入慢动作（`start_slowmo`）：`world_time_scale` 0.25，持续 `SLOWMO_SECONDS` 1.2 秒实际时间，顿帧和改键菜单期间计时不走，`Engine.time_scale` 始终是 1；画面边缘泛青（单独一层 CanvasLayer，在顿帧快照层下面），主角 `invulnerable`。慢动作中按左键或右键是反击：瞬移到那台敌人的另一侧 18 像素（那边是墙就落在这一侧），面向它出 `counter_slash`（必暴击 3 倍、10 帧顿帧），反击命中时慢动作结束。玩家只认 `open_counter(敌人)` / `close_counter()`，不知道世界时钟。
 
 ## Shift 手势与蹲行（2026-10-18）
@@ -94,6 +94,11 @@ S+A/D 使用 crouch_walk_left/right，各 16 帧、14 fps，速度 20 像素/秒
 ## 敌人
 
 - `scripts/enemies/enemy_attacker.gd`：挂在敌人身体下的攻击组件。主角进入范围后身体红闪预警 0.5 秒（结束前 0.2 秒锁定位置），然后 0.18 秒直线突袭到锁定点，最后 0.12 秒是判定；碰到主角就调用它的 `receive_attack`，判定结束没碰到也报告一次（contact = false），这样闪开的突刺也能判完美闪避。之后停顿、飘回原位、冷却 1.2 秒。时间按世界时钟走：delta 乘 `GameSession.world_time_scale`，顿帧时整棵树暂停。身体和主角之间加了碰撞例外，突袭穿过主角而不是推开它。
+  贴地的人形敌人（第一章安保）另设：`horizontal`（突袭沿地面，不跟主角的高度）、`standoff`（停在主角身前）、`returns = false`（不飘回原位，停在哪儿就从哪儿再来）、`mirror_hitbox`（判定框按朝向翻转）、`damage`（随攻击传给主角）；`armed = false` 时不起手，`stagger(秒)` 取消正在举的这一下。
+- 第一章的人形敌人（`scripts/enemies/humanoid.gd` 和四个子类，代码画的占位剪影，脚底为原点，约 28 像素高）：碰撞层 2（主角的刀能砍到），只和地形碰撞，和主角之间有碰撞例外（主角能从人中间穿过）；时间也按世界时钟走（`move_and_slide` 前按 `world_time_scale` 缩放速度）。挨刀的接口和训练木桩相同（`take_damage`、`damage_point`、`receive_hit_reaction`、`knock_up`、`knock_back`）：挨打硬直 0.28 秒、挑空上天、空中连击吊住；血到 0 躺下，碰撞层清空。`active` 由夜晚唤醒，`held` 让剧情时刻全员定住，`think()` 是醒着时每帧的决定，`figure()` / `glow_figure()` 是姿势的矩形（发光部分画在不受光照的子节点上）。
+  - `guard.gd` 近战安保：走近，挂一个 `enemy_attacker`（举棍红闪 0.5 秒 → 0.16 秒贴地突袭，10 点伤害）。
+  - `gunner.gd` 持枪保镖：保持 64–150 像素；瞄准 0.8 秒（激光瞄准线，最后 0.25 秒锁定快闪）后发射 `enemy_bullet.gd`。子弹在胸口高度水平飞，走世界时钟；碰到主角身体就 `receive_attack(contact = true)`，从主角身体中线另一侧穿过去（被跳过、蹲过、冲刺穿过）报告 contact = false；判定窗口就是到达主角的那一刻（`window_age` 0），所以到达前 0.2 秒内开始的突刺是完美闪避，反击瞬移到 `attack.source`（开枪的人）身边。撞墙或飞满 420 像素消失。
+  - `buyer.gd` 逃跑的买家、`doctor.gd` 求饶的医生：不攻击。最后一个医生（`last`）在 `executable` 之前 `take_damage` 返回 false，之后任意一刀毙命。
 - 测试夹具 `tests/fixtures/attack_drone.gd`：会攻击的悬浮无人机（木桩不攻击），由 `arena.add_attacker(位置)` 按需加入，默认场地里没有。
 
 ## 人物材质（所有场景）
@@ -148,8 +153,9 @@ NightStreetProto
 - 改键测试使用独立的 `settings_path`，不会覆盖玩家真实的 `user://keybindings.cfg`。
 - `tests/test_perfect_counter.gd` 覆盖慢动作和反击：世界时钟是主角的 1/4、主角全速、无敌、1.2 秒实际时间、顿帧时计时不走且仍冻结满帧、左右键反击的落点和朝向、3 倍伤害、10 帧顿帧、反击命中结束慢动作。
 - `tests/test_enemy_attack.gd` 覆盖敌人攻击和受击：预警红闪和时长、HIT 的击退距离和硬直、打断挥刀和蓄力、过早突刺和跳过是 EVADE、判定前 0.14 秒和判定中的突刺是 PERFECT、被打坏的无人机不再攻击。
-- `tests/test_chapter_flow.gd` 从 `boot.tscn` 开始，用真实按键（在实际碰撞体上寻路后按住 WASD）走完第一章 M1 全程：开场、接单、医院锁定一次、拉闸、读密码、开门、背后暗杀、回家购物、睡觉暴走、侧视夜晚、屏息、第 2 天，并检查章节 HUD 和调试键。`tests/test_light_sense.gd` 逐盏灯检查照亮自己的房间、不穿墙、贴图和判定的亮度一致、断电变暗和遮罩、暴露条涨落、锁定回检查点、R 回检查点和自由模式不受影响。
-- `tests/recorders/capture_chapter1.gd` 用真实渲染截 23 张第一章画面到 `evidence/chapter1/`。
+- `tests/test_chapter_flow.gd` 从 `boot.tscn` 开始，用真实按键（在实际碰撞体上寻路后按住 WASD）走完第一章全程：开场、接单、医院锁定一次、拉闸、读密码、开门、背后暗杀、回家购物、睡觉暴走、第一夜（`night_bot` 用真实键鼠打完五课、两层、三句台词和处决）、屏息、第 2 天，并检查章节 HUD 和调试键。`tests/test_light_sense.gd` 逐盏灯检查照亮自己的房间、不穿墙、贴图和判定的亮度一致、断电变暗和遮罩、暴露条涨落、锁定回检查点、R 回检查点和自由模式不受影响。
+- `tests/test_night_fight.gd`（Test-Game 带 `-- --nw-step=d1_night` 运行，从 `boot.tscn` 进第一夜）用真实按键逐项查第一夜：人员、生命条、五课图标和学会条件、求饶的医生、安保一棍的伤害和击退、0.35 秒内不重复扣血、过量生命先扣、死亡后本层重来、一楼没清楼梯不开、一楼跳起来不会惊动二楼、买家逃到墙边、枪手瞄准线时长和锁定、子弹命中 / 跳过 / 蹲过 / 完美闪避和反击、上楼、最后一个医生的保护和三句台词、处决的重顿帧和黑场、自由模式医院没有这些。`tests/support/night_bot.gd` 是两个套件共用的“玩家”：只看屏幕上能看到的东西（人站在哪、举棍的红闪、激光、飞着的子弹），按真实键鼠操作。
+- `tests/recorders/capture_chapter1.gd` 用真实渲染截 23 张第一章画面到 `evidence/chapter1/`；`tests/recorders/capture_chapter1_night.gd` 截第一夜 22 张（死亡重来、过量生命，然后 night_bot 实打一遍时的各课、红闪、慢动作、激光、子弹、买家、医生、上楼、三句台词、处决、屏息）到 `evidence/chapter1_night/`。
 - `tests/test_level_shared.gd` 覆盖关卡共用部分：冻结计数、剧情弹窗、对话框参数和说话人、E 键保留与旧配置迁移、提示文字跟随改键。
 - `tests/recorders/capture_levels.gd` 在窗口模式下截安全屋、医院俯视和侧视、每一页对话、密码门和楼梯提示（88 张），改关卡代码前后各跑一次逐像素比对，就能确认画面没变。
 - `tests/recorders/capture_interior_lighting.gd` 记录 19 张室内灯光对照：屏幕动画两时刻、开关屏、人物近光、清晰对话、真实 F8 往返、医院两层/双视角的供电切换。用非无头模式运行，图与渲染尺寸报告写入 `evidence/interior_lighting/`；测试与录制都使用隔离改键配置。
@@ -171,10 +177,11 @@ NightStreetProto
 只在 `chapter_active` 时挂上，自由模式的安全屋和医院不变。台词、时间点、商店和屏息文字都在 `assets/story/chapter1.json`；计划和拍板记录见 [第一章_实现计划](design/第一章_实现计划.md)。
 
 - `home_601/home_chapter.gd`：安全屋的章节逻辑。进入步骤时播 `enter_sequence`（标题卡、醒来、音效、对白，按顺序）；电视按天播新闻；电脑打开暗网终端（`scripts/ui/terminal_menu.gd`：信息推进剧情，购物记下订单）；冰箱、哑铃记当晚标记；床在允许的步骤睡到 22:00 并播暴走转场；门按步骤的 `door` 出发。
-- `hospital/hospital_chapter.gd`：医院的章节逻辑。步骤决定视角（白天俯视、夜晚侧视）和出生房间；白天潜行时每个物理帧用 `interior_lighting.light_level(脚下)` 判亮暗（阈值 `LIT_THRESHOLD` 0.06），暴露条每秒 +0.8 / -0.3，满了锁定、回本层入口（`checkpoint`，R 也回这里）；科伯恩是 `story_target.gd` 画的占位剪影，作为额外交互点交给 `hospital_interactions`，只有在暗处、从背后按 E 才能暗杀；出口面板白天回家、夜晚进屏息。章节里配电箱不要钥匙，接待电脑的值班表换成带密码的版本（`line_overrides`）。
+- `hospital/hospital_chapter.gd`：医院的章节逻辑。步骤决定视角（白天俯视、夜晚侧视）和出生房间；白天潜行时每个物理帧用 `interior_lighting.light_level(脚下)` 判亮暗（阈值 `LIT_THRESHOLD` 0.06），暴露条每秒 +0.8 / -0.3，满了锁定、回本层入口（`checkpoint`，R 也回这里）；科伯恩是 `story_target.gd` 画的占位剪影，作为额外交互点交给 `hospital_interactions`，只有在暗处、从背后按 E 才能暗杀；出口面板白天回家（战斗夜晚没有出口，处决后直接进屏息）。章节里配电箱不要钥匙，接待电脑的值班表换成带密码的版本（`line_overrides`）。
 - 光照判定和画面一致：`interior_lighting.gd` 给每个光源记 `reach`（俯视医院按 `layout.json` 的 `light_zones`，墙上的灯用 `zone` 指明照哪边；侧视是楼层上下界），光照贴图在 `reach` 外是黑的，`light_level()` 用同一套 `band()` 衰减和 `reach` 算亮度。二楼走廊的光斑画在底图里，断电时显示 `assets/underground_hospital/lamp_off/` 的遮罩（`tools/art/gen_lamp_off_covers.py` 生成并写进 layout 的 `off_cover`）。
 - `levels/breath_interlude.gd`（`scenes/breath_interlude.tscn`）：屏息过场，黑屏、呼吸声，按步骤的 `breath_round` 逐行打出乱码口号，然后进 `next` 步骤。
 - `ui/story_overlay.gd`：标题卡、淡入淡出、22:00 暴走、锁定提示和剧情音效（`assets/audio/story/`，`tools/audio/gen_story_sfx.py` 合成的占位）。
+- `hospital/night_fight.gd`：步骤带 `fight`（第一夜 `d1_night` → `nights.night1`）时由 `hospital_chapter` 挂上，管一整夜：按 `chapter1.json` 放人（`enemies` 的 `kind`、`floor`、`x`、`faces`、`last`），主角在同层 150 像素内就唤醒；`hero_vitals.gd`（血量、临时过量生命 `grant_overheal`、`died`）和 `ui/health_hud.gd`（右上生命条，占暴露条的位置）；五课教学（`ui/tutorial_plate.gd`，只有按键图标）按真实动作判定学会；一楼清空前 `stairs_open()` 为假（`underground_hospital._begin_stairs` 和键帽都看它），屏幕边缘的青色箭头指路；血到 0 时 `restart_floor()` 让这层的人回原位、主角回本层起点（`floors.<层>.start`，写进 `hospital_chapter.checkpoint`，R 也回这里）；只剩最后一个医生且主角走近时用医院的对话框打出 `last_words`，读完后下一刀触发 `_execute()`：`GameSession.hit_stop(&"heavy")`（新增的公开方法，剧情要的顿帧）→ `story_overlay.execution()`（白一帧、黑场）→ `SceneRoutes.travel(next)`。战斗夜晚 `hospital_chapter.interactions()` 只留楼梯（夜里没有可读的东西），出口也不再用。
 - UI“冷光终端”：`ui/hud_style.gd` 是颜色和底板；`ui/chapter_hud.gd` 是状态牌（左上）、交互键帽（底部居中）、提示气泡和操作提示（6 秒后淡出）；`ui/exposure_hud.gd` 是暴露条和扫描牌（夜街也用）。章节模式下安全屋和医院原来的标题、操作提示、交互提示都隐藏，由这些组件代替。HUD 用 10px 像素字体（`pixel_ui.small_font()`），对白仍是 12px。
 
 ## 已知问题
