@@ -1,0 +1,201 @@
+{
+  "date": "2026-10-18",
+  "timezone": "America/New_York (machine local time, UTC-4)",
+  "base": "ceb00ff (main after PR #7)",
+  "branch": "fix/night-street-drone-wait",
+  "status": "passed",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "tested_game_tree": "d48e62815c1a6499be076ad87835582b5d237b82",
+  "tested_runner_blob": "f16f7c45ea5dbcd42fb1e5c6c14703f1216fd87b",
+  "change": "tests/test_night_street_proto.gd only: verify_drone_attack waits for the hero to be FREE with no hit-stop before placing it beside the second drone (6 lines).",
+  "symptom": "After PR #7 merged, the full run on main ceb00ff failed night_street_proto: \"A hover drone lunges at a hero in reach and hits\" and \"A timely dash perfectly dodges the hover drone\" (drone_first_result []).",
+  "root_cause": "verify_combat leaves crits to chance. When the combo's third hit rolls a critical (30%), its freeze is 6 frames instead of 2, so the hero is still swinging (state ATTACK) when verify_drone_attack teleports it 40 px from the second drone. The rest of the swing kills that 3-HP drone, and a destroyed drone stands down (attacker COOLDOWN, no lunge), so no attack arrives in the 70-frame window. The 10-frame freeze seen in the failing runs ([2,2,10,10]) was that kill, not the critical.",
+  "not_pr7": "Forcing the critical (critical_roll_override = 0.0 in the combo) failed 3/3 on a5c0987 (before PR #7, no prototype code) and 3/3 on ceb00ff with the identical test file; with normal rolls the merged tree passed 8/8.",
+  "reproduction_probe": "At the start of the drone check: hero_state=1 (ATTACK); the drone went TELEGRAPH then COOLDOWN with its clock held at 0 (the destroyed-body branch of enemy_attacker.gd).",
+  "fix_verification": {
+    "night_street_proto_forced_crit": {
+      "runs": 5,
+      "passed": 5,
+      "hit_stop_frames": [
+        [
+          2,
+          2,
+          6,
+          10
+        ],
+        [
+          2,
+          2,
+          6,
+          10
+        ],
+        [
+          2,
+          2,
+          6,
+          10
+        ],
+        [
+          2,
+          2,
+          6,
+          10
+        ],
+        [
+          2,
+          2,
+          6,
+          10
+        ]
+      ],
+      "how": "critical_roll_override = 0.0 during the combo in a scratch copy of the fixed test"
+    },
+    "night_street_proto_normal": {
+      "runs": 6,
+      "passed": 6,
+      "hit_stop_frames": [
+        [
+          2,
+          2,
+          2,
+          10
+        ],
+        [
+          2,
+          2,
+          2,
+          10
+        ],
+        [
+          2,
+          2,
+          6,
+          10
+        ],
+        [
+          2,
+          2,
+          2,
+          10
+        ],
+        [
+          2,
+          2,
+          2,
+          10
+        ]
+      ],
+      "note": "five separate runs plus the full regression run; one separate run rolled a real critical ([2,2,6,10]) and passed"
+    }
+  },
+  "full_regression": {
+    "suite_count": 45,
+    "checks": 4865,
+    "failed_suites": [],
+    "suite_checks": {
+      "core_v07": 553,
+      "keybindings": 69,
+      "keybindings_reload": 21,
+      "air_combat": 116,
+      "air_dash_animation_v14": 174,
+      "scene_integration_v14": 106,
+      "scene_routes": 69,
+      "interior_lighting": 192,
+      "home_furniture": 84,
+      "hospital_interactions": 23,
+      "hospital_environment": 73,
+      "hospital_physical_stairs": 54,
+      "hospital_ward_layout": 22,
+      "hospital_security": 104,
+      "level_shared": 38,
+      "contact_refresh_v07": 6,
+      "charged_slash": 52,
+      "moveset": 1014,
+      "combat_state": 18,
+      "rhythm_combat": 94,
+      "enemy_attack": 29,
+      "perfect_counter": 31,
+      "night_street_proto": 50,
+      "combat_impact_v2": 60,
+      "combat_impact_v2_144": 60,
+      "impact_burst": 39,
+      "impact_burst_144": 39,
+      "thrust_path": 60,
+      "jump_chase": 76,
+      "jump_chase_144": 76,
+      "smooth_charge_links": 92,
+      "smooth_charge_links_144": 92,
+      "primary_charge_chain": 114,
+      "primary_charge_chain_144": 133,
+      "direct_charge": 40,
+      "direct_charge_144": 40,
+      "charged_draw": 73,
+      "charged_draw_144": 73,
+      "heavy_cleave": 67,
+      "roll_thrust_motion": 80,
+      "shift_controls": 40,
+      "locomotion_blade": 260,
+      "light_sense": 132,
+      "chapter_flow": 122,
+      "night_fight": 105
+    }
+  },
+  "post_merge_regression_before_fix": {
+    "commit": "ceb00ffcf90661829d29d5f9b7d52c380aa6092f",
+    "suite_count": 45,
+    "checks": 4865,
+    "failed_suites": [
+      "night_street_proto"
+    ],
+    "suite_checks": {
+      "core_v07": 553,
+      "keybindings": 69,
+      "keybindings_reload": 21,
+      "air_combat": 116,
+      "air_dash_animation_v14": 174,
+      "scene_integration_v14": 106,
+      "scene_routes": 69,
+      "interior_lighting": 192,
+      "home_furniture": 84,
+      "hospital_interactions": 23,
+      "hospital_environment": 73,
+      "hospital_physical_stairs": 54,
+      "hospital_ward_layout": 22,
+      "hospital_security": 104,
+      "level_shared": 38,
+      "contact_refresh_v07": 6,
+      "charged_slash": 52,
+      "moveset": 1014,
+      "combat_state": 18,
+      "rhythm_combat": 94,
+      "enemy_attack": 29,
+      "perfect_counter": 31,
+      "night_street_proto": 50,
+      "combat_impact_v2": 60,
+      "combat_impact_v2_144": 60,
+      "impact_burst": 39,
+      "impact_burst_144": 39,
+      "thrust_path": 60,
+      "jump_chase": 76,
+      "jump_chase_144": 76,
+      "smooth_charge_links": 92,
+      "smooth_charge_links_144": 92,
+      "primary_charge_chain": 114,
+      "primary_charge_chain_144": 133,
+      "direct_charge": 40,
+      "direct_charge_144": 40,
+      "charged_draw": 73,
+      "charged_draw_144": 73,
+      "heavy_cleave": 67,
+      "roll_thrust_motion": 80,
+      "shift_controls": 40,
+      "locomotion_blade": 260,
+      "light_sense": 132,
+      "chapter_flow": 122,
+      "night_fight": 105
+    }
+  },
+  "command": "tools/Test-Game.ps1 -GodotPath <local Godot executable>",
+  "local_logs": "game/evidence/logs/",
+  "scope": "Actual execution on this exact game tree and runner blob. Documentation-only changes do not change the tested game tree."
+}

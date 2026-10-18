@@ -262,5 +262,33 @@
   },
   "command": "tools/Test-Game.ps1 -GodotPath <local Godot executable>",
   "local_logs": "game/evidence/logs/",
-  "scope": "Actual execution on this exact game tree and runner blob. Documentation-only changes do not change the tested game tree."
+  "scope": "Actual execution on this exact game tree and runner blob. Documentation-only changes do not change the tested game tree.",
+  "merge": {
+    "pull_request": "https://github.com/cogco1/nightwalker/pull/7",
+    "merge_commit": "ceb00ffcf90661829d29d5f9b7d52c380aa6092f",
+    "merged_head": "d237d24586b46a2b20d0d3be5d5677f69842fa17",
+    "main_before_merge": "a5c09875f08dfdd80fe8058426da0a7adf4481ee (unchanged since the branch was cut)",
+    "approval": "User 2026-10-18 after the comparison video: “效果可以，先这样，等总协调那边走合并”; merged through the coordinating session.",
+    "pending_kept_as_is": [
+      "on by default, F10 switch",
+      "sword qi is visual only, hurts nobody",
+      "the screen cut crosses HUD text",
+      "tremor amplitude as recorded"
+    ],
+    "post_merge_regression": {
+      "commit": "ceb00ffcf90661829d29d5f9b7d52c380aa6092f",
+      "game_tree": "3938c6bc461529e0844e1ea138463d83761452bf",
+      "game_tree_matches_pull_request": true,
+      "suite_count": 45,
+      "checks": 4865,
+      "failed_suites": [
+        "night_street_proto"
+      ],
+      "failures": [
+        "A hover drone lunges at a hero in reach and hits",
+        "A timely dash perfectly dodges the hover drone"
+      ],
+      "cause": "docs/verification/2026-10-18_night-street-test-fix.json (pre-existing test flake, not PR #7)"
+    }
+  }
 }
