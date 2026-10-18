@@ -65,7 +65,7 @@ func setup(location: Vector2) -> void:
 
 
 ## entries: Strings, or Dictionaries {label, note (10px, right-aligned), badge (unread dot)}.
-func open(heading: String, entries: Array, player: CharacterBody2D, start := 0, clock := "") -> void:
+func open(heading: String, entries: Array, player: CharacterBody2D, start := 0, clock := "", balance := -1) -> void:
 	options.clear()
 	notes.clear()
 	badges.clear()
@@ -77,8 +77,8 @@ func open(heading: String, entries: Array, player: CharacterBody2D, start := 0, 
 	selected = clampi(start, 0, maxi(0, options.size() - 1))
 	_first = 0
 	title.text = heading
-	corner.text = clock
-	corner.position.x = size.x - 6 - STYLE.width(clock)
+	corner.text = _account_clock(heading, clock, balance)
+	corner.position.x = size.x - 6 - STYLE.width(corner.text)
 	footer.text = "%s/%s 选择 · %s 确定 · Esc 返回" % [CONTROLS.hint_text("move_up"), CONTROLS.hint_text("move_down"),
 		CONTROLS.interact_text()]
 	if not active:
@@ -92,6 +92,18 @@ func open(heading: String, entries: Array, player: CharacterBody2D, start := 0, 
 			_session = weakref(session)
 	show()
 	_redraw_rows()
+
+
+## Keep the account and time visible without running into the page heading.
+func _account_clock(heading: String, clock: String, balance: int) -> String:
+	if balance < 0:
+		return clock
+	var account := "￥%d" % balance
+	var combined := account if clock.is_empty() else account + " · " + clock
+	var available := size.x - STYLE.width(heading) - 18
+	if STYLE.width(combined) > available and clock.contains(" "):
+		combined = account + " · " + clock.get_slice(" ", clock.get_slice_count(" ") - 1)
+	return combined
 
 
 func close() -> void:

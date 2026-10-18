@@ -177,7 +177,8 @@ NightStreetProto
 
 只在 `chapter_active` 时挂上，自由模式的安全屋和医院不变。台词、时间点、商店和屏息文字都在 `assets/story/chapter1.json`；计划和拍板记录见 [第一章_实现计划](design/第一章_实现计划.md)。
 
-- `home_601/home_chapter.gd`：安全屋的章节逻辑。进入步骤时播 `enter_sequence`（标题卡、醒来、音效、对白，按顺序）；电视按天播新闻；电脑打开暗网终端（`scripts/ui/terminal_menu.gd`：信息推进剧情，购物记下订单）；冰箱、哑铃记当晚标记；床在允许的步骤睡到 22:00 并播暴走转场；门按步骤的 `door` 出发。
+- `story_state.gd` 的本轮账户：`balance` 和 `balance_changed` 跨场景共享，`award_once(id, amount)` 用奖励标记去重，`spend(amount)` 原子扣款，`purchase(id, price)` 先检查已有物品和余额再一次性赋物扣款；重新 `start_chapter` 清零，尚无持久化存档。
+- `home_601/home_chapter.gd`：安全屋的章节逻辑。进入步骤时播 `enter_sequence`（标题卡、醒来、音效、对白，按顺序）；电视按天播新闻；电脑打开暗网终端（`scripts/ui/terminal_menu.gd`：信息推进剧情，购物原子扣费并记录物品）；冰箱、哑铃记当晚标记；真实撤离到 `d1_return` 且 `coburn_dead` 时仅结算一次50元，HUD显示到账；电脑结算需完整翻页，Esc关闭不推进，完成进入 `d1_resupply` 并自动打开购物；成功购买才到 `d1_shopped`，床在允许的步骤睡到 22:00 并播暴走转场；门按步骤的 `door` 出发。
 - `hospital/hospital_chapter.gd`：医院的章节逻辑。步骤决定视角（白天俯视、夜晚侧视）和出生房间；白天潜行时每个物理帧用 `interior_lighting.light_level(脚下)` 判亮暗（阈值 `LIT_THRESHOLD` 0.06），暴露条每秒 +0.8 / -0.3，满了锁定、回本层入口（`checkpoint`，R 也回这里）；科伯恩由 `story_target.gd` 使用原生像素医生素材显示，素材与制作记录分别在 `assets/npcs/coburn/` 和 `art_metadata/coburn_20261018/`；`hospital_chapter` 单独处理F处决，实时核对章节阶段、俯视楼层、距离、背后和灯光，拒绝弹窗、楼梯、设置和顿帧期间输入；E保留普通调查。短刀光演出结束后推进 `d1_target_down`，解锁原有撤离流程；出口面板白天回家（战斗夜晚没有出口，处决后直接进屏息）。章节里配电箱不要钥匙，接待电脑的值班表换成带密码的版本（`line_overrides`）。
 - 光照判定和画面一致：`interior_lighting.gd` 给每个光源记 `reach`（俯视医院按 `layout.json` 的 `light_zones`，墙上的灯用 `zone` 指明照哪边；侧视是楼层上下界），光照贴图在 `reach` 外是黑的，`light_level()` 用同一套 `band()` 衰减和 `reach` 算亮度。二楼走廊的光斑画在底图里，断电时显示 `assets/underground_hospital/lamp_off/` 的遮罩（`tools/art/gen_lamp_off_covers.py` 生成并写进 layout 的 `off_cover`）。
 - `levels/breath_interlude.gd`（`scenes/breath_interlude.tscn`）：屏息过场，黑屏、呼吸声，按步骤的 `breath_round` 逐行打出乱码口号，然后进 `next` 步骤。

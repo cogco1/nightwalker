@@ -51,6 +51,7 @@ $suites = @(
     @{ Name = 'locomotion_blade';          Script = 'test_locomotion_blade' },
     @{ Name = 'light_sense';              Script = 'test_light_sense' },
     @{ Name = 'coburn_execution';         Script = 'test_coburn_execution' },
+    @{ Name = 'coburn_reward_flow';       Script = 'test_coburn_reward_flow' },
     @{ Name = 'chapter_flow';             Script = 'test_chapter_flow' },
     # Enters through boot.tscn at the first night, as Run-Game.ps1 -Step d1_night does.
     @{ Name = 'night_fight';              Script = 'test_night_fight'; Extra = @('--', '--nw-step=d1_night') }

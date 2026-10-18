@@ -287,6 +287,7 @@ func day_one_home() -> void:
 	var home := current_scene
 	story = STORY_STATE.ensure(self)
 	check(story.chapter_active and story.step == "d1_wake" and story.day == 1, "the boot scene starts chapter 1 at its first step")
+	check(story.balance == 0, "a new chapter starts with no contract money")
 	check(home.chapter != null and home.player.is_frozen(), "the safehouse runs the opening with the hero held")
 	var hud: Node = home.chapter.hud
 	check(hud.place_label.text == "C区 601" and hud.clock_label.text == "07/27 12:00", "the status plate shows 601, the story date and 12:00")
@@ -309,7 +310,7 @@ func day_one_home() -> void:
 	await tap(KEY_E)
 	var menu: Panel = home.chapter.menu
 	check(menu.active and menu.options[0] == "信息（主线）" and menu.badges[0] and menu.options.size() == 3, "the computer opens the dark-web terminal with an unread message")
-	check(not hud.prompt.visible and menu.corner.text == "07/27 12:00", "the terminal hides the key cap and shows the clock")
+	check(not hud.prompt.visible and menu.corner.text.contains("12:00") and menu.corner.text.contains("￥0"), "the terminal hides the key cap and shows the clock and initial account")
 	await tap(KEY_E)
 	check(home.dialogue.active and story.step == "d1_contract", "reading Joren's message takes the job")
 	var bold_index: int = home.dialogue.pages.find("甚至连他们为什么要死都不知道……")
@@ -330,6 +331,7 @@ func hospital_day() -> void:
 	var hospital := current_scene
 	var chapter: Node = hospital.chapter
 	check(story.step == "d1_hospital" and hospital.view_mode == 0 and hospital.floor_id == 1, "the job opens the hospital top-down on floor 1")
+	check(story.balance == 0, "arriving at the clinic does not pay an unfinished contract")
 	var hud: Node = chapter.chapter_hud
 	check(hud.place_label.text == "地下医院 1F" and hud.clock_label.text == "12:30", "the status plate shows the floor and the arrival time")
 	check(not hospital._title.visible and not hospital._hint.visible, "the sandbox title and control line give way to the HUD")
@@ -384,6 +386,13 @@ func hospital_day() -> void:
 	await tap(KEY_ENTER)
 	await frames(24)
 	check(hospital.security.is_door_unlocked("office_door") and not hospital.security.keypad_active, "1010 opens the office door")
+	if not await walk_hospital("exit_panel", Vector2(590, 175), 16.0):
+		return
+	await tap(KEY_E)
+	check(current_scene == hospital and story.step == "d1_hospital" and story.balance == 0,
+		"the real exit cannot withdraw or pay before Coburn is dead")
+	if hospital.interactions.dialogue_active:
+		await read_all(hospital.interactions.dialogue)
 
 	# From the front Coburn would see the hero; from behind, in the dark, the job is done.
 	var feet: Vector2 = chapter.target.position
@@ -401,6 +410,7 @@ func hospital_day() -> void:
 			break
 		await frames(1)
 	check(chapter.target.dead and story.has_flag("coburn_dead") and story.step == "d1_target_down", "F from behind, in the dark, kills Coburn")
+	check(story.balance == 0, "the execution alone leaves the account unpaid until the hero reaches 601")
 	check(not chapter.busy and not hospital.player.is_frozen(), "the execution releases the hero for the withdrawal")
 	check(chapter.overlay.shown.has("strike") and not hospital.interactions.dialogue_active, "the kill flashes without any subtitle")
 	check(chapter.locks == 1, "the dark route never locked on again")
@@ -415,18 +425,21 @@ func day_one_evening() -> void:
 	var home := current_scene
 	var hud: Node = home.chapter.hud
 	check(story.step == "d1_return" and hud.clock_label.text == "07/27 14:50", "the exit returns home at 14:50")
-	check(hud.goal_label.text == "▸ 电脑 · 暗网购物", "home sends the hero to shop")
+	check(story.balance == 50 and hud.balance_label.text.contains("￥50"), "reaching 601 pays the contract once and updates the visible account")
+	check(hud.goal_label.text.contains("电脑"), "home guides the hero to the next computer message")
 	if not await walk_home("computer"):
 		return
 	await tap(KEY_E)
 	var menu: Panel = home.chapter.menu
-	check(menu.active and not menu.badges[0], "no new message after the job")
-	await tap(KEY_S)
-	check(menu.selected == 1, "S moves to 购物")
+	check(menu.active and menu.badges[0] and menu.corner.text.contains("￥50"), "the terminal has an unread settlement and the real balance")
 	await tap(KEY_E)
-	check(menu.active and menu.options.size() == 4 and menu.options[0] == "暗器 · 钢钉" and menu.notes[0] == "武器装备 ￥40", "the shop lists equipment, food, drink and supplies with prices")
+	check(home.dialogue.active and story.step == "d1_return", "opening the settlement does not skip unread pages")
+	await read_all(home.dialogue)
+	check(story.step == "d1_resupply", "finishing the settlement guides the hero to the script's resupply")
+	check(menu.active and menu.options.size() == 4 and menu.options[0] == "暗器 · 钢钉" and menu.notes[0].contains("￥40"), "the shop lists equipment, food, drink and supplies with prices")
 	await tap(KEY_E)
-	check(story.has_item("throwing_spike") and story.step == "d1_shopped" and not menu.active, "ordering an item completes the shop lesson")
+	check(story.has_item("throwing_spike") and story.balance == 10 and story.step == "d1_shopped" and not menu.active,
+		"buying the steel spikes deducts 40 once and completes resupply")
 	await read_all(home.dialogue)
 	check(hud.goal_label.text == "▸ 床 · 睡觉", "after shopping the bed waits")
 	if not await walk_home("bed"):

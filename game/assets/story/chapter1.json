@@ -3,7 +3,7 @@
 	"id": "chapter1",
 	"title": "第一章",
 	"source_document": "SK(1).txt（2026-10-17 用户批准台词入库）",
-	"notes": "M1 范围：第 1 天到第 2 天早上；M2 加上第一夜的器官交易战斗、按键图标教学和最后一个医生的三句台词（nights.night1，全程无字幕，只有这三句）。商店扣钱和物品效果（M3）、金域大厦（M4/M5）还没做；原文第 3 天“信息（主线）：”之后断了，等用户补。台词按原文，省略号统一为“……”。",
+	"notes": "M1 范围：第 1 天到第 2 天早上；M2 加上第一夜的器官交易战斗、按键图标教学和最后一个医生的三句台词（nights.night1，全程无字幕，只有这三句）。按用户新增需求，科伯恩委托撤离回家后报酬50元到账一次、购物真实扣款；物品效果（M3）、金域大厦（M4/M5）还没做。返家结算消息为新增系统/主角引导，不是SK原文；乔伦责问保持在夜战后的第二天。原文第 3 天“信息（主线）：”之后断了，等用户补。原有台词按原文，省略号统一为“……”。",
 	"start_step": "d1_wake",
 	"days": {
 		"1": {"date": "2040-07-27"},
@@ -15,7 +15,8 @@
 		"d1_contract": {"objective": "出门 · 费列罗诊所", "door": "d1_hospital"},
 		"d1_hospital": {"time": "12:30", "scene": "hospital", "view": "top_down", "objective": "科伯恩 · 二楼办公室", "stealth": true},
 		"d1_target_down": {"objective": "离开 · 二楼走廊尽头的出口", "stealth": true, "exit": "d1_return"},
-		"d1_return": {"time": "14:50", "scene": "home", "objective": "电脑 · 暗网购物", "shop_next": "d1_shopped"},
+		"d1_return": {"time": "14:50", "scene": "home", "objective": "电脑 · 查看结算", "computer": "d1_resupply"},
+		"d1_resupply": {"objective": "电脑 · 暗网购物", "shop_next": "d1_shopped"},
 		"d1_shopped": {"objective": "床 · 睡觉", "bed": "d1_night"},
 		"d1_night": {"time": "22:00", "scene": "hospital", "view": "side_view", "phase": "night", "fight": "night1"},
 		"d1_breath": {"phase": "night", "scene": "breath", "breath_round": 0, "next": "d2_wake"},
@@ -40,6 +41,10 @@
 			"lines": ["科伯恩 男 27岁 在C区费列罗诊所担任主治医师，上班时间为8:00—14:30。", "信息很少，但有这些足够了", "我不知道为什么要去处理这些……", "**甚至连他们为什么要死都不知道……**", "但是这是我唯一不让我饿死的办法……"],
 			"speakers": ["qiaolun", "protagonist", "protagonist", "protagonist", "protagonist"]
 		},
+		"d1_return": {
+			"lines": ["委托已结算。报酬：￥50。", "先去暗网补点东西，再休息。"],
+			"speakers": ["terminal", "protagonist"]
+		},
 		"d2_wake": {
 			"lines": ["我让你去处理那个混账科伯恩！！！", "新闻真是让我打开眼界啊", "别人不是我杀的。", "那可真是 太 巧 了", "这一单的老板很不满意", "以前我都能帮你糊弄过去", "但这老板扬言要在行动上警告我们", "你去处理这件事，然后再联系我", "莫温，金域大厦顶层，总办公室。"],
 			"speakers": ["qiaolun", "qiaolun", "sk_reply", "qiaolun", "qiaolun", "qiaolun", "qiaolun", "qiaolun", "qiaolun"]
@@ -56,7 +61,10 @@
 		"bed_not_yet": ["还不困。还有事没做。"],
 		"door_nowhere": ["601。门外是C区的老楼走廊。", "现在没有要去的地方。"],
 		"door_m4": ["金域大厦……这一段还没做好（第一章 M4）。"],
-		"shop_bought": ["已下单：%s。", "（价格和效果从 M3 开始生效。）"],
+		"shop_bought": ["已购买：%s。", "已从账户扣款。"],
+		"shop_owned": ["已经有%s了，不需要重复购买。"],
+		"shop_insufficient": ["余额不足，无法购买%s。"],
+		"shop_invalid": ["这件物品暂时无法购买。"],
 		"no_messages": ["没有新消息。"]
 	},
 	"shop": [

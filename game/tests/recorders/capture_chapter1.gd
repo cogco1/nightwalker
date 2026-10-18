@@ -167,8 +167,15 @@ func run() -> void:
 	home = current_scene
 	await seconds(0.6)
 	home._open_interaction("computer")
-	home.chapter.menu.move(1)
-	home.chapter._on_menu_chosen(1)
+	home.chapter._on_menu_chosen(0)
+	await frames(2)
+	await type_out(home.dialogue)
+	await shot("contract_receipt_and_resupply_guidance")
+	for _page in range(80):
+		if not home.dialogue.active:
+			break
+		home.dialogue.advance()
+		await frames(2)
 	await frames(6)
 	await shot("dark_web_shop")
 	home.chapter._on_menu_chosen(1)
