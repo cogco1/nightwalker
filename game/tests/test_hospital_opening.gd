@@ -39,15 +39,14 @@ func staff_on_floor(expected: int) -> void:
 
 
 func opening() -> void:
-	var boot: Node = load(BOOT).instantiate()
-	root.add_child(boot)
-	current_scene = boot
-	if not await arrive(HOSPITAL, "The public boot"):
+	# Reuse the complete public safehouse opening, real computer interaction and E at the exit.
+	await day_one_home()
+	if not await arrive(HOSPITAL, "The safehouse door"):
 		return
 	hospital = current_scene
 	story = STORY_STATE.ensure(self)
 	check(story.step == "d1_hospital" and story.clock_text() == "12:30" and hospital.floor_id == 1 and hospital.view_mode == 0,
-		"default first chapter opens the day hospital, without a developer step override")
+		"leaving the safehouse contract enters the day hospital at 12:30, without a developer step override")
 	check(hospital.player.position == SPAWN and hospital.chapter.checkpoint == SPAWN, "the screenshot's pharmacy corridor is the spawn and checkpoint")
 	check(hospital.position_is_clear(SPAWN, 0) and hospital.lighting.light_level(SPAWN) < hospital.chapter.LIT_THRESHOLD,
 		"the new spawn is clear and safe from surveillance")

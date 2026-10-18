@@ -16,7 +16,8 @@ func _initialize() -> void:
 
 
 func observe(label: String) -> void:
-	var box: Panel = hospital.interactions.dialogue
+	var at_home: bool = current_scene.scene_file_path == HOME
+	var box: Panel = current_scene.dialogue if at_home else hospital.interactions.dialogue
 	if label.begins_with("floor_two"):
 		for _tick in range(600):
 			if not hospital.chapter.chapter_hud.toast_panel.visible:
@@ -31,8 +32,9 @@ func observe(label: String) -> void:
 	var filename := "%02d_%s.png" % [shots.size() + 1, label]
 	var image := root.get_texture().get_image()
 	check(image.save_png(OUT + filename) == OK, "the GPU framebuffer saves " + filename)
-	shots.append({"file": filename, "step": story.step, "floor": hospital.floor_id,
-		"player": [player().position.x, player().position.y], "patrol_count": hospital.lighting.patrols.size(),
+	shots.append({"file": filename, "scene": current_scene.scene_file_path, "step": story.step,
+		"floor": 0 if at_home else hospital.floor_id,
+		"player": [player().position.x, player().position.y], "patrol_count": 0 if at_home else hospital.lighting.patrols.size(),
 		"dialogue": box.body.text if box.active else ""})
 
 

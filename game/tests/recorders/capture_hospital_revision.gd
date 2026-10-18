@@ -15,7 +15,8 @@ func _initialize() -> void:
 
 
 func observe(label: String) -> void:
-	var box: Panel = hospital.interactions.dialogue
+	var at_home: bool = current_scene.scene_file_path == HOME
+	var box: Panel = current_scene.dialogue if at_home else hospital.interactions.dialogue
 	if box.active and label != "drawer_note_and_animation":
 		for _tick in range(120):
 			if box.body.visible_characters < 0 or box.body.visible_characters >= box.body.text.length():
@@ -24,7 +25,8 @@ func observe(label: String) -> void:
 	await RenderingServer.frame_post_draw
 	var filename := "%02d_%s.png" % [shots.size() + 1, label]
 	check(root.get_texture().get_image().save_png(OUT + filename) == OK, "the GPU writes " + filename)
-	shots.append({"file": filename, "floor": hospital.floor_id, "step": story.step,
+	shots.append({"file": filename, "scene": current_scene.scene_file_path,
+		"floor": 0 if at_home else hospital.floor_id, "step": story.step,
 		"player": [player().position.x, player().position.y], "dialogue": box.body.text if box.active else ""})
 
 

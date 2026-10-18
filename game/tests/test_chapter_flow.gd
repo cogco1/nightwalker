@@ -364,15 +364,14 @@ func stay(code: int, label: String) -> void:
 # --- the chapter ---------------------------------------------------------------------------------
 
 func day_one_home() -> void:
-	# The public boot now opens the hospital (hospital_opening). Preserve coverage of the optional old intro.
-	story = STORY_STATE.ensure(self)
-	story.start_chapter()
-	routes.travel("d1_wake")
-	if not await arrive(HOME, "The optional 601 opening"):
+	var boot: Node = load(BOOT).instantiate()
+	root.add_child(boot)
+	current_scene = boot
+	if not await arrive(HOME, "The public boot"):
 		return
 	var home := current_scene
 	story = STORY_STATE.ensure(self)
-	check(story.chapter_active and story.step == "d1_wake" and story.day == 1, "the optional 601 opening remains playable")
+	check(story.chapter_active and story.step == "d1_wake" and story.day == 1, "the public chapter starts in safehouse 601")
 	check(story.balance == 0, "a new chapter starts with no contract money")
 	check(home.chapter != null and home.player.is_frozen(), "the safehouse runs the opening with the hero held")
 	var hud: Node = home.chapter.hud
@@ -385,6 +384,8 @@ func day_one_home() -> void:
 	check(opening.has("咚咚 咚咚") and home.chapter.overlay.played.has("knock"), "the knock code sounds and is captioned")
 	check(opening.has("又有生命要逝去了……"), "the opening ends on the knock's meaning")
 	check(not home.player.is_frozen() and hud.goal_label.text == "▸ 电脑", "after the opening the hero is free and sent to the computer")
+	if has_method("observe"):
+		await call("observe", "safehouse_start")
 	check(hud.hints_panel.visible and hud.hints_label.text.contains("移动"), "the control hints show for a while after the opening")
 	await stay(KEY_F8, "F8 is a developer key inside the chapter")
 	await stay(KEY_F7, "F7 is a developer key inside the chapter")
