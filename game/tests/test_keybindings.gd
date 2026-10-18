@@ -65,7 +65,7 @@ func tap(code: Key) -> void:
 
 
 func release_inputs() -> void:
-	for code in [KEY_W, KEY_S, KEY_A, KEY_D, KEY_J, KEY_K, KEY_I, KEY_C, KEY_L, KEY_V, KEY_N, KEY_M, KEY_SHIFT, KEY_SPACE, KEY_R, KEY_TAB, KEY_F1, KEY_ESCAPE]:
+	for code in [KEY_W, KEY_S, KEY_A, KEY_D, KEY_J, KEY_K, KEY_I, KEY_C, KEY_L, KEY_V, KEY_N, KEY_M, KEY_E, KEY_F, KEY_SHIFT, KEY_SPACE, KEY_R, KEY_TAB, KEY_F1, KEY_ESCAPE]:
 		key(code, false)
 	for button in CONTROLS.MOUSE_BUTTONS:
 		mouse(button, false)
@@ -139,6 +139,8 @@ func run_tests() -> void:
 	check(menu.waiting_slot == "move_left" and menu.status.text.contains("保留"), "F1 remains a reliable settings shortcut")
 	await tap(KEY_E)
 	check(menu.waiting_slot == "move_left" and menu.status.text.contains("E 保留") and menu.draft["move_left"] == KEY_A, "E stays reserved for interaction and cannot be captured")
+	await tap(KEY_F)
+	check(menu.waiting_slot == "move_left" and menu.status.text.contains("F 保留") and menu.draft["move_left"] == KEY_A, "F stays reserved for top-down execution and cannot be captured")
 	await tap(KEY_K)
 	check(menu.waiting_slot.is_empty() and menu.draft["move_left"] == KEY_K, "new physical keyboard key is captured")
 	menu.begin_capture("jump")
@@ -276,6 +278,24 @@ func run_tests() -> void:
 	CONTROLS.install()
 	check(CONTROLS.current == CONTROLS.defaults() and CONTROLS.load_notice.contains("RMB"), "a profile saved before the heavy attack gets RMB for heavy and says so")
 	check(InputMap.action_get_events("heavy_mouse").size() == 1, "the heavy action is bound to one mouse button")
+	# A formerly valid custom F binding must migrate without losing the rest of the profile.
+	var prior_execution := ConfigFile.new()
+	prior_execution.set_value("bindings", "version", 4)
+	var prior_f := custom_profile()
+	prior_f["jump"] = KEY_F
+	for slot in CONTROLS.SLOTS:
+		prior_execution.set_value("bindings", slot, prior_f[slot])
+	prior_execution.save(TEST_PATH)
+	CONTROLS.current.clear()
+	CONTROLS.install()
+	check(CONTROLS.current["jump"] not in [KEY_E, KEY_F] and CONTROLS.validate(CONTROLS.current).is_empty(), "a saved F binding moves to an available supported key")
+	check(CONTROLS.load_notice.contains("F"), "migration explains that F is reserved for execution")
+	var surviving := CONTROLS.current.duplicate()
+	surviving["jump"] = custom_profile()["jump"]
+	check(surviving == custom_profile(), "reserving F preserves every other saved keyboard and mouse binding")
+	var reserved_f := custom_profile()
+	reserved_f["jump"] = KEY_F
+	check(not CONTROLS.validate(reserved_f).is_empty(), "a new profile cannot bind a player action to the execution key")
 	# The reload stage expects the custom profile on disk.
 	check(CONTROLS.save_bindings(custom_profile()).is_empty(), "the custom profile is saved again for the reload stage")
 	check(InputMap.action_get_events("attack").size() == 1 and not CONTROLS.current.has("attack_keyboard"), "old saved J attack is discarded during migration")

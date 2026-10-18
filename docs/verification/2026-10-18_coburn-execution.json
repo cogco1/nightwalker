@@ -1,0 +1,325 @@
+{
+  "date": "2026-10-18",
+  "timezone": "Asia/Shanghai",
+  "based_on_commit": "5ad37d35bf05f4c6e86389eac850650b97fefff7",
+  "tested_game_tree": "7da08723dbef5443b3e66de7041cbf6221963a06",
+  "tested_runner_blob": "04cd0a37b60cf725484da7833ec3ff215d7beb89",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "status": "passed_with_known_regression_failure",
+  "import": "passed",
+  "full_regression": {
+    "suite_count": 46,
+    "checks": 4942,
+    "passed_suites": 45,
+    "failed_suites": [
+      "chapter_flow"
+    ],
+    "runner_exit_code": 1,
+    "suite_results": {
+      "core_v07": {
+        "checks": 553,
+        "passed": true
+      },
+      "keybindings": {
+        "checks": 74,
+        "passed": true
+      },
+      "keybindings_reload": {
+        "checks": 21,
+        "passed": true
+      },
+      "air_combat": {
+        "checks": 116,
+        "passed": true
+      },
+      "air_dash_animation_v14": {
+        "checks": 174,
+        "passed": true
+      },
+      "scene_integration_v14": {
+        "checks": 106,
+        "passed": true
+      },
+      "scene_routes": {
+        "checks": 69,
+        "passed": true
+      },
+      "interior_lighting": {
+        "checks": 192,
+        "passed": true
+      },
+      "home_furniture": {
+        "checks": 84,
+        "passed": true
+      },
+      "hospital_interactions": {
+        "checks": 23,
+        "passed": true
+      },
+      "hospital_environment": {
+        "checks": 73,
+        "passed": true
+      },
+      "hospital_physical_stairs": {
+        "checks": 54,
+        "passed": true
+      },
+      "hospital_ward_layout": {
+        "checks": 22,
+        "passed": true
+      },
+      "hospital_security": {
+        "checks": 104,
+        "passed": true
+      },
+      "level_shared": {
+        "checks": 38,
+        "passed": true
+      },
+      "contact_refresh_v07": {
+        "checks": 6,
+        "passed": true
+      },
+      "charged_slash": {
+        "checks": 52,
+        "passed": true
+      },
+      "moveset": {
+        "checks": 1014,
+        "passed": true
+      },
+      "combat_state": {
+        "checks": 18,
+        "passed": true
+      },
+      "rhythm_combat": {
+        "checks": 94,
+        "passed": true
+      },
+      "enemy_attack": {
+        "checks": 29,
+        "passed": true
+      },
+      "perfect_counter": {
+        "checks": 31,
+        "passed": true
+      },
+      "night_street_proto": {
+        "checks": 50,
+        "passed": true
+      },
+      "combat_impact_v2": {
+        "checks": 60,
+        "passed": true
+      },
+      "combat_impact_v2_144": {
+        "checks": 60,
+        "passed": true
+      },
+      "impact_burst": {
+        "checks": 39,
+        "passed": true
+      },
+      "impact_burst_144": {
+        "checks": 39,
+        "passed": true
+      },
+      "thrust_path": {
+        "checks": 60,
+        "passed": true
+      },
+      "jump_chase": {
+        "checks": 76,
+        "passed": true
+      },
+      "jump_chase_144": {
+        "checks": 76,
+        "passed": true
+      },
+      "smooth_charge_links": {
+        "checks": 92,
+        "passed": true
+      },
+      "smooth_charge_links_144": {
+        "checks": 92,
+        "passed": true
+      },
+      "primary_charge_chain": {
+        "checks": 114,
+        "passed": true
+      },
+      "primary_charge_chain_144": {
+        "checks": 133,
+        "passed": true
+      },
+      "direct_charge": {
+        "checks": 40,
+        "passed": true
+      },
+      "direct_charge_144": {
+        "checks": 40,
+        "passed": true
+      },
+      "charged_draw": {
+        "checks": 73,
+        "passed": true
+      },
+      "charged_draw_144": {
+        "checks": 73,
+        "passed": true
+      },
+      "heavy_cleave": {
+        "checks": 67,
+        "passed": true
+      },
+      "roll_thrust_motion": {
+        "checks": 80,
+        "passed": true
+      },
+      "shift_controls": {
+        "checks": 40,
+        "passed": true
+      },
+      "locomotion_blade": {
+        "checks": 260,
+        "passed": true
+      },
+      "light_sense": {
+        "checks": 132,
+        "passed": true
+      },
+      "coburn_execution": {
+        "checks": 70,
+        "passed": true
+      },
+      "chapter_flow": {
+        "checks": 124,
+        "passed": false
+      },
+      "night_fight": {
+        "checks": 105,
+        "passed": true
+      }
+    },
+    "failure": "Every lesson shows in order: move, light, heavy, dodge (perfect absent).",
+    "baseline_note": "The same intermittent night tutorial ordering failure was observed on unchanged main 5ad37d3 during the preceding package verification. Night tutorial logic is unchanged in this work.",
+    "log_sha256": "8f00512c7c9628d1c22e5b25fe53c8ae0bb5e261977325b2265aae030c146a8a"
+  },
+  "chapter_flow_retry": {
+    "checks": 124,
+    "status": "passed",
+    "exit_code": 0,
+    "failures": [],
+    "scope": "One separate retry on final source; does not replace the failed full-run record."
+  },
+  "feature_checks": {
+    "coburn_execution": 70,
+    "keybindings": 74,
+    "hospital_interactions": 23,
+    "coverage": [
+      "Real F execution and E refusal",
+      "Front/light/distance/wall/floor/side-view refusal",
+      "Dialogue/keypad/settings/stairs/freeze gates",
+      "Echo and repeat refusal",
+      "R and Tab cannot interrupt execution",
+      "Execution releases freeze and modal",
+      "Dead pose survives floor reload",
+      "F migration preserves other custom bindings",
+      "Actual E withdrawal to safehouse"
+    ]
+  },
+  "visual": {
+    "renderer": "OpenGL 3.3 Compatibility / NVIDIA GeForce RTX 3050 Laptop GPU",
+    "captures": 7,
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "native_size": [
+      320,
+      180
+    ],
+    "rendered_size": [
+      1280,
+      720
+    ],
+    "recorder": "res://tests/recorders/capture_coburn.gd",
+    "findings": [
+      {
+        "check": "doctor_scale",
+        "result": "pass",
+        "detail": "31-native-pixel doctor matches the protagonist's human scale without runtime enlargement."
+      },
+      {
+        "check": "doctor_design",
+        "result": "pass",
+        "detail": "Short dark hair, face, white coat lapels, dark teal undershirt and seated shoes remain legible under cold lighting."
+      },
+      {
+        "check": "F_prompt",
+        "result": "pass",
+        "detail": "03 shows F and 处决 · 科伯恩 clearly. 02 correctly requests approaching from behind."
+      },
+      {
+        "check": "execution_contact",
+        "result": "pass",
+        "detail": "05 shows the existing bright blade arc and impact flash; 06 shows the bowed final pose and updated withdrawal objective."
+      },
+      {
+        "check": "side_view_action",
+        "result": "pass",
+        "detail": "07 has no actionable F prompt and pressing F leaves the chapter step unchanged."
+      },
+      {
+        "check": "contextual_instruction",
+        "result": "pass",
+        "detail": "Final rerender shows the global tip 灯光下会暴露，暗处才安全. F execution appears only in the actionable nearby target prompt, with no residual F text after death or in side view (06, 07)."
+      }
+    ],
+    "local_evidence": "game/evidence/coburn/"
+  },
+  "art": {
+    "generator": "built-in image_gen",
+    "prompt": "game/art_metadata/coburn_20261018/generation_prompt.txt",
+    "source": "game/art_metadata/coburn_20261018/coburn_sheet_generated.png",
+    "record": "game/art_metadata/coburn_20261018/import_record.json",
+    "assets": "game/assets/npcs/coburn/",
+    "rebuild": "python tools/art/import_coburn.py",
+    "frame_size": [
+      48,
+      48
+    ],
+    "foot_anchor": [
+      24,
+      40
+    ],
+    "idle_body_height": 31,
+    "runtime_scale": [
+      1,
+      1
+    ],
+    "filter": "nearest",
+    "alpha": [
+      0,
+      255
+    ]
+  },
+  "story": {
+    "reference": "docs/design/第一章策划原文_SK.txt",
+    "target": "Coburn, male, 27, attending physician at Ferrero clinic, shift 08:00-14:30",
+    "route": "Safehouse contract -> hospital shadow route -> office password 1010 -> top-down F execution -> exit -> safehouse",
+    "appearance": "Visual adaptation; SK does not specify his face or clothing.",
+    "execution_key": "F",
+    "regular_interaction_key": "E",
+    "keybinding_version": 5
+  },
+  "preserved": [
+    "1152 original player PNG frames and 76 animation entries",
+    "Hospital backgrounds, geometry and 320x180 native grid",
+    "Story dialogue and day/night timing",
+    "Side-view combat and existing hit-stop"
+  ],
+  "intermediate_fixes": [
+    "Hospital test MockPlayer now implements the existing is_frozen player contract; all 23 assertions preserved.",
+    "Arrival guidance remains the original light-exposure toast; F appears only in the contextual nearby prompt."
+  ],
+  "command": "tools/Test-Game.ps1 -GodotPath <local engine executable>"
+}

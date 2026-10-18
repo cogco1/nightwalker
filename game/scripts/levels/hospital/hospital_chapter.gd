@@ -13,6 +13,8 @@ const EXPOSURE_HUD = preload("res://scripts/ui/exposure_hud.gd")
 const STORY_TARGET = preload("res://scripts/levels/hospital/story_target.gd")
 const CHAPTER_HUD = preload("res://scripts/ui/chapter_hud.gd")
 const NIGHT_FIGHT = preload("res://scripts/levels/hospital/night_fight.gd")
+const CONTROLS = preload("res://scripts/core/controls.gd")
+const GAME_SESSION = preload("res://scripts/core/game_session.gd")
 ## Light level at the feet that counts as lit: inside about 0.73 of a ceiling lamp's radius, half a screen's.
 const LIT_THRESHOLD := 0.06
 ## Exposure per second in light / out of it; 1.0 locks on.
@@ -104,7 +106,7 @@ func on_view_activated() -> void:
 		target.name = "Coburn"
 		target.setup(hospital.world, Vector2(feet[0], feet[1]))
 		if story.has_flag("coburn_dead"):
-			target.kill()
+			target.kill(true)
 	if is_instance_valid(fight):
 		fight.on_view_activated()
 	if is_inside_tree():
@@ -125,11 +127,19 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
-	chapter_hud.set_prompt(_prompt_title())
+	var execution := _execution_prompt()
+	chapter_hud.set_prompt(execution if not execution.is_empty() else _prompt_title(),
+		CONTROLS.execute_text() if not execution.is_empty() else "")
 	if not stealth() or not is_instance_valid(hospital.player):
 		return
 	var top_left: Vector2 = hospital.camera.get_screen_center_position() - Vector2(160, 90)
 	hud.update(delta, exposure, busy, in_light and not busy, hospital.player.global_position - top_left)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and CONTROLS.is_execute(event):
+		request_execution()
+		get_viewport().set_input_as_handled()
 
 
 ## Full exposure: the lock flashes and the hero is put back where this floor was entered.
@@ -153,16 +163,14 @@ func lock_on() -> void:
 func _prompt_title() -> String:
 	var interactions: Node = hospital.interactions
 	var security: Node = hospital.security
-	if busy or hospital.stairs_busy or not is_instance_valid(interactions) or interactions.dialogue_active:
-		return ""
-	if is_instance_valid(security) and security.keypad_active:
-		return ""
-	if is_instance_valid(fight) and fight.busy:
+	if _input_blocked():
 		return ""
 	var door: String = security.nearest_door_title() if is_instance_valid(security) else ""
 	if not door.is_empty():
 		return door
 	var item: Dictionary = interactions._find_interaction(interactions.nearest_id)
+	if String(item.get("kind", "")) == "story":
+		return "" # Coburn has his own F prompt, never an E execution.
 	if String(item.get("kind", "")) == "stairs" and not stairs_open():
 		return ""
 	return String(item.get("title", ""))
@@ -191,19 +199,105 @@ func story_targets() -> Array:
 		"anchors": {"top_down": [target.position.x, target.position.y]}}]
 
 
-## E on Coburn: only from behind and out of the light.
+## Ordinary E interactions never execute a story target. Kept for the shared interaction dispatcher.
 func story_interact(_id: String) -> Array:
-	var settings: Dictionary = story.chapter.get("hospital", {})
+	return []
+
+
+## Modals and impact pauses must never queue an execution for when normal play resumes.
+func _input_blocked() -> bool:
 	var player: CharacterBody2D = hospital.player
-	if in_light:
-		return settings.get("kill_too_bright", [])
+	if busy or hospital.stairs_busy or not is_instance_valid(player) or player.is_frozen() or get_tree().paused:
+		return true
+	if is_instance_valid(overlay) and (overlay.busy or overlay.shade.color.a > 0.01):
+		return true
+	if not is_instance_valid(hospital.interactions) or hospital.interactions.dialogue_active:
+		return true
+	if is_instance_valid(hospital.security) and hospital.security.keypad_active:
+		return true
+	if is_instance_valid(fight) and fight.busy:
+		return true
+	var session := GAME_SESSION.of(self)
+	return session != null and (session.settings_open or session.hit_stop_active or session.has_modal())
+
+
+func _near_execution_target() -> bool:
+	var settings: Dictionary = story.chapter.get("hospital", {}).get("coburn", {})
+	return story.chapter_active and story.step == "d1_hospital" and stealth() \
+		and hospital.floor_id == int(settings.get("floor", 2)) \
+		and is_instance_valid(target) and not target.dead and target.get_parent() == hospital.world \
+		and not story.has_flag("coburn_dead") \
+		and hospital.player.global_position.distance_to(target.global_position) <= KILL_RADIUS
+
+
+## Read the light at the key press, not the previous physics frame (a breaker may have just changed it).
+func _execution_block_reason() -> String:
+	var player: CharacterBody2D = hospital.player
+	if hospital.lighting.light_level(player.global_position) >= LIT_THRESHOLD:
+		return "先避开光线"
 	if not target.is_behind(player.global_position):
-		return settings.get("kill_from_front", [])
+		return "需绕到背后"
+	var ray := PhysicsRayQueryParameters2D.create(player.global_position, target.global_position, 1)
+	# The target's own body is the destination, not cover. Other solid furniture / closed doors still block F.
+	var excluded: Array[RID] = [player.get_rid()]
+	var body := target.get_node_or_null("StoryTargetBody") as CollisionObject2D
+	if body != null:
+		excluded.append(body.get_rid())
+	ray.exclude = excluded
+	if not hospital.get_world_2d().direct_space_state.intersect_ray(ray).is_empty():
+		return "路径被挡住"
+	if player.is_attacking or player.is_charging or player.is_dodging or player.state == player.State.HURT:
+		return "先收起动作"
+	return ""
+
+
+func _execution_prompt() -> String:
+	if _input_blocked() or not _near_execution_target():
+		return ""
+	var reason := _execution_block_reason()
+	return "处决 · 科伯恩" if reason.is_empty() else reason
+
+
+## Dedicated F request: the same gates drive both the prompt and the action; holding F never repeats it.
+func request_execution() -> bool:
+	if _input_blocked() or not _near_execution_target() or not _execution_block_reason().is_empty():
+		return false
+	_execute()
+	return true
+
+
+## Reuse the existing native attack drawings and kill feedback, without advancing the ordinary combo state.
+func _execute() -> void:
+	busy = true
+	var player: CharacterBody2D = hospital.player
+	var session := GAME_SESSION.of(self)
+	if session != null:
+		session.push_modal(self)
+	player.freeze(self)
+	player._update_facing(target.global_position - player.global_position)
+	var animation := "attack1_" + String(player.facing)
+	player._set_manual_frame(animation, 2)
+	chapter_hud.set_prompt("")
+	if session != null:
+		session.combat_feedback.play("swing_light")
+	await get_tree().create_timer(0.07, false).timeout
+	player._set_manual_frame(animation, 6)
 	target.kill()
 	overlay.strike_flash()
+	var direction: Vector2 = player._facing_vector()
+	player.fx.impact(target.global_position + Vector2(0, -12), &"light", direction, player.global_position, true)
 	story.set_flag("coburn_dead")
 	story.set_step("d1_target_down")
-	return []
+	player.impact.emit(&"kill", direction)
+	if session != null and session.hit_stop_active:
+		await session.hit_stop_finished
+	player._set_manual_frame(animation, 11)
+	await get_tree().create_timer(0.13, false).timeout
+	player.show_idle()
+	player.unfreeze(self)
+	if session != null:
+		session.pop_modal(self)
+	busy = false
 
 
 ## Reading text the chapter replaces for an interaction (the duty roster carries the door code).

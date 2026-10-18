@@ -132,7 +132,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_instance_valid(security) and security.keypad_active:
 		get_viewport().set_input_as_handled()
 		return
-	if stairs_busy:
+	if stairs_busy or (chapter != null and chapter.busy):
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.is_action_pressed("switch_view"):
