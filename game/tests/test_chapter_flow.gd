@@ -1,7 +1,7 @@
 extends "res://tests/support/isolated_suite.gd"
 ## Chapter 1, milestones 1 and 2, played start to finish with real input: the boot scene starts the story, the
-## title card and the opening play in 601 at 12:00, the computer takes Coburn's job, the door leaves for the
-## hospital, light locks the hero on, the breaker darkens the clinic, the roster gives the door code, Coburn falls
+## optional historical opening plays in 601 at 12:00, the computer takes Coburn's job, the door leaves for the
+## hospital, the sealed breaker stays powered, the roster gives the door code, Coburn falls
 ## from behind, the exit returns home at 14:50, the shop takes an order, the bed sleeps to the 22:00 rampage, the
 ## first night (side view) is fought through by tests/support/night_bot.gd (held A / D, clicks, Shift dodges and
 ## counters, every lesson, both floors, the last doctor's three lines and his execution) into the held-breath
@@ -30,6 +30,9 @@ var _walk_frames := 0
 
 
 func _initialize() -> void:
+	var bindings: GDScript = load("res://scripts/core/controls.gd")
+	bindings.current = bindings.defaults()
+	bindings.install(false)
 	create_timer(280.0, true).timeout.connect(func() -> void:
 		check(false, "Chapter flow completes before the deadline")
 		finish()
@@ -231,6 +234,68 @@ func walk_hospital(id: String, anchor: Vector2, radius := 20.0, extra := Callabl
 	return await walk(goal, "hospital " + id)
 
 
+## Cross a deliberate straight corridor segment with the real hold-Shift gesture, then walk its last pixels.
+## The short final approach uses the normal brake rather than teleporting or changing the hero's speed.
+func sprint_to(point: Vector2, label := "the next dark patch") -> bool:
+	var chapter: Node = current_scene.chapter
+	var initial_locks: int = chapter.locks
+	var peak := 0.0
+	key(KEY_SHIFT, true)
+	for _tick in range(600):
+		var offset: Vector2 = point - player().position
+		if offset.length() <= 8.0 or chapter.locks != initial_locks:
+			break
+		var horizontal := absf(offset.x) >= absf(offset.y)
+		hold((KEY_D if offset.x > 0 else KEY_A) if horizontal else (KEY_S if offset.y > 0 else KEY_W))
+		await frames()
+		_walk_frames += 1
+		peak = maxf(peak, player().velocity.length())
+		if chapter.exposure > float(observations.get("day_peak_exposure", 0.0)):
+			observations["day_peak_exposure"] = chapter.exposure
+			observations["day_peak_location"] = {"leg": label, "point": [player().position.x, player().position.y]}
+	hold(0)
+	key(KEY_SHIFT, false)
+	await frames(6)
+	var reached: bool = chapter.locks == initial_locks and await move_to(point)
+	check(reached, "held Shift and movement reach " + label + " without a surveillance reset")
+	observations["sprint_peak_speed"] = maxf(float(observations.get("sprint_peak_speed", 0.0)), peak)
+	return reached
+
+
+func await_dark(label := "the dark waiting patch") -> bool:
+	hold(0)
+	var chapter: Node = current_scene.chapter
+	var initial_locks: int = chapter.locks
+	for _tick in range(360):
+		if chapter.exposure <= 0.005 and not chapter.busy:
+			break
+		await frames()
+	var safe: bool = chapter.locks == initial_locks and chapter.exposure <= 0.005 \
+		and current_scene.lighting.light_level(player().global_position) < chapter.LIT_THRESHOLD
+	var waits: Array = observations.get("dark_waits", [])
+	waits.append({"point": [player().position.x, player().position.y], "light": current_scene.lighting.light_level(player().global_position),
+		"exposure": chapter.exposure, "locks": chapter.locks})
+	observations["dark_waits"] = waits
+	check(safe, label + " is actually dark and lets the exposure meter drain")
+	return safe
+
+
+func close_intro() -> bool:
+	var hospital := current_scene
+	for _tick in range(180):
+		if hospital.interactions.dialogue_active:
+			break
+		await frames()
+	check(hospital.interactions.dialogue_active, "the real day arrival presents its protagonist reading")
+	if not hospital.interactions.dialogue_active:
+		return false
+	var lines := await read_all(hospital.interactions.dialogue)
+	check(lines.has("光粒子监控，真是麻烦..."), "the hospital opening uses the requested line")
+	check(not hospital.chapter.busy and not hospital.player.is_frozen() and story.has_flag("sequence:hospital_opening"),
+		"finishing the day arrival returns movement once")
+	return not hospital.chapter.busy
+
+
 # --- reading -----------------------------------------------------------------------------------
 
 ## Turns every page of the open reading with E; returns the pages it showed.
@@ -279,14 +344,15 @@ func stay(code: int, label: String) -> void:
 # --- the chapter ---------------------------------------------------------------------------------
 
 func day_one_home() -> void:
-	var boot: Node = load(BOOT).instantiate()
-	root.add_child(boot)
-	current_scene = boot
-	if not await arrive(MAIN, "Boot"):
+	# The public boot now opens the hospital (hospital_opening). Preserve coverage of the optional old intro.
+	story = STORY_STATE.ensure(self)
+	story.start_chapter()
+	routes.travel("d1_wake")
+	if not await arrive(HOME, "The optional 601 opening"):
 		return
 	var home := current_scene
 	story = STORY_STATE.ensure(self)
-	check(story.chapter_active and story.step == "d1_wake" and story.day == 1, "the boot scene starts chapter 1 at its first step")
+	check(story.chapter_active and story.step == "d1_wake" and story.day == 1, "the optional 601 opening remains playable")
 	check(story.balance == 0, "a new chapter starts with no contract money")
 	check(home.chapter != null and home.player.is_frozen(), "the safehouse runs the opening with the hero held")
 	var hud: Node = home.chapter.hud
@@ -335,31 +401,30 @@ func hospital_day() -> void:
 	var hud: Node = chapter.chapter_hud
 	check(hud.place_label.text == "地下医院 1F" and hud.clock_label.text == "12:30", "the status plate shows the floor and the arrival time")
 	check(not hospital._title.visible and not hospital._hint.visible, "the sandbox title and control line give way to the HUD")
-	check(hud.toast_panel.visible and hud.toast_label.text == "灯光下会暴露，暗处才安全", "the arrival toast explains light exposure; F appears at the target")
+	check(hospital.player.position.distance_to(Vector2(566, 78)) < 1.0, "the day mission starts at the northeast clinic entrance")
+	if not await close_intro():
+		return
+	check(hud.toast_panel.visible and hud.toast_label.text == "请尽快躲避光线，shift奔跑。", "the arrival guides the player to sprint between dark patches")
 	await stay(KEY_F7, "F7 is inert in the chapter hospital")
 	await tap(KEY_TAB)
 	check(hospital.view_mode == 0, "Tab does not switch the projection inside the chapter")
-	var checkpoint: Vector2 = chapter.checkpoint
-
-	# Into the lit corridor: the meter fills and the lock sends the hero back.
-	await walk(func(point: Vector2) -> bool: return point == Vector2(76, 70), "the lit floor-1 corridor")
-	var waited := 0
-	while chapter.locks == 0 and waited < 240:
-		await frames(1)
-		waited += 1
-	check(chapter.locks == 1 and chapter.overlay.shown.has("lock:微光粒子监控已锁定"), "standing in the corridor light locks on")
-	while chapter.busy:
-		await frames(1)
-	await frames(3)
-	check(hospital.player.position.distance_to(checkpoint) < 1.0, "the lock returns the hero to the entry room")
-
-	# Breaker: no key inside the chapter; the clinic goes dark.
+	# All sources remain on. Stop below the gaps between ceiling lights to recover before the next crossing.
+	for point: Vector2 in [Vector2(430, 78), Vector2(302, 78), Vector2(174, 78)]:
+		if not await sprint_to(point, "floor-1 dark patch " + str(point)) or not await await_dark():
+			return
+	# The turn under the western lamp is a crossing, not a place to wait; continue through the open doorway.
+	if not await sprint_to(Vector2(76, 78), "the western doorway turn") \
+		or not await sprint_to(Vector2(76, 100), "the unlit entry room") or not await await_dark():
+		return
+	check(float(observations.get("sprint_peak_speed", 0.0)) >= 137.0, "holding Shift uses the shipped 138px/s running speed")
+	# The day mission's breaker is sealed; real E reads its feedback and leaves the clinical supply on.
 	if not await walk_hospital("breaker", Vector2(116, 157), 18.0):
 		return
 	check(hud.prompt.visible and hud.prompt_label.text == "配电箱" and not hospital.interactions._hint.visible, "the key cap names the breaker")
 	await tap(KEY_E)
-	check(hospital.interactions.dialogue_active and not hospital.interactions.power_states["clinical"], "the breaker opens without a key and cuts the clinic's power")
-	await read_all(hospital.interactions.dialogue)
+	check(hospital.interactions.dialogue_active and hospital.interactions.power_states["clinical"], "E at the sealed day breaker keeps the hospital powered")
+	var breaker_lines := await read_all(hospital.interactions.dialogue)
+	check(breaker_lines.has("配电箱不能关闭。得避开光线。"), "the breaker explains the powered stealth route")
 	if not await walk_hospital("stairs_up", Vector2(74, 174), 18.0):
 		return
 	await tap(KEY_E)
@@ -374,29 +439,51 @@ func hospital_day() -> void:
 	var roster := await read_all(hospital.interactions.dialogue)
 	check(roster.any(func(page: String) -> bool: return page.contains("1010")), "the duty roster carries the door code")
 
-	# Office door: the corridor is dark now.
-	if not await walk_hospital("office_door", Vector2(502, 152), 6.0):
+	# The low edge of the corridor stays below the lights. Ordinary E at the exit still refuses an unpaid job.
+	for point: Vector2 in [Vector2(106, 186), Vector2(590, 186), Vector2(590, 175)]:
+		if not await sprint_to(point, "the lower corridor toward the exit"):
+			return
+	await tap(KEY_E)
+	check(current_scene == hospital and story.step == "d1_hospital" and story.balance == 0,
+		"the real exit cannot withdraw or pay before Coburn is dead")
+	if hospital.interactions.dialogue_active:
+		await read_all(hospital.interactions.dialogue)
+	for point: Vector2 in [Vector2(590, 186), Vector2(502, 186)]:
+		if not await sprint_to(point, "the office's dark lower approach"):
+			return
+	if not await await_dark("the lower office waiting patch"):
 		return
-	check(not chapter.in_light, "the corridor by the office is dark after the breaker")
+	if not await sprint_to(Vector2(502, 154), "the office keypad"):
+		return
 	check(hud.prompt_label.text == "办公室密码门" and not hospital.security.get("_hint").visible, "the key cap names the locked office door")
 	await tap(KEY_E)
 	check(hospital.security.keypad_active, "E at the office door opens the keypad")
 	for digit in "1010":
 		await tap(KEY_0 + int(digit), digit.unicode_at(0))
 	await tap(KEY_ENTER)
-	await frames(24)
+	# The code-confirm tap already took five frames; twelve more clear the existing 0.25s door animation.
+	# Move as soon as it opens instead of waiting unnecessarily under a live corridor lamp.
+	await frames(12)
 	check(hospital.security.is_door_unlocked("office_door") and not hospital.security.keypad_active, "1010 opens the office door")
-	if not await walk_hospital("exit_panel", Vector2(590, 175), 16.0):
+	# Enter below the desk, then take the narrow west side. Wait for the moving office pool to leave the target.
+	for point: Vector2 in [Vector2(502, 133), Vector2(429, 133), Vector2(429, 64)]:
+		if not await sprint_to(point, "the office west route"):
+			return
+	if not await await_dark("the west office waiting patch"):
 		return
-	await tap(KEY_E)
-	check(current_scene == hospital and story.step == "d1_hospital" and story.balance == 0,
-		"the real exit cannot withdraw or pay before Coburn is dead")
-	if hospital.interactions.dialogue_active:
-		await read_all(hospital.interactions.dialogue)
-
-	# From the front Coburn would see the hero; from behind, in the dark, the job is done.
-	var feet: Vector2 = chapter.target.position
-	if not await walk(func(point: Vector2) -> bool: return point.distance_to(feet) <= 20.0 and point.y <= feet.y - 14.0, "behind Coburn"):
+	var office: PointLight2D
+	for source: Dictionary in hospital.lighting.patrols:
+		if source["id"] == "patrol_office":
+			office = source["light"]
+	check(is_instance_valid(office), "the actual moving office surveillance light exists")
+	if not is_instance_valid(office):
+		return
+	for _tick in range(900):
+		if office.position.x >= 560.0:
+			break
+		await frames()
+	check(office.position.x >= 560.0 and chapter.exposure <= 0.005, "the hero waits in darkness until the office light opens a real crossing window")
+	if not await sprint_to(Vector2(492, 64), "the dark approach behind Coburn"):
 		return
 	await frames(2)
 	check(hospital.interactions.nearest_id == "coburn" and hud.prompt_label.text.contains("科伯恩") and hud.key_label.text == "F", "behind Coburn the key cap names him and F")
@@ -413,9 +500,10 @@ func hospital_day() -> void:
 	check(story.balance == 0, "the execution alone leaves the account unpaid until the hero reaches 601")
 	check(not chapter.busy and not hospital.player.is_frozen(), "the execution releases the hero for the withdrawal")
 	check(chapter.overlay.shown.has("strike") and not hospital.interactions.dialogue_active, "the kill flashes without any subtitle")
-	check(chapter.locks == 1, "the dark route never locked on again")
-	if not await walk_hospital("exit_panel", Vector2(590, 175), 16.0):
-		return
+	check(chapter.locks == 0 and hospital.interactions.power_states["clinical"], "the powered route reaches the execution without any surveillance reset")
+	for point: Vector2 in [Vector2(429, 64), Vector2(429, 133), Vector2(502, 133), Vector2(502, 186), Vector2(590, 186), Vector2(590, 175)]:
+		if not await sprint_to(point, "the withdrawal through the powered clinic"):
+			return
 	await tap(KEY_E)
 
 

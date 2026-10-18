@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "fluorescent_energy": 0.19,
+  "sources": [
+    {
+      "id": "patrol_west",
+      "position": [180, 165],
+      "from": [180, 165],
+      "to": [348, 165],
+      "period": 13.0,
+      "phase": 0.0,
+      "zone": "corridor",
+      "radius": 20,
+      "energy": 0.8,
+      "colour": "9bd9e8"
+    },
+    {
+      "id": "patrol_east",
+      "position": [386, 165],
+      "from": [386, 165],
+      "to": [596, 165],
+      "period": 15.0,
+      "phase": 0.2,
+      "zone": "corridor",
+      "radius": 20,
+      "energy": 0.8,
+      "colour": "9bd9e8"
+    },
+    {
+      "id": "patrol_office",
+      "position": [450, 72],
+      "from": [450, 72],
+      "to": [590, 72],
+      "period": 12.0,
+      "phase": 0.5,
+      "zone": "office",
+      "radius": 26,
+      "energy": 0.65,
+      "colour": "b1e5ed"
+    }
+  ]
+}

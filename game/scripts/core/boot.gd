@@ -1,5 +1,5 @@
 extends Node
-## Formal entry (Run-Demo): starts chapter 1, then opens the safehouse. With "-- --sandbox" it opens the free
+## Formal entry (Run-Demo): starts chapter 1 at its configured scene. With "-- --sandbox" it opens the free
 ## sandbox instead, the same as Run-Sandbox.cmd starting main.tscn directly: no clock, F7 / F8 / Tab free. With
 ## "-- --nw-step=<id>" (Run-Game.ps1 -Step <id>) the chapter starts at that step instead, to try one part (a step
 ## that names its scene, e.g. d1_night for the first night's fight).
@@ -22,10 +22,10 @@ func _open_initial_scene() -> void:
 		story.end_chapter()
 	else:
 		story.start_chapter()
-		var step := requested_step(OS.get_cmdline_user_args())
-		if not step.is_empty() and story.chapter.get("steps", {}).get(step, {}).has("scene"):
-			get_tree().root.get_node("SceneRoutes").travel.call_deferred(step)
-			return
+		var requested := requested_step(OS.get_cmdline_user_args())
+		var step: String = requested if story.step_data(requested).has("scene") and not requested.is_empty() else story.step
+		get_tree().root.get_node("SceneRoutes").travel.call_deferred(step)
+		return
 	get_tree().change_scene_to_file.call_deferred(MAIN_PATH)
 
 

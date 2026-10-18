@@ -82,7 +82,7 @@ func _ready() -> void:
 		chapter = HOSPITAL_CHAPTER.new(self)
 		start = chapter.start_context()
 		floor_id = int(start.get("floor", floor_id))
-	activate_view(int(start["view"]), String(start["room"]))
+	activate_view(int(start["view"]), String(start["room"]), start.get("position"))
 	interactions = INTERACTIONS.new()
 	interactions.name = "HospitalInteractions"
 	interactions.call("configure", self, base_layout)

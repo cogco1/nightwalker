@@ -292,13 +292,15 @@ func has_item(id: String) -> bool:
 func try_unlock_breaker() -> bool:
 	if not _is_top_down():
 		return false
+	var chapter: Variant = _host.get("chapter")
+	if chapter != null and chapter.stealth():
+		return false
 	if is_breaker_unlocked():
 		return true
 	var breaker: Dictionary = _settings.get("breaker", {})
 	var state := _ensure_story_state()
-	# Chapter 1 cuts the lights with this breaker, so the story opens the cabinet without the key.
-	var chapter := state != null and bool(state.get("chapter_active"))
-	if not chapter and not has_item(String(breaker.get("required_item", "breaker_key"))):
+	var story_mode := state != null and bool(state.get("chapter_active"))
+	if not story_mode and not has_item(String(breaker.get("required_item", "breaker_key"))):
 		return false
 	if state == null:
 		return false

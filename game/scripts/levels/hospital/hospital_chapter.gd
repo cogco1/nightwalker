@@ -15,6 +15,7 @@ const CHAPTER_HUD = preload("res://scripts/ui/chapter_hud.gd")
 const NIGHT_FIGHT = preload("res://scripts/levels/hospital/night_fight.gd")
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
+const DAY_STAFF = preload("res://scripts/levels/hospital/hospital_day_staff.gd")
 ## Light level at the feet that counts as lit: inside about 0.73 of a ceiling lamp's radius, half a screen's.
 const LIT_THRESHOLD := 0.06
 ## Exposure per second in light / out of it; 1.0 locks on.
@@ -29,6 +30,7 @@ var overlay: CanvasLayer
 var hud: Node
 var chapter_hud: Node
 var target: Node2D
+var day_staff: Node2D
 ## The night's fight when the step names one (chapter1.json nights.*).
 var fight: Node
 var exposure := 0.0
@@ -50,7 +52,11 @@ func start_context() -> Dictionary:
 	var settings: Dictionary = story.chapter.get("hospital", {})
 	if String(story.step_data().get("view", "top_down")) == "side_view":
 		return {"view": 1, "floor": int(settings.get("night_floor", 1)), "room": ""}
-	return {"view": 0, "floor": 1, "room": String(settings.get("arrival_room", "entry"))}
+	var start := {"view": 0, "floor": 1, "room": String(settings.get("arrival_room", "entry"))}
+	var point: Array = settings.get("arrival_position", [])
+	if point.size() == 2:
+		start["position"] = Vector2(point[0], point[1])
+	return start
 
 
 func _ready() -> void:
@@ -76,11 +82,35 @@ func _ready() -> void:
 		night["id"] = fight_id
 		fight = NIGHT_FIGHT.new(self, night)
 		add_child(fight)
-	if stealth():
-		chapter_hud.toast(String(story.chapter.get("hospital", {}).get("tip", "")))
 	hospital.refresh_ui()
 	overlay.shade.color.a = 1.0
-	overlay.fade_from_black(0.8 if story.is_night() else 0.5)
+	_arrive.call_deferred()
+
+
+## A single introduction on the actual hospital arrival; stairs and exposure resets never replay it.
+func _arrive() -> void:
+	var opening: Dictionary = story.chapter.get("hospital", {}).get("opening", {})
+	var show_opening: bool = stealth() and story.step == "d1_hospital" and not opening.is_empty() \
+		and not story.has_flag("sequence:hospital_opening")
+	var session := GAME_SESSION.of(self)
+	if show_opening:
+		story.set_flag("sequence:hospital_opening")
+		busy = true
+		hospital.player.freeze(self)
+		if session != null:
+			session.push_modal(self)
+	await overlay.fade_from_black(0.8 if story.is_night() else 0.5)
+	if show_opening:
+		var dialogue: Panel = hospital.interactions.dialogue
+		dialogue.open(opening.get("lines", []), "地下医院", hospital.player, opening.get("speakers", []))
+		await dialogue.closed
+		hospital.player.unfreeze(self)
+		if session != null:
+			session.pop_modal(self)
+		busy = false
+		chapter_hud.toast(String(opening.get("tip", "")), CHAPTER_HUD.STYLE.CYAN, 8.0)
+	elif stealth():
+		chapter_hud.toast(String(story.chapter.get("hospital", {}).get("tip", "")))
 
 
 func stealth() -> bool:
@@ -100,6 +130,7 @@ func refresh() -> void:
 func on_view_activated() -> void:
 	checkpoint = hospital.player.position
 	exposure = 0.0
+	day_staff = DAY_STAFF.refresh(hospital, story)
 	target = null
 	var settings: Dictionary = story.chapter.get("hospital", {}).get("coburn", {})
 	if hospital.view_mode == 0 and hospital.floor_id == int(settings.get("floor", 2)) and not story.chapter.is_empty():

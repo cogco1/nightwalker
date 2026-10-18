@@ -38,6 +38,42 @@ func frames(count: int) -> void:
 	await process_frame
 
 
+func tap(code: int) -> void:
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.physical_keycode = code
+	event.pressed = true
+	Input.parse_input_event(event)
+	Input.flush_buffered_events()
+	await frames(2)
+	event = InputEventKey.new()
+	event.keycode = code
+	event.physical_keycode = code
+	event.pressed = false
+	Input.parse_input_event(event)
+	Input.flush_buffered_events()
+	await frames(3)
+
+
+func close_day_opening() -> void:
+	# This suite measures the exposure meter after the actual first-arrival reading releases the hero.
+	for _tick in range(180):
+		if hospital.interactions.dialogue_active:
+			break
+		await frames(1)
+	check(hospital.interactions.dialogue_active, "the first clinic arrival opens its story reading")
+	for _page in range(30):
+		if not hospital.interactions.dialogue_active and not hospital.chapter.busy:
+			break
+		if hospital.interactions.dialogue_active:
+			await tap(KEY_E)
+		else:
+			await frames(1)
+	await frames(2)
+	check(story.has_flag("sequence:hospital_opening") and not hospital.chapter.busy and not hospital.player.is_frozen(),
+		"reading the day arrival releases the hero before exposure is measured")
+
+
 func open_hospital() -> void:
 	if is_instance_valid(hospital):
 		hospital.queue_free()
@@ -191,17 +227,21 @@ func verify_sandbox() -> void:
 
 func run() -> void:
 	story = STORY_STATE.ensure(self)
+	# Keep the existing static-source/zone/texture and breaker assertions in the unchanged sandbox. Chapter
+	# floor 2 now adds moving lights, which are covered separately by hospital_opening instead of changing
+	# this suite's one-source-at-a-time picture/gameplay equivalence checks.
+	await verify_sandbox()
+	await verify_floor(1)
+	await verify_floor(2)
+	await verify_breaker()
 	story.start_chapter()
 	story.set_step("d1_hospital")
 	await open_hospital()
 	check(hospital.view_mode == 0 and hospital.floor_id == 1, "the day job opens top-down on floor 1")
-	check(hospital.player.position.distance_to(Vector2(108, 174)) < 1.0, "the day job starts in the entry room")
+	check(hospital.player.position.distance_to(Vector2(566, 78)) < 1.0, "the day job starts at the new northeast clinic arrival")
 	check(hospital.chapter.chapter_hud.clock_label.text == "12:30", "the status plate carries the story clock")
-	await verify_floor(1)
-	await verify_floor(2)
-	await verify_breaker()
+	await close_day_opening()
 	await verify_exposure()
-	await verify_sandbox()
 	finish()
 
 
