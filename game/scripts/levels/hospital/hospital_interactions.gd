@@ -223,14 +223,14 @@ func _open_interaction(item: Dictionary) -> void:
 	if raw_lines is Array and lines.is_empty():
 		lines = raw_lines.duplicate()
 	if String(item.get("kind", "inspect")) == "toggle_power":
-		var locked := false
+		var locked: bool = chapter != null and chapter.stealth()
 		# Only this projection uses the new key lock; generic interactions retain their behavior.
 		var required := String(item.get("top_down_required_item", ""))
-		if _view_key() == "top_down" and not required.is_empty():
+		if not locked and _view_key() == "top_down" and not required.is_empty():
 			var security: Variant = _host.get("security")
 			locked = not is_instance_valid(security) or not bool(security.call("try_unlock_breaker"))
-		if locked:
-			lines = ["配电柜锁着。得先找到钥匙。"]
+			if locked:
+				lines = ["配电柜锁着。得先找到钥匙。"]
 		var section := String(item.get("power_section", ""))
 		if not locked and not section.is_empty():
 			var powered := not bool(power_states.get(section, true))

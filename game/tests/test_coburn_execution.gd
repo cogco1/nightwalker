@@ -71,6 +71,9 @@ func enter_office(powered := false) -> void:
 	hospital.floor_id = 2
 	hospital.activate_view(0, "", BACK)
 	hospital.interactions.power_states["clinical"] = powered
+	# Isolate F's existing light/front/modal gates from the independently tested moving-light route.
+	for source: Dictionary in hospital.lighting.patrols:
+		hospital.lighting.set_source_power(String(source["id"]), false)
 	await frames(5)
 	await place(BACK)
 
@@ -307,6 +310,7 @@ func run() -> void:
 	routes = root.get_node("SceneRoutes")
 	story = STORY_STATE.ensure(self)
 	story.start_chapter()
+	story.set_flag("sequence:hospital_opening")
 	routes.travel("d1_hospital")
 	for _tick in range(120):
 		if current_scene != null and current_scene.scene_file_path == HOSPITAL and not routes.switching:

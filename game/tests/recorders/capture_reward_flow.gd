@@ -42,6 +42,7 @@ func run() -> void:
 	routes = root.get_node("SceneRoutes")
 	story = STORY_STATE.ensure(self)
 	story.start_chapter()
+	story.set_flag("sequence:hospital_opening")
 	routes.travel("d1_hospital")
 	if not await arrive(HOSPITAL, "The capture fixture"):
 		finish()
@@ -51,6 +52,9 @@ func run() -> void:
 	hospital.floor_id = 2
 	hospital.activate_view(0, "", Vector2(492, 64))
 	hospital.interactions.power_states["clinical"] = false
+	# This recording isolates the paid withdrawal; the full chapter suite walks the powered patrol route.
+	for source: Dictionary in hospital.lighting.patrols:
+		hospital.lighting.set_source_power(String(source["id"]), false)
 	# The real arrival fade owns input until it ends. Wait for the offered execution rather than pressing F
 	# under its modal (GPU rendering can arrive while the headless fixture has already faded).
 	var ready := false

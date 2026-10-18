@@ -3,6 +3,7 @@ extends Node2D
 ## replaces only its native-grid rig and rebinds the new player's own material.
 
 const SETTINGS_PATH := "res://assets/lighting/interiors.json"
+const PATROLS_PATH := "res://assets/lighting/hospital_patrols.json"
 const EMISSIVE := preload("res://shaders/emissive_add.gdshader")
 const FOG := preload("res://shaders/interior_fog.gdshader")
 const LIT_MASK := 1
@@ -11,6 +12,8 @@ var world_root: Node2D
 var hero: CharacterBody2D
 var context: Dictionary = {}
 var lights: Array[PointLight2D] = []
+## The first day's three floor-2 moving surveillance lights, sharing the visible/exposure source records.
+var patrols: Array[Dictionary] = []
 var ambient: CanvasModulate
 var glow: WorldEnvironment
 var rig: Node2D
@@ -23,12 +26,16 @@ var _sources: Array[Dictionary] = []
 var _light_textures: Dictionary = {}
 var _clock := 0.0
 var _last_tick := -1
+var _patrol_settings: Dictionary = {}
+var _patrol_clock := 0.0
+var _day_patrol := false
 
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	process_priority = 110
 	_settings = JSON.parse_string(FileAccess.get_file_as_string(SETTINGS_PATH))
+	_patrol_settings = JSON.parse_string(FileAccess.get_file_as_string(PATROLS_PATH))
 	ambient = CanvasModulate.new()
 	ambient.name = "InteriorAmbient"
 	add_child(ambient)
@@ -61,6 +68,9 @@ func refresh_context(next_world: Node2D, next_hero: CharacterBody2D, next_contex
 	glow.environment.glow_intensity = float(_profile.get("glow_intensity", 0.45))
 	lights.clear()
 	_sources.clear()
+	patrols.clear()
+	_patrol_clock = 0.0
+	_day_patrol = _uses_day_patrols()
 	rig = Node2D.new()
 	rig.name = "InteriorLightRig"
 	rig.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -91,6 +101,9 @@ func refresh_context(next_world: Node2D, next_hero: CharacterBody2D, next_contex
 		var key := "emergency_side_view" if int(context.get("view_mode", 0)) == 1 else "emergency_top_down_%d" % int(context.get("floor_id", 1))
 		for item in _profile.get(key, []):
 			_add_source(item, "emergency", holder, fixture_holder, background)
+		if _day_patrol:
+			for item in _patrol_settings.get("sources", []):
+				_add_source(item, "patrol", holder, fixture_holder, background)
 	_build_fog(layout)
 	var sprite := hero.get_node_or_null("Sprite") as AnimatedSprite2D
 	_hero_material = sprite.material as ShaderMaterial if sprite != null else null
@@ -101,7 +114,20 @@ func refresh_context(next_world: Node2D, next_hero: CharacterBody2D, next_contex
 		_hero_material.set_shader_parameter("shade_edge_color", Color(0.035, 0.055, 0.075, 0.40))
 		_hero_material.set_shader_parameter("glow_strength", 0.65)
 	_update_sources()
+	_place_patrols()
 	_update_hero_light()
+
+
+## Chapter-only challenge; the sandbox, safehouse, first floor and every side view keep their old lights.
+func _uses_day_patrols() -> bool:
+	if String(context.get("profile", "")) != "hospital" or int(context.get("view_mode", 0)) != 0 \
+			or int(context.get("floor_id", 1)) != 2:
+		return false
+	var chapter: Node = get_parent().get("chapter")
+	if not is_instance_valid(chapter):
+		return false
+	var story: Node = chapter.get("story")
+	return is_instance_valid(story) and story.chapter_active and story.step in ["d1_hospital", "d1_target_down"]
 
 
 func set_power_states(states: Dictionary) -> void:
@@ -132,6 +158,8 @@ func _add_source(item: Dictionary, kind: String, holder: Node2D, fixture_holder:
 	var side := int(context.get("view_mode", 0)) == 1
 	var radius := float(item.get("radius", 108.0 if side and kind == "fluorescent" else 76.0 if kind == "fluorescent" else 40.0))
 	var energy := float(item.get("energy", 0.34 if kind == "fluorescent" else 0.24))
+	if _day_patrol and kind == "fluorescent":
+		energy = float(_patrol_settings.get("fluorescent_energy", 0.19))
 	var colour := Color(String(item.get("colour", "79c1d3" if kind == "screen" else "88bac7")))
 	if kind == "emergency":
 		radius = 42.0
@@ -162,17 +190,18 @@ func _add_source(item: Dictionary, kind: String, holder: Node2D, fixture_holder:
 	light.set_meta("floor_id", source_floor)
 	light.set_meta("vertical_span", vertical_span)
 	light.set_meta("reach", reach)
-	var section := "" if kind == "emergency" else _power_section(rectangle, at)
+	# Surveillance has its own supply; a room's breaker never removes these moving pools.
+	var section := "" if kind in ["emergency", "patrol"] else _power_section(rectangle, at)
 	light.set_meta("power_section", section)
 	holder.add_child(light)
 	lights.append(light)
 	var emission: CanvasItem
 	var cover: ColorRect
-	if kind == "emergency":
+	if kind in ["emergency", "patrol"]:
 		var core := ColorRect.new()
 		core.position = at - Vector2.ONE
-		core.size = Vector2(2, 1)
-		core.color = Color(colour, 0.65)
+		core.size = Vector2(3, 2) if kind == "patrol" else Vector2(2, 1)
+		core.color = Color(colour.lightened(0.45) if kind == "patrol" else colour, 0.9 if kind == "patrol" else 0.65)
 		core.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		emission = core
 	elif background != null and rectangle.has_area():
@@ -216,8 +245,17 @@ func _add_source(item: Dictionary, kind: String, holder: Node2D, fixture_holder:
 		material.set_shader_parameter("flicker", 0.09 if kind == "fluorescent" else 0.0)
 		emission.material = material
 		fixture_holder.add_child(emission)
-	_sources.append({"id": id, "kind": kind, "light": light, "emission": emission, "cover": cover,
-		"section": section, "energy": energy, "radius": radius, "reach": reach, "pool": pool})
+	var source := {"id": id, "kind": kind, "light": light, "emission": emission, "cover": cover,
+		"section": section, "energy": energy, "radius": radius, "reach": reach, "pool": pool}
+	_sources.append(source)
+	if kind == "patrol":
+		var start: Array = item["from"]
+		var end: Array = item["to"]
+		source["from"] = Vector2(start[0], start[1])
+		source["to"] = Vector2(end[0], end[1])
+		source["period"] = float(item["period"])
+		source["phase"] = float(item.get("phase", 0.0))
+		patrols.append(source)
 
 
 ## Top-down walls stop light: a source lights only its room or corridor (layout light_zones). A lamp on a wall
@@ -283,6 +321,9 @@ func _update_sources() -> void:
 
 func _process(delta: float) -> void:
 	_clock += delta
+	if not patrols.is_empty() and not _patrol_motion_blocked():
+		_patrol_clock += delta
+		_place_patrols()
 	# Mirror the prop animation's discrete cadence, never modulating body scale.
 	var tick := int(_clock * 12.0)
 	if tick != _last_tick:
@@ -292,6 +333,34 @@ func _process(delta: float) -> void:
 			if light.enabled and entry["kind"] == "fluorescent":
 				light.energy = float(entry["energy"]) * (0.91 if (tick + int(light.position.x)) % 71 in [0, 1] else 1.0)
 	_update_hero_light()
+
+
+## Pause the route as well as the hero while reading, entering a code, changing floors or playing a scene.
+func _patrol_motion_blocked() -> bool:
+	if get_tree().paused or not is_instance_valid(hero) or hero.is_frozen():
+		return true
+	var host := get_parent()
+	var chapter: Node = host.get("chapter")
+	if not is_instance_valid(chapter) or chapter.busy or bool(host.get("stairs_busy")):
+		return true
+	var overlay: Node = chapter.get("overlay")
+	if is_instance_valid(overlay) and (overlay.busy or overlay.shade.color.a > 0.01):
+		return true
+	var session := host.get_node_or_null("GameSession")
+	return session != null and (session.settings_open or session.hit_stop_active or session.has_modal())
+
+
+## Three cached disks on horizontal rails. No texture or mask changes during movement: each rail's complete
+## disk stays in its room, so the initial room clipping and the exposure test keep the same boundaries.
+func _place_patrols() -> void:
+	for source in patrols:
+		var phase := _patrol_clock / float(source["period"]) + float(source["phase"])
+		var progress := 0.5 - 0.5 * cos(TAU * phase)
+		var at := Vector2(source["from"]).lerp(Vector2(source["to"]), progress).round()
+		var light: PointLight2D = source["light"]
+		light.position = at
+		var core: ColorRect = source["emission"]
+		core.position = at - Vector2.ONE
 
 
 func _update_hero_light() -> void:

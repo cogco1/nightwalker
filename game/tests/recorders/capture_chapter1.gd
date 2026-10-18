@@ -1,7 +1,7 @@
 extends "res://tests/support/isolated_suite.gd"
-## Real GPU captures of chapter 1 milestone 1 for review: title card, opening subtitles, the dark-web terminal
+## GPU presentation fixtures of the optional 601 prologue and chapter 1: title card, subtitles, the terminal
 ## and its bold line, the hospital's dark arrival, the hero in lamp light with the scan readout, the lock,
-## the floor-2 corridor before and after the breaker, Coburn from behind and after the kill, the shop, the
+## the floor-2 moving lights, Coburn from behind and after the kill, the shop, the
 ## 22:00 rampage, the night hospital, the held-breath lines and the second morning. Writes evidence/chapter1/.
 
 const CONTROLS = preload("res://scripts/core/controls.gd")
@@ -94,9 +94,10 @@ func place(point: Vector2, facing := "up") -> void:
 func run() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
 	routes = root.get_node("SceneRoutes")
-	change_scene_to_file("res://scenes/boot.tscn")
-	await arrive("res://scenes/main.tscn")
 	story = STORY_STATE.ensure(self)
+	story.start_chapter()
+	routes.travel("d1_wake")
+	await arrive("res://scenes/home_601.tscn")
 	var home := current_scene
 	await seconds(1.2)
 	await shot("title_card")
@@ -125,7 +126,12 @@ func run() -> void:
 	await arrive("res://scenes/underground_hospital.tscn")
 	var hospital := current_scene
 	await seconds(0.6)
-	await shot("hospital_day_arrival_dark_entry")
+	await type_out(hospital.interactions.dialogue)
+	await shot("hospital_day_corridor_monologue")
+	while hospital.chapter.busy:
+		if hospital.interactions.dialogue_active:
+			hospital.interactions.dialogue.advance()
+		await frames(1)
 	await place(Vector2(112, 62))
 	await seconds(0.7)
 	await shot("lamp_light_scan_and_meter")
@@ -142,10 +148,9 @@ func run() -> void:
 	hospital.chapter.exposure = 0.0
 	await seconds(0.3)
 	await shot("floor2_corridor_powered")
-	hospital.interactions.power_states["clinical"] = false
 	await place(Vector2(300, 172), "right")
-	await seconds(0.3)
-	await shot("floor2_corridor_breaker_cut")
+	await seconds(1.0)
+	await shot("floor2_corridor_patrol_sweep")
 	story.set_flag("door:office_door")
 	hospital.activate_view(0)
 	await place(Vector2(492, 64), "down")
