@@ -1,0 +1,642 @@
+{
+  "date": "2026-10-19",
+  "started": "2026-10-18",
+  "timezone": "Asia/Shanghai",
+  "based_on_commit": "6aced69c1d99bf4cd577018e32790fe61407795e",
+  "status": "passed",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "import": "passed",
+  "tested_commit": "a6129da4efc0ab7a691266d49f1b91d2c8f87c85",
+  "tested_game_tree": "cbb0cf03ac046728698627fc40fa94d21da67dc2",
+  "tested_runner_blob": "be8fd2aa2c42aa32db23e29c08f7d9fef91adf66",
+  "full_regression": {
+    "suite_count": 49,
+    "checks": 5389,
+    "failed_suites": [],
+    "runner_exit_code": 0,
+    "suite_checks": {
+      "core_v07": 553,
+      "keybindings": 74,
+      "keybindings_reload": 21,
+      "air_combat": 116,
+      "air_dash_animation_v14": 174,
+      "scene_integration_v14": 106,
+      "scene_routes": 69,
+      "interior_lighting": 192,
+      "home_furniture": 84,
+      "hospital_interactions": 23,
+      "hospital_environment": 73,
+      "hospital_physical_stairs": 54,
+      "hospital_ward_layout": 22,
+      "hospital_security": 104,
+      "level_shared": 38,
+      "contact_refresh_v07": 6,
+      "charged_slash": 52,
+      "moveset": 1014,
+      "combat_state": 18,
+      "rhythm_combat": 94,
+      "enemy_attack": 29,
+      "perfect_counter": 31,
+      "night_street_proto": 50,
+      "combat_impact_v2": 60,
+      "combat_impact_v2_144": 60,
+      "impact_burst": 39,
+      "impact_burst_144": 39,
+      "thrust_path": 60,
+      "jump_chase": 76,
+      "jump_chase_144": 76,
+      "smooth_charge_links": 92,
+      "smooth_charge_links_144": 92,
+      "primary_charge_chain": 114,
+      "primary_charge_chain_144": 133,
+      "direct_charge": 40,
+      "direct_charge_144": 40,
+      "charged_draw": 73,
+      "charged_draw_144": 73,
+      "heavy_cleave": 67,
+      "roll_thrust_motion": 80,
+      "shift_controls": 40,
+      "locomotion_blade": 260,
+      "light_sense": 134,
+      "hospital_opening": 80,
+      "hospital_revision": 105,
+      "coburn_execution": 72,
+      "coburn_reward_flow": 201,
+      "chapter_flow": 181,
+      "night_fight": 105
+    },
+    "log_sha256": "59c1a02531f0a70f768c5f5c8d514d87b433bbef476f9593423e88680101ff31",
+    "all_suite_stderr_bytes": {
+      "core_v07": 0,
+      "keybindings": 0,
+      "keybindings_reload": 0,
+      "air_combat": 0,
+      "air_dash_animation_v14": 0,
+      "scene_integration_v14": 0,
+      "scene_routes": 0,
+      "interior_lighting": 0,
+      "home_furniture": 0,
+      "hospital_interactions": 0,
+      "hospital_environment": 0,
+      "hospital_physical_stairs": 0,
+      "hospital_ward_layout": 0,
+      "hospital_security": 0,
+      "level_shared": 0,
+      "contact_refresh_v07": 0,
+      "charged_slash": 0,
+      "moveset": 0,
+      "combat_state": 0,
+      "rhythm_combat": 0,
+      "enemy_attack": 0,
+      "perfect_counter": 0,
+      "night_street_proto": 0,
+      "combat_impact_v2": 0,
+      "combat_impact_v2_144": 0,
+      "impact_burst": 0,
+      "impact_burst_144": 0,
+      "thrust_path": 0,
+      "jump_chase": 0,
+      "jump_chase_144": 0,
+      "smooth_charge_links": 0,
+      "smooth_charge_links_144": 0,
+      "primary_charge_chain": 0,
+      "primary_charge_chain_144": 0,
+      "direct_charge": 0,
+      "direct_charge_144": 0,
+      "charged_draw": 0,
+      "charged_draw_144": 0,
+      "heavy_cleave": 0,
+      "roll_thrust_motion": 0,
+      "shift_controls": 0,
+      "locomotion_blade": 0,
+      "light_sense": 0,
+      "hospital_opening": 0,
+      "hospital_revision": 0,
+      "coburn_execution": 0,
+      "coburn_reward_flow": 0,
+      "chapter_flow": 0,
+      "night_fight": 0
+    }
+  },
+  "earlier_full_attempt": {
+    "tested_commit": "9beebc0c5ffcadc70424d372c82cb872fc266631",
+    "suite_count": 49,
+    "checks": 5348,
+    "failed_suites": [
+      "scene_integration_v14",
+      "hospital_security"
+    ],
+    "cause": "The moved refrigerators blocked the floor below the pharmacy doorway.",
+    "fix": "Split the actual background refrigerators and their colliders to either side of the door; update LEDs and the cold-cabinet interaction. Keep the original door tests and add real chapter S/W passage checks.",
+    "log_sha256": "d8333b0c0bf6ac42e741cabdcdb84dd2e75e21e6f7f019bfaa5164f995cb3013"
+  },
+  "interim_full_pass": {
+    "tested_commit": "f3cc0e8cc9f2a5319b5b9524c567b2b1456fab78",
+    "suites": 49,
+    "checks": 5354,
+    "failed_suites": [],
+    "log_sha256": "044bfe0d47d4f4d7c0b24c633a44da327e296871cbf0cb1b7260c573cde4786c",
+    "follow_up": "Move the storage doctor final endpoint from y158 to y162 to clear the refrigerator footprint; add checks for every patrol waypoint and rerun the complete suite on the final source."
+  },
+  "independent_layout_review": {
+    "footprint": [
+      12,
+      8
+    ],
+    "bfs_grid_native_px": 1,
+    "all_layout_interaction_anchors_reachable": 11,
+    "floor_1_reachable_foot_points": 44729,
+    "floor_2_reachable_foot_points": 51251,
+    "office_assumed_unlocked": true,
+    "all_20_props_and_floor_backgrounds_rebuild_pixel_identically": true,
+    "layout_import_reconstruction_equals_shipped_json": true,
+    "doctor_storage_final_waypoint": [
+      566,
+      162
+    ]
+  },
+  "chapter_route": {
+    "all_day_doctors_and_lights_enabled": true,
+    "no_day_lock_on": true,
+    "sequence": [
+      "computer_no_password",
+      "drawer_1010",
+      "office_keypad",
+      "F_execution",
+      "actual_exit",
+      "home_plus_50_once",
+      "buy_40_balance_10",
+      "bed",
+      "22:00_side_view_11_enemies",
+      "night_and_day2"
+    ],
+    "observations": {
+      "dark_waits": [
+        {
+          "exposure": 0.00499999999999935,
+          "light": 0.0272,
+          "locks": 0,
+          "point": [
+            430.062072753906,
+            78.0
+          ]
+        },
+        {
+          "exposure": 0.00499999999999935,
+          "light": 0.0,
+          "locks": 0,
+          "point": [
+            302.13525390625,
+            78.0
+          ]
+        },
+        {
+          "exposure": 0.00499999999999935,
+          "light": 0.0,
+          "locks": 0,
+          "point": [
+            174.207962036133,
+            78.0
+          ]
+        },
+        {
+          "exposure": 0.001666666666665,
+          "light": 0.0,
+          "locks": 0,
+          "point": [
+            76.1805038452148,
+            100.100845336914
+          ]
+        },
+        {
+          "exposure": 0.00333333333333309,
+          "light": 0.0456,
+          "locks": 0,
+          "point": [
+            501.496490478516,
+            185.976089477539
+          ]
+        },
+        {
+          "exposure": 0.0049999999999999,
+          "light": 0.0456,
+          "locks": 0,
+          "point": [
+            502.111846923828,
+            186.241455078125
+          ]
+        },
+        {
+          "exposure": 0.00499999999999829,
+          "light": 0.0,
+          "locks": 0,
+          "point": [
+            509.795623779297,
+            133.214965820313
+          ]
+        }
+      ],
+      "day_peak_exposure": 0.839999999999999,
+      "day_peak_location": {
+        "leg": "the office's south waiting area",
+        "point": [
+          502.111846923828,
+          146.247421264648
+        ]
+      },
+      "night": {
+        "frames": 2222,
+        "seconds": 37.0,
+        "tally": {
+          "clicks": 77,
+          "counters": 6,
+          "evade": 0,
+          "heavy_clicks": 7,
+          "hit": 1,
+          "perfect": 6,
+          "shift": 7
+        }
+      },
+      "sprint_peak_speed": 138.0,
+      "walk_seconds": 49.0
+    }
+  },
+  "behaviour": {
+    "stairs_trigger_floor1": [
+      32,
+      112,
+      58,
+      76
+    ],
+    "stairs_trigger_floor2": [
+      29,
+      84,
+      55,
+      52
+    ],
+    "only_day_chapter_password_door": "office_door",
+    "password": "1010",
+    "clue": "treatment_drawer",
+    "computer_discloses_password": false,
+    "moving_light_radii": [
+      32,
+      32,
+      38
+    ],
+    "white_light_markers": false,
+    "doctor_count_by_floor": [
+      3,
+      2
+    ],
+    "doctor_speed_native_px_s": 18,
+    "doctor_sight_radius": 64,
+    "doctor_sight_angle_degrees": 90,
+    "doctor_attacks": false,
+    "sight_blocked_by_actual_walls_furniture_and_closed_doors": true,
+    "open_doorways_transmit_sight": true,
+    "exposure_rise_per_second": 0.8,
+    "on_full_exposure": "doctor/light message and return to current floor checkpoint",
+    "paused_while_reading_menus_stairs_hitstop_or_scene_fade": true,
+    "native_canvas": [
+      320,
+      180
+    ],
+    "hospital_floor_native": [
+      640,
+      224
+    ],
+    "player_scale": [
+      1,
+      1
+    ]
+  },
+  "assets": {
+    "backup": {
+      "source_commit": "6aced69c1d99bf4cd577018e32790fe61407795e",
+      "file": "夜行者_医院布局视野修改前_源码与素材.zip",
+      "bytes": 55398531,
+      "sha256": "71a9cb9ea4f22c9baa0f9f8b70b447a60ed7c4f306f090cea67a27e7fc0a61bf",
+      "zip_crc": "passed",
+      "entries": 4524
+    },
+    "floors": [
+      {
+        "file": "game/assets/underground_hospital/hospital_floor_1_native.png",
+        "size": [
+          640,
+          224
+        ],
+        "sha256": "48c69bee88c66f19199aba4f6e93863c3d7ce354bb5cebcb12b66bb4fdf1a646"
+      },
+      {
+        "file": "game/assets/underground_hospital/hospital_floor_2_native.png",
+        "size": [
+          640,
+          224
+        ],
+        "sha256": "ee00e14949a282c302a9718413a28a46b08db878b866e050d2999c9127656749"
+      }
+    ],
+    "coburn_frames": [
+      {
+        "file": "game/assets/npcs/coburn/idle_00.png",
+        "bbox": [
+          17,
+          9,
+          31,
+          40
+        ],
+        "sha256": "9538658f701bfba21eec094f31103b76a914dd7ed85fa7e0d78b934482bc3f2b"
+      },
+      {
+        "file": "game/assets/npcs/coburn/idle_01.png",
+        "bbox": [
+          17,
+          9,
+          31,
+          40
+        ],
+        "sha256": "a02c4c8650cb5e50145b901c77e931755697c14c586b8eef04edf9a4965e34a0"
+      },
+      {
+        "file": "game/assets/npcs/coburn/collapse_00.png",
+        "bbox": [
+          15,
+          13,
+          33,
+          40
+        ],
+        "sha256": "a2f8d775e5773e01564d6d6acab0a1e7c29df56c45dd9d1b156d9ed597359c06"
+      },
+      {
+        "file": "game/assets/npcs/coburn/dead_00.png",
+        "bbox": [
+          15,
+          17,
+          33,
+          40
+        ],
+        "sha256": "5d9e225c89b53dfe01addb0d96993fbeeaf1fa2aca927ed6e7e54aa9e940723b"
+      }
+    ],
+    "source_hashes": "passed",
+    "binary_alpha": "passed",
+    "player_frames_changed": [],
+    "side_hospital_art_changed": []
+  },
+  "generated_art": {
+    "tool": "built-in image_gen",
+    "scene_sources_prompts_and_registration": "game/art_metadata/hospital_layout_v18/import_record.json",
+    "scene_rebuild": "tools/art/import_hospital_layout_v18.py",
+    "coburn_sources_prompts_and_registration": "game/art_metadata/coburn_20261018/import_record.json",
+    "coburn_rebuild": "tools/art/import_coburn.py"
+  },
+  "gpu_revision": {
+    "adapter": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "checks": 113,
+    "failures": [],
+    "native_size": [
+      320,
+      180
+    ],
+    "renderer": "opengl3",
+    "shots": [
+      {
+        "dialogue": "光粒子监控，真是麻烦...",
+        "file": "01_opening_monologue.png",
+        "floor": 1,
+        "player": [
+          566.0,
+          78.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "ffd0a49b9c941f24e1c93f458963124ecf8f188cb7de3074630ba84435291941"
+      },
+      {
+        "dialogue": "",
+        "file": "02_avoid_light_shift_caption.png",
+        "floor": 1,
+        "player": [
+          566.0,
+          78.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "8ddadcf667e2b2d44dd9defe533937fbe37334bc3602efe0fe0ce0bba5189dee"
+      },
+      {
+        "dialogue": "",
+        "file": "03_daytime_ward_doctors.png",
+        "floor": 1,
+        "player": [
+          268.0,
+          178.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "0b508b9522a535751823c0aaa0f51e0da93dda62127cd202ccaa865984f02a0a"
+      },
+      {
+        "dialogue": "",
+        "file": "04_pharmacy_doorway_clear.png",
+        "floor": 1,
+        "player": [
+          538.0,
+          104.683753967285
+        ],
+        "step": "d1_hospital",
+        "sha256": "1481d18dd150cc1a6e4d1cf84f145057ad42e050b0276932fbb338e4f12390b3"
+      },
+      {
+        "dialogue": "",
+        "file": "05_upper_stair_prompt.png",
+        "floor": 1,
+        "player": [
+          48.0,
+          132.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "e6026af9a42887926f69f35df278cf706ece4135c0f1727efca150ff093a9531"
+      },
+      {
+        "dialogue": "抽屉里有张便签。",
+        "file": "06_drawer_note_and_animation.png",
+        "floor": 2,
+        "player": [
+          261.0,
+          100.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "7043eaa13e7bb7db6f91cdb89c6c3834c08e5607095f751e768027638aaa460f"
+      },
+      {
+        "dialogue": "",
+        "file": "07_larger_pools_without_white_centres.png",
+        "floor": 2,
+        "player": [
+          610.0,
+          186.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "569f9857491c46b6e0f7a6b08ed18e6d644352a6f7d10c65237e3e232cbb353f"
+      },
+      {
+        "dialogue": "",
+        "file": "08_doctor_view_and_witness_meter.png",
+        "floor": 2,
+        "player": [
+          316.0,
+          128.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "8d8fa802befe51508ad362be221d52175597e3c91d57593e7446449302f5ac51"
+      }
+    ],
+    "status": "passed",
+    "suite": "capture_hospital_revision",
+    "window_size": [
+      1280,
+      720
+    ],
+    "log_sha256": "c9bdbf2198b59de4f629e976679ad4ac12f5670eda064e20536b3a2b8bc7b73d",
+    "stderr_bytes": 0,
+    "images_visually_reviewed": true
+  },
+  "gpu_reward_continuation": {
+    "adapter": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "checks": 22,
+    "failures": [],
+    "native_size": [
+      320,
+      180
+    ],
+    "renderer": "opengl3",
+    "shots": [
+      {
+        "account": "账户 ￥0",
+        "balance": 0,
+        "file": "01_coburn_down_unpaid_until_exit.png",
+        "goal": "▸ 离开 · 二楼走廊尽头的出口",
+        "player": [
+          492.0,
+          64.0
+        ],
+        "scene": "res://scenes/underground_hospital.tscn",
+        "step": "d1_target_down",
+        "time": "12:30",
+        "view": 0,
+        "walk_seconds": 0.0,
+        "sha256": "0794c43c28963248db75496aae6106f3719a4c926a941a2073b851b449e72802"
+      },
+      {
+        "account": "账户 ￥50",
+        "balance": 50,
+        "file": "02_home_arrival_account_plus50.png",
+        "goal": "▸ 电脑 · 查看结算",
+        "player": [
+          110.0,
+          104.0
+        ],
+        "scene": "res://scenes/home_601.tscn",
+        "step": "d1_return",
+        "time": "14:50",
+        "view": "top_down",
+        "walk_seconds": 3.6,
+        "sha256": "f92cb7e4e3a9ba2645c468eaad43da19c0ca24ab37787614d98a6b310bfd0986"
+      },
+      {
+        "account": "账户 ￥50",
+        "balance": 50,
+        "file": "03_computer_settlement_mainline_reading.png",
+        "goal": "▸ 电脑 · 查看结算",
+        "player": [
+          74.3162460327148,
+          102.136756896973
+        ],
+        "scene": "res://scenes/home_601.tscn",
+        "step": "d1_return",
+        "time": "14:50",
+        "view": "top_down",
+        "walk_seconds": 4.5,
+        "sha256": "854cec5c2f1a781c0337e8c326c62bd712be9a5c28d9ace862a6d07ea90ccae1"
+      },
+      {
+        "account": "账户 ￥50",
+        "balance": 50,
+        "file": "04_resupply_prices_and_50_yuan_account.png",
+        "goal": "▸ 电脑 · 暗网购物",
+        "player": [
+          74.3162460327148,
+          102.136756896973
+        ],
+        "scene": "res://scenes/home_601.tscn",
+        "step": "d1_resupply",
+        "time": "14:50",
+        "view": "top_down",
+        "walk_seconds": 4.5,
+        "sha256": "1d40bf8e5a91514f2eb3fb3e1353fe5d827287fb657f201881307c4163daa6c0"
+      },
+      {
+        "account": "账户 ￥10",
+        "balance": 10,
+        "file": "05_purchase_confirmation_account_10.png",
+        "goal": "▸ 床 · 睡觉",
+        "player": [
+          74.3162460327148,
+          102.136756896973
+        ],
+        "scene": "res://scenes/home_601.tscn",
+        "step": "d1_shopped",
+        "time": "14:50",
+        "view": "top_down",
+        "walk_seconds": 4.5,
+        "sha256": "5152a0f60d0cc1f27152e738312f135faa6643148807c7774c9e0f461c7fce90"
+      },
+      {
+        "account": "账户 ￥10",
+        "balance": 10,
+        "file": "06_bed_prompt_and_sleep_objective.png",
+        "goal": "▸ 床 · 睡觉",
+        "player": [
+          250.367538452148,
+          122.136756896973
+        ],
+        "scene": "res://scenes/home_601.tscn",
+        "step": "d1_shopped",
+        "time": "14:50",
+        "view": "top_down",
+        "walk_seconds": 8.7,
+        "sha256": "98dae8dee1b170a4c51f0bbda6557b0c69a409743e538828f8a26265c9ab80b7"
+      },
+      {
+        "account": "账户 ￥10",
+        "balance": 10,
+        "file": "07_2200_mainline_side_view_night.png",
+        "goal": "",
+        "player": [
+          60.0,
+          286.0
+        ],
+        "scene": "res://scenes/underground_hospital.tscn",
+        "step": "d1_night",
+        "time": "22:00",
+        "view": 1,
+        "walk_seconds": 8.7,
+        "sha256": "73e15f8d2342d870137af6e0169a037f77b877db996fc09b4fce817aab724ed9"
+      }
+    ],
+    "size": [
+      1280,
+      720
+    ],
+    "status": "passed",
+    "suite": "capture_reward_flow",
+    "log_sha256": "3b5ad1d8f44553544facda091d1471208773b022a259e3dc6873c03dfa8c9c38",
+    "stderr_bytes": 0,
+    "images_visually_reviewed": true
+  },
+  "notes": [
+    "Fixtures isolate individual sight and password assertions; chapter_flow walks the complete powered route with every patrol active.",
+    "The sandbox retains its earlier password/key mechanics; the active daytime chapter opens every door except the office.",
+    "Local evidence logs, captures and the original backup remain outside Git; this portable record preserves their checks and hashes.",
+    "Only documentation and this verification record change after the tested source commit."
+  ]
+}
