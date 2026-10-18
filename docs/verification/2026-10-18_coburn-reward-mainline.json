@@ -1,0 +1,186 @@
+{
+  "date": "2026-10-18",
+  "timezone": "Asia/Shanghai",
+  "based_on_commit": "96a670d439d52d9251ce9fc7a685f2aaa336f687",
+  "status": "passed",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "import": "passed",
+  "tested_game_tree": "a00eb7d4acecf5c32b66deaa4ce5c23c5a7047c7",
+  "final_game_tree": "d3f1c3f214fc3c9ac6f0684e444b091a3729bc11",
+  "tested_runner_blob": "14f4b562e8b9611f181032273bef8eb3af092758",
+  "full_regression": {
+    "tested_commit": "79bc144e92c1c484d00c206f2065becbdcd746f2",
+    "game_tree": "a00eb7d4acecf5c32b66deaa4ce5c23c5a7047c7",
+    "suite_count": 47,
+    "checks": 5106,
+    "failed_suites": [],
+    "runner_exit_code": 0,
+    "suite_checks": {
+      "core_v07": 553,
+      "keybindings": 74,
+      "keybindings_reload": 21,
+      "air_combat": 116,
+      "air_dash_animation_v14": 174,
+      "scene_integration_v14": 106,
+      "scene_routes": 69,
+      "interior_lighting": 192,
+      "home_furniture": 84,
+      "hospital_interactions": 23,
+      "hospital_environment": 73,
+      "hospital_physical_stairs": 54,
+      "hospital_ward_layout": 22,
+      "hospital_security": 104,
+      "level_shared": 38,
+      "contact_refresh_v07": 6,
+      "charged_slash": 52,
+      "moveset": 1014,
+      "combat_state": 18,
+      "rhythm_combat": 94,
+      "enemy_attack": 29,
+      "perfect_counter": 31,
+      "night_street_proto": 50,
+      "combat_impact_v2": 60,
+      "combat_impact_v2_144": 60,
+      "impact_burst": 39,
+      "impact_burst_144": 39,
+      "thrust_path": 60,
+      "jump_chase": 76,
+      "jump_chase_144": 76,
+      "smooth_charge_links": 92,
+      "smooth_charge_links_144": 92,
+      "primary_charge_chain": 114,
+      "primary_charge_chain_144": 133,
+      "direct_charge": 40,
+      "direct_charge_144": 40,
+      "charged_draw": 73,
+      "charged_draw_144": 73,
+      "heavy_cleave": 67,
+      "roll_thrust_motion": 80,
+      "shift_controls": 40,
+      "locomotion_blade": 260,
+      "light_sense": 132,
+      "coburn_execution": 72,
+      "coburn_reward_flow": 153,
+      "chapter_flow": 133,
+      "night_fight": 105
+    },
+    "log_sha256": "4b659c28edbad150cc5b2dd8ae760658aed599d76d1f1ffc57a72eeb4c3b7c6a"
+  },
+  "post_full_regression_changes": {
+    "paths": [
+      "tests/recorders/capture_reward_flow.gd"
+    ],
+    "runtime_and_test_suites_unchanged": true,
+    "reason": "GPU recorder now waits for the actual offered F prompt and the night arrival fade to end; game input guards are unchanged.",
+    "verification": "Final recorder was executed on the actual GPU: 22 checks, 7 screenshots, exit 0 and empty stderr."
+  },
+  "feature_checks": {
+    "coburn_reward_flow": 153,
+    "coburn_execution": 72,
+    "chapter_flow": 133
+  },
+  "observed_mainline": {
+    "inside_hospital_after_execution": 0,
+    "home_after_actual_exit": 50,
+    "steel_spike_price": 40,
+    "after_purchase": 10,
+    "side_view_night_balance": 10,
+    "night_step": "d1_night",
+    "night_time": "22:00",
+    "night_view": 1,
+    "night_enemy_count": 11
+  },
+  "coverage": [
+    "No payment before execution or before actual withdrawal",
+    "One credit across re-entry, duplicate step and message reading",
+    "Esc leaves settlement unread and recoverable",
+    "Full settlement reading opens shopping",
+    "Atomic purchase: insufficient and owned requests cannot debit or advance",
+    "Successful purchase points to bed",
+    "Real E sleep transitions to the side-view hospital",
+    "Balance survives night and next-day scene changes",
+    "Restarting chapter resets balance"
+  ],
+  "story": {
+    "reference": "docs/design/第一章策划原文_SK.txt",
+    "order": "Assassination -> exit -> 601 contract settlement -> computer guidance -> shopping -> bed -> 22:00 side-view hospital",
+    "reward": "50 yuan added by this user request, once per chapter session",
+    "bridge_dialogue": "New system/protagonist guidance for the requested shopping transition; not original SK dialogue.",
+    "original_first_contract_and_second_day_messages_preserved": true,
+    "original_night_dialogue_and_timing_preserved": true
+  },
+  "account_scope": "Current chapter session only; shared across scenes, no persistent save yet.",
+  "visual": {
+    "renderer": "opengl3",
+    "adapter": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "native_size": [
+      320,
+      180
+    ],
+    "rendered_size": [
+      1280,
+      720
+    ],
+    "checks": 22,
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "captures": 7,
+    "recorder": "res://tests/recorders/capture_reward_flow.gd",
+    "recorder_blob": "c19a267f584d35587a6b334b7a35b0a9570532ae",
+    "review": "All seven actual GPU images viewed: 0 inside hospital, +50 receipt, system/protagonist reading, readable prices and balance, paid 10 balance and bed goal, clear 22:00 side view with separate account/health/tutorial.",
+    "screenshots": [
+      {
+        "file": "01_coburn_down_unpaid_until_exit.png",
+        "step": "d1_target_down",
+        "balance": 0,
+        "sha256": "acb98ff68153ab47aa0e9284848493d75f4d10796e3ee02dfc87004f355483e5"
+      },
+      {
+        "file": "02_home_arrival_account_plus50.png",
+        "step": "d1_return",
+        "balance": 50,
+        "sha256": "6a72e5cdd6423e9a33449fdaf5199380ae4f1359c6a9af332b75c046434f1df1"
+      },
+      {
+        "file": "03_computer_settlement_mainline_reading.png",
+        "step": "d1_return",
+        "balance": 50,
+        "sha256": "590c556c86b155bc00cddc7dc7921d209ca56a176eaf7856879a631da1ab9031"
+      },
+      {
+        "file": "04_resupply_prices_and_50_yuan_account.png",
+        "step": "d1_resupply",
+        "balance": 50,
+        "sha256": "0acc4af1812ac0867775eed85f093db9eef088af97e0e98c5099a5db66de6430"
+      },
+      {
+        "file": "05_purchase_confirmation_account_10.png",
+        "step": "d1_shopped",
+        "balance": 10,
+        "sha256": "929d307e508c760707048e35fdcdd4d666b8208fbda753411479ce9f41ea38dc"
+      },
+      {
+        "file": "06_bed_prompt_and_sleep_objective.png",
+        "step": "d1_shopped",
+        "balance": 10,
+        "sha256": "3da958408c47608a6efe8957df56d0d3235f6e64d70336ac9894bb481c86c663"
+      },
+      {
+        "file": "07_2200_mainline_side_view_night.png",
+        "step": "d1_night",
+        "balance": 10,
+        "sha256": "c7a6f174721bcba0dff81eac378793f165eda7aada4a6eb5992ebb357b6dc44c"
+      }
+    ],
+    "local_evidence": "game/evidence/coburn_reward/",
+    "local_logs": "game/evidence/reward_flow/"
+  },
+  "preserved": [
+    "320x180 native world and original pixel scaling",
+    "All player and Coburn art/animations",
+    "Existing F stealth gates and combat feedback",
+    "Original hospital and safehouse geometry",
+    "Original second-day Qiaolun dialogue"
+  ],
+  "command": "tools/Test-Game.ps1 -GodotPath <local engine executable>"
+}

@@ -51,7 +51,19 @@ func run() -> void:
 	hospital.floor_id = 2
 	hospital.activate_view(0, "", Vector2(492, 64))
 	hospital.interactions.power_states["clinical"] = false
-	await frames(10)
+	# The real arrival fade owns input until it ends. Wait for the offered execution rather than pressing F
+	# under its modal (GPU rendering can arrive while the headless fixture has already faded).
+	var ready := false
+	for _tick in range(180):
+		var hud: Node = hospital.chapter.chapter_hud
+		if hud.prompt.visible and hud.key_label.text == "F" and hud.prompt_label.text.contains("处决"):
+			ready = true
+			break
+		await frames()
+	check(ready, "the actual execution prompt is ready after the hospital arrival fade")
+	if not ready:
+		finish()
+		return
 	await tap(KEY_F)
 	for _tick in range(180):
 		if not hospital.chapter.busy:
@@ -93,7 +105,12 @@ func run() -> void:
 	if not await arrive(HOSPITAL, "The captured 22:00 night"):
 		finish()
 		return
-	await frames(6)
+	var night_overlay: CanvasLayer = current_scene.chapter.overlay
+	for _tick in range(180):
+		if not night_overlay.busy and night_overlay.shade.color.a <= 0.01:
+			break
+		await frames()
+	check(not night_overlay.busy and night_overlay.shade.color.a <= 0.01, "the actual night arrival fade finishes before the screenshot")
 	check(story.step == "d1_night" and current_scene.view_mode == 1 and story.balance == 10,
 		"the recorded night uses side view and keeps the remaining account")
 	await shot("2200_mainline_side_view_night")
