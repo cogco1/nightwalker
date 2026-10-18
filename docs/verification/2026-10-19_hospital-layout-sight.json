@@ -6,12 +6,12 @@
   "status": "passed",
   "engine": "4.7.2.stable.official.ed1daf0bf",
   "import": "passed",
-  "tested_commit": "a6129da4efc0ab7a691266d49f1b91d2c8f87c85",
-  "tested_game_tree": "cbb0cf03ac046728698627fc40fa94d21da67dc2",
+  "tested_commit": "8aa5223cc3cf673a002bfa4e1414784e5da67e2c",
+  "tested_game_tree": "eef8add3491ec38181bf6d25d330b4aab259e7cb",
   "tested_runner_blob": "be8fd2aa2c42aa32db23e29c08f7d9fef91adf66",
   "full_regression": {
     "suite_count": 49,
-    "checks": 5389,
+    "checks": 5453,
     "failed_suites": [],
     "runner_exit_code": 0,
     "suite_checks": {
@@ -58,14 +58,14 @@
       "shift_controls": 40,
       "locomotion_blade": 260,
       "light_sense": 134,
-      "hospital_opening": 80,
-      "hospital_revision": 105,
+      "hospital_opening": 112,
+      "hospital_revision": 137,
       "coburn_execution": 72,
       "coburn_reward_flow": 201,
       "chapter_flow": 181,
       "night_fight": 105
     },
-    "log_sha256": "59c1a02531f0a70f768c5f5c8d514d87b433bbef476f9593423e88680101ff31",
+    "log_sha256": "e81c7f1c4153bab6590a179b918afeb80410fde5b987a0cea6d143f9890cca8b",
     "all_suite_stderr_bytes": {
       "core_v07": 0,
       "keybindings": 0,
@@ -137,6 +137,14 @@
     "failed_suites": [],
     "log_sha256": "044bfe0d47d4f4d7c0b24c633a44da327e296871cbf0cb1b7260c573cde4786c",
     "follow_up": "Move the storage doctor final endpoint from y158 to y162 to clear the refrigerator footprint; add checks for every patrol waypoint and rerun the complete suite on the final source."
+  },
+  "before_start_location_clarification": {
+    "tested_commit": "a6129da4efc0ab7a691266d49f1b91d2c8f87c85",
+    "suites": 49,
+    "checks": 5389,
+    "failed_suites": [],
+    "log_sha256": "59c1a02531f0a70f768c5f5c8d514d87b433bbef476f9593423e88680101ff31",
+    "follow_up": "The user clarified that the game starts in safehouse 601; the photographed hospital position is only the arrival point after leaving home. Restore default d1_wake, and share the real public boot/home/contract/door test sequence with hospital tests."
   },
   "independent_layout_review": {
     "footprint": [
@@ -245,16 +253,16 @@
         ]
       },
       "night": {
-        "frames": 2222,
-        "seconds": 37.0,
+        "frames": 2150,
+        "seconds": 35.8,
         "tally": {
-          "clicks": 77,
-          "counters": 6,
+          "clicks": 79,
+          "counters": 5,
           "evade": 0,
-          "heavy_clicks": 7,
+          "heavy_clicks": 12,
           "hit": 1,
-          "perfect": 6,
-          "shift": 7
+          "perfect": 5,
+          "shift": 6
         }
       },
       "sprint_peak_speed": 138.0,
@@ -262,6 +270,15 @@
     }
   },
   "behaviour": {
+    "default_start_step": "d1_wake",
+    "default_scene": "res://scenes/home_601.tscn",
+    "default_time": "12:00",
+    "hospital_arrival_step": "d1_hospital",
+    "hospital_arrival_position": [
+      566,
+      78
+    ],
+    "hospital_arrival_time": "12:30",
     "stairs_trigger_floor1": [
       32,
       112,
@@ -393,7 +410,7 @@
   },
   "gpu_revision": {
     "adapter": "NVIDIA GeForce RTX 3050 Laptop GPU",
-    "checks": 113,
+    "checks": 146,
     "failures": [],
     "native_size": [
       320,
@@ -402,92 +419,112 @@
     "renderer": "opengl3",
     "shots": [
       {
+        "dialogue": "",
+        "file": "01_safehouse_start.png",
+        "floor": 0,
+        "player": [
+          110.0,
+          104.0
+        ],
+        "scene": "res://scenes/home_601.tscn",
+        "step": "d1_wake",
+        "sha256": "7fa4b31476ee9fbb04b79c36c5d5bb331d9c6599af8908a2911b8cf8db6984b8"
+      },
+      {
         "dialogue": "光粒子监控，真是麻烦...",
-        "file": "01_opening_monologue.png",
+        "file": "02_opening_monologue.png",
         "floor": 1,
         "player": [
           566.0,
           78.0
         ],
+        "scene": "res://scenes/underground_hospital.tscn",
         "step": "d1_hospital",
-        "sha256": "ffd0a49b9c941f24e1c93f458963124ecf8f188cb7de3074630ba84435291941"
+        "sha256": "adffd1a36a1abe653508e95dfdd213c6e54d876cb3df3085584538002683dd32"
       },
       {
         "dialogue": "",
-        "file": "02_avoid_light_shift_caption.png",
+        "file": "03_avoid_light_shift_caption.png",
         "floor": 1,
         "player": [
           566.0,
           78.0
         ],
+        "scene": "res://scenes/underground_hospital.tscn",
         "step": "d1_hospital",
-        "sha256": "8ddadcf667e2b2d44dd9defe533937fbe37334bc3602efe0fe0ce0bba5189dee"
+        "sha256": "579417260b8fa8cac08736e0f045c93d278a6bb53b0f4ecd4b5e88631f4f2c82"
       },
       {
         "dialogue": "",
-        "file": "03_daytime_ward_doctors.png",
+        "file": "04_daytime_ward_doctors.png",
         "floor": 1,
         "player": [
           268.0,
           178.0
         ],
+        "scene": "res://scenes/underground_hospital.tscn",
         "step": "d1_hospital",
-        "sha256": "0b508b9522a535751823c0aaa0f51e0da93dda62127cd202ccaa865984f02a0a"
+        "sha256": "af33496a6be04f8bfacfb937ebcab92895ed9ac9da1ef3564757929636e9e73b"
       },
       {
         "dialogue": "",
-        "file": "04_pharmacy_doorway_clear.png",
+        "file": "05_pharmacy_doorway_clear.png",
         "floor": 1,
         "player": [
           538.0,
           104.683753967285
         ],
+        "scene": "res://scenes/underground_hospital.tscn",
         "step": "d1_hospital",
-        "sha256": "1481d18dd150cc1a6e4d1cf84f145057ad42e050b0276932fbb338e4f12390b3"
+        "sha256": "3ecef335a3abc26811bd80962681e832a647d411e288fc149a782b1440aeb1be"
       },
       {
         "dialogue": "",
-        "file": "05_upper_stair_prompt.png",
+        "file": "06_upper_stair_prompt.png",
         "floor": 1,
         "player": [
           48.0,
           132.0
         ],
+        "scene": "res://scenes/underground_hospital.tscn",
         "step": "d1_hospital",
-        "sha256": "e6026af9a42887926f69f35df278cf706ece4135c0f1727efca150ff093a9531"
+        "sha256": "86298f3da98347e31e4415106d0ed8ace32555423f7749fb72e9d2ff30528a41"
       },
       {
         "dialogue": "抽屉里有张便签。",
-        "file": "06_drawer_note_and_animation.png",
+        "file": "07_drawer_note_and_animation.png",
         "floor": 2,
         "player": [
           261.0,
           100.0
         ],
+        "scene": "res://scenes/underground_hospital.tscn",
         "step": "d1_hospital",
-        "sha256": "7043eaa13e7bb7db6f91cdb89c6c3834c08e5607095f751e768027638aaa460f"
+        "sha256": "79285393f94354e0e6bca260a610aa718da2171e96367f02f7a39df1c5d00ce8"
       },
       {
         "dialogue": "",
-        "file": "07_larger_pools_without_white_centres.png",
+        "file": "08_larger_pools_without_white_centres.png",
         "floor": 2,
         "player": [
           610.0,
           186.0
         ],
+        "scene": "res://scenes/underground_hospital.tscn",
         "step": "d1_hospital",
-        "sha256": "569f9857491c46b6e0f7a6b08ed18e6d644352a6f7d10c65237e3e232cbb353f"
+        "sha256": "0e031b968e4f5ec5ddd3ef925c4c82b1efa249e2ab387b3ef5a0ac9cfe1c0628"
       },
       {
         "dialogue": "",
-        "file": "08_doctor_view_and_witness_meter.png",
+        "file": "09_doctor_view_and_witness_meter.png",
         "floor": 2,
         "player": [
           316.0,
           128.0
         ],
+        "scene": "res://scenes/underground_hospital.tscn",
         "step": "d1_hospital",
-        "sha256": "8d8fa802befe51508ad362be221d52175597e3c91d57593e7446449302f5ac51"
+        "sha256": "118577fbda2ac07ebec98dcc160d557862d351e28ae362d89fb508a3039f0759"
       }
     ],
     "status": "passed",
@@ -496,7 +533,119 @@
       1280,
       720
     ],
-    "log_sha256": "c9bdbf2198b59de4f629e976679ad4ac12f5670eda064e20536b3a2b8bc7b73d",
+    "log_sha256": "68722e0ce5ca36b4ba9a1492d9874a8d6a5398cae5dd61120a2bedf3e452c81e",
+    "stderr_bytes": 0,
+    "images_visually_reviewed": true
+  },
+  "gpu_safehouse_hospital_opening": {
+    "adapter": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "checks": 119,
+    "failures": [],
+    "native_size": [
+      320,
+      180
+    ],
+    "renderer": "opengl3",
+    "shots": [
+      {
+        "dialogue": "",
+        "file": "01_safehouse_start.png",
+        "floor": 0,
+        "patrol_count": 0,
+        "player": [
+          110.0,
+          104.0
+        ],
+        "scene": "res://scenes/home_601.tscn",
+        "step": "d1_wake",
+        "sha256": "7fa4b31476ee9fbb04b79c36c5d5bb331d9c6599af8908a2911b8cf8db6984b8"
+      },
+      {
+        "dialogue": "光粒子监控，真是麻烦...",
+        "file": "02_opening_monologue.png",
+        "floor": 1,
+        "patrol_count": 0,
+        "player": [
+          566.0,
+          78.0
+        ],
+        "scene": "res://scenes/underground_hospital.tscn",
+        "step": "d1_hospital",
+        "sha256": "adffd1a36a1abe653508e95dfdd213c6e54d876cb3df3085584538002683dd32"
+      },
+      {
+        "dialogue": "",
+        "file": "03_avoid_light_shift_caption.png",
+        "floor": 1,
+        "patrol_count": 0,
+        "player": [
+          566.0,
+          78.0
+        ],
+        "scene": "res://scenes/underground_hospital.tscn",
+        "step": "d1_hospital",
+        "sha256": "579417260b8fa8cac08736e0f045c93d278a6bb53b0f4ecd4b5e88631f4f2c82"
+      },
+      {
+        "dialogue": "",
+        "file": "04_daytime_ward_doctors.png",
+        "floor": 1,
+        "patrol_count": 0,
+        "player": [
+          268.0,
+          178.0
+        ],
+        "scene": "res://scenes/underground_hospital.tscn",
+        "step": "d1_hospital",
+        "sha256": "af33496a6be04f8bfacfb937ebcab92895ed9ac9da1ef3564757929636e9e73b"
+      },
+      {
+        "dialogue": "配电箱不能关闭。得避开光线。",
+        "file": "05_breaker_cannot_be_cut.png",
+        "floor": 1,
+        "patrol_count": 0,
+        "player": [
+          116.0,
+          157.0
+        ],
+        "scene": "res://scenes/underground_hospital.tscn",
+        "step": "d1_hospital",
+        "sha256": "75779a4554c6dc47da10f6c2dd37e21ec96b73011036087427f3b809fd33e6e1"
+      },
+      {
+        "dialogue": "",
+        "file": "06_floor_two_moving_lights_a.png",
+        "floor": 2,
+        "patrol_count": 3,
+        "player": [
+          610.0,
+          186.0
+        ],
+        "scene": "res://scenes/underground_hospital.tscn",
+        "step": "d1_hospital",
+        "sha256": "1ce196446a31f2a1371404c6eef7b0c357e5b1be5113c9a1f0d4ad2746397423"
+      },
+      {
+        "dialogue": "",
+        "file": "07_floor_two_moving_lights_b.png",
+        "floor": 2,
+        "patrol_count": 3,
+        "player": [
+          470.0,
+          186.0
+        ],
+        "scene": "res://scenes/underground_hospital.tscn",
+        "step": "d1_hospital",
+        "sha256": "9082fcc7f976c51df5cb4b3b9b83ea5485f04d6ae4bf2f0818e719a245feca91"
+      }
+    ],
+    "status": "passed",
+    "suite": "capture_hospital_opening",
+    "window_size": [
+      1280,
+      720
+    ],
+    "log_sha256": "bc1c103f3098574f5ec6d9b13c3274bf4ecc1a5ce4e857bc927eeafbd8ce5969",
     "stderr_bytes": 0,
     "images_visually_reviewed": true
   },
@@ -524,7 +673,7 @@
         "time": "12:30",
         "view": 0,
         "walk_seconds": 0.0,
-        "sha256": "0794c43c28963248db75496aae6106f3719a4c926a941a2073b851b449e72802"
+        "sha256": "c45ae5e390e595904b483792d634481373a8f2d9dd68bdf448c13d1e66bf7227"
       },
       {
         "account": "账户 ￥50",
