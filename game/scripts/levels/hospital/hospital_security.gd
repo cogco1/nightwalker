@@ -171,6 +171,9 @@ func is_position_blocked(point: Vector2, floor: int) -> bool:
 
 
 func is_door_unlocked(id: String) -> bool:
+	var chapter: Variant = _host.get("chapter") if is_instance_valid(_host) else null
+	if chapter != null and chapter.stealth() and id != "office_door" and not _door(id).is_empty():
+		return true
 	var state := _ensure_story_state()
 	return state != null and bool(state.call("has_flag", "door:" + id))
 

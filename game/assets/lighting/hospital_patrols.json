@@ -10,7 +10,7 @@
       "period": 13.0,
       "phase": 0.0,
       "zone": "corridor",
-      "radius": 20,
+      "radius": 32,
       "energy": 0.8,
       "colour": "9bd9e8"
     },
@@ -18,23 +18,23 @@
       "id": "patrol_east",
       "position": [386, 165],
       "from": [386, 165],
-      "to": [596, 165],
+      "to": [582, 165],
       "period": 15.0,
       "phase": 0.2,
       "zone": "corridor",
-      "radius": 20,
+      "radius": 32,
       "energy": 0.8,
       "colour": "9bd9e8"
     },
     {
       "id": "patrol_office",
-      "position": [450, 72],
-      "from": [450, 72],
-      "to": [590, 72],
+      "position": [462, 72],
+      "from": [462, 72],
+      "to": [578, 72],
       "period": 12.0,
       "phase": 0.5,
       "zone": "office",
-      "radius": 26,
+      "radius": 38,
       "energy": 0.65,
       "colour": "b1e5ed"
     }

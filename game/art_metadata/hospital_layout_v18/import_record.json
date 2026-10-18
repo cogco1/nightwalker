@@ -1,0 +1,1260 @@
+{
+  "schema_version": 1,
+  "generator": "built-in image_gen",
+  "native_size": [
+    640,
+    224
+  ],
+  "source_files": [
+    {
+      "path": "floor_1_generated.png",
+      "sha256": "429971a95e68b9891c9a010109e9f3f1fba8b013a16ba536cc37569771117402"
+    },
+    {
+      "path": "floor_2_generated.png",
+      "sha256": "d22a0cb5ea878180cf13e75d4e3b39bae702beb961f1487c9986bcbf92e857bc"
+    },
+    {
+      "path": "furniture_atlas_generated.png",
+      "sha256": "64ad305d73d3abb8329bb9eb1f70316359ed791170e231d2cf3d9c3401c0d20d"
+    },
+    {
+      "path": "work_surfaces_generated.png",
+      "sha256": "09cb8ac8f336948ad37c4cdb7f525ccb3f2e04aff0e85410e47155e494c8a207"
+    }
+  ],
+  "prompts": [
+    "floor_1_prompt.txt",
+    "floor_2_prompt.txt",
+    "furniture_atlas_prompt.txt",
+    "work_surfaces_prompt.txt"
+  ],
+  "conversion": {
+    "resampling": "nearest",
+    "palette_colors_per_prop_max": 48,
+    "dithering": "none",
+    "prop_alpha_values": [
+      0,
+      255
+    ]
+  },
+  "floor_regions": {
+    "1": [
+      [
+        140,
+        94,
+        252,
+        96
+      ],
+      [
+        404,
+        94,
+        216,
+        96
+      ]
+    ],
+    "2": [
+      [
+        20,
+        43,
+        171,
+        92
+      ],
+      [
+        203,
+        43,
+        207,
+        92
+      ],
+      [
+        422,
+        43,
+        198,
+        92
+      ]
+    ]
+  },
+  "floor_tile_source_native_rect": [
+    170,
+    154,
+    32,
+    24
+  ],
+  "props": [
+    {
+      "name": "bed",
+      "source_region": [
+        0,
+        0,
+        345,
+        340
+      ],
+      "source_alpha_bbox": [
+        119,
+        76,
+        264,
+        325
+      ],
+      "native_size": [
+        32,
+        57
+      ],
+      "native_sha256": "8d1e65489ba8c22af79c9b46fe2eee917a4f7bb1c734df4ca459d5e8a123ace0"
+    },
+    {
+      "name": "bedside",
+      "source_region": [
+        345,
+        0,
+        655,
+        340
+      ],
+      "source_alpha_bbox": [
+        101,
+        152,
+        202,
+        306
+      ],
+      "native_size": [
+        14,
+        27
+      ],
+      "native_sha256": "0fa1bfda503099107bbf3eb63dc8c1dc0572e560470f09f6d2864ed1e475d7bc"
+    },
+    {
+      "name": "iv",
+      "source_region": [
+        655,
+        0,
+        945,
+        340
+      ],
+      "source_alpha_bbox": [
+        100,
+        78,
+        188,
+        315
+      ],
+      "native_size": [
+        11,
+        43
+      ],
+      "native_sha256": "0573dceed6aa245de6a73582c861c4fa61d536e4402f480b48bc137fbdeea24a"
+    },
+    {
+      "name": "curtain",
+      "source_region": [
+        945,
+        0,
+        1273,
+        340
+      ],
+      "source_alpha_bbox": [
+        70,
+        76,
+        209,
+        315
+      ],
+      "native_size": [
+        16,
+        47
+      ],
+      "native_sha256": "71b69a9b140fe30baa599b223b470f1419a71e47e24fbbe7c41e4d7d47bad817"
+    },
+    {
+      "name": "pharmacy",
+      "source_region": [
+        0,
+        340,
+        345,
+        640
+      ],
+      "source_alpha_bbox": [
+        64,
+        20,
+        319,
+        277
+      ],
+      "native_size": [
+        58,
+        62
+      ],
+      "native_sha256": "5434ce276c824c630bde144de806b29b44d3262676ce7a6214cf8b28bfd11e29"
+    },
+    {
+      "name": "fridge",
+      "source_region": [
+        345,
+        340,
+        655,
+        640
+      ],
+      "source_alpha_bbox": [
+        87,
+        25,
+        219,
+        273
+      ],
+      "native_size": [
+        32,
+        58
+      ],
+      "native_sha256": "48ffc9d777c0a208ed0c6339cf9c05a7cb30122dc4787dd11cb2f0a4a4d97513"
+    },
+    {
+      "name": "supplies",
+      "source_region": [
+        655,
+        340,
+        945,
+        640
+      ],
+      "source_alpha_bbox": [
+        78,
+        12,
+        205,
+        277
+      ],
+      "native_size": [
+        27,
+        61
+      ],
+      "native_sha256": "6d9bfd3553f5c12d7323645c4b46a3e3205619962475f7822cc02d4f6aa67d1c"
+    },
+    {
+      "name": "bench",
+      "source_region": [
+        945,
+        340,
+        1273,
+        640
+      ],
+      "source_alpha_bbox": [
+        19,
+        129,
+        293,
+        277
+      ],
+      "native_size": [
+        53,
+        24
+      ],
+      "native_sha256": "fd2775d725883cb88d50be6f878a226ecd850b1b8f04ca9d418cd6a67e326903"
+    },
+    {
+      "name": "locker",
+      "source_region": [
+        0,
+        640,
+        345,
+        930
+      ],
+      "source_alpha_bbox": [
+        140,
+        33,
+        234,
+        257
+      ],
+      "native_size": [
+        16,
+        36
+      ],
+      "native_sha256": "49a08efbebbc77d07b5a00ee797b60381025130d49a85da841510abfb5e4841b"
+    },
+    {
+      "name": "sink",
+      "source_region": [
+        345,
+        640,
+        655,
+        930
+      ],
+      "source_alpha_bbox": [
+        73,
+        61,
+        224,
+        243
+      ],
+      "native_size": [
+        27,
+        30
+      ],
+      "native_sha256": "c009a2bc3425d714d23fb383ff71e7286b060b424ce634aff031e114a68d1b48"
+    },
+    {
+      "name": "drawer",
+      "source_region": [
+        655,
+        640,
+        945,
+        930
+      ],
+      "source_alpha_bbox": [
+        84,
+        38,
+        204,
+        251
+      ],
+      "native_size": [
+        19,
+        45
+      ],
+      "native_sha256": "314ab3331a195e24a99d0a96ce5fa1ac6030bd72bcf2ab576f27d115374be450"
+    },
+    {
+      "name": "monitor_cart",
+      "source_region": [
+        945,
+        640,
+        1273,
+        930
+      ],
+      "source_alpha_bbox": [
+        82,
+        47,
+        229,
+        249
+      ],
+      "native_size": [
+        24,
+        32
+      ],
+      "native_sha256": "603f94fc0b0e6b87b86ed93125b08a85d3dd1381cc954e9fae7182a444e826b8"
+    },
+    {
+      "name": "small_files",
+      "source_region": [
+        0,
+        930,
+        345,
+        1236
+      ],
+      "source_alpha_bbox": [
+        140,
+        57,
+        235,
+        250
+      ],
+      "native_size": [
+        16,
+        31
+      ],
+      "native_sha256": "acd118af57f9495cdf35b136d94fee43978e5866773a75bc0134924439fdb41a"
+    },
+    {
+      "name": "archive",
+      "source_region": [
+        345,
+        930,
+        655,
+        1236
+      ],
+      "source_alpha_bbox": [
+        63,
+        18,
+        233,
+        249
+      ],
+      "native_size": [
+        31,
+        42
+      ],
+      "native_sha256": "4abcb8c8fecf3fff8de3fc25b05cae006e63f1c7e35d4d1cd71d5a1fcc8ba2d0"
+    },
+    {
+      "name": "office_locker",
+      "source_region": [
+        655,
+        930,
+        945,
+        1236
+      ],
+      "source_alpha_bbox": [
+        91,
+        13,
+        201,
+        251
+      ],
+      "native_size": [
+        20,
+        43
+      ],
+      "native_sha256": "3a420f76190b17d42764d8bdcf15bb7b6165e49790fc517ffa1b95b46dfa3f74"
+    },
+    {
+      "name": "plant",
+      "source_region": [
+        945,
+        930,
+        1273,
+        1236
+      ],
+      "source_alpha_bbox": [
+        102,
+        65,
+        230,
+        239
+      ],
+      "native_size": [
+        14,
+        23
+      ],
+      "native_sha256": "66ccf2a96bae1f4123c08af54e299625cde30e4a015b416113b3cfa193ed9438"
+    },
+    {
+      "name": "reception_counter",
+      "source_sheet": "work_surfaces_generated.png",
+      "source_region": [
+        0,
+        0,
+        960,
+        530
+      ],
+      "source_alpha_bbox": [
+        100,
+        127,
+        872,
+        472
+      ],
+      "native_size": [
+        71,
+        40
+      ],
+      "native_sha256": "38ecd45c801e51d146700029d3b3253657c30338a46a2fb8b49bc9876514f8be"
+    },
+    {
+      "name": "surgery_table",
+      "source_sheet": "work_surfaces_generated.png",
+      "source_region": [
+        960,
+        0,
+        1536,
+        530
+      ],
+      "source_alpha_bbox": [
+        122,
+        83,
+        365,
+        494
+      ],
+      "native_size": [
+        34,
+        49
+      ],
+      "native_sha256": "fad5200beabdb4b6c4c95167d02b92922e84476056b5ad0d9dbdcb52ab0b4dec"
+    },
+    {
+      "name": "office_desk",
+      "source_sheet": "work_surfaces_generated.png",
+      "source_region": [
+        0,
+        530,
+        960,
+        1024
+      ],
+      "source_alpha_bbox": [
+        137,
+        39,
+        812,
+        411
+      ],
+      "native_size": [
+        68,
+        49
+      ],
+      "native_sha256": "01861ccc7f76f5fadce999be35dc64da73a3fad4659ee195e553a2822d9c1906"
+    },
+    {
+      "name": "surgery_lamp",
+      "source_sheet": "work_surfaces_generated.png",
+      "source_region": [
+        960,
+        530,
+        1536,
+        1024
+      ],
+      "source_alpha_bbox": [
+        73,
+        79,
+        424,
+        390
+      ],
+      "native_size": [
+        40,
+        27
+      ],
+      "native_sha256": "29ed540a0b2a255c01fd39f5e0e83a9a59183cdf6ddaedb5d574c01918c487b6"
+    }
+  ],
+  "placements": [
+    {
+      "floor": 1,
+      "name": "curtain",
+      "visual_rect": [
+        145,
+        94,
+        16,
+        47
+      ],
+      "source": "native_props/curtain.png"
+    },
+    {
+      "floor": 1,
+      "name": "bed",
+      "visual_rect": [
+        182,
+        92,
+        32,
+        57
+      ],
+      "source": "native_props/bed.png"
+    },
+    {
+      "floor": 1,
+      "name": "bed",
+      "visual_rect": [
+        252,
+        92,
+        32,
+        57
+      ],
+      "source": "native_props/bed.png"
+    },
+    {
+      "floor": 1,
+      "name": "bed",
+      "visual_rect": [
+        319,
+        92,
+        32,
+        57
+      ],
+      "source": "native_props/bed.png"
+    },
+    {
+      "floor": 1,
+      "name": "bedside",
+      "visual_rect": [
+        234,
+        94,
+        14,
+        27
+      ],
+      "source": "native_props/bedside.png"
+    },
+    {
+      "floor": 1,
+      "name": "bedside",
+      "visual_rect": [
+        302,
+        94,
+        14,
+        27
+      ],
+      "source": "native_props/bedside.png"
+    },
+    {
+      "floor": 1,
+      "name": "iv",
+      "visual_rect": [
+        222,
+        105,
+        11,
+        43
+      ],
+      "source": "native_props/iv.png"
+    },
+    {
+      "floor": 1,
+      "name": "iv",
+      "visual_rect": [
+        291,
+        105,
+        11,
+        43
+      ],
+      "source": "native_props/iv.png"
+    },
+    {
+      "floor": 1,
+      "name": "pharmacy",
+      "visual_rect": [
+        415,
+        94,
+        58,
+        62
+      ],
+      "source": "native_props/pharmacy.png"
+    },
+    {
+      "floor": 1,
+      "name": "fridge",
+      "visual_rect": [
+        490,
+        94,
+        32,
+        58
+      ],
+      "source": "native_props/fridge.png"
+    },
+    {
+      "floor": 1,
+      "name": "fridge",
+      "visual_rect": [
+        526,
+        94,
+        32,
+        58
+      ],
+      "source": "native_props/fridge.png"
+    },
+    {
+      "floor": 1,
+      "name": "supplies",
+      "visual_rect": [
+        580,
+        94,
+        27,
+        61
+      ],
+      "source": "native_props/supplies.png"
+    },
+    {
+      "floor": 2,
+      "name": "reception_counter",
+      "visual_rect": [
+        103,
+        43,
+        71,
+        40
+      ],
+      "source": "native_props/reception_counter.png"
+    },
+    {
+      "floor": 2,
+      "name": "surgery_table",
+      "visual_rect": [
+        288,
+        74,
+        34,
+        49
+      ],
+      "source": "native_props/surgery_table.png"
+    },
+    {
+      "floor": 2,
+      "name": "office_desk",
+      "visual_rect": [
+        543,
+        43,
+        68,
+        49
+      ],
+      "source": "native_props/office_desk.png"
+    },
+    {
+      "floor": 2,
+      "name": "surgery_lamp",
+      "visual_rect": [
+        286,
+        36,
+        40,
+        27
+      ],
+      "source": "native_props/surgery_lamp.png"
+    },
+    {
+      "floor": 2,
+      "name": "plant",
+      "visual_rect": [
+        24,
+        43,
+        14,
+        23
+      ],
+      "source": "native_props/plant.png"
+    },
+    {
+      "floor": 2,
+      "name": "bench",
+      "visual_rect": [
+        43,
+        43,
+        53,
+        24
+      ],
+      "source": "native_props/bench.png"
+    },
+    {
+      "floor": 2,
+      "name": "locker",
+      "visual_rect": [
+        175,
+        43,
+        16,
+        36
+      ],
+      "source": "native_props/locker.png"
+    },
+    {
+      "floor": 2,
+      "name": "curtain",
+      "visual_rect": [
+        203,
+        43,
+        16,
+        47
+      ],
+      "source": "native_props/curtain.png"
+    },
+    {
+      "floor": 2,
+      "name": "sink",
+      "visual_rect": [
+        222,
+        43,
+        27,
+        30
+      ],
+      "source": "native_props/sink.png"
+    },
+    {
+      "floor": 2,
+      "name": "drawer",
+      "visual_rect": [
+        252,
+        43,
+        19,
+        45
+      ],
+      "source": "native_props/drawer.png"
+    },
+    {
+      "floor": 2,
+      "name": "monitor_cart",
+      "visual_rect": [
+        357,
+        43,
+        24,
+        32
+      ],
+      "source": "native_props/monitor_cart.png"
+    },
+    {
+      "floor": 2,
+      "name": "small_files",
+      "visual_rect": [
+        428,
+        43,
+        16,
+        31
+      ],
+      "source": "native_props/small_files.png"
+    },
+    {
+      "floor": 2,
+      "name": "archive",
+      "visual_rect": [
+        451,
+        43,
+        31,
+        42
+      ],
+      "source": "native_props/archive.png"
+    },
+    {
+      "floor": 2,
+      "name": "office_locker",
+      "visual_rect": [
+        600,
+        88,
+        20,
+        43
+      ],
+      "source": "native_props/office_locker.png"
+    }
+  ],
+  "collision_rects": {
+    "1": [
+      {
+        "id": "north_wall",
+        "collision_rect": [
+          -100,
+          -100,
+          840,
+          144
+        ]
+      },
+      {
+        "id": "south_wall",
+        "collision_rect": [
+          -100,
+          190,
+          840,
+          200
+        ]
+      },
+      {
+        "id": "west_wall",
+        "collision_rect": [
+          -100,
+          0,
+          120,
+          224
+        ]
+      },
+      {
+        "id": "east_wall",
+        "collision_rect": [
+          620,
+          0,
+          740,
+          224
+        ]
+      },
+      {
+        "id": "entry_partition",
+        "collision_rect": [
+          130,
+          82,
+          10,
+          118
+        ]
+      },
+      {
+        "id": "storage_partition",
+        "collision_rect": [
+          392,
+          82,
+          12,
+          118
+        ]
+      },
+      {
+        "id": "room_wall_0",
+        "collision_rect": [
+          20,
+          82,
+          42,
+          10
+        ]
+      },
+      {
+        "id": "room_wall_1",
+        "collision_rect": [
+          90,
+          82,
+          40,
+          10
+        ]
+      },
+      {
+        "id": "room_wall_2",
+        "collision_rect": [
+          140,
+          82,
+          219,
+          12
+        ]
+      },
+      {
+        "id": "room_wall_3",
+        "collision_rect": [
+          385,
+          82,
+          7,
+          12
+        ]
+      },
+      {
+        "id": "room_wall_4",
+        "collision_rect": [
+          404,
+          82,
+          119,
+          10
+        ]
+      },
+      {
+        "id": "room_wall_5",
+        "collision_rect": [
+          553,
+          82,
+          67,
+          10
+        ]
+      },
+      {
+        "id": "stair_lower",
+        "collision_rect": [
+          32,
+          133,
+          32,
+          44
+        ]
+      },
+      {
+        "id": "bed_a",
+        "collision_rect": [
+          182,
+          92,
+          32,
+          57
+        ]
+      },
+      {
+        "id": "bed_b",
+        "collision_rect": [
+          252,
+          92,
+          32,
+          57
+        ]
+      },
+      {
+        "id": "bed_c",
+        "collision_rect": [
+          319,
+          92,
+          32,
+          57
+        ]
+      },
+      {
+        "id": "ward_cabinet_a",
+        "collision_rect": [
+          234,
+          94,
+          14,
+          27
+        ]
+      },
+      {
+        "id": "ward_cabinet_b",
+        "collision_rect": [
+          302,
+          94,
+          14,
+          27
+        ]
+      },
+      {
+        "id": "ward_iv_a",
+        "collision_rect": [
+          222,
+          141,
+          11,
+          7
+        ]
+      },
+      {
+        "id": "ward_iv_b",
+        "collision_rect": [
+          291,
+          141,
+          11,
+          7
+        ]
+      },
+      {
+        "id": "ward_curtain",
+        "collision_rect": [
+          145,
+          94,
+          16,
+          47
+        ]
+      },
+      {
+        "id": "medical_shelves",
+        "collision_rect": [
+          415,
+          94,
+          58,
+          40
+        ]
+      },
+      {
+        "id": "lab_bench",
+        "collision_rect": [
+          415,
+          134,
+          58,
+          22
+        ]
+      },
+      {
+        "id": "refrigerators",
+        "collision_rect": [
+          490,
+          94,
+          68,
+          58
+        ]
+      },
+      {
+        "id": "east_supplies",
+        "collision_rect": [
+          580,
+          94,
+          27,
+          61
+        ]
+      }
+    ],
+    "2": [
+      {
+        "id": "north_wall",
+        "collision_rect": [
+          -100,
+          -100,
+          840,
+          143
+        ]
+      },
+      {
+        "id": "south_wall",
+        "collision_rect": [
+          -100,
+          192,
+          840,
+          200
+        ]
+      },
+      {
+        "id": "west_wall",
+        "collision_rect": [
+          -100,
+          0,
+          120,
+          224
+        ]
+      },
+      {
+        "id": "east_wall",
+        "collision_rect": [
+          620,
+          0,
+          740,
+          224
+        ]
+      },
+      {
+        "id": "treatment_partition",
+        "collision_rect": [
+          191,
+          26,
+          12,
+          118
+        ]
+      },
+      {
+        "id": "office_partition",
+        "collision_rect": [
+          410,
+          26,
+          12,
+          118
+        ]
+      },
+      {
+        "id": "room_wall_0",
+        "collision_rect": [
+          20,
+          135,
+          66,
+          10
+        ]
+      },
+      {
+        "id": "room_wall_1",
+        "collision_rect": [
+          126,
+          135,
+          65,
+          10
+        ]
+      },
+      {
+        "id": "room_wall_2",
+        "collision_rect": [
+          203,
+          135,
+          80,
+          10
+        ]
+      },
+      {
+        "id": "room_wall_3",
+        "collision_rect": [
+          316,
+          135,
+          94,
+          10
+        ]
+      },
+      {
+        "id": "room_wall_4",
+        "collision_rect": [
+          422,
+          135,
+          64,
+          10
+        ]
+      },
+      {
+        "id": "room_wall_5",
+        "collision_rect": [
+          518,
+          135,
+          102,
+          10
+        ]
+      },
+      {
+        "id": "stair_upper",
+        "collision_rect": [
+          34,
+          94,
+          30,
+          40
+        ]
+      },
+      {
+        "id": "reception_desk",
+        "collision_rect": [
+          103,
+          43,
+          71,
+          40
+        ]
+      },
+      {
+        "id": "waiting_seats",
+        "collision_rect": [
+          43,
+          43,
+          53,
+          24
+        ]
+      },
+      {
+        "id": "reception_cabinet",
+        "collision_rect": [
+          175,
+          43,
+          16,
+          36
+        ]
+      },
+      {
+        "id": "surgery_table",
+        "collision_rect": [
+          289,
+          76,
+          31,
+          43
+        ]
+      },
+      {
+        "id": "surgery_sink",
+        "collision_rect": [
+          222,
+          43,
+          27,
+          30
+        ]
+      },
+      {
+        "id": "medical_cart",
+        "collision_rect": [
+          357,
+          43,
+          24,
+          32
+        ]
+      },
+      {
+        "id": "office_desk",
+        "collision_rect": [
+          543,
+          43,
+          68,
+          49
+        ]
+      },
+      {
+        "id": "files",
+        "collision_rect": [
+          451,
+          43,
+          31,
+          42
+        ]
+      },
+      {
+        "id": "office_cabinet",
+        "collision_rect": [
+          600,
+          88,
+          20,
+          43
+        ]
+      },
+      {
+        "id": "treatment_drawer",
+        "collision_rect": [
+          252,
+          43,
+          19,
+          45
+        ]
+      },
+      {
+        "id": "treatment_curtain",
+        "collision_rect": [
+          203,
+          43,
+          16,
+          47
+        ]
+      },
+      {
+        "id": "office_small_files",
+        "collision_rect": [
+          428,
+          43,
+          16,
+          31
+        ]
+      },
+      {
+        "id": "reception_plant",
+        "collision_rect": [
+          24,
+          43,
+          14,
+          23
+        ]
+      }
+    ]
+  },
+  "protected": [
+    "side view",
+    "corridor bounds",
+    "original doorway coordinates",
+    "stairs geometry",
+    "player scale and frames",
+    "Coburn foot 492,82 and rear approach 492,64"
+  ],
+  "outputs": [
+    {
+      "path": "hospital_floor_1_native.png",
+      "sha256": "1c8872a816a70fd6e21ad4bb46612c10d178cc94d1a52b69b0ea882c2a9b84ee"
+    },
+    {
+      "path": "hospital_floor_2_native.png",
+      "sha256": "ee00e14949a282c302a9718413a28a46b08db878b866e050d2999c9127656749"
+    }
+  ]
+}

@@ -55,6 +55,8 @@ func run() -> void:
 	# This recording isolates the paid withdrawal; the full chapter suite walks the powered patrol route.
 	for source: Dictionary in hospital.lighting.patrols:
 		hospital.lighting.set_source_power(String(source["id"]), false)
+	for doctor: Node in hospital.chapter.day_staff.get_children():
+		doctor.set_physics_process(false)
 	# The real arrival fade owns input until it ends. Wait for the offered execution rather than pressing F
 	# under its modal (GPU rendering can arrive while the headless fixture has already faded).
 	var ready := false

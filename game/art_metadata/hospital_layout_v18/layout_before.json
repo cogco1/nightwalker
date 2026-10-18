@@ -1,0 +1,1523 @@
+{
+  "schema_version": 2,
+  "scene": "underground_hospital",
+  "native_size": [
+    640,
+    360
+  ],
+  "viewport_size": [
+    320,
+    180
+  ],
+  "initial_floor": 1,
+  "views": {
+    "top_down": {
+      "default_floor": 1,
+      "floors": {
+        "1": {
+          "native_size": [
+            640,
+            224
+          ],
+          "background": "res://assets/underground_hospital/hospital_floor_1_native.png",
+          "player_start": [
+            110,
+            65
+          ],
+          "colliders": [
+            {
+              "id": "north_wall",
+              "rect": [
+                -100,
+                -100,
+                840,
+                144
+              ]
+            },
+            {
+              "id": "south_wall",
+              "rect": [
+                -100,
+                190,
+                840,
+                200
+              ]
+            },
+            {
+              "id": "west_wall",
+              "rect": [
+                -100,
+                0,
+                120,
+                224
+              ]
+            },
+            {
+              "id": "east_wall",
+              "rect": [
+                620,
+                0,
+                740,
+                224
+              ]
+            },
+            {
+              "id": "entry_partition",
+              "rect": [
+                130,
+                82,
+                10,
+                118
+              ]
+            },
+            {
+              "id": "storage_partition",
+              "rect": [
+                392,
+                82,
+                12,
+                118
+              ]
+            },
+            {
+              "id": "room_wall_0",
+              "rect": [
+                20,
+                82,
+                42,
+                10
+              ]
+            },
+            {
+              "id": "room_wall_1",
+              "rect": [
+                90,
+                82,
+                40,
+                10
+              ]
+            },
+            {
+              "id": "room_wall_2",
+              "rect": [
+                140,
+                82,
+                219,
+                12
+              ]
+            },
+            {
+              "id": "room_wall_3",
+              "rect": [
+                385,
+                82,
+                7,
+                12
+              ]
+            },
+            {
+              "id": "room_wall_4",
+              "rect": [
+                404,
+                82,
+                119,
+                10
+              ]
+            },
+            {
+              "id": "room_wall_5",
+              "rect": [
+                553,
+                82,
+                67,
+                10
+              ]
+            },
+            {
+              "id": "stair_lower",
+              "rect": [
+                32,
+                133,
+                32,
+                44
+              ]
+            },
+            {
+              "id": "bed_a",
+              "rect": [
+                182,
+                92,
+                32,
+                57
+              ]
+            },
+            {
+              "id": "bed_b",
+              "rect": [
+                252,
+                92,
+                33,
+                57
+              ]
+            },
+            {
+              "id": "bed_c",
+              "rect": [
+                319,
+                92,
+                32,
+                57
+              ]
+            },
+            {
+              "id": "ward_cabinet_a",
+              "rect": [
+                234,
+                105,
+                14,
+                25
+              ]
+            },
+            {
+              "id": "ward_cabinet_b",
+              "rect": [
+                302,
+                105,
+                14,
+                25
+              ]
+            },
+            {
+              "id": "ward_iv_a",
+              "rect": [
+                224,
+                127,
+                11,
+                7
+              ]
+            },
+            {
+              "id": "ward_iv_b",
+              "rect": [
+                292,
+                127,
+                11,
+                7
+              ]
+            },
+            {
+              "id": "ward_curtain",
+              "rect": [
+                145,
+                94,
+                16,
+                53
+              ]
+            },
+            {
+              "id": "medical_shelves",
+              "rect": [
+                415,
+                103,
+                62,
+                35
+              ]
+            },
+            {
+              "id": "lab_bench",
+              "rect": [
+                431,
+                140,
+                48,
+                34
+              ]
+            },
+            {
+              "id": "refrigerators",
+              "rect": [
+                490,
+                105,
+                68,
+                54
+              ]
+            },
+            {
+              "id": "east_supplies",
+              "rect": [
+                580,
+                109,
+                27,
+                58
+              ]
+            }
+          ],
+          "monitors": [
+            {
+              "id": "cold_led_0",
+              "rect": [
+                509,
+                115,
+                7,
+                2
+              ]
+            },
+            {
+              "id": "cold_led_1",
+              "rect": [
+                541,
+                115,
+                7,
+                2
+              ]
+            }
+          ],
+          "fluorescents": [
+            {
+              "id": "lower_lamp_0",
+              "rect": [
+                101,
+                36,
+                22,
+                3
+              ],
+              "zone": "corridor"
+            },
+            {
+              "id": "lower_lamp_1",
+              "rect": [
+                227,
+                36,
+                19,
+                3
+              ],
+              "zone": "corridor"
+            },
+            {
+              "id": "lower_lamp_2",
+              "rect": [
+                357,
+                36,
+                21,
+                3
+              ],
+              "zone": "corridor"
+            },
+            {
+              "id": "lower_lamp_3",
+              "rect": [
+                477,
+                36,
+                20,
+                3
+              ],
+              "zone": "corridor"
+            }
+          ],
+          "light_zones": [
+            {
+              "id": "corridor",
+              "rect": [
+                20,
+                44,
+                600,
+                38
+              ]
+            },
+            {
+              "id": "entry",
+              "rect": [
+                20,
+                92,
+                110,
+                98
+              ]
+            },
+            {
+              "id": "ward",
+              "rect": [
+                140,
+                92,
+                252,
+                98
+              ]
+            },
+            {
+              "id": "storage",
+              "rect": [
+                404,
+                92,
+                216,
+                98
+              ]
+            }
+          ]
+        },
+        "2": {
+          "native_size": [
+            640,
+            224
+          ],
+          "background": "res://assets/underground_hospital/hospital_floor_2_native.png",
+          "player_start": [
+            136,
+            172
+          ],
+          "colliders": [
+            {
+              "id": "north_wall",
+              "rect": [
+                -100,
+                -100,
+                840,
+                143
+              ]
+            },
+            {
+              "id": "south_wall",
+              "rect": [
+                -100,
+                192,
+                840,
+                200
+              ]
+            },
+            {
+              "id": "west_wall",
+              "rect": [
+                -100,
+                0,
+                120,
+                224
+              ]
+            },
+            {
+              "id": "east_wall",
+              "rect": [
+                620,
+                0,
+                740,
+                224
+              ]
+            },
+            {
+              "id": "treatment_partition",
+              "rect": [
+                191,
+                26,
+                12,
+                118
+              ]
+            },
+            {
+              "id": "office_partition",
+              "rect": [
+                410,
+                26,
+                12,
+                118
+              ]
+            },
+            {
+              "id": "room_wall_0",
+              "rect": [
+                20,
+                135,
+                66,
+                10
+              ]
+            },
+            {
+              "id": "room_wall_1",
+              "rect": [
+                126,
+                135,
+                65,
+                10
+              ]
+            },
+            {
+              "id": "room_wall_2",
+              "rect": [
+                203,
+                135,
+                80,
+                10
+              ]
+            },
+            {
+              "id": "room_wall_3",
+              "rect": [
+                316,
+                135,
+                94,
+                10
+              ]
+            },
+            {
+              "id": "room_wall_4",
+              "rect": [
+                422,
+                135,
+                64,
+                10
+              ]
+            },
+            {
+              "id": "room_wall_5",
+              "rect": [
+                518,
+                135,
+                102,
+                10
+              ]
+            },
+            {
+              "id": "stair_upper",
+              "rect": [
+                34,
+                94,
+                30,
+                40
+              ]
+            },
+            {
+              "id": "reception_desk",
+              "rect": [
+                83,
+                96,
+                71,
+                28
+              ]
+            },
+            {
+              "id": "waiting_seats",
+              "rect": [
+                70,
+                56,
+                53,
+                22
+              ]
+            },
+            {
+              "id": "reception_cabinet",
+              "rect": [
+                156,
+                56,
+                16,
+                28
+              ]
+            },
+            {
+              "id": "surgery_table",
+              "rect": [
+                289,
+                76,
+                31,
+                43
+              ]
+            },
+            {
+              "id": "surgery_sink",
+              "rect": [
+                222,
+                62,
+                27,
+                19
+              ]
+            },
+            {
+              "id": "medical_cart",
+              "rect": [
+                361,
+                75,
+                24,
+                23
+              ]
+            },
+            {
+              "id": "office_desk",
+              "rect": [
+                466,
+                90,
+                68,
+                34
+              ]
+            },
+            {
+              "id": "files",
+              "rect": [
+                531,
+                53,
+                31,
+                32
+              ]
+            },
+            {
+              "id": "office_cabinet",
+              "rect": [
+                586,
+                72,
+                20,
+                43
+              ]
+            }
+          ],
+          "monitors": [
+            {
+              "id": "upper_screen_0",
+              "rect": [
+                94,
+                97,
+                12,
+                9
+              ]
+            },
+            {
+              "id": "upper_screen_1",
+              "rect": [
+                362,
+                64,
+                11,
+                9
+              ]
+            },
+            {
+              "id": "upper_screen_2",
+              "rect": [
+                482,
+                87,
+                13,
+                8
+              ]
+            }
+          ],
+          "fluorescents": [
+            {
+              "id": "upper_lamp_0",
+              "rect": [
+                101,
+                144,
+                20,
+                3
+              ],
+              "zone": "corridor",
+              "off_cover": {
+                "texture": "res://assets/underground_hospital/lamp_off/upper_lamp_0.png",
+                "position": [
+                  79,
+                  147
+                ]
+              }
+            },
+            {
+              "id": "upper_lamp_1",
+              "rect": [
+                235,
+                144,
+                22,
+                3
+              ],
+              "zone": "corridor",
+              "off_cover": {
+                "texture": "res://assets/underground_hospital/lamp_off/upper_lamp_1.png",
+                "position": [
+                  213,
+                  147
+                ]
+              }
+            },
+            {
+              "id": "upper_lamp_2",
+              "rect": [
+                362,
+                144,
+                20,
+                3
+              ],
+              "zone": "corridor",
+              "off_cover": {
+                "texture": "res://assets/underground_hospital/lamp_off/upper_lamp_2.png",
+                "position": [
+                  340,
+                  147
+                ]
+              }
+            },
+            {
+              "id": "upper_lamp_3",
+              "rect": [
+                497,
+                144,
+                22,
+                3
+              ],
+              "zone": "corridor",
+              "off_cover": {
+                "texture": "res://assets/underground_hospital/lamp_off/upper_lamp_3.png",
+                "position": [
+                  475,
+                  147
+                ]
+              }
+            }
+          ],
+          "light_zones": [
+            {
+              "id": "reception",
+              "rect": [
+                20,
+                43,
+                171,
+                92
+              ]
+            },
+            {
+              "id": "treatment",
+              "rect": [
+                203,
+                43,
+                207,
+                92
+              ]
+            },
+            {
+              "id": "office",
+              "rect": [
+                422,
+                43,
+                198,
+                92
+              ]
+            },
+            {
+              "id": "corridor",
+              "rect": [
+                20,
+                145,
+                600,
+                47
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "side_view": {
+      "native_size": [
+        640,
+        360
+      ],
+      "background": "res://assets/underground_hospital/hospital_side_native.png",
+      "player_start": [
+        60,
+        286
+      ],
+      "floor_spawns": {
+        "1": [
+          60,
+          286
+        ],
+        "2": [
+          100,
+          164
+        ]
+      },
+      "colliders": [
+        {
+          "id": "west_wall",
+          "rect": [
+            -100,
+            0,
+            112,
+            360
+          ]
+        },
+        {
+          "id": "east_wall",
+          "rect": [
+            634,
+            0,
+            100,
+            360
+          ]
+        },
+        {
+          "id": "roof",
+          "rect": [
+            -100,
+            -100,
+            840,
+            159
+          ]
+        },
+        {
+          "id": "lower_floor",
+          "rect": [
+            12,
+            286,
+            622,
+            12
+          ]
+        },
+        {
+          "id": "upper_floor_west",
+          "rect": [
+            12,
+            164,
+            6,
+            10
+          ]
+        },
+        {
+          "id": "stair_entry",
+          "rect": [
+            18,
+            164,
+            150,
+            10
+          ],
+          "one_way": true
+        },
+        {
+          "id": "upper_floor",
+          "rect": [
+            168,
+            164,
+            466,
+            10
+          ]
+        },
+        {
+          "id": "stair_ramp",
+          "rect": [
+            24,
+            164,
+            120,
+            130
+          ],
+          "one_way": true,
+          "stair_only": true,
+          "polygon": [
+            [
+              24,
+              164
+            ],
+            [
+              144,
+              286
+            ],
+            [
+              144,
+              294
+            ],
+            [
+              24,
+              172
+            ]
+          ]
+        }
+      ],
+      "monitors": [
+        {
+          "id": "side_screen_0",
+          "rect": [
+            147,
+            120,
+            9,
+            9
+          ]
+        },
+        {
+          "id": "side_screen_1",
+          "rect": [
+            250,
+            121,
+            9,
+            8
+          ]
+        },
+        {
+          "id": "side_screen_2",
+          "rect": [
+            464,
+            124,
+            9,
+            9
+          ]
+        }
+      ],
+      "fluorescents": [
+        {
+          "id": "side_lamp_0",
+          "rect": [
+            86,
+            77,
+            46,
+            2
+          ]
+        },
+        {
+          "id": "side_lamp_1",
+          "rect": [
+            283,
+            77,
+            43,
+            2
+          ]
+        },
+        {
+          "id": "side_lamp_2",
+          "rect": [
+            489,
+            77,
+            43,
+            2
+          ]
+        },
+        {
+          "id": "side_lamp_3",
+          "rect": [
+            202,
+            195,
+            34,
+            2
+          ]
+        },
+        {
+          "id": "side_lamp_4",
+          "rect": [
+            347,
+            195,
+            34,
+            2
+          ]
+        },
+        {
+          "id": "side_lamp_5",
+          "rect": [
+            490,
+            195,
+            39,
+            2
+          ]
+        }
+      ]
+    }
+  },
+  "rooms": [
+    {
+      "id": "entry",
+      "floor_id": 1,
+      "top_down_rect": [
+        20,
+        83,
+        116,
+        117
+      ],
+      "side_view_rect": [
+        12,
+        174,
+        156,
+        132
+      ],
+      "top_down_anchor": [
+        108,
+        174
+      ],
+      "side_view_anchor": [
+        60,
+        286
+      ]
+    },
+    {
+      "id": "ward",
+      "floor_id": 1,
+      "top_down_rect": [
+        136,
+        83,
+        262,
+        117
+      ],
+      "side_view_rect": [
+        168,
+        174,
+        267,
+        132
+      ],
+      "top_down_anchor": [
+        232,
+        178
+      ],
+      "side_view_anchor": [
+        288,
+        286
+      ]
+    },
+    {
+      "id": "storage",
+      "floor_id": 1,
+      "top_down_rect": [
+        398,
+        83,
+        226,
+        117
+      ],
+      "side_view_rect": [
+        435,
+        174,
+        199,
+        132
+      ],
+      "top_down_anchor": [
+        564,
+        177
+      ],
+      "side_view_anchor": [
+        547,
+        286
+      ]
+    },
+    {
+      "id": "reception",
+      "floor_id": 2,
+      "top_down_rect": [
+        20,
+        26,
+        177,
+        177
+      ],
+      "side_view_rect": [
+        12,
+        59,
+        208,
+        115
+      ],
+      "top_down_anchor": [
+        136,
+        172
+      ],
+      "side_view_anchor": [
+        100,
+        164
+      ]
+    },
+    {
+      "id": "treatment",
+      "floor_id": 2,
+      "top_down_rect": [
+        197,
+        26,
+        219,
+        177
+      ],
+      "side_view_rect": [
+        220,
+        59,
+        198,
+        115
+      ],
+      "top_down_anchor": [
+        340,
+        172
+      ],
+      "side_view_anchor": [
+        310,
+        164
+      ]
+    },
+    {
+      "id": "office",
+      "floor_id": 2,
+      "top_down_rect": [
+        416,
+        26,
+        208,
+        177
+      ],
+      "side_view_rect": [
+        418,
+        59,
+        216,
+        115
+      ],
+      "top_down_anchor": [
+        542,
+        172
+      ],
+      "side_view_anchor": [
+        490,
+        164
+      ]
+    }
+  ],
+  "interactions": [
+    {
+      "id": "stairs_up",
+      "title": "楼梯 · 上二楼",
+      "floor_id": 1,
+      "room_id": "entry",
+      "kind": "stairs",
+      "anchors": {
+        "top_down": [
+          74,
+          174
+        ],
+        "side_view": [
+          160,
+          286
+        ]
+      },
+      "radius": 22,
+      "lines": [],
+      "target_floor": 2,
+      "radii": {
+        "side_view": 10
+      }
+    },
+    {
+      "id": "stairs_down",
+      "title": "楼梯 · 下一楼",
+      "floor_id": 2,
+      "room_id": "reception",
+      "kind": "stairs",
+      "anchors": {
+        "top_down": [
+          71,
+          124
+        ],
+        "side_view": [
+          30,
+          164
+        ]
+      },
+      "radius": 22,
+      "lines": [],
+      "target_floor": 1,
+      "radii": {
+        "side_view": 6
+      }
+    },
+    {
+      "id": "breaker",
+      "title": "配电箱",
+      "floor_id": 1,
+      "room_id": "entry",
+      "kind": "toggle_power",
+      "anchors": {
+        "top_down": [
+          116,
+          157
+        ],
+        "side_view": [
+          71,
+          286
+        ]
+      },
+      "radius": 22,
+      "lines": [
+        "墙上的线路通向楼上的诊疗区。"
+      ],
+      "power_section": "clinical",
+      "power_off_lines": [
+        "诊疗区电源已切断。",
+        "灯光暗下去。没有光的地方，也躲开了微光粒子监控。"
+      ],
+      "power_on_lines": [
+        "诊疗区电源重新接通。",
+        "头顶的灯亮起来，暗处又缩回了墙边。"
+      ],
+      "top_down_required_item": "breaker_key"
+    },
+    {
+      "id": "ward_bed",
+      "title": "空病床",
+      "floor_id": 1,
+      "room_id": "ward",
+      "kind": "inspect",
+      "anchors": {
+        "top_down": [
+          269,
+          164
+        ],
+        "side_view": [
+          220,
+          286
+        ]
+      },
+      "radius": 22,
+      "lines": [
+        "床边的输液架没有挂瓶。床单泛白，金属边缘已经磨亮。"
+      ]
+    },
+    {
+      "id": "cold_cabinet",
+      "title": "冷藏柜",
+      "floor_id": 1,
+      "room_id": "storage",
+      "kind": "inspect",
+      "anchors": {
+        "top_down": [
+          530,
+          176
+        ],
+        "side_view": [
+          477,
+          286
+        ]
+      },
+      "radius": 22,
+      "lines": [
+        "柜门锁着。里面的压缩机一直低鸣。",
+        "封箱的标签上只有编号，冷气从门缝里渗出来。"
+      ]
+    },
+    {
+      "id": "reception_pc",
+      "title": "接待电脑",
+      "floor_id": 2,
+      "room_id": "reception",
+      "kind": "inspect",
+      "anchors": {
+        "top_down": [
+          117,
+          137
+        ],
+        "side_view": [
+          145,
+          164
+        ]
+      },
+      "radius": 22,
+      "lines": [
+        "值班表：科伯恩，男，27岁。",
+        "费列罗诊所主治医师，在岗时间8:00—14:30。"
+      ]
+    },
+    {
+      "id": "empty_table",
+      "title": "空手术台",
+      "floor_id": 2,
+      "room_id": "treatment",
+      "kind": "inspect",
+      "anchors": {
+        "top_down": [
+          340,
+          130
+        ],
+        "side_view": [
+          306,
+          164
+        ]
+      },
+      "radius": 22,
+      "lines": [
+        "手术台很冷。金属边缘被反复擦拭过，缝隙里却积着灰。"
+      ]
+    },
+    {
+      "id": "duty_record",
+      "title": "科伯恩的值班记录",
+      "floor_id": 2,
+      "room_id": "office",
+      "kind": "inspect",
+      "anchors": {
+        "top_down": [
+          545,
+          132
+        ],
+        "side_view": [
+          512,
+          164
+        ]
+      },
+      "radius": 22,
+      "lines": [
+        "科伯恩。27岁。8:00—14:30。",
+        "乔伦给的信息，与这里的记录一致。"
+      ]
+    },
+    {
+      "id": "archive",
+      "title": "病历档案",
+      "floor_id": 2,
+      "room_id": "office",
+      "kind": "inspect",
+      "anchors": {
+        "top_down": [
+          570,
+          93
+        ],
+        "side_view": [
+          567,
+          164
+        ]
+      },
+      "radius": 22,
+      "lines": [
+        "档案封面按身份序列号排列。",
+        "那些条形码，代表着被记录在案的人。"
+      ]
+    },
+    {
+      "id": "exit_panel",
+      "title": "出口控制面板",
+      "floor_id": 2,
+      "room_id": "office",
+      "kind": "inspect",
+      "anchors": {
+        "top_down": [
+          590,
+          175
+        ],
+        "side_view": [
+          597,
+          164
+        ]
+      },
+      "radius": 22,
+      "lines": [
+        "门外通向地下诊所出口。面板还亮着。",
+        "出去以后，还得回到601。"
+      ]
+    }
+  ],
+  "stairs": {
+    "top_down_spawns": {
+      "1": [
+        74,
+        174
+      ],
+      "2": [
+        71,
+        124
+      ]
+    },
+    "room_ids": {
+      "1": "entry",
+      "2": "reception"
+    },
+    "side_spawns": {
+      "1": [
+        160,
+        286
+      ],
+      "2": [
+        30,
+        164
+      ]
+    },
+    "side_flight": {
+      "upper_landing_y": 164,
+      "lower_landing_y": 286,
+      "upper_entry_x": [
+        24,
+        36
+      ],
+      "lower_entry_x": [
+        150,
+        174
+      ],
+      "upper_exit_x": 22,
+      "lower_exit_x": 178,
+      "jump_off_x": [
+        18,
+        168
+      ]
+    },
+    "side_traversal": "single straight flight,lower-right to upper-left;W/E choosesup,S/E choosesdown;AD freephysics;defaultbothfloorpassagesflat"
+  },
+  "power_sections": {
+    "clinical": {
+      "top_down": {
+        "floor_id": 2,
+        "darken_rects": [
+          [
+            23,
+            145,
+            591,
+            45
+          ],
+          [
+            205,
+            44,
+            201,
+            90
+          ]
+        ],
+        "screen_rects": [
+          [
+            94,
+            97,
+            12,
+            9
+          ],
+          [
+            362,
+            64,
+            11,
+            9
+          ],
+          [
+            482,
+            87,
+            13,
+            8
+          ]
+        ]
+      },
+      "side_view": {
+        "darken_rects": [
+          [
+            23,
+            76,
+            605,
+            82
+          ]
+        ],
+        "screen_rects": [
+          [
+            147,
+            120,
+            9,
+            9
+          ],
+          [
+            250,
+            121,
+            9,
+            8
+          ],
+          [
+            464,
+            124,
+            9,
+            9
+          ]
+        ]
+      }
+    }
+  },
+  "source_document": "SK.txt",
+  "source_grounded": [
+    "C区地下医院/诊所",
+    "俯视潜入与夜晚侧视",
+    "科伯恩27岁主治医师8:00—14:30",
+    "微光粒子监控以光为介质",
+    "办公室与地下诊所出口"
+  ],
+  "ward_route": {
+    "door_opening": [
+      359,
+      82,
+      26,
+      12
+    ],
+    "entry": [
+      372,
+      65
+    ],
+    "turn": [
+      372,
+      174
+    ],
+    "west": [
+      166,
+      174
+    ],
+    "bed_heads_against_wall": true,
+    "old_middle_door_closed": true
+  },
+  "design_notes": "User selected first small six-room concept;topdown current floor only;stairs connect both floors;side cutaway depicts same room IDs;only approved protagonist,zeroNPC/enemies. Ward beds abut northwall and entrance shifts east for clear L-shaped circulation. Environment prose is an adaptation for review, not additional canon.",
+  "security": {
+    "views": [
+      "top_down"
+    ],
+    "doors": [
+      {
+        "id": "storage_door",
+        "title": "药品库密码门",
+        "floor_id": 1,
+        "code": "1010",
+        "anchor": [
+          538,
+          87
+        ],
+        "rect": [
+          523,
+          82,
+          30,
+          10
+        ],
+        "sprite_position": [
+          522,
+          78
+        ]
+      },
+      {
+        "id": "treatment_door",
+        "title": "诊疗室密码门",
+        "floor_id": 2,
+        "code": "1010",
+        "anchor": [
+          299,
+          140
+        ],
+        "rect": [
+          283,
+          135,
+          33,
+          10
+        ],
+        "sprite_position": [
+          283,
+          131
+        ]
+      },
+      {
+        "id": "office_door",
+        "title": "办公室密码门",
+        "floor_id": 2,
+        "code": "1010",
+        "anchor": [
+          502,
+          140
+        ],
+        "rect": [
+          486,
+          135,
+          32,
+          10
+        ],
+        "sprite_position": [
+          486,
+          131
+        ]
+      }
+    ],
+    "breaker": {
+      "interaction_id": "breaker",
+      "required_item": "breaker_key",
+      "floor_id": 1,
+      "anchor": [
+        116,
+        157
+      ],
+      "sprite_position": [
+        102,
+        104
+      ],
+      "collision_rect": [
+        102,
+        104,
+        24,
+        32
+      ]
+    },
+    "item_definitions": {
+      "breaker_key": {
+        "name": "配电柜钥匙"
+      }
+    },
+    "key_source": "reserved_for_future_npc_dialogue"
+  }
+}

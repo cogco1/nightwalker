@@ -27,10 +27,11 @@ func staff_on_floor(expected: int) -> void:
 	if staff == null:
 		return
 	for doctor: Node2D in staff.get_children():
-		check(doctor.scale == Vector2.ONE and doctor.position == doctor.position.round(), "a doctor shares the native pixel grid and scale")
-		check(not doctor is CollisionObject2D and doctor.find_children("*", "CollisionObject2D", true, false).is_empty(),
-			"a doctor has no combat or movement-blocking collision")
-		check(not doctor.is_in_group("enemies") and not doctor.has_method("take_damage") and not doctor.has_method("think"),
+		check(doctor.scale == Vector2.ONE and doctor.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST,
+			"a moving doctor keeps the native pixel drawing and scale")
+		check(doctor is CharacterBody2D and doctor.collision_layer == 0 and doctor.collision_mask == 1,
+			"a doctor respects walls without blocking or attacking the player")
+		check(not doctor.is_in_group("enemies") and not doctor.has_method("take_damage"),
 			"a doctor never joins hostile AI or attack targets")
 		check(hospital.position_is_clear(doctor.position, 0), "the doctor stands on clear floor")
 
@@ -128,7 +129,7 @@ func surveillance() -> void:
 		check(light.enabled and source.section == "", "a patrol has independent power")
 		check(light.position == light.position.round() and light.texture_scale == 1.0, "a patrol draws at native integer positions")
 		check(lighting.light_level(light.position) >= hospital.chapter.LIT_THRESHOLD, "standing in the visible beam counts as exposed")
-	player().position = Vector2(304, 186)
+	player().position = Vector2(610, 186)
 	player().velocity = Vector2.ZERO
 	hospital.follow_player()
 	await frames(90)

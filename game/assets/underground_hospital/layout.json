@@ -156,7 +156,7 @@
               "rect": [
                 252,
                 92,
-                33,
+                32,
                 57
               ]
             },
@@ -173,25 +173,25 @@
               "id": "ward_cabinet_a",
               "rect": [
                 234,
-                105,
+                94,
                 14,
-                25
+                27
               ]
             },
             {
               "id": "ward_cabinet_b",
               "rect": [
                 302,
-                105,
+                94,
                 14,
-                25
+                27
               ]
             },
             {
               "id": "ward_iv_a",
               "rect": [
-                224,
-                127,
+                222,
+                141,
                 11,
                 7
               ]
@@ -199,8 +199,8 @@
             {
               "id": "ward_iv_b",
               "rect": [
-                292,
-                127,
+                291,
+                141,
                 11,
                 7
               ]
@@ -211,43 +211,43 @@
                 145,
                 94,
                 16,
-                53
+                47
               ]
             },
             {
               "id": "medical_shelves",
               "rect": [
                 415,
-                103,
-                62,
-                35
+                94,
+                58,
+                40
               ]
             },
             {
               "id": "lab_bench",
               "rect": [
-                431,
-                140,
-                48,
-                34
+                415,
+                134,
+                58,
+                22
               ]
             },
             {
               "id": "refrigerators",
               "rect": [
                 490,
-                105,
+                94,
                 68,
-                54
+                58
               ]
             },
             {
               "id": "east_supplies",
               "rect": [
                 580,
-                109,
+                94,
                 27,
-                58
+                61
               ]
             }
           ],
@@ -255,18 +255,18 @@
             {
               "id": "cold_led_0",
               "rect": [
-                509,
-                115,
-                7,
+                513,
+                102,
+                4,
                 2
               ]
             },
             {
               "id": "cold_led_1",
               "rect": [
-                541,
-                115,
-                7,
+                549,
+                102,
+                4,
                 2
               ]
             }
@@ -350,7 +350,8 @@
                 98
               ]
             }
-          ]
+          ],
+          "furniture_registration": "res://art_metadata/hospital_layout_v18/import_record.json"
         },
         "2": {
           "native_size": [
@@ -483,28 +484,28 @@
             {
               "id": "reception_desk",
               "rect": [
-                83,
-                96,
+                103,
+                43,
                 71,
-                28
+                40
               ]
             },
             {
               "id": "waiting_seats",
               "rect": [
-                70,
-                56,
+                43,
+                43,
                 53,
-                22
+                24
               ]
             },
             {
               "id": "reception_cabinet",
               "rect": [
-                156,
-                56,
+                175,
+                43,
                 16,
-                28
+                36
               ]
             },
             {
@@ -520,45 +521,81 @@
               "id": "surgery_sink",
               "rect": [
                 222,
-                62,
+                43,
                 27,
-                19
+                30
               ]
             },
             {
               "id": "medical_cart",
               "rect": [
-                361,
-                75,
+                357,
+                43,
                 24,
-                23
+                32
               ]
             },
             {
               "id": "office_desk",
               "rect": [
-                466,
-                90,
+                543,
+                43,
                 68,
-                34
+                49
               ]
             },
             {
               "id": "files",
               "rect": [
-                531,
-                53,
+                451,
+                43,
                 31,
-                32
+                42
               ]
             },
             {
               "id": "office_cabinet",
               "rect": [
-                586,
-                72,
+                600,
+                88,
                 20,
                 43
+              ]
+            },
+            {
+              "id": "treatment_drawer",
+              "rect": [
+                252,
+                43,
+                19,
+                45
+              ]
+            },
+            {
+              "id": "treatment_curtain",
+              "rect": [
+                203,
+                43,
+                16,
+                47
+              ]
+            },
+            {
+              "id": "office_small_files",
+              "rect": [
+                428,
+                43,
+                16,
+                31
+              ]
+            },
+            {
+              "id": "reception_plant",
+              "rect": [
+                24,
+                43,
+                14,
+                23
               ]
             }
           ],
@@ -566,28 +603,28 @@
             {
               "id": "upper_screen_0",
               "rect": [
-                94,
-                97,
-                12,
-                9
+                114,
+                52,
+                7,
+                5
               ]
             },
             {
               "id": "upper_screen_1",
               "rect": [
-                362,
-                64,
+                363,
+                46,
                 11,
-                9
+                8
               ]
             },
             {
               "id": "upper_screen_2",
               "rect": [
-                482,
-                87,
-                13,
-                8
+                554,
+                54,
+                8,
+                7
               ]
             }
           ],
@@ -698,7 +735,8 @@
                 47
               ]
             }
-          ]
+          ],
+          "furniture_registration": "res://art_metadata/hospital_layout_v18/import_record.json"
         }
       }
     },
@@ -1072,7 +1110,13 @@
       "target_floor": 2,
       "radii": {
         "side_view": 10
-      }
+      },
+      "top_down_trigger_rect": [
+        32,
+        112,
+        58,
+        76
+      ]
     },
     {
       "id": "stairs_down",
@@ -1095,7 +1139,13 @@
       "target_floor": 1,
       "radii": {
         "side_view": 6
-      }
+      },
+      "top_down_trigger_rect": [
+        29,
+        84,
+        55,
+        52
+      ]
     },
     {
       "id": "breaker",
@@ -1179,8 +1229,8 @@
       "kind": "inspect",
       "anchors": {
         "top_down": [
-          117,
-          137
+          132,
+          96
         ],
         "side_view": [
           145,
@@ -1222,8 +1272,8 @@
       "kind": "inspect",
       "anchors": {
         "top_down": [
-          545,
-          132
+          574,
+          106
         ],
         "side_view": [
           512,
@@ -1244,8 +1294,8 @@
       "kind": "inspect",
       "anchors": {
         "top_down": [
-          570,
-          93
+          469,
+          100
         ],
         "side_view": [
           567,
@@ -1278,6 +1328,29 @@
       "lines": [
         "门外通向地下诊所出口。面板还亮着。",
         "出去以后，还得回到601。"
+      ]
+    },
+    {
+      "id": "treatment_drawer",
+      "title": "水槽旁抽屉",
+      "floor_id": 2,
+      "room_id": "treatment",
+      "kind": "inspect",
+      "anchors": {
+        "top_down": [
+          261,
+          100
+        ]
+      },
+      "radius": 18,
+      "drawer_rect": [
+        255,
+        78,
+        14,
+        7
+      ],
+      "lines": [
+        "抽屉里的便签写着：1010。"
       ]
     }
   ],
@@ -1346,22 +1419,22 @@
         ],
         "screen_rects": [
           [
-            94,
-            97,
-            12,
-            9
+            114,
+            52,
+            7,
+            5
           ],
           [
-            362,
-            64,
+            363,
+            46,
             11,
-            9
+            8
           ],
           [
-            482,
-            87,
-            13,
-            8
+            554,
+            54,
+            8,
+            7
           ]
         ]
       },
@@ -1427,7 +1500,7 @@
     "bed_heads_against_wall": true,
     "old_middle_door_closed": true
   },
-  "design_notes": "User selected first small six-room concept;topdown current floor only;stairs connect both floors;side cutaway depicts same room IDs;only approved protagonist,zeroNPC/enemies. Ward beds abut northwall and entrance shifts east for clear L-shaped circulation. Environment prose is an adaptation for review, not additional canon.",
+  "design_notes": "User selected first small six-room concept;topdown current floor only;stairs connect both floors;side cutaway depicts same room IDs;only approved protagonist,zeroNPC/enemies. Ward beds abut northwall and entrance shifts east for clear L-shaped circulation. Environment prose is an adaptation for review, not additional canon. Native layout v18: short north wall at y43; wall-attached furniture bodies fully block their backs; generated upright props replace floor-like silhouettes. Side view unchanged.",
   "security": {
     "views": [
       "top_down"

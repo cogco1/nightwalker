@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "character": "科伯恩 / Coburn",
   "source_document": "SK.txt",
   "canon": {
@@ -16,6 +16,13 @@
     1254,
     1254
   ],
+  "standing_source_file": "coburn_standing_generated.png",
+  "standing_source_sha256": "974308576158755010dde303415aeff3e366a4685bd43b6eb3579f6d2f11f5e3",
+  "standing_source_size": [
+    1774,
+    887
+  ],
+  "standing_prompt_file": "standing_generation_prompt.txt",
   "prompt_file": "generation_prompt.txt",
   "native_frame_size": [
     48,
@@ -42,35 +49,39 @@
   "frames": [
     {
       "name": "idle_00",
+      "source_file": "coburn_standing_generated.png",
       "source_bbox_in_cell": [
-        190,
-        92,
-        464,
-        585
+        429,
+        99,
+        749,
+        796
       ],
       "native_bbox": [
-        16,
+        17,
         9,
-        33,
+        31,
         40
       ],
-      "sha256": "e4e35b24e9ee636db809a6b006f44df34b02c9d819aab9cece4957cc66c1c6c2"
+      "uniform_source_to_native_scale": 0.04447632711621234,
+      "sha256": "9538658f701bfba21eec094f31103b76a914dd7ed85fa7e0d78b934482bc3f2b"
     },
     {
       "name": "idle_01",
+      "source_file": "coburn_standing_generated.png",
       "source_bbox_in_cell": [
-        163,
-        92,
-        439,
-        585
+        123,
+        99,
+        444,
+        796
       ],
       "native_bbox": [
-        16,
+        17,
         9,
-        33,
+        31,
         40
       ],
-      "sha256": "703525d5ff48b482133f8c6733b55accc2d43afa37668367567ab85faf294f0f"
+      "uniform_source_to_native_scale": 0.04447632711621234,
+      "sha256": "a02c4c8650cb5e50145b901c77e931755697c14c586b8eef04edf9a4965e34a0"
     },
     {
       "name": "collapse_00",
@@ -105,5 +116,5 @@
       "sha256": "5d9e225c89b53dfe01addb0d96993fbeeaf1fa2aca927ed6e7e54aa9e940723b"
     }
   ],
-  "protected": "Player frames, hospital background and collision dimensions unchanged."
+  "protected": "Player frames, target collision dimensions, original collapse/dead pixels unchanged by standing edit."
 }
