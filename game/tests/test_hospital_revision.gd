@@ -37,6 +37,7 @@ func stairs_and_clue() -> void:
 		and not hospital.security.is_door_unlocked("office_door"), "only Coburn's office starts password-locked")
 	var body: StaticBody2D = hospital.security.get("_door_bodies").get("treatment_door")
 	check(body != null and body.collision_layer == 0, "the open treatment door has no blocking collision")
+	staff_on_floor(2)
 	# These feet are below the actual north wall. Furniture must fill its back edge instead of leaving a
 	# playable gap that lets the character appear to stand on chair backs, countertops or cabinet tops.
 	for point: Vector2 in [Vector2(69, 60), Vector2(132, 60), Vector2(181, 60), Vector2(235, 60),

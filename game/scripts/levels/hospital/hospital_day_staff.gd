@@ -8,7 +8,7 @@ const STAFF := {
 	1: [
 		{"id": "ward_rounds", "points": [Vector2(170, 166), Vector2(230, 166), Vector2(230, 178)], "appearance": 0},
 		{"id": "ward_chart", "points": [Vector2(314, 172), Vector2(354, 172), Vector2(354, 160)], "appearance": 1},
-		{"id": "storage_staff", "points": [Vector2(458, 176), Vector2(566, 176), Vector2(566, 158)], "appearance": 2},
+		{"id": "storage_staff", "points": [Vector2(458, 176), Vector2(566, 176), Vector2(566, 162)], "appearance": 2},
 	],
 	2: [
 		{"id": "reception_staff", "points": [Vector2(181, 88), Vector2(181, 123)], "appearance": 1},

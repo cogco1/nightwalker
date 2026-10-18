@@ -34,6 +34,8 @@ func staff_on_floor(expected: int) -> void:
 		check(not doctor.is_in_group("enemies") and not doctor.has_method("take_damage"),
 			"a doctor never joins hostile AI or attack targets")
 		check(hospital.position_is_clear(doctor.position, 0), "the doctor stands on clear floor")
+		for point: Vector2 in doctor.patrol_points:
+			check(hospital.position_is_clear(point, 0), "the doctor's whole footprint fits at its patrol endpoint " + str(point))
 
 
 func opening() -> void:
