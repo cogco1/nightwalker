@@ -21,7 +21,7 @@ PROP_OUT = META / "native_props"
 GRID = ([0, 345, 655, 945, 1273], [0, 340, 640, 930, 1236])
 PROPS = [
     ("bed", (32, 57)), ("bedside", (14, 27)), ("iv", (11, 43)), ("curtain", (16, 47)),
-    ("pharmacy", (58, 62)), ("fridge", (32, 58)), ("supplies", (27, 61)), ("bench", (53, 24)),
+    ("pharmacy", (58, 62)), ("fridge", (27, 58)), ("supplies", (27, 61)), ("bench", (53, 24)),
     ("locker", (16, 36)), ("sink", (27, 30)), ("drawer", (19, 45)), ("monitor_cart", (24, 32)),
     ("small_files", (16, 31)), ("archive", (31, 42)), ("office_locker", (20, 43)), ("plant", (14, 23)),
 ]
@@ -29,7 +29,7 @@ PLACEMENTS = {
     1: [
         ("curtain", (145, 94)), ("bed", (182, 92)), ("bed", (252, 92)), ("bed", (319, 92)),
         ("bedside", (234, 94)), ("bedside", (302, 94)), ("iv", (222, 105)), ("iv", (291, 105)),
-        ("pharmacy", (415, 94)), ("fridge", (490, 94)), ("fridge", (526, 94)), ("supplies", (580, 94)),
+        ("pharmacy", (415, 94)), ("fridge", (485, 94)), ("fridge", (553, 94)), ("supplies", (580, 94)),
     ],
     2: [
         ("plant", (24, 43)), ("bench", (43, 43)), ("locker", (175, 43)),
@@ -109,7 +109,7 @@ def update_layout() -> dict:
               "ward_cabinet_a": [234, 94, 14, 27], "ward_cabinet_b": [302, 94, 14, 27],
               "ward_iv_a": [222, 141, 11, 7], "ward_iv_b": [291, 141, 11, 7],
               "ward_curtain": [145, 94, 16, 47], "medical_shelves": [415, 94, 58, 40],
-              "lab_bench": [415, 134, 58, 22], "refrigerators": [490, 94, 68, 58],
+              "lab_bench": [415, 134, 58, 22], "refrigerators": [485, 94, 27, 58],
               "east_supplies": [580, 94, 27, 61]},
         "2": {"reception_desk": [103, 43, 71, 40], "waiting_seats": [43, 43, 53, 24],
               "reception_cabinet": [175, 43, 16, 36], "surgery_table": [289, 76, 31, 43],
@@ -122,14 +122,17 @@ def update_layout() -> dict:
             if item["id"] in updates:
                 item["rect"] = updates[item["id"]]
         floors[floor]["furniture_registration"] = "res://art_metadata/hospital_layout_v18/import_record.json"
+    # Keep both refrigerators against the wall on opposite sides of the only
+    # storage doorway. A single bounding box must never bridge its clear gap.
+    floors["1"]["colliders"].append({"id": "refrigerator_east", "rect": [553, 94, 27, 58]})
     floors["2"]["colliders"].extend([
         {"id": "treatment_drawer", "rect": [252, 43, 19, 45]},
         {"id": "treatment_curtain", "rect": [203, 43, 16, 47]},
         {"id": "office_small_files", "rect": [428, 43, 16, 31]},
         {"id": "reception_plant", "rect": [24, 43, 14, 23]},
     ])
-    floors["1"]["monitors"] = [{"id": "cold_led_0", "rect": [513, 102, 4, 2]},
-                                   {"id": "cold_led_1", "rect": [549, 102, 4, 2]}]
+    floors["1"]["monitors"] = [{"id": "cold_led_0", "rect": [505, 102, 3, 2]},
+                                   {"id": "cold_led_1", "rect": [573, 102, 3, 2]}]
     floors["2"]["monitors"] = [{"id": "upper_screen_0", "rect": [114, 52, 7, 5]},
                                    {"id": "upper_screen_1", "rect": [363, 46, 11, 8]},
                                    {"id": "upper_screen_2", "rect": [554, 54, 8, 7]}]
@@ -144,6 +147,8 @@ def update_layout() -> dict:
             item["anchors"]["top_down"] = [132, 96]
         elif item["id"] == "duty_record":
             item["anchors"]["top_down"] = [574, 106]
+        elif item["id"] == "cold_cabinet":
+            item["anchors"]["top_down"] = [499, 164]
     data["interactions"].append({
         "id": "treatment_drawer", "title": "水槽旁抽屉", "floor_id": 2,
         "room_id": "treatment", "kind": "inspect", "anchors": {"top_down": [261, 100]},

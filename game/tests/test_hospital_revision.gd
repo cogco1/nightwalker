@@ -85,6 +85,29 @@ func stairs_and_clue() -> void:
 		"the drawer's code opens the real office door")
 
 
+func storage_passage() -> void:
+	await place_at(Vector2(538, 65))
+	hospital.chapter.exposure = 0.0
+	check(String(story.chapter.hospital.tip).contains("医生"), "the ongoing stealth hint includes doctor sight as well as light")
+	check(hospital.security.is_door_unlocked("storage_door"), "the chapter's pharmacy is open without a keypad")
+	check(hospital.position_is_clear(Vector2(538, 104), 0), "the pharmacy's entrance also has clear floor beyond the door")
+	key(KEY_S, true)
+	await frames(40)
+	key(KEY_S, false)
+	await frames(3)
+	check(player().position.y > 100.0 and absf(player().position.x - 538.0) < 1.0,
+		"real S input enters the pharmacy instead of hitting a refrigerator behind its open door")
+	await observe("pharmacy_doorway_clear")
+	key(KEY_W, true)
+	await frames(40)
+	key(KEY_W, false)
+	await frames(3)
+	check(player().position.y < 82.0, "real W input returns through the pharmacy doorway")
+	var cabinet: Dictionary = hospital.interactions._find_interaction("cold_cabinet")
+	var anchor: Array = cabinet.anchors.top_down
+	check(hospital.position_is_clear(Vector2(anchor[0], anchor[1]), 0), "the moved cold cabinet retains a clear interaction approach")
+
+
 func patrol_and_light() -> Node2D:
 	await place_at(Vector2(610, 186))
 	var lighting: Node = hospital.lighting
@@ -188,6 +211,7 @@ func run() -> void:
 	if not is_instance_valid(hospital):
 		finish()
 		return
+	await storage_passage()
 	await stairs_and_clue()
 	var doctor := await patrol_and_light()
 	if is_instance_valid(doctor):

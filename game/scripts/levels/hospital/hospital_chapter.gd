@@ -128,7 +128,7 @@ func refresh() -> void:
 		in_sight = false
 
 
-## The hospital rebuilt its world (arrival, stairs): this is the floor's checkpoint; Coburn sits on floor 2.
+## The hospital rebuilt its world (arrival, stairs): this is the floor's checkpoint; Coburn is on floor 2.
 func on_view_activated() -> void:
 	checkpoint = hospital.player.position
 	exposure = 0.0

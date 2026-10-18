@@ -196,10 +196,10 @@
         273
       ],
       "native_size": [
-        32,
+        27,
         58
       ],
-      "native_sha256": "48ffc9d777c0a208ed0c6339cf9c05a7cb30122dc4787dd11cb2f0a4a4d97513"
+      "native_sha256": "fecda8881aa70795c3ee569d71780ae6d77ac72aad341b650605db2f92cfe546"
     },
     {
       "name": "supplies",
@@ -590,9 +590,9 @@
       "floor": 1,
       "name": "fridge",
       "visual_rect": [
-        490,
+        485,
         94,
-        32,
+        27,
         58
       ],
       "source": "native_props/fridge.png"
@@ -601,9 +601,9 @@
       "floor": 1,
       "name": "fridge",
       "visual_rect": [
-        526,
+        553,
         94,
-        32,
+        27,
         58
       ],
       "source": "native_props/fridge.png"
@@ -986,9 +986,9 @@
       {
         "id": "refrigerators",
         "collision_rect": [
-          490,
+          485,
           94,
-          68,
+          27,
           58
         ]
       },
@@ -999,6 +999,15 @@
           94,
           27,
           61
+        ]
+      },
+      {
+        "id": "refrigerator_east",
+        "collision_rect": [
+          553,
+          94,
+          27,
+          58
         ]
       }
     ],
@@ -1250,7 +1259,7 @@
   "outputs": [
     {
       "path": "hospital_floor_1_native.png",
-      "sha256": "1c8872a816a70fd6e21ad4bb46612c10d178cc94d1a52b69b0ea882c2a9b84ee"
+      "sha256": "48c69bee88c66f19199aba4f6e93863c3d7ce354bb5cebcb12b66bb4fdf1a646"
     },
     {
       "path": "hospital_floor_2_native.png",

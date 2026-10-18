@@ -82,7 +82,7 @@
 			"tip": "请尽快躲避光线，shift奔跑。"
 		},
 		"night_floor": 1,
-		"tip": "灯光下会暴露，暗处才安全",
+		"tip": "避开巡光和医生视线",
 		"locked": "微光粒子监控已锁定",
 		"doctor_locked": "医生发现了你",
 		"line_overrides": {
