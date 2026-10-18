@@ -35,6 +35,7 @@ var day_staff: Node2D
 var fight: Node
 var exposure := 0.0
 var in_light := false
+var in_sight := false
 var light_level := 0.0
 var locks := 0
 var checkpoint := Vector2.ZERO
@@ -124,12 +125,14 @@ func refresh() -> void:
 	if not stealth():
 		exposure = 0.0
 		in_light = false
+		in_sight = false
 
 
-## The hospital rebuilt its world (arrival, stairs): this is the floor's checkpoint; Coburn sits on floor 2.
+## The hospital rebuilt its world (arrival, stairs): this is the floor's checkpoint; Coburn is on floor 2.
 func on_view_activated() -> void:
 	checkpoint = hospital.player.position
 	exposure = 0.0
+	in_sight = false
 	day_staff = DAY_STAFF.refresh(hospital, story)
 	target = null
 	var settings: Dictionary = story.chapter.get("hospital", {}).get("coburn", {})
@@ -152,11 +155,12 @@ func _physics_process(delta: float) -> void:
 		return
 	light_level = hospital.lighting.light_level(player.global_position)
 	in_light = light_level >= LIT_THRESHOLD
-	if busy or player.is_frozen():
+	in_sight = is_instance_valid(day_staff) and day_staff.visible_by(player)
+	if _input_blocked():
 		return
-	exposure = clampf(exposure + (EXPOSURE_RISE if in_light else -EXPOSURE_FALL) * delta, 0.0, 1.0)
+	exposure = clampf(exposure + (EXPOSURE_RISE if in_light or in_sight else -EXPOSURE_FALL) * delta, 0.0, 1.0)
 	if exposure >= 1.0:
-		lock_on()
+		lock_on(String(story.chapter.get("hospital", {}).get("doctor_locked", "医生发现了你")) if in_sight else "")
 
 
 func _process(delta: float) -> void:
@@ -165,8 +169,9 @@ func _process(delta: float) -> void:
 		CONTROLS.execute_text() if not execution.is_empty() else "")
 	if not stealth() or not is_instance_valid(hospital.player):
 		return
+	hud.meter_label.text = "目击" if in_sight else "暴露"
 	var top_left: Vector2 = hospital.camera.get_screen_center_position() - Vector2(160, 90)
-	hud.update(delta, exposure, busy, in_light and not busy, hospital.player.global_position - top_left)
+	hud.update(delta, exposure, busy, (in_light or in_sight) and not busy, hospital.player.global_position - top_left)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -176,12 +181,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 ## Full exposure: the lock flashes and the hero is put back where this floor was entered.
-func lock_on() -> void:
+func lock_on(reason := "") -> void:
 	busy = true
 	locks += 1
 	var player: CharacterBody2D = hospital.player
 	player.freeze(self)
-	await overlay.lock_flash(String(story.chapter.get("hospital", {}).get("locked", "")))
+	await overlay.lock_flash(reason if not reason.is_empty() else String(story.chapter.get("hospital", {}).get("locked", "")))
 	if is_instance_valid(player):
 		player.position = checkpoint
 		player.velocity = Vector2.ZERO
@@ -189,6 +194,7 @@ func lock_on() -> void:
 		player.unfreeze(self)
 		hospital.follow_player()
 	exposure = 0.0
+	in_sight = false
 	busy = false
 
 
@@ -268,6 +274,8 @@ func _execution_block_reason() -> String:
 	var player: CharacterBody2D = hospital.player
 	if hospital.lighting.light_level(player.global_position) >= LIT_THRESHOLD:
 		return "先避开光线"
+	if is_instance_valid(day_staff) and day_staff.visible_by(player):
+		return "先避开医生视线"
 	if not target.is_behind(player.global_position):
 		return "需绕到背后"
 	var ray := PhysicsRayQueryParameters2D.create(player.global_position, target.global_position, 1)
@@ -333,7 +341,7 @@ func _execute() -> void:
 	busy = false
 
 
-## Reading text the chapter replaces for an interaction (the duty roster carries the door code).
+## Reading text the chapter replaces for an interaction (the treatment drawer carries the door code).
 func line_override(id: String) -> Variant:
 	return story.chapter.get("hospital", {}).get("line_overrides", {}).get(id)
 

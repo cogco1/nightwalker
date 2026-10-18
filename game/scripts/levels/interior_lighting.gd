@@ -197,11 +197,11 @@ func _add_source(item: Dictionary, kind: String, holder: Node2D, fixture_holder:
 	lights.append(light)
 	var emission: CanvasItem
 	var cover: ColorRect
-	if kind in ["emergency", "patrol"]:
+	if kind == "emergency":
 		var core := ColorRect.new()
 		core.position = at - Vector2.ONE
-		core.size = Vector2(3, 2) if kind == "patrol" else Vector2(2, 1)
-		core.color = Color(colour.lightened(0.45) if kind == "patrol" else colour, 0.9 if kind == "patrol" else 0.65)
+		core.size = Vector2(2, 1)
+		core.color = Color(colour, 0.65)
 		core.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		emission = core
 	elif background != null and rectangle.has_area():
@@ -350,8 +350,8 @@ func _patrol_motion_blocked() -> bool:
 	return session != null and (session.settings_open or session.hit_stop_active or session.has_modal())
 
 
-## Three cached disks on horizontal rails. No texture or mask changes during movement: each rail's complete
-## disk stays in its room, so the initial room clipping and the exposure test keep the same boundaries.
+## Cached disks on horizontal rails, with no painted centre marker. The horizontal span stays inside its
+## room; the fixed-height texture clipping and gameplay reach share the same wall boundaries.
 func _place_patrols() -> void:
 	for source in patrols:
 		var phase := _patrol_clock / float(source["period"]) + float(source["phase"])
@@ -359,8 +359,6 @@ func _place_patrols() -> void:
 		var at := Vector2(source["from"]).lerp(Vector2(source["to"]), progress).round()
 		var light: PointLight2D = source["light"]
 		light.position = at
-		var core: ColorRect = source["emission"]
-		core.position = at - Vector2.ONE
 
 
 func _update_hero_light() -> void:

@@ -139,6 +139,11 @@ func _refresh_nearest() -> void:
 		if not is_finite(radius) or radius <= 0.0:
 			continue
 		var distance := player.global_position.distance_to(point)
+		# Stair landings have a visible approach area, including the upper end of the first-floor flight.
+		var trigger: Variant = item.get("top_down_trigger_rect", [])
+		if _view_key() == "top_down" and String(item.get("kind", "")) == "stairs" and trigger is Array and trigger.size() == 4:
+			if Rect2(trigger[0], trigger[1], trigger[2], trigger[3]).has_point(player.global_position):
+				distance = 0.0
 		if distance <= radius and distance < best:
 			best = distance
 			nearest_id = id
@@ -289,11 +294,26 @@ func _draw() -> void:
 			_draw_rectangles(view.get("screen_rects", []), Color(0.025, 0.045, 0.065, 0.96))
 	if _feedback_remaining <= 0.0:
 		return
+	var drawer: Variant = _find_interaction(last_interaction).get("drawer_rect", [])
+	if drawer is Array and drawer.size() == 4:
+		_draw_opening_drawer(Rect2(drawer[0], drawer[1], drawer[2], drawer[3]))
+		return
 	var tick := int((0.3 - _feedback_remaining) * 20.0)
 	var spread := 2 + tick
 	var color := Color("b8e7ed") if tick % 2 == 0 else Color("75baca")
 	for offset in [Vector2(-spread, 0), Vector2(spread, -1), Vector2(0, -spread)]:
 		draw_rect(Rect2(_feedback_position + offset, Vector2.ONE), color)
+
+
+## Slide the real painted drawer front out and back on the native grid; no extra texture or timer.
+func _draw_opening_drawer(rectangle: Rect2) -> void:
+	var background: Sprite2D = _host.get("background")
+	if background == null or background.texture == null or not rectangle.has_area():
+		return
+	var phase := clampf(1.0 - _feedback_remaining / 0.3, 0.0, 1.0)
+	var offset := Vector2(0, roundf(sin(phase * PI) * 3.0))
+	draw_rect(rectangle, Color("101c23"))
+	draw_texture_rect_region(background.texture, Rect2(rectangle.position + offset, rectangle.size), rectangle)
 
 
 func _draw_rectangles(rectangles: Variant, color: Color) -> void:

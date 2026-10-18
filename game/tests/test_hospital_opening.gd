@@ -27,24 +27,26 @@ func staff_on_floor(expected: int) -> void:
 	if staff == null:
 		return
 	for doctor: Node2D in staff.get_children():
-		check(doctor.scale == Vector2.ONE and doctor.position == doctor.position.round(), "a doctor shares the native pixel grid and scale")
-		check(not doctor is CollisionObject2D and doctor.find_children("*", "CollisionObject2D", true, false).is_empty(),
-			"a doctor has no combat or movement-blocking collision")
-		check(not doctor.is_in_group("enemies") and not doctor.has_method("take_damage") and not doctor.has_method("think"),
+		check(doctor.scale == Vector2.ONE and doctor.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST,
+			"a moving doctor keeps the native pixel drawing and scale")
+		check(doctor is CharacterBody2D and doctor.collision_layer == 0 and doctor.collision_mask == 1,
+			"a doctor respects walls without blocking or attacking the player")
+		check(not doctor.is_in_group("enemies") and not doctor.has_method("take_damage"),
 			"a doctor never joins hostile AI or attack targets")
 		check(hospital.position_is_clear(doctor.position, 0), "the doctor stands on clear floor")
+		for point: Vector2 in doctor.patrol_points:
+			check(hospital.position_is_clear(point, 0), "the doctor's whole footprint fits at its patrol endpoint " + str(point))
 
 
 func opening() -> void:
-	var boot: Node = load(BOOT).instantiate()
-	root.add_child(boot)
-	current_scene = boot
-	if not await arrive(HOSPITAL, "The public boot"):
+	# Reuse the complete public safehouse opening, real computer interaction and E at the exit.
+	await day_one_home()
+	if not await arrive(HOSPITAL, "The safehouse door"):
 		return
 	hospital = current_scene
 	story = STORY_STATE.ensure(self)
 	check(story.step == "d1_hospital" and story.clock_text() == "12:30" and hospital.floor_id == 1 and hospital.view_mode == 0,
-		"default first chapter opens the day hospital, without a developer step override")
+		"leaving the safehouse contract enters the day hospital at 12:30, without a developer step override")
 	check(hospital.player.position == SPAWN and hospital.chapter.checkpoint == SPAWN, "the screenshot's pharmacy corridor is the spawn and checkpoint")
 	check(hospital.position_is_clear(SPAWN, 0) and hospital.lighting.light_level(SPAWN) < hospital.chapter.LIT_THRESHOLD,
 		"the new spawn is clear and safe from surveillance")
@@ -128,7 +130,7 @@ func surveillance() -> void:
 		check(light.enabled and source.section == "", "a patrol has independent power")
 		check(light.position == light.position.round() and light.texture_scale == 1.0, "a patrol draws at native integer positions")
 		check(lighting.light_level(light.position) >= hospital.chapter.LIT_THRESHOLD, "standing in the visible beam counts as exposed")
-	player().position = Vector2(304, 186)
+	player().position = Vector2(610, 186)
 	player().velocity = Vector2.ZERO
 	hospital.follow_player()
 	await frames(90)

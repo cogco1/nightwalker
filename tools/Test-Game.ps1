@@ -51,6 +51,7 @@ $suites = @(
     @{ Name = 'locomotion_blade';          Script = 'test_locomotion_blade' },
     @{ Name = 'light_sense';              Script = 'test_light_sense' },
     @{ Name = 'hospital_opening';         Script = 'test_hospital_opening' },
+    @{ Name = 'hospital_revision';        Script = 'test_hospital_revision' },
     @{ Name = 'coburn_execution';         Script = 'test_coburn_execution' },
     @{ Name = 'coburn_reward_flow';       Script = 'test_coburn_reward_flow' },
     @{ Name = 'chapter_flow';             Script = 'test_chapter_flow' },

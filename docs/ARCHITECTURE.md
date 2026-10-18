@@ -5,8 +5,8 @@
 ## 场景流转
 
 ```
-启动 → scenes/boot.tscn → SceneRoutes.travel(start_step) → underground_hospital.tscn
-       （默认 d1_hospital；-- --sandbox 则进入 main.tscn 自由模式）
+启动 → scenes/boot.tscn → SceneRoutes.travel(start_step) → home_601.tscn
+       （默认 d1_wake：601安全屋；-- --sandbox 则进入 main.tscn 自由模式）
           │  章节：剧情步骤 SceneRoutes.travel(step)   自由模式：门口 E / F7
           ▼
 SceneRoutes.switch_to()  ←── autoload，登记安全屋、医院、夜街和屏息
@@ -18,7 +18,7 @@ home_601.tscn   underground_hospital.tscn
        night_street_proto.tscn
 ```
 
-- 正式入口是 `boot.tscn`（`scripts/core/boot.gd`）：开始第一章并按 `chapter1.json.start_step` 路由，当前默认 `d1_hospital`，打开医院俯视一楼；`Run-Sandbox.cmd` 直接打开 `main.tscn`，没有章节，就是原来的自由模式。章节里 `SceneRoutes.travel(step)` 进入步骤并打开它的 `scene`（home / hospital / breath），不受玩家冻结影响；F7、F8 和医院的 Tab 只有带 `-- --nw-debug` 才生效。`-- --nw-step=<步骤>`（`Run-Game.ps1 -Step <步骤>`）可覆盖默认入口，`d1_wake` 保留601原开场，`d1_night` 直接进第一夜；只认写了 `scene` 的步骤。
+- 正式入口是 `boot.tscn`（`scripts/core/boot.gd`）：开始第一章并按 `chapter1.json.start_step` 路由，当前默认 `d1_wake`，打开601安全屋，播放标题卡、电视新闻、独白和敲门；玩家在电脑读完乔伦委托后，由门口进入 `d1_hospital`（12:30，俯视医院1F脚点566,78）；`Run-Sandbox.cmd` 直接打开 `main.tscn`，没有章节，就是原来的自由模式。章节里 `SceneRoutes.travel(step)` 进入步骤并打开它的 `scene`（home / hospital / breath），不受玩家冻结影响；F7、F8 和医院的 Tab 只有带 `-- --nw-debug` 才生效。`-- --nw-step=<步骤>`（`Run-Game.ps1 -Step <步骤>`）可覆盖默认入口，`d1_hospital` 用于跳过安全屋直接调试医院，`d1_night` 直接进第一夜；只认写了 `scene` 的步骤。
 - `SceneRoutes`（`scripts/core/scene_routes.gd`）是唯一的 autoload。F7 保留安全屋/医院往返，F8 从两处室内进入夜街并返回来源楼层、视角和安全脚点；直接启动夜街则返回安全屋。快捷键被改键占用时不抢键；设置、剧情弹窗和楼梯过渡拦截切场。切场景前取消顿帧、清空攻击缓冲、恢复暂停和画布变换。侧视空中离开医院时返回该楼层既有安全出生点。
 - `main.tscn` 和 `home_601.tscn` 都挂 `home_601.gd`。`main.tscn` 是自由模式入口；章节与场景路由回安全屋时用 `home_601.tscn`，正式项目入口是 `boot.tscn`。
 - `night_street_proto.tscn`（夜街原型）已接入 F8 路由，也可以用 `Run-NightStreet.cmd` 直接启动，或在编辑器里打开后按 F6。
@@ -144,7 +144,7 @@ NightStreetProto
 | `assets/side_view.tres`、`top_down.tres` | 把 frames 组装成 SpriteFrames |
 | `assets/home_601/layout.json` | 安全屋碰撞、可交互物、对话文本 |
 | `assets/home_601/home_601_furnished_native.png` | 当前安全屋底图；旧图 `home_601_native.png` 保留，场景和 PropEffects 统一读取 layout.background |
-| `assets/underground_hospital/layout.json` | 医院俯视两层和侧视的房间、墙、楼梯（`stairs.side_flight`：侧视楼梯两端平台高度和上下楼判定区间）、门禁、交互点 |
+| `assets/underground_hospital/layout.json` | 医院俯视两层与侧视的房间、墙、家具地面占地、楼梯、门禁和交互点；`top_down_trigger_rect` 扩展俯视楼梯入口，`drawer_rect` 指定可开合抽屉正面 |
 | `assets/lighting/hospital_patrols.json` | 第一章白天俯视二楼3束巡光的路线、周期、半径与亮度 |
 | `assets/fonts/` | fusion-pixel 10/12px 中文像素字体（OFL） |
 | `art_metadata/` | 原画、提示词、遮罩、导入脚本和校验报告；有 `.gdignore`，Godot 不导入 |
@@ -156,7 +156,7 @@ NightStreetProto
 - 改键测试使用独立的 `settings_path`，不会覆盖玩家真实的 `user://keybindings.cfg`。
 - `tests/test_perfect_counter.gd` 覆盖慢动作和反击：世界时钟是主角的 1/4、主角全速、无敌、1.2 秒实际时间、顿帧时计时不走且仍冻结满帧、左右键反击的落点和朝向、3 倍伤害、10 帧顿帧、反击命中结束慢动作。
 - `tests/test_enemy_attack.gd` 覆盖敌人攻击和受击：预警红闪和时长、HIT 的击退距离和硬直、打断挥刀和蓄力、过早突刺和跳过是 EVADE、判定前 0.14 秒和判定中的突刺是 PERFECT、被打坏的无人机不再攻击。
-- `tests/test_chapter_flow.gd` 用真实按键（在实际碰撞体上寻路后按住 WASD）覆盖保留的601开场、接单、医院锁定、不可关闸、密码、背后暗杀、回家购物、睡觉暴走、第一夜（`night_bot` 打完五课、两层、三句台词和处决）、屏息、第 2 天，并检查章节 HUD 和调试键。`tests/test_hospital_opening.gd` 覆盖默认正式入口的医院出生、独白/提示、医生、禁用配电箱及移动光照；`tests/test_light_sense.gd` 保留自由模式逐盏灯范围、断电变暗和遮罩，并验证章节暴露涨落、锁定和 R 回检查点。
+- `tests/test_chapter_flow.gd` 用真实按键（在实际碰撞体上寻路后按住 WASD）覆盖默认601开场、接单、医院锁定、不可关闸、密码、背后暗杀、回家购物、睡觉暴走、第一夜（`night_bot` 打完五课、两层、三句台词和处决）、屏息、第 2 天，并检查章节 HUD 和调试键。`tests/test_hospital_opening.gd` 覆盖默认正式入口601开场与接单、真实出门后医院指定出生点、独白/提示、医生、禁用配电箱及移动光照，同时保留显式跳入医院与第一夜的调试入口检查；`tests/test_light_sense.gd` 保留自由模式逐盏灯范围、断电变暗和遮罩，并验证章节暴露涨落、锁定和 R 回检查点。
 - `tests/test_night_fight.gd`（Test-Game 带 `-- --nw-step=d1_night` 运行，从 `boot.tscn` 进第一夜）用真实按键逐项查第一夜：人员、生命条、五课图标和学会条件、求饶的医生、安保一棍的伤害和击退、0.35 秒内不重复扣血、过量生命先扣、死亡后本层重来、一楼没清楼梯不开、一楼跳起来不会惊动二楼、买家逃到墙边、枪手瞄准线时长和锁定、子弹命中 / 跳过 / 蹲过 / 完美闪避和反击、上楼、最后一个医生的保护和三句台词、处决的重顿帧和黑场、自由模式医院没有这些。`tests/support/night_bot.gd` 是两个套件共用的“玩家”：只看屏幕上能看到的东西（人站在哪、举棍的红闪、激光、飞着的子弹），按真实键鼠操作。
 - `tests/recorders/capture_chapter1.gd` 用真实渲染截 23 张第一章画面到 `evidence/chapter1/`；`tests/recorders/capture_chapter1_night.gd` 截第一夜 22 张（死亡重来、过量生命，然后 night_bot 实打一遍时的各课、红闪、慢动作、激光、子弹、买家、医生、上楼、三句台词、处决、屏息）到 `evidence/chapter1_night/`。
 - `tests/test_level_shared.gd` 覆盖关卡共用部分：冻结计数、剧情弹窗、对话框参数和说话人、E 键保留与旧配置迁移、提示文字跟随改键。
@@ -181,10 +181,11 @@ NightStreetProto
 
 - `story_state.gd` 的本轮账户：`balance` 和 `balance_changed` 跨场景共享，`award_once(id, amount)` 用奖励标记去重，`spend(amount)` 原子扣款，`purchase(id, price)` 先检查已有物品和余额再一次性赋物扣款；重新 `start_chapter` 清零，尚无持久化存档。
 - `home_601/home_chapter.gd`：安全屋的章节逻辑。进入步骤时播 `enter_sequence`（标题卡、醒来、音效、对白，按顺序）；电视按天播新闻；电脑打开暗网终端（`scripts/ui/terminal_menu.gd`：信息推进剧情，购物原子扣费并记录物品）；冰箱、哑铃记当晚标记；真实撤离到 `d1_return` 且 `coburn_dead` 时仅结算一次50元，HUD显示到账；电脑结算需完整翻页，Esc关闭不推进，完成进入 `d1_resupply` 并自动打开购物；成功购买才到 `d1_shopped`，床在允许的步骤睡到 22:00 并播暴走转场；门按步骤的 `door` 出发。
-- `hospital/hospital_chapter.gd`：医院的章节逻辑。步骤决定视角（白天俯视、夜晚侧视），`hospital.arrival_room/arrival_position` 决定白天出生（当前一楼药品库门旁566,78），位置走原有碰撞校验。`_arrive()` 淡入后用现有带主角立绘的 DialogueBox 播“光粒子监控，真是麻烦...”，关闭后解冻并显示“请尽快躲避光线，shift奔跑。”8秒；`sequence:hospital_opening` 标记避免换层、锁定和重入重复。这两句来自本次用户要求，不是SK原文。白天潜行每个物理帧用 `interior_lighting.light_level(脚下)` 判亮暗（阈值0.06），暴露条每秒 +0.8 / -0.3，满了锁定、回本层检查点（R也回这里）。科伯恩由 `story_target.gd` 和 `assets/npcs/coburn/` 原生素材显示；F处决实时核对阶段、楼层、距离、背后、灯光和模态，E保留普通调查。结束推进 `d1_target_down`，出口面板白天回家；夜战仍在处决后进入屏息。章节白天潜行的配电箱交互与 `hospital_security.try_unlock_breaker()` 均拒绝操作，即使已有钥匙或旧解锁标记；自由模式的钥匙和电闸逻辑保留。值班表仍通过 `line_overrides` 给出门禁密码。
-- `hospital/hospital_day_staff.gd` 和 `day_doctor.gd`：`on_view_activated()` 刷新当前 World 的白天医生，一楼3人、二楼2人，只在章节白天俯视出现。轻微呼吸动画，无攻击、伤害接口或碰撞，不进 `enemies` 组，不替代科伯恩或夜间敌人。
+- `hospital/hospital_chapter.gd`：医院的章节逻辑。步骤决定视角（白天俯视、夜晚侧视），`hospital.arrival_room/arrival_position` 决定从601接单、出门后进入医院时的白天出生点（当前一楼药品库门旁566,78），不改变 `d1_wake` 的601正式开场，位置走原有碰撞校验。`_arrive()` 淡入后用现有带主角立绘的 DialogueBox 播“光粒子监控，真是麻烦...”，关闭后解冻并显示“请尽快躲避光线，shift奔跑。”8秒；`sequence:hospital_opening` 标记避免重复。这两句来自用户要求，不是SK原文。每个物理帧读取灯光（阈值0.06）和 `day_staff.visible_by(player)`，`in_light or in_sight` 共用一条暴露进度，每秒 +0.8 / -0.3，约1.25秒满后锁定并回本层检查点。`_input_blocked()` 阻止模态、冻结和过渡期间累计；被医生看到时表头为“目击”，扫描反馈开启，锁定显示“医生发现了你”。F处决实时核对阶段、楼层、距离、背后、灯光、医生目击和模态；E保留普通调查。处决后推进 `d1_target_down` 并由出口回家；夜战原流程保留。章节白天配电箱仍禁止关闭，即使已有钥匙或解锁标记。`line_overrides` 的密码只在 `treatment_drawer`，接待电脑只留值班表。
+- `hospital/hospital_day_staff.gd`、`day_doctor.gd`、`doctor_sight.gd`：白天俯视一楼3人、二楼2人，沿巡逻点行走并转向，保持轻微呼吸。`doctor.sees_player(player)` / 容器 `visible_by(player)` 依据同层、距离、朝向和真实墙体/家具射线，开放门洞两侧可互相看到；可见视野扇形同样裁掉遮挡。医生巡逻在模态期间暂停，无攻击、伤害接口或碰撞，不进 `enemies` 组，夜战与自由模式不生成。
+- `hospital_interactions.gd` 的俯视楼梯在 `top_down_trigger_rect` 内优先选择，让一楼顶部靠近即显示E，同时保留原底部入口。`treatment_drawer` 用现有0.3秒反馈计时，将背景里的 `drawer_rect` 正面整数下移3像素再合回，不另建贴图或循环。`hospital_security.is_door_unlocked()` 在章节白天将非办公室门视为开放，不写共享解锁标记；办公室仍保留真实密码门碰撞，自由模式仍用原三门锁。家具沿墙脚布置，碰撞使用地面占地，不按整段立面阻挡玩家。
 - 光照判定和画面一致：`interior_lighting.gd` 给每个光源记 `reach`（俯视医院按 `layout.json` 的 `light_zones`，墙上的灯用 `zone` 指明照哪边；侧视是楼层上下界），光照贴图在 `reach` 外是黑的，`light_level()` 用同一套 `band()` 衰减和 `reach` 算亮度。二楼走廊的光斑画在底图里，断电时显示 `assets/underground_hospital/lamp_off/` 的遮罩（`tools/art/gen_lamp_off_covers.py` 生成并写进 layout 的 `off_cover`）。
-- 第一章白天俯视二楼额外创建3个巡光 PointLight2D，来自 `hospital_patrols.json`，共用 `_sources`、`band()`、`reach` 和 `light_level()`，画面与曝光同步；整数像素移动，临床分区断电不影响巡光。复用光照助手的 `_process()`，阅读、密码、设置、顿帧、开场和楼梯忙时暂停路线时钟；自由模式、1F和夜战不创建巡光。本章2F固定灯亮度降至0.19，保留沿墙暗带供潜行。
+- 第一章白天俯视二楼额外创建3个巡光 PointLight2D，来自 `hospital_patrols.json`，共用 `_sources`、`band()`、`reach` 和 `light_level()`，画面与曝光同步；本轮扩大光斑、移除发光灯芯，整数像素移动，临床分区断电不影响巡光。复用光照助手的 `_process()`，阅读、密码、设置、顿帧、开场和楼梯忙时暂停路线时钟；自由模式、1F和夜战不创建巡光。本章2F固定灯亮度0.19，需结合巡光移开的时机穿行。
 - `levels/breath_interlude.gd`（`scenes/breath_interlude.tscn`）：屏息过场，黑屏、呼吸声，按步骤的 `breath_round` 逐行打出乱码口号，然后进 `next` 步骤。
 - `ui/story_overlay.gd`：标题卡、淡入淡出、22:00 暴走、锁定提示和剧情音效（`assets/audio/story/`，`tools/audio/gen_story_sfx.py` 合成的占位）。
 - `hospital/night_fight.gd`：步骤带 `fight`（第一夜 `d1_night` → `nights.night1`）时由 `hospital_chapter` 挂上，管一整夜：按 `chapter1.json` 放人（`enemies` 的 `kind`、`floor`、`x`、`faces`、`last`），主角在同层 150 像素内就唤醒；`hero_vitals.gd`（血量、临时过量生命 `grant_overheal`、`died`）和 `ui/health_hud.gd`（右上生命条，占暴露条的位置）；五课教学（`ui/tutorial_plate.gd`，只有按键图标）按真实动作判定学会；一楼清空前 `stairs_open()` 为假（`underground_hospital._begin_stairs` 和键帽都看它），屏幕边缘的青色箭头指路；血到 0 时 `restart_floor()` 让这层的人回原位、主角回本层起点（`floors.<层>.start`，写进 `hospital_chapter.checkpoint`，R 也回这里）；只剩最后一个医生且主角走近时用医院的对话框打出 `last_words`，读完后下一刀触发 `_execute()`：`GameSession.hit_stop(&"heavy")`（新增的公开方法，剧情要的顿帧）→ `story_overlay.execution()`（白一帧、黑场）→ `SceneRoutes.travel(next)`。战斗夜晚 `hospital_chapter.interactions()` 只留楼梯（夜里没有可读的东西），出口也不再用。

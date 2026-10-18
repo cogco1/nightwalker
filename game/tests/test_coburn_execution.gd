@@ -7,6 +7,7 @@ const CONTROLS = preload("res://scripts/core/controls.gd")
 const HOSPITAL := "res://scenes/underground_hospital.tscn"
 const BACK := Vector2(492, 64)
 const ART := "res://assets/npcs/coburn/"
+const FIXTURE_LIGHT := "execution_fixture_screen"
 
 var checks := 0
 var failures: Array[String] = []
@@ -74,6 +75,14 @@ func enter_office(powered := false) -> void:
 	# Isolate F's existing light/front/modal gates from the independently tested moving-light route.
 	for source: Dictionary in hospital.lighting.patrols:
 		hospital.lighting.set_source_power(String(source["id"]), false)
+	for doctor: Node in hospital.chapter.day_staff.get_children():
+		doctor.set_physics_process(false)
+	# The office screen moved with the north-wall desk. Keep the light gate isolated using a real temporary
+	# source, built by the shipped lighting code and counted by both the renderer and light_level().
+	var lighting: Node = hospital.lighting
+	lighting._add_source({"id": FIXTURE_LIGHT, "position": [492, 64], "radius": 24, "energy": 0.65, "zone": "office"},
+		"screen", lighting.rig.get_node("Lights"), lighting.rig.get_node("FixtureEmission"), hospital.background)
+	lighting.set_source_power(FIXTURE_LIGHT, false)
 	await frames(5)
 	await place(BACK)
 
@@ -151,10 +160,13 @@ func rejection_paths() -> void:
 	check(hud.prompt_label.text.contains("背后"), "the front explains the missing behind-target approach")
 
 	hospital.interactions.power_states["clinical"] = true
-	await place(Vector2(480, 74))
-	check(hospital.chapter.in_light, "the bright refusal fixture stands inside the real office-screen light")
+	hospital.lighting.set_source_power(FIXTURE_LIGHT, true)
+	await place(BACK)
+	check(hospital.chapter.in_light and hospital.lighting.light_level(BACK) >= hospital.chapter.LIT_THRESHOLD,
+		"the bright refusal fixture stands inside a real rendered office-screen light")
 	await tap(KEY_F)
 	alive("F in monitor light")
+	hospital.lighting.set_source_power(FIXTURE_LIGHT, false)
 	hospital.interactions.power_states["clinical"] = false
 	await place(BACK)
 
