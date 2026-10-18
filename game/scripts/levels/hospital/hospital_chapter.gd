@@ -69,6 +69,7 @@ func _ready() -> void:
 	hud.build(canvas)
 	hud.marked_text = "已锁定"
 	story.step_changed.connect(func(_step: String) -> void: refresh())
+	story.balance_changed.connect(func(_amount: int) -> void: chapter_hud.set_balance(story.balance))
 	var fight_id := String(story.step_data().get("fight", ""))
 	if not fight_id.is_empty() and hospital.view_mode == 1:
 		var night: Dictionary = story.chapter.get("nights", {}).get(fight_id, {}).duplicate(true)
@@ -88,6 +89,7 @@ func stealth() -> bool:
 
 func refresh() -> void:
 	chapter_hud.set_status("地下医院 %dF" % hospital.floor_id, story.clock_text(), story.objective())
+	chapter_hud.set_balance(story.balance)
 	hud.set_visible(stealth())
 	if not stealth():
 		exposure = 0.0

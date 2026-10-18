@@ -11,12 +11,16 @@ const TOAST_Y := 131.0
 const HINTS_Y := 165.0
 const HINT_SECONDS := 6.0
 const TOAST_SECONDS := 4.0
+const RECEIPT_SECONDS := 4.0
 const FADE_SECONDS := 0.5
 
 var status: Panel
 var place_label: Label
 var clock_label: Label
 var goal_label: Label
+var balance_panel: Panel
+var balance_label: Label
+var balance_change_label: Label
 var prompt: Panel
 var key_cap: ColorRect
 var key_label: Label
@@ -28,6 +32,7 @@ var hints_panel: Panel
 var hints_label: Label
 var _toast_left := 0.0
 var _hints_left := 0.0
+var _receipt_left := 0.0
 
 
 func build(canvas: CanvasLayer) -> void:
@@ -36,6 +41,11 @@ func build(canvas: CanvasLayer) -> void:
 	place_label = STYLE.small(status, Vector2(6, 1), "", STYLE.TEXT)
 	clock_label = STYLE.small(status, Vector2(6, 1), "", STYLE.MUTED)
 	goal_label = STYLE.small(status, Vector2(6, 13), "", STYLE.AMBER)
+	balance_panel = STYLE.panel(canvas, "AccountPlate", STYLE.plate())
+	balance_label = STYLE.small(balance_panel, Vector2(6, 1), "", STYLE.MUTED)
+	balance_change_label = STYLE.small(balance_panel, Vector2.ZERO, "", STYLE.AMBER)
+	balance_change_label.hide()
+	balance_panel.hide()
 	prompt = STYLE.panel(canvas, "PromptChip", STYLE.plate())
 	key_cap = ColorRect.new()
 	key_cap.color = STYLE.TEXT
@@ -65,6 +75,31 @@ func set_status(place: String, clock: String, goal: String) -> void:
 	goal_label.text = "" if goal.is_empty() else "▸ " + goal
 	var wide := maxi(STYLE.width(place) + 6 + STYLE.width(clock), STYLE.width(goal_label.text))
 	status.size = Vector2(wide + 12, 27 if not goal.is_empty() else 15)
+	balance_panel.position = Vector2(4, status.position.y + status.size.y + 3)
+
+
+## The safehouse account. Existing chapter HUDs keep this hidden until a balance is supplied.
+## A positive change is a one-off receipt; ordinary refreshes update the total without restarting it.
+func set_balance(amount: int, change := 0) -> void:
+	if amount < 0:
+		balance_panel.hide()
+		return
+	balance_label.text = "账户 ￥%d" % amount
+	if change > 0:
+		balance_change_label.text = "+%d 已到账" % change
+		balance_change_label.modulate.a = 1.0
+		balance_change_label.show()
+		_receipt_left = RECEIPT_SECONDS
+	_layout_balance()
+	balance_panel.show()
+
+
+func _layout_balance() -> void:
+	var wide := STYLE.width(balance_label.text) + 12
+	if balance_change_label.visible:
+		balance_change_label.position = Vector2(wide + 2, 1)
+		wide += STYLE.width(balance_change_label.text) + 8
+	balance_panel.size = Vector2(wide, 14)
 
 
 ## The key cap for what E would do here; an empty label hides it.
@@ -117,6 +152,10 @@ static func controls_text() -> String:
 func _process(delta: float) -> void:
 	_toast_left = _fade(toast_panel, _toast_left, delta)
 	_hints_left = _fade(hints_panel, _hints_left, delta)
+	if balance_change_label.visible:
+		_receipt_left = _fade(balance_change_label, _receipt_left, delta)
+		if not balance_change_label.visible:
+			_layout_balance()
 
 
 func _fade(item: CanvasItem, left: float, delta: float) -> float:

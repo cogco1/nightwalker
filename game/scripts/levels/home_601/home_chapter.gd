@@ -2,7 +2,7 @@ extends Node
 ## Chapter mode of the safehouse (only when the story runs; the sandbox home is untouched). Replaces the sandbox
 ## labels with the chapter HUD (status plate, key cap, control hints), plays the step's opening sequence, and
 ## gives the hub its jobs: the TV shows the day's
-## news, the computer opens the dark-web terminal (messages advance the story, the shop records orders), the
+## news, the computer opens the dark-web terminal (messages advance the story, the shop charges the account), the
 ## fridge and dumbbells mark tonight's buffs, the bed sleeps to 22:00 and the door leaves for the job.
 ## Text comes from assets/story/chapter1.json.
 
@@ -47,7 +47,10 @@ func _ready() -> void:
 	menu.chosen.connect(_on_menu_chosen)
 	menu.cancelled.connect(_on_menu_cancelled)
 	story.step_changed.connect(func(_step: String) -> void: refresh_hud())
+	story.balance_changed.connect(func(_amount: int) -> void: refresh_hud())
 	refresh_hud()
+	if story.step == "d1_return" and story.has_flag("coburn_dead") and story.award_once("coburn_contract", 50):
+		hud.set_balance(story.balance, 50)
 	var sequence := String(story.step_data().get("enter_sequence", ""))
 	if not sequence.is_empty() and not story.has_flag("sequence:" + sequence):
 		var first: Array = story.text("sequences", sequence)
@@ -58,6 +61,7 @@ func _ready() -> void:
 
 func refresh_hud() -> void:
 	hud.set_status("C区 601", "%s %s" % [story.short_date(), story.clock_text()], story.objective())
+	hud.set_balance(story.balance)
 
 
 ## The key cap names what E would open here, while nothing else holds the room.
@@ -148,15 +152,25 @@ func open_terminal() -> void:
 	var entries: Array = []
 	for label in ROOT_OPTIONS:
 		entries.append({"label": label, "badge": label == ROOT_OPTIONS[0] and _unread_message() != ""})
-	menu.open("暗网终端", entries, home.player, 0, _terminal_clock())
+	menu.open("暗网终端", entries, home.player, 0, _terminal_clock(), story.balance)
 
 
 func open_shop() -> void:
+	# The return's mainline message comes before the shopping lesson, including the direct shop entry.
+	if story.step == "d1_return":
+		_close_menu()
+		_read_settlement()
+		return
 	menu_page = "shop"
 	var entries: Array = []
 	for item: Dictionary in story.chapter.get("shop", []):
-		entries.append({"label": String(item["name"]), "note": "%s ￥%d" % [item["kind"], int(item["price"])]})
-	menu.open("暗网终端 · 购物", entries, home.player, 0, _terminal_clock())
+		var note := "￥%d" % int(item["price"])
+		if story.has_item(String(item["id"])):
+			note = "已拥有"
+		elif int(item["price"]) > story.balance:
+			note += " · 余额不足"
+		entries.append({"label": String(item["name"]), "note": note})
+	menu.open("暗网终端 · 购物", entries, home.player, 0, _terminal_clock(), story.balance)
 
 
 func _terminal_clock() -> String:
@@ -169,15 +183,21 @@ func _unread_message() -> String:
 
 
 func _on_menu_chosen(index: int) -> void:
+	if not menu.active or busy:
+		return
 	if menu_page == "shop":
-		var item: Dictionary = story.chapter.get("shop", [])[index]
-		story.grant_item(String(item["id"]))
+		var shop: Array = story.chapter.get("shop", [])
+		if index < 0 or index >= shop.size():
+			return
+		var item: Dictionary = shop[index]
+		var result: String = story.purchase(String(item["id"]), int(item["price"]))
 		var lines: Array = []
-		for line in story.text("home", "shop_bought"):
+		var text_key := "shop_bought" if result == "purchased" else "shop_" + result
+		for line in story.text("home", text_key):
 			lines.append(String(line).replace("%s", String(item["name"])))
 		_close_menu()
 		var next := String(story.step_data().get("shop_next", ""))
-		if not next.is_empty():
+		if result == "purchased" and not next.is_empty():
 			story.set_step(next)
 		_read(lines, "暗网购物", ["terminal", "terminal"])
 		return
@@ -186,6 +206,9 @@ func _on_menu_chosen(index: int) -> void:
 			var key := _unread_message()
 			_close_menu()
 			if not key.is_empty():
+				if key == "d1_return":
+					_read_settlement()
+					return
 				var message: Dictionary = story.text("messages", key)
 				last_read = key
 				story.set_step(String(story.step_data().get("computer", "")))
@@ -199,6 +222,25 @@ func _on_menu_chosen(index: int) -> void:
 			open_shop()
 		_:
 			_close_menu()
+
+
+## Esc leaves the settlement unread; only turning its final page enables the shop and the bed route.
+func _read_settlement() -> void:
+	if home.dialogue_active:
+		return
+	var message: Dictionary = story.text("messages", "d1_return")
+	_read(message["lines"], "暗网终端", message.get("speakers", []))
+	await home.dialogue.closed
+	if home.dialogue.page_index < home.dialogue.pages.size() or story.step != "d1_return":
+		return
+	last_read = "d1_return"
+	story.set_step(String(story.step_data().get("computer", "")))
+	_continue_resupply.call_deferred()
+
+
+func _continue_resupply() -> void:
+	if story.step == "d1_resupply" and not home.dialogue_active and not busy:
+		open_shop()
 
 
 func _on_menu_cancelled() -> void:

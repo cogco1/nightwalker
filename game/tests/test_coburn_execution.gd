@@ -270,6 +270,7 @@ func execute_and_leave() -> void:
 		await frames()
 	check(not chapter.busy and not hospital.player.is_frozen() and not paused, "the execution releases its freeze without leaving the scene paused")
 	check(victim.dead and story.has_flag("coburn_dead") and story.step == "d1_target_down", "F executes Coburn and advances to the scripted withdrawal")
+	check(story.balance == 0, "executing the target does not pay before leaving the hospital")
 	check(transitions.count("d1_target_down") == 1, "held F, repeats and E produce only one story transition")
 	check(chapter.overlay.shown.has("strike") and not hospital.interactions.dialogue_active, "the execution strikes without inventing spoken lines")
 	check(victim.position == foot and victim.scale == Vector2.ONE and sprite.scale == Vector2.ONE,
@@ -298,6 +299,7 @@ func execute_and_leave() -> void:
 		await frames()
 	check(current_scene != null and current_scene.scene_file_path == "res://scenes/home_601.tscn" and story.step == "d1_return",
 		"ordinary E at the exit still withdraws to 601 at the next script step")
+	check(story.balance == 50, "the real exit settles exactly 50 yuan upon reaching 601")
 	observations["execution_transitions"] = transitions
 
 

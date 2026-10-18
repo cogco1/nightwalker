@@ -1,10 +1,11 @@
 extends Node
-## Session story state under /root/NightwalkerStoryState: inventory and flags (doors, power, breaker key) and,
+## Session story state under /root/NightwalkerStoryState: inventory, balance and flags (doors, power, breaker key) and,
 ## once start_chapter() runs, the chapter progress: day, clock and the current step of assets/story/chapter1.json.
 ## Without start_chapter() the game is the free sandbox it always was (scene tests, editor F6, Run-Sandbox):
 ## no clock, and F7 / F8 / Tab stay free. Nothing is saved; quitting clears it.
 
 signal step_changed(step: String)
+signal balance_changed(amount: int)
 
 const NODE_NAME := "NightwalkerStoryState"
 const CHAPTER_PATH := "res://assets/story/chapter1.json"
@@ -13,6 +14,7 @@ const DEBUG_ARGUMENT := "--nw-debug"
 
 var items: Dictionary = {}
 var flags: Dictionary = {}
+var balance := 0
 var chapter_active := false
 var debug_keys := false
 var chapter: Dictionary = {}
@@ -54,18 +56,52 @@ func has_flag(id: String) -> bool:
 	return bool(flags.get(id, false))
 
 
+## A contract can pay only once in this chapter session, even if its scene is entered again.
+func award_once(id: String, amount: Variant) -> bool:
+	if id.is_empty() or typeof(amount) != TYPE_INT or amount <= 0 or has_flag("reward:" + id):
+		return false
+	set_flag("reward:" + id)
+	balance += amount
+	balance_changed.emit(balance)
+	return true
+
+
+func spend(amount: Variant) -> bool:
+	if typeof(amount) != TYPE_INT or amount <= 0 or amount > balance:
+		return false
+	balance -= amount
+	balance_changed.emit(balance)
+	return true
+
+
+## Commit the order before notifying UI, so repeated selection cannot charge twice for one item.
+func purchase(id: String, price: Variant) -> String:
+	if id.is_empty() or typeof(price) != TYPE_INT or price <= 0:
+		return "invalid"
+	if has_item(id):
+		return "owned"
+	if price > balance:
+		return "insufficient"
+	items[id] = true
+	balance -= price
+	balance_changed.emit(balance)
+	return "purchased"
+
+
 ## Starts a fresh chapter run: clears this session's items and flags and enters the chapter's first step.
 func start_chapter(path := CHAPTER_PATH) -> void:
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
 	chapter = parsed if parsed is Dictionary else {}
 	items.clear()
 	flags.clear()
+	balance = 0
 	chapter_active = true
 	debug_keys = OS.get_cmdline_user_args().has(DEBUG_ARGUMENT)
 	day = 1
 	minutes = 0
 	step = ""
 	set_step(String(chapter.get("start_step", "")))
+	balance_changed.emit(balance)
 
 
 ## Back to the sandbox (tests use this between runs).
