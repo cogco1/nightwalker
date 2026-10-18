@@ -10,6 +10,8 @@ signal special_started(kind: String, direction: Vector2)
 signal landing_impact(point: Vector2)
 ## Once per attack stage on first contact: light / critical / heavy. GameSession maps it to a hit-stop.
 signal impact(weight: StringName, direction: Vector2)
+## Every contact that shows hit feedback, where it landed (kill folded into weight); the impact prototype reads it.
+signal struck(point: Vector2, weight: StringName, direction: Vector2, killed: bool)
 ## Every attack or special start, with the move id (attack1-3, crouch_stab, air_attack1-3, rising_slash, ...).
 signal move_started(move: StringName)
 ## A blade commits after its wind-up; swing audio follows the animation rather than the button press.
@@ -1022,6 +1024,7 @@ func _resolve_hit(target: Node, point: Vector2, row: Dictionary = {}) -> bool:
 	var killed: bool = health != null and int(health) <= 0
 	var substance: StringName = target.get_meta("hit_material", &"flesh")
 	fx.impact(point, weight, attack_direction, global_position, killed, substance, row.get("draw_cut",false))
+	struck.emit(point, &"kill" if killed else weight, attack_direction, killed)
 	var first_critical := stage_is_critical and not _critical_stop_emitted
 	var first_normal := not stage_is_critical and not _normal_stop_emitted
 	if first_critical:

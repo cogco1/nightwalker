@@ -1,4 +1,4 @@
-# Full regression: asset import, then every suite in game/tests. Logs: game/evidence/logs.
+﻿# Full regression: asset import, then every suite in game/tests. Logs: game/evidence/logs.
 param([string]$GodotPath = '')
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'common.ps1')
@@ -32,6 +32,8 @@ $suites = @(
     @{ Name = 'night_street_proto';       Script = 'test_night_street_proto' },
     @{ Name = 'combat_impact_v2';         Script = 'test_combat_impact_v2' },
     @{ Name = 'combat_impact_v2_144';     Script = 'test_combat_impact_v2'; Fps = 144 },
+    @{ Name = 'impact_burst';             Script = 'test_impact_burst' },
+    @{ Name = 'impact_burst_144';         Script = 'test_impact_burst'; Fps = 144 },
     @{ Name = 'thrust_path';              Script = 'test_thrust_path' },
     @{ Name = 'jump_chase';               Script = 'test_jump_chase' },
     @{ Name = 'jump_chase_144';           Script = 'test_jump_chase'; Fps = 144 },

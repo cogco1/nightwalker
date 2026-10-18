@@ -5,6 +5,7 @@ extends Node
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const MENU = preload("res://scripts/ui/keybindings_menu.gd")
 const COMBAT_FEEDBACK = preload("res://scripts/core/combat_feedback.gd")
+const IMPACT_BURST = preload("res://scripts/core/impact_burst.gd")
 const IMPACT_FRAME = preload("res://shaders/impact_frame.gdshader")
 const PLAYER = preload("res://scripts/player/player.gd")
 # Impact weight -> displayed frames held (and at least frames/60 s), native-pixel shift and camera recoil.
@@ -42,6 +43,8 @@ signal slowmo_finished
 var settings_open := false
 var keybindings_menu: CanvasLayer
 var combat_feedback: Node
+## The hit-impact prototype (sword qi out of the screen, screen cut, tremor); F10 switches it.
+var impact_burst: Node
 var hit_stop_active := false
 ## Speed of the world relative to the hero: enemies scale their delta by it (1 = normal).
 var world_time_scale := 1.0
@@ -119,6 +122,9 @@ func _ready() -> void:
 	combat_feedback = COMBAT_FEEDBACK.new()
 	combat_feedback.name = "CombatFeedback"
 	add_child(combat_feedback)
+	impact_burst = IMPACT_BURST.new()
+	impact_burst.name = "ImpactBurst"
+	add_child(impact_burst)
 	bind_player(_host.get("player"))
 
 
@@ -133,6 +139,7 @@ func bind_player(player: CharacterBody2D) -> void:
 		_player.attack_received.connect(_on_attack_received)
 		_player.counter_started.connect(_on_counter_started)
 	combat_feedback.bind_player(_player)
+	impact_burst.bind_player(_player)
 
 
 func _process(delta: float) -> void:
@@ -279,7 +286,7 @@ func _run_hit_stop(direction: Vector2, weight: StringName) -> void:
 	_saved_canvas = get_viewport().canvas_transform
 	_layer_offsets.clear()
 	for layer in _host.find_children("*", "CanvasLayer", true, false):
-		if layer != _overlay_layer and layer != _slowmo_layer:
+		if layer != _overlay_layer and layer != _slowmo_layer and not layer.is_in_group(&"no_stop_shift"):
 			_layer_offsets[layer] = layer.offset
 	_apply_stop_shift(hit_stop_shake)
 	get_tree().paused = true
@@ -309,7 +316,7 @@ func _run_hit_stop(direction: Vector2, weight: StringName) -> void:
 	_finish_hit_stop()
 	hit_stop_finished.emit(hit_stop_displayed_frames)
 	if stop.has("aftershock"):
-		_aftershock(stop["aftershock"], token, -1.0 if direction.x < 0.0 else 1.0)
+		_aftershock(impact_burst.tremor(_active_weight, stop["aftershock"]), token, -1.0 if direction.x < 0.0 else 1.0)
 
 
 # Frozen-frame look for displayed frame `frame` (1-based): negative first, then flash, then the plain snapshot.
@@ -364,6 +371,11 @@ func _finish_hit_stop() -> void:
 	_layer_offsets.clear()
 	get_tree().paused = _saved_pause
 	hit_stop_active = false
+
+
+## The weight of the freeze in progress (after any same-tick upgrade).
+func stop_weight() -> StringName:
+	return _active_weight
 
 
 ## A freeze the story asks for (the execution), run like an impact's unless one is already running.
