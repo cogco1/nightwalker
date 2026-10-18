@@ -214,6 +214,12 @@ func verify_drone_attack(player: CharacterBody2D) -> void:
 	var results: Array[int] = []
 	player.attack_received.connect(func(result: int, _attack: Dictionary) -> void: results.append(result))
 	street.drone.position.x = 900.0
+	# A swing still running from the combat check (a critical's longer freeze delays its end) must not land on this
+	# drone once the hero is placed beside it.
+	for _index in range(240):
+		if player.state == player.State.FREE and not session.hit_stop_active:
+			break
+		await frames(1)
 	target.hp = target.max_hp
 	await frames(4)
 	# standing still in reach: the drone blinks red, lunges and hits
