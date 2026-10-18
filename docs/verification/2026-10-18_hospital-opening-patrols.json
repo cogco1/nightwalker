@@ -1,0 +1,419 @@
+{
+  "date": "2026-10-18",
+  "timezone": "Asia/Shanghai",
+  "based_on_commit": "4bf4f782fec80d2233d158dd8ca7ae60bed8552c",
+  "status": "passed",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "import": "passed",
+  "tested_commit": "5c328472d3e392a80e54bebe55eab2f90d3c0681",
+  "tested_game_tree": "76e8d9ed6408c4e42f122aba45982e6a8d5a56b9",
+  "tested_runner_blob": "6395e10b8b5e43db1a7e31c2ae3d6e4ff497db7b",
+  "full_regression": {
+    "suite_count": 48,
+    "checks": 5231,
+    "failed_suites": [],
+    "runner_exit_code": 0,
+    "suite_checks": {
+      "core_v07": 553,
+      "keybindings": 74,
+      "keybindings_reload": 21,
+      "air_combat": 116,
+      "air_dash_animation_v14": 174,
+      "scene_integration_v14": 106,
+      "scene_routes": 69,
+      "interior_lighting": 192,
+      "home_furniture": 84,
+      "hospital_interactions": 23,
+      "hospital_environment": 73,
+      "hospital_physical_stairs": 54,
+      "hospital_ward_layout": 22,
+      "hospital_security": 104,
+      "level_shared": 38,
+      "contact_refresh_v07": 6,
+      "charged_slash": 52,
+      "moveset": 1014,
+      "combat_state": 18,
+      "rhythm_combat": 94,
+      "enemy_attack": 29,
+      "perfect_counter": 31,
+      "night_street_proto": 50,
+      "combat_impact_v2": 60,
+      "combat_impact_v2_144": 60,
+      "impact_burst": 39,
+      "impact_burst_144": 39,
+      "thrust_path": 60,
+      "jump_chase": 76,
+      "jump_chase_144": 76,
+      "smooth_charge_links": 92,
+      "smooth_charge_links_144": 92,
+      "primary_charge_chain": 114,
+      "primary_charge_chain_144": 133,
+      "direct_charge": 40,
+      "direct_charge_144": 40,
+      "charged_draw": 73,
+      "charged_draw_144": 73,
+      "heavy_cleave": 67,
+      "roll_thrust_motion": 80,
+      "shift_controls": 40,
+      "locomotion_blade": 260,
+      "light_sense": 134,
+      "hospital_opening": 67,
+      "coburn_execution": 72,
+      "coburn_reward_flow": 181,
+      "chapter_flow": 161,
+      "night_fight": 105
+    },
+    "log_sha256": "a6e838461f634bf803c7bc26b5df7a4bfcc37fd50e5f50cf0183e0839296bb2b"
+  },
+  "new_opening": {
+    "scene": "res://scenes/underground_hospital.tscn",
+    "step": "d1_hospital",
+    "floor": 1,
+    "view": "top_down",
+    "feet": [
+      566,
+      78
+    ],
+    "time": "12:30",
+    "monologue": "光粒子监控，真是麻烦...",
+    "caption": "请尽快躲避光线，shift奔跑。",
+    "caption_seconds": 8,
+    "text_origin": "Current explicit user request; not quoted from SK.",
+    "old_prologue": "--nw-step=d1_wake remains available"
+  },
+  "day_staff": {
+    "floor_1": 3,
+    "floor_2": 2,
+    "native_height": 28,
+    "scale": 1,
+    "hostile": false,
+    "blocking_collision": false,
+    "night_changed": false
+  },
+  "surveillance": {
+    "count": 3,
+    "native_radii": [
+      20,
+      20,
+      26
+    ],
+    "independent_power": true,
+    "integer_position": true,
+    "real_exposure": true,
+    "paused_with_modals": true,
+    "breaker_cannot_cut_during_chapter_day": true,
+    "sandbox_breaker_unchanged": true
+  },
+  "live_input_route": {
+    "source": "tests/test_chapter_flow.gd hospital_day; actual Shift/WASD/E/password/F with all lights enabled",
+    "peak_exposure": 0.839999999999999,
+    "run_speed": 138.0,
+    "dark_waits": [
+      {
+        "exposure": 0.00499999999999935,
+        "light": 0.0272,
+        "locks": 0,
+        "point": [
+          430.062072753906,
+          78.0
+        ]
+      },
+      {
+        "exposure": 0.00499999999999935,
+        "light": 0.0,
+        "locks": 0,
+        "point": [
+          302.13525390625,
+          78.0
+        ]
+      },
+      {
+        "exposure": 0.00499999999999935,
+        "light": 0.0,
+        "locks": 0,
+        "point": [
+          174.207962036133,
+          78.0
+        ]
+      },
+      {
+        "exposure": 0.001666666666665,
+        "light": 0.0,
+        "locks": 0,
+        "point": [
+          76.1805038452148,
+          100.100845336914
+        ]
+      },
+      {
+        "exposure": 0.0,
+        "light": 0.0456,
+        "locks": 0,
+        "point": [
+          502.2568359375,
+          186.241455078125
+        ]
+      },
+      {
+        "exposure": 0.00499999999999829,
+        "light": 0.0,
+        "locks": 0,
+        "point": [
+          429.307525634766,
+          64.4123229980469
+        ]
+      }
+    ],
+    "reached": "Coburn execution, real withdrawal, 50 yuan, paid resupply, 22:00 side-view night, held breath and day 2"
+  },
+  "gpu_opening": {
+    "adapter": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "checks": 73,
+    "failures": [],
+    "native_size": [
+      320,
+      180
+    ],
+    "renderer": "opengl3",
+    "shots": [
+      {
+        "dialogue": "光粒子监控，真是麻烦...",
+        "file": "01_opening_monologue.png",
+        "floor": 1,
+        "patrol_count": 0,
+        "player": [
+          566.0,
+          78.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "b797200af74e9939f415c8359489aa8c437a40a81a6bb4065f4c4fe6cc1296ef"
+      },
+      {
+        "dialogue": "",
+        "file": "02_avoid_light_shift_caption.png",
+        "floor": 1,
+        "patrol_count": 0,
+        "player": [
+          566.0,
+          78.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "0ac1e2ff41f8ee85c3970bfeb1907927c11311583b416ab0fbb316fbbc938f42"
+      },
+      {
+        "dialogue": "",
+        "file": "03_daytime_ward_doctors.png",
+        "floor": 1,
+        "patrol_count": 0,
+        "player": [
+          268.0,
+          178.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "b2190e95e58ba799ee5f7ea84238d99c6f2129dd5ab331bd42e9a735ce38518e"
+      },
+      {
+        "dialogue": "配电箱不能关闭。得避开光线。",
+        "file": "04_breaker_cannot_be_cut.png",
+        "floor": 1,
+        "patrol_count": 0,
+        "player": [
+          116.0,
+          157.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "8454409cd4e5b1481b250efea1c8dd903914c33248397835a5244090d4f95acb"
+      },
+      {
+        "dialogue": "",
+        "file": "05_floor_two_moving_lights_a.png",
+        "floor": 2,
+        "patrol_count": 3,
+        "player": [
+          304.0,
+          186.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "3830694655e3a0bfdbd93ca1b9f3f4b19b79d95e22feb36607918d0493119e79"
+      },
+      {
+        "dialogue": "",
+        "file": "06_floor_two_moving_lights_b.png",
+        "floor": 2,
+        "patrol_count": 3,
+        "player": [
+          470.0,
+          186.0
+        ],
+        "step": "d1_hospital",
+        "sha256": "9dd719c9fd3898e8acb372f3ce4d5e132a4a8623a174dd132ca03ebf7bb4c015"
+      }
+    ],
+    "status": "passed",
+    "suite": "capture_hospital_opening",
+    "window_size": [
+      1280,
+      720
+    ],
+    "report_sha256": "7199cf12934d456f004a58c3477e65bf2df4ea78366e9e35fac88464aeada0fa",
+    "stdout_sha256": "011e3ec1387f8e637aa30c31cce6339791da5948730244c5d42ddf746c7a3a5d",
+    "stderr_bytes": 0,
+    "process_exit_code": 0,
+    "provenance": "Actual GPU framebuffer with scripted input; fixture placements isolate the visual behavior."
+  },
+  "gpu_reward_continuation": {
+    "adapter": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "checks": 22,
+    "failures": [],
+    "native_size": [
+      320,
+      180
+    ],
+    "renderer": "opengl3",
+    "shots": [
+      {
+        "account": "账户 ￥0",
+        "balance": 0,
+        "file": "01_coburn_down_unpaid_until_exit.png",
+        "goal": "▸ 离开 · 二楼走廊尽头的出口",
+        "player": [
+          492.0,
+          64.0
+        ],
+        "scene": "res://scenes/underground_hospital.tscn",
+        "step": "d1_target_down",
+        "time": "12:30",
+        "view": 0,
+        "walk_seconds": 0.0,
+        "sha256": "8d4381484098cf34f0931de5f8e12684fb28f04c4ad88968cc14f5bca68092f5"
+      },
+      {
+        "account": "账户 ￥50",
+        "balance": 50,
+        "file": "02_home_arrival_account_plus50.png",
+        "goal": "▸ 电脑 · 查看结算",
+        "player": [
+          110.0,
+          104.0
+        ],
+        "scene": "res://scenes/home_601.tscn",
+        "step": "d1_return",
+        "time": "14:50",
+        "view": "top_down",
+        "walk_seconds": 4.9,
+        "sha256": "6a72e5cdd6423e9a33449fdaf5199380ae4f1359c6a9af332b75c046434f1df1"
+      },
+      {
+        "account": "账户 ￥50",
+        "balance": 50,
+        "file": "03_computer_settlement_mainline_reading.png",
+        "goal": "▸ 电脑 · 查看结算",
+        "player": [
+          74.3162460327148,
+          102.136756896973
+        ],
+        "scene": "res://scenes/home_601.tscn",
+        "step": "d1_return",
+        "time": "14:50",
+        "view": "top_down",
+        "walk_seconds": 5.8,
+        "sha256": "590c556c86b155bc00cddc7dc7921d209ca56a176eaf7856879a631da1ab9031"
+      },
+      {
+        "account": "账户 ￥50",
+        "balance": 50,
+        "file": "04_resupply_prices_and_50_yuan_account.png",
+        "goal": "▸ 电脑 · 暗网购物",
+        "player": [
+          74.3162460327148,
+          102.136756896973
+        ],
+        "scene": "res://scenes/home_601.tscn",
+        "step": "d1_resupply",
+        "time": "14:50",
+        "view": "top_down",
+        "walk_seconds": 5.8,
+        "sha256": "0acc4af1812ac0867775eed85f093db9eef088af97e0e98c5099a5db66de6430"
+      },
+      {
+        "account": "账户 ￥10",
+        "balance": 10,
+        "file": "05_purchase_confirmation_account_10.png",
+        "goal": "▸ 床 · 睡觉",
+        "player": [
+          74.3162460327148,
+          102.136756896973
+        ],
+        "scene": "res://scenes/home_601.tscn",
+        "step": "d1_shopped",
+        "time": "14:50",
+        "view": "top_down",
+        "walk_seconds": 5.8,
+        "sha256": "929d307e508c760707048e35fdcdd4d666b8208fbda753411479ce9f41ea38dc"
+      },
+      {
+        "account": "账户 ￥10",
+        "balance": 10,
+        "file": "06_bed_prompt_and_sleep_objective.png",
+        "goal": "▸ 床 · 睡觉",
+        "player": [
+          250.367538452148,
+          122.136756896973
+        ],
+        "scene": "res://scenes/home_601.tscn",
+        "step": "d1_shopped",
+        "time": "14:50",
+        "view": "top_down",
+        "walk_seconds": 10.0,
+        "sha256": "3da958408c47608a6efe8957df56d0d3235f6e64d70336ac9894bb481c86c663"
+      },
+      {
+        "account": "账户 ￥10",
+        "balance": 10,
+        "file": "07_2200_mainline_side_view_night.png",
+        "goal": "",
+        "player": [
+          60.0,
+          286.0
+        ],
+        "scene": "res://scenes/underground_hospital.tscn",
+        "step": "d1_night",
+        "time": "22:00",
+        "view": 1,
+        "walk_seconds": 10.0,
+        "sha256": "c7a6f174721bcba0dff81eac378793f165eda7aada4a6eb5992ebb357b6dc44c"
+      }
+    ],
+    "size": [
+      1280,
+      720
+    ],
+    "status": "passed",
+    "suite": "capture_reward_flow",
+    "report_sha256": "9f7ba1666ad7b8c767ce20d7fa142899d7492061ae9f37322da026ec7749c1af",
+    "stdout_sha256": "fc707920b335df3aee657c04edf882b6c86b08afddaa9f9bd634b5c6a5122919",
+    "stderr_bytes": 0,
+    "process_exit_code": 0,
+    "provenance": "Actual GPU framebuffer with scripted input; fixture placements isolate the visual behavior."
+  },
+  "legacy_presentation_recorder": {
+    "script": "tests/recorders/capture_chapter1.gd",
+    "fixture_based": true,
+    "shots": 24,
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "stdout_sha256": "276493fdeb39db27f173825f67a3acd6ad301afe530ec564b48312d707853a6f"
+  },
+  "backup": {
+    "based_on_commit": "4bf4f782fec80d2233d158dd8ca7ae60bed8552c",
+    "file": "夜行者_医院开场调整前_源码与素材.zip",
+    "bytes": 55379859,
+    "sha256": "02e68e2df377f63465bf890deac9c22dba06a477b9668bb35202a2ac9b78d01c",
+    "zip_crc": "passed"
+  },
+  "limits": [
+    "Wallet/inventory remain session state; persistent save and complete item effects are not part of this change.",
+    "Daytime doctors are noninteractive simple ambient models; original night enemies are unchanged."
+  ],
+  "post_test_game_changes": []
+}
