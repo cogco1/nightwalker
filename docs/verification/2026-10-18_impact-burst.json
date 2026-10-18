@@ -1,0 +1,266 @@
+{
+  "date": "2026-10-18",
+  "timezone": "America/New_York (machine local time, UTC-4)",
+  "base": "a5c0987 (main: v2026.10.18 combat baseline + chapter 1 M2)",
+  "branch": "proto/hit-impact",
+  "status": "passed",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "tested_game_tree": "3938c6bc461529e0844e1ea138463d83761452bf",
+  "tested_runner_blob": "f16f7c45ea5dbcd42fb1e5c6c14703f1216fd87b",
+  "suite_count": 45,
+  "checks": 4865,
+  "failed_suites": [],
+  "suite_checks": {
+    "air_combat": 116,
+    "air_dash_animation_v14": 174,
+    "chapter_flow": 122,
+    "charged_draw": 73,
+    "charged_draw_144": 73,
+    "charged_slash": 52,
+    "combat_impact_v2": 60,
+    "combat_impact_v2_144": 60,
+    "combat_state": 18,
+    "contact_refresh_v07": 6,
+    "core_v07": 553,
+    "direct_charge": 40,
+    "direct_charge_144": 40,
+    "enemy_attack": 29,
+    "heavy_cleave": 67,
+    "home_furniture": 84,
+    "hospital_environment": 73,
+    "hospital_interactions": 23,
+    "hospital_physical_stairs": 54,
+    "hospital_security": 104,
+    "hospital_ward_layout": 22,
+    "impact_burst": 39,
+    "impact_burst_144": 39,
+    "interior_lighting": 192,
+    "jump_chase": 76,
+    "jump_chase_144": 76,
+    "keybindings": 69,
+    "keybindings_reload": 21,
+    "level_shared": 38,
+    "light_sense": 132,
+    "locomotion_blade": 260,
+    "moveset": 1014,
+    "night_fight": 105,
+    "night_street_proto": 50,
+    "perfect_counter": 31,
+    "primary_charge_chain": 114,
+    "primary_charge_chain_144": 133,
+    "rhythm_combat": 94,
+    "roll_thrust_motion": 80,
+    "scene_integration_v14": 106,
+    "scene_routes": 69,
+    "shift_controls": 40,
+    "smooth_charge_links": 92,
+    "smooth_charge_links_144": 92,
+    "thrust_path": 60
+  },
+  "request": "User 2026-10-18: a prototype that makes hits more effective, sword qi that looks like it bursts out of the screen, plus a slight screen shake; built on the latest GitHub version by the developer's own reading.",
+  "prototype": {
+    "script": "game/scripts/core/impact_burst.gd",
+    "shader": "game/shaders/screen_cut.gdshader",
+    "default": "on",
+    "toggle": "F10 (yields to an action bound to F10)",
+    "sword_qi": {
+      "moves": [
+        "heavy_slash",
+        "rush_cleave",
+        "chase_cleave",
+        "spin_cleave_b",
+        "counter_slash",
+        "air_spin_c"
+      ],
+      "side_view_only": true,
+      "life_seconds": 0.36,
+      "travel_px": 520,
+      "half_height_px": "20 -> 210 times the move's size (1.25 for the charged draw)",
+      "damage": "none (visual only)",
+      "screen_edge": "jagged crack along the edge and ink splinters where it leaves"
+    },
+    "screen_cut": {
+      "weights": [
+        "critical",
+        "heavy",
+        "kill"
+      ],
+      "from_freeze_frame": 2,
+      "split_native_px": 2,
+      "closes": "when the freeze ends",
+      "fade_seconds": 0.16
+    },
+    "tremor_native_px": {
+      "tick": [
+        [
+          1,
+          0
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "light": [
+        [
+          1,
+          0
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "critical": [
+        [
+          2,
+          0
+        ],
+        [
+          -2,
+          1
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "heavy": [
+        [
+          3,
+          1
+        ],
+        [
+          -2,
+          -1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "kill": [
+        [
+          3,
+          1
+        ],
+        [
+          -3,
+          -1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          -1,
+          -1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "bounds": "x <= 3, y <= 1, back to rest; off restores impact v2's recoil"
+    },
+    "look": "ink black and crimson like impact v2 and the charged draw; no additive light, no full-screen flash; the prototype's layers hide on the frame the freeze photographs and are kept out of the freeze's shift"
+  },
+  "impact_burst_suite": {
+    "fps": [
+      60,
+      144
+    ],
+    "checks_each": 39
+  },
+  "recording": {
+    "recorder": "game/tests/recorders/record_impact_burst.gd",
+    "composer": "tools/art_qa/compose_impact_burst.py",
+    "adapter": "NVIDIA GeForce RTX 4090 Laptop GPU",
+    "takes": [
+      {
+        "cuts": 1,
+        "frames": 111,
+        "guard_hp": 2,
+        "take": "charged_draw_on",
+        "tears": 1,
+        "waves": 1
+      },
+      {
+        "cuts": 1,
+        "frames": 62,
+        "guard_hp": 5,
+        "take": "heavy_cleave_on",
+        "tears": 1,
+        "waves": 1
+      },
+      {
+        "cuts": 1,
+        "frames": 101,
+        "guard_hp": 3,
+        "take": "light_crit_on",
+        "tears": 0,
+        "waves": 0
+      },
+      {
+        "cuts": 0,
+        "frames": 111,
+        "guard_hp": 2,
+        "take": "charged_draw_off",
+        "tears": 0,
+        "waves": 0
+      },
+      {
+        "cuts": 0,
+        "frames": 62,
+        "guard_hp": 5,
+        "take": "heavy_cleave_off",
+        "tears": 0,
+        "waves": 0
+      },
+      {
+        "cuts": 0,
+        "frames": 101,
+        "guard_hp": 3,
+        "take": "light_crit_off",
+        "tears": 0,
+        "waves": 0
+      }
+    ],
+    "outputs": [
+      "impact_burst_compare.mp4 (1280x360, 60 fps, 5.47 s, left on / right off)",
+      "impact_burst_compare_half_speed.mp4"
+    ],
+    "review": "Charged draw and heavy cleave each throw one crescent that grows beyond screen height and breaks out of the right edge with a crack and splinters; the critical/heavy/kill cut crosses the whole screen past both edges and the two sides visibly slide 2 px (pipes and floor slab offset); the light combo's critical third hit cuts; no still copy of the qi in the frozen frame."
+  },
+  "command": "tools/Test-Game.ps1 -GodotPath <local Godot executable>",
+  "local_logs": "game/evidence/logs/",
+  "scope": "Actual execution on this exact game tree and runner blob. Documentation-only changes do not change the tested game tree."
+}
