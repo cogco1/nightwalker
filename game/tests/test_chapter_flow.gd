@@ -333,7 +333,7 @@ func hospital_day() -> void:
 	var hud: Node = chapter.chapter_hud
 	check(hud.place_label.text == "地下医院 1F" and hud.clock_label.text == "12:30", "the status plate shows the floor and the arrival time")
 	check(not hospital._title.visible and not hospital._hint.visible, "the sandbox title and control line give way to the HUD")
-	check(hud.toast_panel.visible and hud.toast_label.text == "灯光下会暴露，暗处才安全", "a toast explains the light")
+	check(hud.toast_panel.visible and hud.toast_label.text == "灯光下会暴露，暗处才安全", "the arrival toast explains light exposure; F appears at the target")
 	await stay(KEY_F7, "F7 is inert in the chapter hospital")
 	await tap(KEY_TAB)
 	check(hospital.view_mode == 0, "Tab does not switch the projection inside the chapter")
@@ -390,9 +390,18 @@ func hospital_day() -> void:
 	if not await walk(func(point: Vector2) -> bool: return point.distance_to(feet) <= 20.0 and point.y <= feet.y - 14.0, "behind Coburn"):
 		return
 	await frames(2)
-	check(hospital.interactions.nearest_id == "coburn" and hud.prompt_label.text == "科伯恩", "behind Coburn the key cap names him")
+	check(hospital.interactions.nearest_id == "coburn" and hud.prompt_label.text.contains("科伯恩") and hud.key_label.text == "F", "behind Coburn the key cap names him and F")
 	await tap(KEY_E)
-	check(chapter.target.dead and story.has_flag("coburn_dead") and story.step == "d1_target_down", "E from behind, in the dark, kills Coburn")
+	check(not chapter.target.dead and story.step == "d1_hospital", "ordinary E cannot execute the story target")
+	if hospital.interactions.dialogue_active:
+		await read_all(hospital.interactions.dialogue)
+	await tap(KEY_F)
+	for _tick in range(180):
+		if not chapter.busy:
+			break
+		await frames(1)
+	check(chapter.target.dead and story.has_flag("coburn_dead") and story.step == "d1_target_down", "F from behind, in the dark, kills Coburn")
+	check(not chapter.busy and not hospital.player.is_frozen(), "the execution releases the hero for the withdrawal")
 	check(chapter.overlay.shown.has("strike") and not hospital.interactions.dialogue_active, "the kill flashes without any subtitle")
 	check(chapter.locks == 1, "the dark route never locked on again")
 	if not await walk_hospital("exit_panel", Vector2(590, 175), 16.0):

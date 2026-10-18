@@ -33,6 +33,15 @@ func seconds(value: float) -> void:
 	await frames(int(value * 60.0))
 
 
+func key(code: int, pressed: bool) -> void:
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.physical_keycode = code
+	event.pressed = pressed
+	Input.parse_input_event(event)
+	Input.flush_buffered_events()
+
+
 func shot(label: String) -> void:
 	if root.mode != Window.MODE_WINDOWED or root.size != SIZE:
 		root.mode = Window.MODE_WINDOWED
@@ -142,10 +151,15 @@ func run() -> void:
 	await place(Vector2(492, 64), "down")
 	await seconds(0.3)
 	await shot("behind_coburn_in_the_dark")
-	hospital.chapter.story_interact("coburn")
-	await frames(3)
+	key(KEY_F, true)
+	await frames(2)
+	key(KEY_F, false)
+	await frames(4)
 	await shot("coburn_kill_flash")
-	await seconds(0.6)
+	for _tick in range(180):
+		if not hospital.chapter.busy:
+			break
+		await frames(1)
 	await shot("coburn_down")
 
 	routes.travel("d1_return")

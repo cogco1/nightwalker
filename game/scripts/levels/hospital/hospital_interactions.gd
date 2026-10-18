@@ -178,7 +178,7 @@ func _all_interactions() -> Array:
 func interact_nearest() -> String:
 	if dialogue_active or _player() == null:
 		return ""
-	if bool(_host.get("stairs_busy")):
+	if bool(_host.get("stairs_busy")) or _player().is_frozen():
 		return ""
 	_refresh_nearest()
 	if nearest_id.is_empty():

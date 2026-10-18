@@ -18,6 +18,9 @@ class MockPlayer extends CharacterBody2D:
 		process_mode = Node.PROCESS_MODE_INHERIT
 		velocity = Vector2.ZERO
 
+	func is_frozen() -> bool:
+		return process_mode == Node.PROCESS_MODE_DISABLED
+
 
 class MockHospital extends Node2D:
 	var player: CharacterBody2D

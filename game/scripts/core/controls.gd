@@ -11,10 +11,11 @@ const LABELS := {
 	"attack_mouse": "攻击鼠标键", "heavy_mouse": "重击鼠标键", "switch_view": "切换视角", "reset_arena": "重置位置",
 }
 const MOUSE_BUTTONS := [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_MIDDLE, MOUSE_BUTTON_XBUTTON1, MOUSE_BUTTON_XBUTTON2]
-## E inspects, talks, uses stairs and opens keypads in every scene. It is reserved: no rebindable action may use it.
+## E handles ordinary interactions; F is the chapter's top-down execution. Neither may be rebound.
 const INTERACT_KEY := KEY_E
-# Free keys offered when a saved action has to move off the reserved interaction key.
-const SPARE_KEYS := [KEY_SHIFT, KEY_CTRL, KEY_ALT, KEY_F, KEY_Q, KEY_L, KEY_K]
+const EXECUTE_KEY := KEY_F
+# There are more spare keys than keyboard slots, so migration always finds one unused by another action.
+const SPARE_KEYS := [KEY_SHIFT, KEY_CTRL, KEY_ALT, KEY_Q, KEY_L, KEY_K, KEY_J, KEY_I, KEY_O, KEY_P, KEY_U, KEY_Y]
 
 static var settings_path := SETTINGS_PATH
 static var current: Dictionary = {}
@@ -43,7 +44,7 @@ static func _load_saved() -> void:
 	if not FileAccess.file_exists(settings_path):
 		return
 	var config := ConfigFile.new()
-	if config.load(settings_path) != OK or config.get_value("bindings", "version", 0) not in [1, 2, 3, 4]:
+	if config.load(settings_path) != OK or config.get_value("bindings", "version", 0) not in [1, 2, 3, 4, 5]:
 		load_notice = "设置文件无法读取，已使用默认按键。"
 		return
 	var profile: Dictionary = {}
@@ -64,10 +65,12 @@ static func _load_saved() -> void:
 		profile["run"] = KEY_SHIFT
 		notices.append("Shift 已改为点按闪避、长按奔跑；Shift＋方向＋左键突刺。")
 	for slot in SLOTS:
-		# Older menus allowed E; it is now the reserved interaction key.
-		if slot not in MOUSE_SLOTS and profile[slot] == INTERACT_KEY:
+		# Older menus allowed E / F; move only those saved slots off the dedicated interaction keys.
+		if slot not in MOUSE_SLOTS and profile[slot] in [INTERACT_KEY, EXECUTE_KEY]:
+			var reserved: int = profile[slot]
 			profile[slot] = _free_key(profile, slot)
-			notices.append("E 键留给交互，「%s」已移到「%s」。" % [LABELS[slot], binding_text(slot, profile)])
+			var purpose := "E 键留给交互" if reserved == INTERACT_KEY else "F 键留给俯视处决"
+			notices.append("%s，「%s」已移到「%s」。" % [purpose, LABELS[slot], binding_text(slot, profile)])
 	if profile["heavy_mouse"] == -1:
 		# Saved before the heavy attack existed: right button, or the first mouse button attack leaves free.
 		for button in [MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_MIDDLE, MOUSE_BUTTON_XBUTTON1, MOUSE_BUTTON_XBUTTON2, MOUSE_BUTTON_LEFT]:
@@ -121,6 +124,8 @@ static func validate(profile: Dictionary) -> String:
 			return "Esc 和 F1 保留用于打开 / 关闭改键界面。"
 		elif code == INTERACT_KEY:
 			return "E 保留用于交互（调查、对话、楼梯、密码门）。"
+		elif code == EXECUTE_KEY:
+			return "F 保留用于俯视处决（靠近目标、暗处、背后）。"
 		elif not _valid_key(code):
 			return "这个按键暂不支持，请换一个键。"
 	if profile["attack_mouse"] == profile["heavy_mouse"]:
@@ -143,7 +148,7 @@ static func save_bindings(profile: Dictionary) -> String:
 	if not error.is_empty():
 		return error
 	var config := ConfigFile.new()
-	config.set_value("bindings", "version", 4)
+	config.set_value("bindings", "version", 5)
 	for slot in SLOTS:
 		config.set_value("bindings", slot, profile[slot])
 	var temp_path := settings_path + ".tmp"
@@ -199,6 +204,14 @@ static func is_interact(event: InputEvent) -> bool:
 
 static func interact_text() -> String:
 	return OS.get_keycode_string(INTERACT_KEY)
+
+
+static func is_execute(event: InputEvent) -> bool:
+	return event is InputEventKey and (event.physical_keycode == EXECUTE_KEY or event.keycode == EXECUTE_KEY)
+
+
+static func execute_text() -> String:
+	return OS.get_keycode_string(EXECUTE_KEY)
 
 
 ## Key name for the on-screen scene hints: binding_text, except that Space and the mouse buttons read in Chinese
