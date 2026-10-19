@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-20",
+  "mode": "built-in-imagegen",
+  "local_compositing_authorized": true,
+  "common_prompt": "Use case: architectural environment replacement preserving layer style.\nEdit the supplied transparent pixel-art industrial background into ONE UNIQUE contiguous segment for a very long side-scrolling background. Keep exact wide 3:1 canvas proportions, same scale of architecture, coarse blocky pixel-art material style, cold gunmetal/concrete, warm yellow sand, and genuinely TRANSPARENT sky and gaps. This is a single main-architecture PARALLAX LAYER, with NO sky, clouds, tiny distant skyline, fog, closer foreground props or receding perspective.\nIMPORTANT PIXEL STYLE: redraw deliberately coarse and simple, like a 768x256 native-pixel game background enlarged. Crisp grouped square pixels, blunt stepped edges, big 2-4 pixel windows, thick pipes, limited 40 colors with 3-4 shade steps. No high-resolution microtexture, fine grunge, antialiased edge noise, photo-realistic or smoothly rounded 3D surfaces.\nThe visible ground edge will ultimately be the top of a sandy industrial terrace at about 66 percent of image height. For all segments except the first, REMOVE the leftmost low ground and ramp: the yellow sand top stays absolutely level across the FULL width at 66 percent image height, entering LEFT and exiting RIGHT at the SAME height. A single solid earth retaining foundation with steel/concrete top band and heavy supports fills the entire lower 34 percent, all the way to canvas bottom with no transparent bottom margin. Buildings stand on/behind this terrace at that height. No detached platforms, gaps or return to lower terrain.\nScene architecture: isolated steel wall sections stand alongside factory and building facades rather than enclosing or hiding them. All facade bases visible. Use dense-sparse-dense grouping of 2-3 SMALL architectural scenes per segment, several distinct bays, differing roof silhouettes and permanent pipes integrated with structures.\nJOINING EDGES: the extreme left/right 8 percent should be quiet clear terrace only, with empty transparent space above ground; no building cut by either edge, no cross-edge pipes or railings. Strong simple horizontal sand and retaining band continues straight through both edges. Keep all major buildings away from the edges. This allows segments to form one long architectural panorama.\nNo humans, player, enemies, characters, bodies, vehicles, weapons, crates, furniture, movable or interactive props, labels, text, HUD, controls, signs, switches, stairs, ladders or collision/debug shapes. Opaque architecture and foundation with transparent surroundings, no colored edge halos or drawn checkerboard.\n",
+  "segments": [
+    {
+      "index": 1,
+      "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-10242795-492a-44f7-94bc-d1ba2e0b6fd8.png",
+      "file": "segment_01.png",
+      "prompt": "SEGMENT 1, ONLY ENTRANCE RISE: override the constant ground rule only here. Low sand at y=87.5% from x=0 to x=12.5%. A broad continuous sand-covered slope rises from x=12.5% to x=41.7%, reaching high terrace y=65.6%. From x=41.7% to right edge ground remains at this high level. Left architecture is a very massive freestanding STEEL WALL with three deep ribs; wall ends before the middle of the slope. At the rise's top a small exposed PUMP HOUSE and then a low factory gatehouse sit on the higher terrain. No skyline behind. Clearly separate exposed steel wall, slope and two small buildings. Keep quieter strip at right edge. Buildings are simplified and original, not copied from the entire reference."
+    },
+    {
+      "index": 2,
+      "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-780cb3ac-7404-49fc-9176-1880bfc0241b.png",
+      "file": "segment_02.png",
+      "prompt": "SEGMENT 2, LIGHT FACTORY YARD: all ground high and level. Three independent small scenes: two low SAWTOOTH-ROOF WORKSHOPS with visible large amber window blocks; a short exposed utility pipe bay; an open sand yard between them. One long low factory roof is the strongest silhouette. A few low wall buttresses, never a continuous wall in front of workshops. Architecture much wider than tall, all medium-sized and same scale as reference. End edges empty above the sand."
+    },
+    {
+      "index": 3,
+      "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-48c5fa16-3876-417f-b190-e7d16f391429.png",
+      "file": "segment_03.png",
+      "prompt": "SEGMENT 3, BOILER DISTRICT: all ground high and level. A compact heavy boiler house with TWO THICK UNEQUAL CHIMNEYS as a landmark; beside it a shorter round-edged but pixel-blocky pressure housing embedded in the building and a connected rectangular pipe-service wing. An open gap and isolated steel wall stub separates a low workshop. Lots of large readable silhouettes, not fine pipe noise. Cold steel with tiny amber windows. End edges empty above the sand."
+    },
+    {
+      "index": 4,
+      "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-1ca24687-3d71-4034-a6db-a2e51dae19c8.png",
+      "file": "segment_04.png",
+      "prompt": "SEGMENT 4, OPEN PIPE GALLERY: REPLACE ALL PREVIOUS BUILDINGS above the ground completely. No twin chimneys and no sawtooth roofs in this segment. Draw a long steel service gallery with three tall rectangular gantry portals and heavy overhead pipe bundles, an exposed pump station and a short freestanding buttress wall at left. Leave broad transparent openings under pipe spans. Low concrete valve housing integrated into the building, no interactive controls. Predominantly horizontal architecture, a few tall square steel portals. A long empty terrace gap separates two small bays. All ground is level high from left edge to right. Foundation bottom completely opaque, edges empty above ground."
+    },
+    {
+      "index": 5,
+      "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-9f40a757-1bf5-40c9-bf21-c28d6f1831d2.png",
+      "file": "segment_05.png",
+      "prompt": "SEGMENT 5, SPARSE LOADING COURT: REPLACE ALL PREVIOUS BUILDINGS above the ground completely. No twin-chimney boiler house. A low broad flat-roof brick/concrete warehouse frontage with wide dark industrial apertures, then a long OPEN COURTYARD GAP, then two modest low utility rooms with square roof vents and fixed steel bracing. This is a quieter interlude between factory landmarks. Use a single short heavy wall section beside the warehouse, not in front of it. No crates, vehicles, cranes, people or loose objects. Ground full-width high and level. Transparent gaps and sky."
+    },
+    {
+      "index": 6,
+      "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-53ae1729-cb8f-45dc-b7b5-5b727e259422.png",
+      "file": "segment_06.png",
+      "prompt": "SEGMENT 6, BUILDING BASES: REPLACE ALL PREVIOUS BUILDINGS above the ground completely. No chimneys or sawtooth roofs. Draw three varied concrete industrial OFFICE/HOUSE TOWERS, large blocky window holes and thick vertical structural ribs, their full bases standing exposed at the high sandy terrace. One damaged taller tower with an uneven roof is the main landmark; lower auxiliary buildings between towers. Clear open breaks between independent building masses, no tiny distant skyline. One short isolated armor wall segment occupies its own gap but doesn't enclose the towers. Keep all objects at the same scale and depth as other segments, coarse pixels. High ground constant."
+    },
+    {
+      "index": 7,
+      "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-bf609042-c770-4cfb-921a-4b4a5434f52c.png",
+      "file": "segment_07.png",
+      "prompt": "SEGMENT 7, MAIN STEELWORKS: REPLACE ALL PREVIOUS BUILDINGS above the ground completely. A large long industrial mill building with a FLAT stepped roof, three SHORT SQUARE EXHAUST STACKS rather than twin round chimneys. Big angular pipe elbows, chunky steel frame braces and small amber window blocks. A thick steel wall end on one side and an open maintenance courtyard on the other. Make it a different silhouette from the boiler house and sawtooth factory. No machinery or objects on the route, only building architecture. Constant raised ground and deep foundation, edges empty above it."
+    },
+    {
+      "index": 8,
+      "generated_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-c75e7257-24e4-4cdf-8152-37ffa63c844e.png",
+      "file": "segment_08.png",
+      "prompt": "SEGMENT 8, OUTER WAREHOUSES: REPLACE ALL PREVIOUS BUILDINGS above the ground completely. A mixed line of low concrete utility structures, a tall narrow square service tower, then a long thin corrugated shed, separated by generous transparent architectural gaps. A few short disconnected heavy steel wall stretches connect industrial rhythms, never enclose buildings. Near right side the scenery thins to an OPEN HIGH TERRACE that continues off the right edge at exactly the SAME elevation, without any down slope or ending pit. No big boiler house, no repeated twin chimneys. Still weathered cold steel with golden sand, matching scale."
+    }
+  ]
+}

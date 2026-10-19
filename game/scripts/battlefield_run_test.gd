@@ -1,0 +1,310 @@
+extends Node2D
+## Standalone native-pixel art check. Launch this scene directly; the chapter routes stay unchanged.
+## -- --battlefield-smoke walks the real hero across the entire terrain, records evidence, then exits.
+
+const PLAYER_SCENE = preload("res://scenes/player.tscn")
+const CONTROLS = preload("res://scripts/core/controls.gd")
+const BACKGROUND_PATH := "res://assets/battlefield_layer_01/battlefield_layer_01_native.png"
+const GROUND_PATH := "res://assets/battlefield_layer_01/ground_profile.json"
+const VIEWPORT_SIZE := Vector2i(320, 180)
+const OUTPUT := "res://evidence/battlefield_run_test/"
+const EDGE_MARGIN := 12.0
+const START_X := 40.0
+
+var player: CharacterBody2D
+var camera: Camera2D
+var background: Sprite2D
+var terrain: StaticBody2D
+var ground_points := PackedVector2Array()
+var world_size := Vector2i.ZERO
+var ground_source := ""
+var ready_for_test := false
+var smoke_report: Dictionary = {}
+var _smoke := false
+
+
+func _ready() -> void:
+	process_physics_priority = 100
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	var window := get_tree().root
+	window.content_scale_size = VIEWPORT_SIZE
+	window.content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
+	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
+	window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_INTEGER
+	DisplayServer.window_set_title("夜行者 · 超长战场跑步试玩")
+	_smoke = OS.get_cmdline_user_args().has("--battlefield-smoke")
+	if _smoke:
+		CONTROLS.settings_path = "user://battlefield_smoke_keybindings.cfg"
+		CONTROLS.current = CONTROLS.defaults()
+	CONTROLS.install()
+	if not _build_background() or not _load_ground():
+		if _smoke:
+			get_tree().quit(2)
+		return
+	_build_terrain()
+	_build_player()
+	_build_camera()
+	_follow_player()
+	ready_for_test = true
+	print("战场跑步试玩 | %s/%s 左右移动 | 长按 %s 奔跑 | %s 跳跃 | %s 返回起点 | Esc 退出" % [
+		CONTROLS.hint_text("move_left"), CONTROLS.hint_text("move_right"),
+		CONTROLS.hint_text("run"), CONTROLS.hint_text("jump"), CONTROLS.hint_text("reset_arena")])
+	print("原生像素: 背景 %d×%d / scale 1；主角 scale 1；视口 320×180，整数 nearest。" % [world_size.x, world_size.y])
+	if _smoke:
+		_run_smoke.call_deferred()
+
+
+func _build_background() -> bool:
+	var texture := load(BACKGROUND_PATH) as Texture2D
+	if texture == null:
+		push_error("Battlefield background is missing: " + BACKGROUND_PATH)
+		return false
+	world_size = Vector2i(texture.get_width(), texture.get_height())
+	if world_size.x < VIEWPORT_SIZE.x or world_size.y < VIEWPORT_SIZE.y:
+		push_error("Battlefield must be at least as large as the native viewport.")
+		return false
+	background = Sprite2D.new()
+	background.name = "BattlefieldBackground"
+	background.texture = texture
+	background.centered = false
+	background.z_index = -10
+	background.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	add_child(background)
+	return true
+
+
+func _load_ground() -> bool:
+	var raw_points: Variant
+	if FileAccess.file_exists(GROUND_PATH):
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(GROUND_PATH))
+		if parsed is Dictionary:
+			raw_points = parsed.get("points", parsed.get("ground_points", parsed.get("surface_points", [])))
+			if int(parsed.get("width", world_size.x)) != world_size.x or int(parsed.get("height", world_size.y)) != world_size.y:
+				push_error("Battlefield ground profile dimensions do not match its native background.")
+				return false
+		else:
+			raw_points = parsed
+		ground_source = GROUND_PATH
+	else:
+		raw_points = [[0, 224], [96, 224], [320, 168], [world_size.x, 168]]
+		ground_source = "native-layout fallback"
+	if not raw_points is Array or raw_points.size() < 2:
+		push_error("Battlefield ground profile needs at least two ordered points.")
+		return false
+	for item: Variant in raw_points:
+		var point := Vector2.ZERO
+		if item is Array and item.size() == 2:
+			point = Vector2(float(item[0]), float(item[1]))
+		elif item is Dictionary and item.has("x") and item.has("y"):
+			point = Vector2(float(item.x), float(item.y))
+		else:
+			push_error("Invalid battlefield ground point: " + str(item))
+			return false
+		if not is_finite(point.x) or not is_finite(point.y) or point.y < 0.0 or point.y > world_size.y:
+			push_error("Battlefield ground point is outside the native image.")
+			return false
+		if not ground_points.is_empty() and point.x <= ground_points[-1].x:
+			push_error("Battlefield ground x coordinates must increase strictly.")
+			return false
+		ground_points.append(point)
+	if not is_zero_approx(ground_points[0].x) or not is_equal_approx(ground_points[-1].x, float(world_size.x)):
+		push_error("Battlefield ground profile must cover the entire native width.")
+		return false
+	return true
+
+
+func _build_terrain() -> void:
+	terrain = StaticBody2D.new()
+	terrain.name = "ContinuousGround"
+	terrain.collision_layer = 1
+	terrain.collision_mask = 0
+	add_child(terrain)
+	# One closed polygon follows every surface point. There are no separate box edges at segment seams.
+	var polygon := PackedVector2Array([Vector2(-128, ground_points[0].y)])
+	polygon.append_array(ground_points)
+	polygon.append(Vector2(world_size.x + 128, ground_points[-1].y))
+	polygon.append(Vector2(world_size.x + 128, world_size.y + 96))
+	polygon.append(Vector2(-128, world_size.y + 96))
+	var collision := CollisionPolygon2D.new()
+	collision.name = "Surface"
+	collision.polygon = polygon
+	terrain.add_child(collision)
+
+
+func _build_player() -> void:
+	player = PLAYER_SCENE.instantiate()
+	player.name = "Player"
+	player.view_mode = 1
+	player.scale = Vector2.ONE
+	player.floor_snap_length = 10.0
+	player.position = Vector2(START_X, ground_y_at(START_X) - 1.0)
+	player.z_index = 1
+	add_child(player)
+
+
+func _build_camera() -> void:
+	camera = Camera2D.new()
+	camera.name = "BattlefieldCamera"
+	camera.zoom = Vector2.ONE
+	camera.position_smoothing_enabled = false
+	camera.limit_left = 0
+	camera.limit_top = 0
+	camera.limit_right = world_size.x
+	camera.limit_bottom = world_size.y
+	camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
+	add_child(camera)
+	camera.make_current()
+
+
+func ground_y_at(x: float) -> float:
+	if ground_points.is_empty():
+		return 0.0
+	for index in range(ground_points.size() - 1):
+		var left := ground_points[index]
+		var right := ground_points[index + 1]
+		if x <= right.x:
+			return lerpf(left.y, right.y, clampf((x - left.x) / (right.x - left.x), 0.0, 1.0))
+	return ground_points[-1].y
+
+
+func _physics_process(_delta: float) -> void:
+	if not ready_for_test:
+		return
+	# Only the two map edges stop movement; all interior traversal uses the surface collider.
+	var limited_x := clampf(player.position.x, EDGE_MARGIN, world_size.x - EDGE_MARGIN)
+	if not is_equal_approx(limited_x, player.position.x):
+		player.position.x = limited_x
+		player.velocity.x = 0.0
+	_follow_player()
+
+
+func _follow_player() -> void:
+	var half := Vector2(VIEWPORT_SIZE) / 2.0
+	var target := player.position + Vector2(48, -64)
+	camera.position = Vector2(
+		clampf(target.x, half.x, world_size.x - half.x),
+		clampf(target.y, half.y, world_size.y - half.y)).round()
+	camera.force_update_scroll()
+
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if _smoke or not event.is_pressed() or event.is_echo():
+		return
+	var key_event := event as InputEventKey
+	var code := key_event.physical_keycode if key_event.physical_keycode != 0 else key_event.keycode
+	if code == KEY_ESCAPE:
+		get_tree().quit()
+	elif event.is_action_pressed("reset_arena") and ready_for_test:
+		player.clear_input_buffer()
+		CONTROLS.release_actions()
+		player.position = Vector2(START_X, ground_y_at(START_X) - 1.0)
+		player.velocity = Vector2.ZERO
+		_follow_player()
+
+
+func _key(code: int, pressed: bool) -> void:
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.physical_keycode = code
+	event.pressed = pressed
+	Input.parse_input_event(event)
+	Input.flush_buffered_events()
+
+
+func _ticks(count: int) -> void:
+	for _index in range(count):
+		await get_tree().physics_frame
+	await get_tree().process_frame
+
+
+func _check(ok: bool, label: String) -> void:
+	smoke_report["checks"] += 1
+	if not ok:
+		smoke_report["failures"].append(label)
+		push_error("Battlefield smoke: " + label)
+
+
+func _capture(label: String) -> void:
+	var entry := {"name": label, "player": [player.position.x, player.position.y],
+		"ground_y": ground_y_at(player.position.x), "camera": [camera.position.x, camera.position.y],
+		"running": bool(player.is_running), "animation": String(player.sprite.animation)}
+	if DisplayServer.get_name() != "headless":
+		await RenderingServer.frame_post_draw
+		var image := get_viewport().get_texture().get_image()
+		var path := OUTPUT + label + ".png"
+		_check(image != null and image.get_size() == VIEWPORT_SIZE, "Screenshot uses the 320x180 native viewport")
+		if image != null:
+			_check(image.save_png(path) == OK, "Write screenshot " + label)
+			entry["png"] = ProjectSettings.globalize_path(path)
+	smoke_report["checkpoints"].append(entry)
+
+
+func _run_smoke() -> void:
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUTPUT))
+	smoke_report = {"checks": 0, "failures": [], "checkpoints": [], "world_size": [world_size.x, world_size.y],
+		"ground_source": ground_source, "max_ground_error": 0.0, "airborne_ticks": 0, "running_ticks": 0,
+		"renderer": RenderingServer.get_current_rendering_method(), "headless": DisplayServer.get_name() == "headless"}
+	await _ticks(12)
+	_check(player.view_mode == 1 and player.is_on_floor(), "Existing side-view hero starts grounded")
+	_check(player.scale == Vector2.ONE and background.scale == Vector2.ONE and camera.zoom == Vector2.ONE, "All world art uses native scale 1")
+	_check(get_tree().root.content_scale_size == VIEWPORT_SIZE, "Viewport stays 320x180")
+	_check(ground_source == GROUND_PATH, "Terrain comes from the delivered ground profile")
+	await _capture("00_start")
+	var start_x := player.position.x
+	_key(int(CONTROLS.current["move_right"]), true)
+	_key(int(CONTROLS.current["run"]), true)
+	var targets: Array[Dictionary] = [{"x": 200.0, "name": "01_slope"}, {"x": 400.0, "name": "02_ridge"}]
+	for index in range(1, int(ceilf(float(world_size.x) / 768.0))):
+		targets.append({"x": float(index * 768 + 160), "name": "%02d_segment_%02d" % [index + 2, index + 1]})
+	var target_index := 0
+	var stalled_ticks := 0
+	var previous_x := player.position.x
+	var elapsed_ticks := 0
+	var timeout_ticks := int((float(world_size.x) / player.run_speed + 15.0) * 60.0)
+	while player.position.x < world_size.x - 32.0 and elapsed_ticks < timeout_ticks:
+		# Desktop focus changes may clear synthetic held keys. Reassert the same real key edges;
+		# the existing Shift gesture ignores repeated presses while already held.
+		_key(int(CONTROLS.current["move_right"]), true)
+		_key(int(CONTROLS.current["run"]), true)
+		await _ticks(1)
+		elapsed_ticks += 1
+		if player.is_running:
+			smoke_report["running_ticks"] += 1
+		if not player.is_on_floor():
+			smoke_report["airborne_ticks"] += 1
+		var error := absf(player.position.y - ground_y_at(player.position.x))
+		smoke_report["max_ground_error"] = maxf(smoke_report["max_ground_error"], error)
+		stalled_ticks = stalled_ticks + 1 if player.position.x - previous_x < 0.05 else 0
+		previous_x = player.position.x
+		if stalled_ticks > 90 or player.position.y > world_size.y + 40:
+			smoke_report["stalled_state"] = {"position": [player.position.x, player.position.y],
+				"velocity": [player.velocity.x, player.velocity.y], "state": int(player.state),
+				"move_right": Input.is_action_pressed("move_right"), "run": Input.is_action_pressed("run"),
+				"is_running": bool(player.is_running), "slide_collisions": player.get_slide_collision_count()}
+			_check(false, "Traversal remains continuous without falling or an interior wall")
+			break
+		if target_index < targets.size() and player.position.x >= float(targets[target_index].x):
+			await _capture(String(targets[target_index].name))
+			target_index += 1
+	_key(int(CONTROLS.current["run"]), false)
+	_key(int(CONTROLS.current["move_right"]), false)
+	await _ticks(20)
+	await _capture("99_end")
+	_check(player.position.x >= world_size.x - 32.0, "Hero runs from the first lowland to the far end")
+	_check(target_index == targets.size(), "Every background segment is reached")
+	_check(float(smoke_report["max_ground_error"]) <= 6.0, "Feet follow the drawn surface within six native pixels")
+	_check(int(smoke_report["airborne_ticks"]) <= 3, "Running stays grounded over the slope and segment seams")
+	_check(int(smoke_report["running_ticks"]) > 60 and not player.is_running, "Held original run input runs, then releases normally")
+	_check(absf(player.velocity.x) < 0.1, "Hero stops normally at the end")
+	_check(absf(camera.position.x - (world_size.x - VIEWPORT_SIZE.x / 2.0)) <= 1.0, "Camera follows to the final native viewport")
+	_check(player.scale == Vector2.ONE and background.scale == Vector2.ONE and camera.zoom == Vector2.ONE, "Traversal preserves native art scales")
+	smoke_report["distance"] = player.position.x - start_x
+	smoke_report["physics_ticks"] = elapsed_ticks
+	smoke_report["final_player"] = [player.position.x, player.position.y]
+	smoke_report["final_camera"] = [camera.position.x, camera.position.y]
+	smoke_report["passed"] = smoke_report["failures"].is_empty()
+	var report_file := FileAccess.open(OUTPUT + "smoke_report.json", FileAccess.WRITE)
+	if report_file != null:
+		report_file.store_string(JSON.stringify(smoke_report, "  "))
+	print("BATTLEFIELD_SMOKE " + JSON.stringify(smoke_report))
+	get_tree().quit(0 if smoke_report["passed"] else 1)

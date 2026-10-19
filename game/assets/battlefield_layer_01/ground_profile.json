@@ -1,0 +1,28 @@
+{
+  "width": 6144,
+  "height": 256,
+  "points": [
+    [
+      0,
+      224
+    ],
+    [
+      140,
+      224
+    ],
+    [
+      224,
+      168
+    ],
+    [
+      6144,
+      168
+    ]
+  ],
+  "layer": "main_architecture",
+  "origin": [
+    0,
+    0
+  ],
+  "reference_scroll_scale": 1.0
+}

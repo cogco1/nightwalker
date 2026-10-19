@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-20",
+  "native_size": [
+    6144,
+    256
+  ],
+  "display_size": [
+    12288,
+    512
+  ],
+  "alpha_values": [
+    0,
+    255
+  ],
+  "palette_colors": 65,
+  "segments": [
+    {
+      "segment": 1,
+      "x": 0,
+      "width": 768,
+      "source_vertical_offset": 12
+    },
+    {
+      "segment": 2,
+      "x": 768,
+      "width": 768,
+      "source_vertical_offset": 0
+    },
+    {
+      "segment": 3,
+      "x": 1536,
+      "width": 768,
+      "source_vertical_offset": -10
+    },
+    {
+      "segment": 4,
+      "x": 2304,
+      "width": 768,
+      "source_vertical_offset": 3
+    },
+    {
+      "segment": 5,
+      "x": 3072,
+      "width": 768,
+      "source_vertical_offset": 7
+    },
+    {
+      "segment": 6,
+      "x": 3840,
+      "width": 768,
+      "source_vertical_offset": -11
+    },
+    {
+      "segment": 7,
+      "x": 4608,
+      "width": 768,
+      "source_vertical_offset": -3
+    },
+    {
+      "segment": 8,
+      "x": 5376,
+      "width": 768,
+      "source_vertical_offset": 0
+    }
+  ],
+  "ground_points": [
+    [
+      0,
+      224
+    ],
+    [
+      140,
+      224
+    ],
+    [
+      224,
+      168
+    ],
+    [
+      6144,
+      168
+    ]
+  ],
+  "native_sha256": "34df7cfd0141c3b318668112e1fdf5fa1c748b1f1bd2d621f4da5fbbc769b140",
+  "display_sha256": "a4999c70b6a842676e405841fe95a2b5123c663b64f9b4a3af0dde18a2c2e1e6",
+  "art_source": "built-in imagegen",
+  "compositing": "user-authorized local pixel alignment and composition"
+}

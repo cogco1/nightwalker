@@ -1,0 +1,192 @@
+{
+  "airborne_ticks": 0,
+  "checkpoints": [
+    {
+      "animation": "idle_right",
+      "camera": [
+        160.0,
+        160.0
+      ],
+      "ground_y": 224.0,
+      "name": "00_start",
+      "player": [
+        40.0,
+        223.998031616211
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/00_start.png",
+      "running": false
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        249.0,
+        115.0
+      ],
+      "ground_y": 183.168619791667,
+      "name": "01_slope",
+      "player": [
+        201.2470703125,
+        179.088897705078
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/01_slope.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        448.0,
+        104.0
+      ],
+      "ground_y": 168.0,
+      "name": "02_ridge",
+      "player": [
+        400.461669921875,
+        167.978424072266
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/02_ridge.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        977.0,
+        104.0
+      ],
+      "ground_y": 168.0,
+      "name": "03_segment_02",
+      "player": [
+        929.458862304688,
+        167.978424072266
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/03_segment_02.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        1746.0,
+        104.0
+      ],
+      "ground_y": 168.0,
+      "name": "04_segment_03",
+      "player": [
+        1697.67260742188,
+        167.978424072266
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/04_segment_03.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        2514.0,
+        104.0
+      ],
+      "ground_y": 168.0,
+      "name": "05_segment_04",
+      "player": [
+        2465.88891601563,
+        167.978424072266
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/05_segment_04.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        3282.0,
+        104.0
+      ],
+      "ground_y": 168.0,
+      "name": "06_segment_05",
+      "player": [
+        3234.10522460938,
+        167.978424072266
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/06_segment_05.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        4048.0,
+        104.0
+      ],
+      "ground_y": 168.0,
+      "name": "07_segment_06",
+      "player": [
+        4000.021484375,
+        167.978424072266
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/07_segment_06.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        4816.0,
+        104.0
+      ],
+      "ground_y": 168.0,
+      "name": "08_segment_07",
+      "player": [
+        4768.16650390625,
+        167.978424072266
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/08_segment_07.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        5584.0,
+        104.0
+      ],
+      "ground_y": 168.0,
+      "name": "09_segment_08",
+      "player": [
+        5536.30126953125,
+        167.978424072266
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/09_segment_08.png",
+      "running": true
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        5984.0,
+        104.0
+      ],
+      "ground_y": 168.0,
+      "name": "99_end",
+      "player": [
+        6116.9140625,
+        167.978424072266
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/99_end.png",
+      "running": false
+    }
+  ],
+  "checks": 34,
+  "distance": 6076.9140625,
+  "failures": [],
+  "final_camera": [
+    5984.0,
+    104.0
+  ],
+  "final_player": [
+    6116.9140625,
+    167.978424072266
+  ],
+  "ground_source": "res://assets/battlefield_layer_01/ground_profile.json",
+  "headless": false,
+  "max_ground_error": 4.07995096842447,
+  "passed": true,
+  "physics_ticks": 2664,
+  "renderer": "gl_compatibility",
+  "running_ticks": 2654,
+  "world_size": [
+    6144,
+    256
+  ]
+}
