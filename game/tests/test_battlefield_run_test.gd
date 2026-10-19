@@ -139,14 +139,14 @@ func run() -> void:
 			lamp_regions = lamp_regions and lamp.texture == lamp.get_parent().texture and lamp.region_enabled \
 				and lamp.region_filter_clip_enabled and lamp.region_rect == effect.rect and not lamp.centered
 		if effect.kind == "steam":
-			var emitter: Array = ambient.settings.get("steam_anchor", [16, 29])
+			var emitter: Array = ambient.settings.get("steam_anchor", [24, 59])
 			steam_roots_fixed = steam_roots_fixed and node.position == (effect.anchor - Vector2(float(emitter[0]), float(emitter[1]))).round()
 		if effect.kind == "stars":
 			layered = layered and effect.layer == "far" and node.size == Vector2.ONE
 		before.append([node.position, node.modulate, (node as Sprite2D).frame if effect.kind == "steam" else -1])
 	check(int(kind_counts.lights) > 0 and int(kind_counts.steam) > 0 and int(kind_counts.stars) > 0 \
-		and int(kind_counts.dust) > 0 and int(kind_counts.dust) <= 16 and ambient.effects.size() <= 100,
-		"Lights, steam, sparse stars and sand use a bounded reusable pool")
+		and int(kind_counts.dust) == 16 and ambient.effects.size() == 50,
+		"The stronger ambient effects use exactly 50 reusable objects including 16 sand grains")
 	check(layered, "Lights and steam inherit their panorama depth; one-pixel stars belong only to the far sky")
 	check(native and lamp_regions, "Ambient coordinates stay integer and lamps reuse exact source window regions")
 	var node_count := scene.get_tree().get_node_count()
@@ -163,10 +163,41 @@ func run() -> void:
 	check(changes > 0 and scene.get_tree().get_node_count() == node_count and native,
 		"Ambient time really changes existing pixels without creating nodes, fractional positions or collisions")
 	check(steam_roots_fixed, "Steam stays anchored at every real chimney mouth through different animation phases")
+	var steam_continuous := true
+	for effect: Dictionary in ambient.effects:
+		if effect.kind == "steam" and effect.node.visible:
+			steam_continuous = steam_continuous and effect.node.modulate.a >= float(effect.data.opacity) * 0.299
+	check(steam_continuous, "The stronger steam keeps a visible base instead of disappearing between cycles")
 	var steam_image: Image = load(String(ambient.settings.steam_texture)).get_image()
-	check(steam_image.get_size() == Vector2i(96, 64) and steam_image.detect_alpha() == Image.ALPHA_BIT \
+	check(steam_image.get_size() == Vector2i(192, 128) and ambient.steam_frame_size == Vector2i(64, 64) and ambient.steam_grid == Vector2i(3, 2) and steam_image.detect_alpha() == Image.ALPHA_BIT \
 		and ambient._steam_used.size() == 6,
-		"Steam uses six 32px frames with binary transparent edges at native scale")
+		"Larger steam uses six new native 64px frames with binary transparent edges and scale one")
+	var timing_saved: float = ambient.elapsed
+	var timing_updates: int = ambient.updates
+	var timing_fraction: float = ambient._accumulator
+	ambient._accumulator = 0.0
+	for _frame in range(60):
+		ambient._process(1.0 / 60.0)
+	check(ambient.updates - timing_updates == 16 and is_equal_approx(ambient.update_hz, 16.0),
+		"At 60 rendered frames per second the ambient pool retains its remainder and really updates 16 times")
+	ambient._accumulator = timing_fraction
+	ambient.update_at(timing_saved)
+	var grain_lengths: Dictionary = {}
+	var wind: Dictionary = {}
+	for effect: Dictionary in ambient.effects:
+		if effect.kind == "dust":
+			grain_lengths[int(effect.node.size.x)] = true
+			wind = effect
+	check(grain_lengths.has(1) and grain_lengths.has(2) and grain_lengths.has(3),
+		"Stronger wind uses one-, two- and three-pixel marks without scaling art")
+	var wind_x: float = wind.node.position.x
+	scene.camera.position.x += 13.0
+	ambient.update_at(timing_saved)
+	var wind_dx: float = wind.node.position.x - wind_x
+	check(is_zero_approx(wind_dx) or is_equal_approx(absf(wind_dx), 320.0),
+		"Moving the camera leaves world-space sand in place until it wraps at the viewport edge")
+	scene.camera.position.x -= 13.0
+	ambient.update_at(timing_saved)
 	var initial_camera_x: float = scene.camera.position.x
 	var initial_far_x: float = scene.far_visible_rect().position.x
 	var initial_mid_x: float = scene.mid_visible_rect().position.x

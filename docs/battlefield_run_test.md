@@ -40,14 +40,16 @@
 可踩建筑与车辆版本的验证结果以 `test_report.json`、`smoke_report.json` 和同目录截图为准。
 
 
-环境动态 v08：独立战场额外读取 `game/assets/battlefield_ambient/ambient.json` 与透明 `steam.png`。
+环境动态 v09：独立战场额外读取 `game/assets/battlefield_ambient/ambient.json` 与透明 `steam_large.png`。
 
 - 窗灯直接裁取所属近/中/远背景的真实灯窗区域，缓慢明暗闪烁，短暂暗跳；不会增加悬空光球。灯与蒸汽节点挂在对应背景 Sprite 下，继承相同的整数位置、视差速度和绘制层级，近处建筑正常遮挡后方效果。
-- 蒸汽是 96×64、3列2行的六帧图集，每帧32×32，固定 scale 1、nearest 与二值透明边。`steam_anchor` 默认 `[16,29]` 对齐实际管口；烟根始终固定在管口，六帧原画内部表现蒸汽向上、向右扩展后淡出，使用预创建 Sprite 循环复用。
-- 稀疏星点只挂远层，每点为1个原生像素，亮度缓慢变化；星坐标仅选实际天空。固定不超过16粒（默认10粒）细沙沿镜头内地表轻微右移，不影响碰撞或人物操作。
-- 动态以12Hz量化更新，所有绘制位置取整；启动时只建立一个有限节点池，不逐帧创建节点、读取/扫描图片、发射碰撞对象。离屏灯/烟/星只做矩形可见性判断，不更新帧与外观。
-- JSON 的 `lights` 包含 `id/layer/rect/period/phase/min_gain/max_gain`；`steam` 包含 `id/layer/position/period/phase/opacity`；`stars` 包含 `id/position/period/phase/opacity`（固定远层）；所有 `rect/position` 使用所属背景源图像素坐标，y=0..511。`dust` 包含 `count/speed/opacity`。
+- 蒸汽是新绘的 192×128、3列2行六帧图集，每帧64×64，固定 scale 1、nearest 与二值透明边。`steam_anchor` 默认 `[24,59]` 对齐实际管口；烟根始终固定在管口，六帧原画内部表现蒸汽向上、向右扩展后淡出，使用预创建 Sprite 循环复用。
+- 稀疏星点只挂远层，每点为1个原生像素，亮度缓慢变化；星坐标仅选实际天空。固定16粒细沙沿镜头内地表轻微右移，不影响碰撞或人物操作。
+- 动态以16Hz量化更新，保留时间余量保证60fps下每秒仍有16次更新，所有绘制位置取整；启动时只建立一个有限节点池，不逐帧创建节点、读取/扫描图片、发射碰撞对象。离屏灯/烟/星只做矩形可见性判断，不更新帧与外观。
+- JSON 的 `lights` 包含 `id/layer/rect/period/phase/min_gain/max_gain`；`steam` 包含 `id/layer/position/period/phase/opacity`；`stars` 包含 `id/position/period/phase/opacity`（固定远层）；所有 `rect/position` 使用所属背景源图像素坐标，y=0..511。`dust` 包含 `count/speed/opacity/lengths`，原生长度循环为1、2、3px。`steam_frame_size` 与 `steam_frames` 定义原生帧格，运行时校验图集尺寸；`update_hz=16` 定义更新率，`steam_min_alpha=0.30` 保留每周期最淡时的管口烟雾。
 
-现有原图 GPU 比对只额外排除当前实际效果的小包围框：灯的源区域、当前蒸汽帧的非透明包围框、1px星点与1–2px沙粒；报告记录 `ambient_excluded_samples` 与逐个效果坐标，不排除整片天空或工业区域。原地形、车辆、楼层路线、三层视差、电梯的实际输入回归继续运行。
+现有原图 GPU 比对只额外排除当前实际效果的小包围框：灯的源区域、当前蒸汽帧的非透明包围框、1px星点与1–3px沙粒；报告记录 `ambient_excluded_samples` 与逐个效果坐标，不排除整片天空或工业区域。原地形、车辆、楼层路线、三层视差、电梯的实际输入回归继续运行。
 
 GPU 烟雾测试额外保存 `ambient_animation_00.png` 至 `ambient_animation_11.png`：固定正常镜头 `[400,104]`，连续1.375秒、8Hz、320×180原生画面；可供真实渲染 GIF 预览。另存 `ambient_sky_animation_00.png` 至 `ambient_sky_animation_11.png`（报告 `sky_animation_frames`），固定高处镜头 `[1008,-106]`，以相同8Hz时序展示中景烟囱与稀疏远空星点。`ambient_probe_{lights,steam,stars,dust}_{a,b}.png` 分别记录相同镜头的两个实际时刻，每类必须在自身效果小矩形内产生可见的 GPU 像素差异。证据捕捉期间暂停人物和电梯物理，结束立即恢复；其余路线测试继续使用真实物理输入。状态与像素证据记入 `smoke_report.json` 的 `ambient`。
+
+蒸汽保持原生像素绘制与固定烟根，通过重绘更宽、更高的64px帧扩大可见烟羽，未放大旧贴图。v09仍为12处灯、10处烟、12颗星和16粒沙的50对象固定池。

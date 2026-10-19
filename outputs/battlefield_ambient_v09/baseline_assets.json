@@ -1,0 +1,14 @@
+{
+  "base_commit": "a689e6b0b21e1cad30f30b0942428ba020ac958b",
+  "unchanged": true,
+  "sha256": {
+    "game/assets/battlefield_layer_01/battlefield_layer_01_native.png": "0e751f057b6dafbf06edd9dcfdf631ed29076c42ee1ab43cc0734a2d686113b8",
+    "game/assets/battlefield_mid_background/battlefield_mid_native.png": "ee7f5fcf4504a2549867ec460d9c4a6a58a60ed52dec6d38c573bcfb0b1c138a",
+    "game/assets/battlefield_far_background/battlefield_far_native.png": "59b99a6f3044665ed56ee6cae9dce775746fb5e61594bed975fbccd53d6ed8c4",
+    "game/assets/battlefield_traversal/foreground_native.png": "a3dc0228d677c4042c48cde8ef6c21636de2657971c91941af6d20fec3c995bf",
+    "game/assets/battlefield_traversal/layout.json": "14dd4ea04f4d52b3219f1e55af5c1ec29a9c0c0e950bbddea30ff1cec915285e",
+    "game/scripts/player/player.gd": "197bcecc4a612da693e41c85c339a06bb9967570ad231d9e57372f0d78172e19",
+    "game/scripts/battlefield_elevator.gd": "ef3fd7f6ca142b7033b23156ef726831226552cdf97e6916b932e52f41dd3909",
+    "game/project.godot": "362acb099d47cd6a23c3df70a38d3dde61a5284655da40c09a62735dbd1aa008"
+  }
+}

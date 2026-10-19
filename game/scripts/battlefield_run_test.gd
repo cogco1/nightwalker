@@ -57,7 +57,7 @@ func _ready() -> void:
 	window.content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
 	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
 	window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_INTEGER
-	window.title = "夜行者 · 工业风沙与环境动态 v08"
+	window.title = "夜行者 · 风沙与蒸汽强化 v09"
 	_smoke = OS.get_cmdline_user_args().has("--battlefield-smoke")
 	if _smoke:
 		CONTROLS.settings_path = "user://battlefield_smoke_keybindings.cfg"

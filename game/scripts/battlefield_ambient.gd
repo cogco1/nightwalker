@@ -2,7 +2,6 @@ extends Node
 ## A small, reusable ambient pool. All coordinates stay on the original native grid.
 
 const SETTINGS_PATH := "res://assets/battlefield_ambient/ambient.json"
-const STEP := 1.0 / 12.0
 
 class PixelMark extends Node2D:
 	var size := Vector2.ONE
@@ -15,6 +14,10 @@ var settings: Dictionary = {}
 var effects: Array[Dictionary] = []
 var elapsed := 0.0
 var updates := 0
+var update_hz := 16.0
+var steam_frame_size := Vector2i.ZERO
+var steam_grid := Vector2i.ZERO
+var _update_step := 1.0 / 16.0
 var _accumulator := 0.0
 var _steam_used: Array[Rect2] = []
 
@@ -26,13 +29,23 @@ func configure(scene: Node2D) -> bool:
 		push_error("Battlefield ambient settings must be a dictionary.")
 		return false
 	settings = parsed
+	update_hz = clampf(float(settings.get("update_hz", 16.0)), 1.0, 30.0)
+	_update_step = 1.0 / update_hz
+	var frame_size: Array = settings.get("steam_frame_size", [64, 64])
+	var frames: Array = settings.get("steam_frames", [3, 2])
+	steam_frame_size = Vector2i(int(frame_size[0]), int(frame_size[1]))
+	steam_grid = Vector2i(int(frames[0]), int(frames[1]))
+	if steam_frame_size.x <= 0 or steam_frame_size.y <= 0 or steam_grid.x <= 0 or steam_grid.y <= 0:
+		push_error("Battlefield steam frame size and grid must be positive native pixels.")
+		return false
 	var steam_texture := load(String(settings.get("steam_texture", ""))) as Texture2D
-	if steam_texture == null or steam_texture.get_size() != Vector2(96, 64):
-		push_error("Battlefield steam needs a 96x64 transparent six-frame native sheet.")
+	if steam_texture == null or Vector2i(steam_texture.get_size()) != steam_frame_size * steam_grid:
+		push_error("Battlefield steam sheet must match the configured native frame size and grid.")
 		return false
 	var steam_image := steam_texture.get_image()
-	for frame in range(6):
-		_steam_used.append(Rect2(steam_image.get_region(Rect2i((frame % 3) * 32, int(frame / 3) * 32, 32, 32)).get_used_rect()))
+	for frame in range(steam_grid.x * steam_grid.y):
+		var origin := Vector2i((frame % steam_grid.x) * steam_frame_size.x, int(frame / steam_grid.x) * steam_frame_size.y)
+		_steam_used.append(Rect2(steam_image.get_region(Rect2i(origin, steam_frame_size)).get_used_rect()))
 	for kind in ["lights", "steam", "stars"]:
 		for data: Dictionary in settings.get(kind, []):
 			var layer := String(data.get("layer", "far"))
@@ -57,14 +70,14 @@ func configure(scene: Node2D) -> bool:
 				var plume := Sprite2D.new()
 				plume.texture = steam_texture
 				plume.centered = false
-				plume.hframes = 3
-				plume.vframes = 2
+				plume.hframes = steam_grid.x
+				plume.vframes = steam_grid.y
 				node = plume
 			else:
 				node = PixelMark.new()
 			var anchor: Array = data.get("position", [bounds.position.x, bounds.position.y])
 			if kind == "steam":
-				var emitter: Array = settings.get("steam_anchor", [16, 29])
+				var emitter: Array = settings.get("steam_anchor", [24, 59])
 				node.position = Vector2(float(anchor[0]) - float(emitter[0]), float(anchor[1]) - float(emitter[1])).round()
 			node.name = String(data.id)
 			node.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -72,10 +85,13 @@ func configure(scene: Node2D) -> bool:
 			effects.append({"id": String(data.id), "kind": kind, "layer": layer, "node": node,
 				"data": data, "anchor": Vector2(float(anchor[0]), float(anchor[1])), "rect": bounds})
 	var dust: Dictionary = settings.get("dust", {})
+	var dust_lengths: Array = dust.get("lengths", [1, 2, 3])
+	if dust_lengths.is_empty():
+		dust_lengths = [1]
 	for index in range(clampi(int(dust.get("count", 10)), 0, 16)):
 		var grain := PixelMark.new()
 		grain.name = "WindSand%02d" % index
-		grain.size = Vector2(2 if index % 4 == 0 else 1, 1)
+		grain.size = Vector2(clampi(int(dust_lengths[index % dust_lengths.size()]), 1, 3), 1)
 		grain.tint = Color(0.52, 0.46, 0.34, float(dust.get("opacity", 0.16)))
 		grain.z_index = 0
 		host.add_child(grain)
@@ -96,11 +112,12 @@ func _layer(layer: String) -> Sprite2D:
 
 func _process(delta: float) -> void:
 	_accumulator += delta
-	if _accumulator < STEP or host.camera == null:
+	if _accumulator < _update_step or host.camera == null:
 		return
-	elapsed += _accumulator
-	_accumulator = 0.0
-	update_at(elapsed)
+	# Retain the fractional remainder so 60fps rendering still averages 16 updates/second.
+	var advance := floorf(_accumulator / _update_step) * _update_step
+	_accumulator -= advance
+	update_at(elapsed + advance)
 
 
 func update_at(time: float) -> void:
@@ -120,7 +137,7 @@ func update_at(time: float) -> void:
 			continue
 		var anchor: Vector2 = item.anchor
 		var source_view := Rect2(viewport.position - node.get_parent().global_position, viewport.size)
-		node.visible = source_view.grow(48.0).has_point(anchor)
+		node.visible = source_view.grow(float(maxi(steam_frame_size.x, steam_frame_size.y))).has_point(anchor)
 		if not node.visible:
 			continue
 		var phase := fposmod(time / maxf(0.1, float(data.get("period", 3.0))) + float(data.get("phase", 0.0)), 1.0)
@@ -132,10 +149,11 @@ func update_at(time: float) -> void:
 			var gain := lerpf(float(data.get("min_gain", 0.65)), float(data.get("max_gain", 1.25)), flicker)
 			node.modulate = Color(gain, gain, gain, 1.0)
 		elif kind == "steam":
-			var emitter: Array = settings.get("steam_anchor", [16, 29])
+			var emitter: Array = settings.get("steam_anchor", [24, 59])
 			node.position = (anchor - Vector2(float(emitter[0]), float(emitter[1]))).round()
-			(node as Sprite2D).frame = mini(5, int(phase * 6.0))
-			node.modulate.a = float(data.get("opacity", 0.18)) * sin(phase * PI)
+			(node as Sprite2D).frame = mini(_steam_used.size() - 1, int(phase * _steam_used.size()))
+			var minimum := clampf(float(data.get("min_alpha", settings.get("steam_min_alpha", 0.30))), 0.0, 1.0)
+			node.modulate.a = float(data.get("opacity", 0.18)) * lerpf(minimum, 1.0, sin(phase * PI))
 		else:
 			node.position = anchor.round()
 			(node as PixelMark).tint = Color(0.63, 0.68, 0.69, float(data.get("opacity", 0.25)) * (0.22 + 0.78 * pow(0.5 + 0.5 * sin(phase * TAU), 2.0)))

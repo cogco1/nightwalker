@@ -1,0 +1,12 @@
+{
+  "mode": "built-in-imagegen",
+  "date": "2026-10-20",
+  "assets": [
+    {
+      "key": "steam_large",
+      "path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-0f0f6967-3885-4c6f-8d5f-1879927e2ddc.png",
+      "prompt": "Use case: stylized-concept. Asset: larger, much more visible factory STEAM / SMOKE MIST animation sprite sheet for a 2D low-resolution pixel platform game. The reference small six-frame steam sheet supplies ONLY the muted warm-gray / ash-gray palette and coarse square-pixel clusters; create NEW wider, thicker rolling plumes, not an enlargement of the old thin wisps. EXACT sheet layout: 3 equal square cells across, 2 equal square cells down, whole image3:2 landscape. Each cell represents a NATIVE64x64 frame, whole sheet192x128; transparent RGBA background, no grid or captions. Six consecutive connected swirls of the SAME plume. Emission root FIXED at cell-local(28,59) in EVERY frame, narrow 3–4px throat at bottom, immediately expanding into broad layered rounded billows that rise and curl RIGHT. Keep the root and bottom tail fixed; only the body curls and rolls. Approximate native body sizes frame1 width30 height40, frame2 width36 height47, frame3 width42 height52, frame4 width44 height51, frame5 width40 height48, frame6 width33 height42. The last shape returns naturally toward the first. Thick but airy steam with overlapping charcoal-gray, muted light warm-gray and dusty-gray pixel clusters, clear uneven/stippled edge and visible negative-space gaps, 4–6 shades. Noticeably more volume and breadth than the reference, no tiny stringlike smoke. All plume pixels must stay inside their own64px cell, leave breathing room at sides and top. Source is a chimney/pipe but DO NOT draw any chimney/hardware/building/person, only plume sprites. No sky, ground, fog filling background, text, numbering, frames, arrows, black background, checkerboard, intense pure-white glow, blue tint, outer halo or blur. Crisp coarse native1px clusters, hard integer pixel edges, no smooth gradients or antialiasing. True empty transparency outside each plume. Same fixed root in all6 frames.",
+      "workspace_source": "outputs/battlefield_ambient_v09/source_art/steam_sheet.png"
+    }
+  ]
+}

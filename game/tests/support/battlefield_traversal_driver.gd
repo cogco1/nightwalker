@@ -374,7 +374,8 @@ func run_ambient() -> Dictionary:
 	var saved_camera: Vector2 = scene.camera.position
 	var saved_animation: bool = player.sprite.is_playing()
 	var count_before: int = scene.get_tree().get_node_count()
-	var report := {"pool_size": ambient.effects.size(), "update_hz": 12, "draw_scale": 1,
+	var report := {"pool_size": ambient.effects.size(), "update_hz": ambient.update_hz, "draw_scale": 1,
+		"steam_frame_size": [ambient.steam_frame_size.x, ambient.steam_frame_size.y],
 		"kind_counts": {"lights": 0, "steam": 0, "stars": 0, "dust": 0},
 		"animation_frames": [], "sky_animation_frames": [], "gpu_probes": [], "intermediate_node_allocations": 0}
 	for effect: Dictionary in ambient.effects:

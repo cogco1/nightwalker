@@ -1,0 +1,146 @@
+{
+  "source_art": "built-in-imagegen",
+  "source_sha256": "c5b85cbdf74ecf11166213d87747017bb80bcff40115dd6409d6bf97ecff1fb2",
+  "native_sha256": "aa9be0fb7e28f4f6926f075dae543a36056a5907dbaad4d0a23dda112d92f386",
+  "frame_size": [
+    64,
+    64
+  ],
+  "sheet_size": [
+    192,
+    128
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "source_rect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "translation": [
+        1,
+        1
+      ],
+      "used_rect": [
+        19,
+        17,
+        51,
+        60
+      ],
+      "opaque_pixels": 595
+    },
+    {
+      "index": 1,
+      "source_rect": [
+        512,
+        0,
+        512,
+        512
+      ],
+      "translation": [
+        1,
+        1
+      ],
+      "used_rect": [
+        14,
+        11,
+        61,
+        60
+      ],
+      "opaque_pixels": 1027
+    },
+    {
+      "index": 2,
+      "source_rect": [
+        1024,
+        0,
+        512,
+        512
+      ],
+      "translation": [
+        1,
+        1
+      ],
+      "used_rect": [
+        14,
+        3,
+        64,
+        60
+      ],
+      "opaque_pixels": 1286
+    },
+    {
+      "index": 3,
+      "source_rect": [
+        0,
+        512,
+        512,
+        512
+      ],
+      "translation": [
+        1,
+        1
+      ],
+      "used_rect": [
+        15,
+        7,
+        62,
+        60
+      ],
+      "opaque_pixels": 1218
+    },
+    {
+      "index": 4,
+      "source_rect": [
+        512,
+        512,
+        512,
+        512
+      ],
+      "translation": [
+        1,
+        1
+      ],
+      "used_rect": [
+        17,
+        7,
+        64,
+        60
+      ],
+      "opaque_pixels": 1054
+    },
+    {
+      "index": 5,
+      "source_rect": [
+        1024,
+        512,
+        512,
+        512
+      ],
+      "translation": [
+        1,
+        1
+      ],
+      "used_rect": [
+        18,
+        14,
+        55,
+        60
+      ],
+      "opaque_pixels": 747
+    }
+  ],
+  "emitter": [
+    24,
+    59
+  ],
+  "alpha_values": [
+    0,
+    255
+  ],
+  "palette_colors": 64,
+  "scale": 1,
+  "sampling": "nearest"
+}
