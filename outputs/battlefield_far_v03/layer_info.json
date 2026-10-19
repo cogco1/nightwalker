@@ -1,0 +1,22 @@
+{
+  "native_size": [
+    6144,
+    256
+  ],
+  "display_size": [
+    12288,
+    512
+  ],
+  "origin": [
+    0,
+    0
+  ],
+  "role": "distant_city_and_industry",
+  "scroll_scale_x": 0.28,
+  "colors": 48,
+  "opaque": true,
+  "native_sha256": "886e17aa3e2cb42c00d6cdf66b627c462d3811219d2f23d50d002a90be64be9d",
+  "source_sections": 8,
+  "source_art": "built-in-imagegen",
+  "integer_scale": 2
+}

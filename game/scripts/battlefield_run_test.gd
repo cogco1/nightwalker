@@ -5,6 +5,8 @@ extends Node2D
 const PLAYER_SCENE = preload("res://scenes/player.tscn")
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const BACKGROUND_PATH := "res://assets/battlefield_layer_01/battlefield_layer_01_native.png"
+const FAR_BACKGROUND_PATH := "res://assets/battlefield_far_background/battlefield_far_native.png"
+const FAR_SCROLL_RATIO := 0.28
 const GROUND_PATH := "res://assets/battlefield_layer_01/ground_profile.json"
 const VIEWPORT_SIZE := Vector2i(320, 180)
 const OUTPUT := "res://evidence/battlefield_run_test/"
@@ -14,6 +16,7 @@ const START_X := 40.0
 var player: CharacterBody2D
 var camera: Camera2D
 var background: Sprite2D
+var far_background: Sprite2D
 var terrain: StaticBody2D
 var ground_points := PackedVector2Array()
 var world_size := Vector2i.ZERO
@@ -50,6 +53,7 @@ func _ready() -> void:
 		CONTROLS.hint_text("move_left"), CONTROLS.hint_text("move_right"),
 		CONTROLS.hint_text("run"), CONTROLS.hint_text("jump"), CONTROLS.hint_text("reset_arena")])
 	print("原生像素: 背景 %d×%d / scale 1；主角 scale 1；视口 320×180，整数 nearest。" % [world_size.x, world_size.y])
+	print("远景: 同宽长图 / scale 1；水平视差 %.2f；天空覆盖完整镜头高度。" % FAR_SCROLL_RATIO)
 	if _smoke:
 		_run_smoke.call_deferred()
 
@@ -63,6 +67,20 @@ func _build_background() -> bool:
 	if world_size.x < VIEWPORT_SIZE.x or world_size.y < VIEWPORT_SIZE.y:
 		push_error("Battlefield must be at least as large as the native viewport.")
 		return false
+	var far_texture := load(FAR_BACKGROUND_PATH) as Texture2D
+	if far_texture == null:
+		push_error("Battlefield far background is missing: " + FAR_BACKGROUND_PATH)
+		return false
+	if Vector2i(far_texture.get_width(), far_texture.get_height()) != world_size:
+		push_error("Battlefield far background must share the native panorama dimensions.")
+		return false
+	far_background = Sprite2D.new()
+	far_background.name = "BattlefieldFarBackground"
+	far_background.texture = far_texture
+	far_background.centered = false
+	far_background.z_index = -20
+	far_background.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	add_child(far_background)
 	background = Sprite2D.new()
 	background.name = "BattlefieldBackground"
 	background.texture = texture
@@ -185,6 +203,17 @@ func _follow_player() -> void:
 		clampf(target.x, half.x, world_size.x - half.x),
 		clampf(target.y, half.y, world_size.y - half.y)).round()
 	camera.force_update_scroll()
+	# One integer translation keeps every far pixel native-sized. Across this map the
+	# 6144px far panorama is wide enough without short repeats or runtime tile loops.
+	far_background.position.x = roundf((camera.position.x - half.x) * (1.0 - FAR_SCROLL_RATIO))
+
+
+func far_visible_rect() -> Rect2:
+	return Rect2(camera.position - Vector2(VIEWPORT_SIZE) / 2.0 - far_background.position, Vector2(VIEWPORT_SIZE))
+
+
+func far_covers_view() -> bool:
+	return Rect2(Vector2.ZERO, Vector2(world_size)).encloses(far_visible_rect())
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -224,16 +253,46 @@ func _check(ok: bool, label: String) -> void:
 		push_error("Battlefield smoke: " + label)
 
 
+func _far_pixel_evidence(rendered: Image) -> Dictionary:
+	# Smoke-only evidence: compare exposed skyline samples with the actual GPU frame.
+	# No image inspection or per-pixel work is used by normal gameplay.
+	var near_image := background.texture.get_image()
+	var far_image := far_background.texture.get_image()
+	var camera_origin := Vector2i(camera.position - Vector2(VIEWPORT_SIZE) / 2.0)
+	var far_origin := Vector2i(far_visible_rect().position)
+	var matched := 0
+	var colors: Dictionary = {}
+	for y in range(0, VIEWPORT_SIZE.y, 4):
+		for x in range(0, VIEWPORT_SIZE.x, 4):
+			if near_image.get_pixel(camera_origin.x + x, camera_origin.y + y).a > 0.0:
+				continue
+			var expected := far_image.get_pixel(far_origin.x + x, far_origin.y + y)
+			var actual := rendered.get_pixel(x, y)
+			if expected.a >= 0.99 and absf(actual.r - expected.r) <= 1.5 / 255.0 \
+					and absf(actual.g - expected.g) <= 1.5 / 255.0 and absf(actual.b - expected.b) <= 1.5 / 255.0:
+				matched += 1
+				colors[expected.to_rgba32()] = true
+	return {"matched_far_samples": matched, "matched_far_colors": colors.size(), "sample_stride": 4}
+
+
 func _capture(label: String) -> void:
 	var entry := {"name": label, "player": [player.position.x, player.position.y],
 		"ground_y": ground_y_at(player.position.x), "camera": [camera.position.x, camera.position.y],
-		"running": bool(player.is_running), "animation": String(player.sprite.animation)}
+		"running": bool(player.is_running), "animation": String(player.sprite.animation),
+		"far_position": [far_background.position.x, far_background.position.y],
+		"far_source_rect": [far_visible_rect().position.x, far_visible_rect().position.y, VIEWPORT_SIZE.x, VIEWPORT_SIZE.y]}
+	_check(far_covers_view(), "Far panorama covers the full viewport at " + label)
+	_check(far_background.position == far_background.position.round(), "Far panorama stays on whole native pixels at " + label)
 	if DisplayServer.get_name() != "headless":
 		await RenderingServer.frame_post_draw
 		var image := get_viewport().get_texture().get_image()
 		var path := OUTPUT + label + ".png"
 		_check(image != null and image.get_size() == VIEWPORT_SIZE, "Screenshot uses the 320x180 native viewport")
 		if image != null:
+			var far_evidence := _far_pixel_evidence(image)
+			entry["far_render_evidence"] = far_evidence
+			_check(int(far_evidence.matched_far_samples) >= 64 and int(far_evidence.matched_far_colors) >= 5,
+				"GPU frame visibly renders the detailed far panorama at " + label)
 			_check(image.save_png(path) == OK, "Write screenshot " + label)
 			entry["png"] = ProjectSettings.globalize_path(path)
 	smoke_report["checkpoints"].append(entry)
@@ -243,14 +302,17 @@ func _run_smoke() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUTPUT))
 	smoke_report = {"checks": 0, "failures": [], "checkpoints": [], "world_size": [world_size.x, world_size.y],
 		"ground_source": ground_source, "max_ground_error": 0.0, "airborne_ticks": 0, "running_ticks": 0,
+		"far_background": FAR_BACKGROUND_PATH, "far_scroll_ratio": FAR_SCROLL_RATIO,
 		"renderer": RenderingServer.get_current_rendering_method(), "headless": DisplayServer.get_name() == "headless"}
 	await _ticks(12)
 	_check(player.view_mode == 1 and player.is_on_floor(), "Existing side-view hero starts grounded")
-	_check(player.scale == Vector2.ONE and background.scale == Vector2.ONE and camera.zoom == Vector2.ONE, "All world art uses native scale 1")
+	_check(player.scale == Vector2.ONE and background.scale == Vector2.ONE and far_background.scale == Vector2.ONE and camera.zoom == Vector2.ONE, "All world art uses native scale 1")
 	_check(get_tree().root.content_scale_size == VIEWPORT_SIZE, "Viewport stays 320x180")
 	_check(ground_source == GROUND_PATH, "Terrain comes from the delivered ground profile")
 	await _capture("00_start")
 	var start_x := player.position.x
+	var start_camera_x := camera.position.x
+	var start_far_x := far_visible_rect().position.x
 	_key(int(CONTROLS.current["move_right"]), true)
 	_key(int(CONTROLS.current["run"]), true)
 	var targets: Array[Dictionary] = [{"x": 200.0, "name": "01_slope"}, {"x": 400.0, "name": "02_ridge"}]
@@ -297,7 +359,13 @@ func _run_smoke() -> void:
 	_check(int(smoke_report["running_ticks"]) > 60 and not player.is_running, "Held original run input runs, then releases normally")
 	_check(absf(player.velocity.x) < 0.1, "Hero stops normally at the end")
 	_check(absf(camera.position.x - (world_size.x - VIEWPORT_SIZE.x / 2.0)) <= 1.0, "Camera follows to the final native viewport")
-	_check(player.scale == Vector2.ONE and background.scale == Vector2.ONE and camera.zoom == Vector2.ONE, "Traversal preserves native art scales")
+	_check(player.scale == Vector2.ONE and background.scale == Vector2.ONE and far_background.scale == Vector2.ONE and camera.zoom == Vector2.ONE, "Traversal preserves native art scales")
+	var camera_distance := camera.position.x - start_camera_x
+	var far_distance := far_visible_rect().position.x - start_far_x
+	_check(absf(far_distance - camera_distance * FAR_SCROLL_RATIO) <= 1.0, "Distant skyline scrolls at 0.28 of foreground speed within one native pixel")
+	smoke_report["camera_distance"] = camera_distance
+	smoke_report["far_source_distance"] = far_distance
+	smoke_report["measured_far_scroll_ratio"] = far_distance / camera_distance if camera_distance > 0.0 else 0.0
 	smoke_report["distance"] = player.position.x - start_x
 	smoke_report["physics_ticks"] = elapsed_ticks
 	smoke_report["final_player"] = [player.position.x, player.position.y]

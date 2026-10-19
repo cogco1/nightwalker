@@ -53,8 +53,18 @@ func run() -> void:
 	var player: CharacterBody2D = scene.player
 	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/boot.tscn", "The normal chapter entry point is unchanged")
 	check(player.view_mode == 1 and player.is_on_floor(), "The shipped side-view player stands on the new lowland")
-	check(player.scale == Vector2.ONE and scene.background.scale == Vector2.ONE and scene.camera.zoom == Vector2.ONE,
-		"Hero, panorama and camera preserve the native pixel grid")
+	check(player.scale == Vector2.ONE and scene.background.scale == Vector2.ONE and scene.far_background.scale == Vector2.ONE and scene.camera.zoom == Vector2.ONE,
+		"Hero, both panoramas and camera preserve the native pixel grid")
+	check(scene.far_background.texture.resource_path == scene.FAR_BACKGROUND_PATH
+		and scene.far_background.texture.get_size() == Vector2(scene.world_size),
+		"The distant city uses its own full-width native panorama")
+	check(scene.far_background.z_index < scene.background.z_index
+		and scene.far_background.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST,
+		"The distant city renders behind the industrial terrain with nearest filtering")
+	check(scene.far_covers_view() and scene.far_background.position == scene.far_background.position.round(),
+		"The far skyline covers the initial viewport on whole pixels")
+	var initial_camera_x: float = scene.camera.position.x
+	var initial_far_x: float = scene.far_visible_rect().position.x
 	check(root.content_scale_size == Vector2i(320, 180) and root.content_scale_stretch == Window.CONTENT_SCALE_STRETCH_INTEGER,
 		"The original 320x180 integer viewport is preserved")
 	check(scene.ground_source == scene.GROUND_PATH, "Collision follows the delivered surface profile")
@@ -81,6 +91,12 @@ func run() -> void:
 		if player.position.x >= 370.0:
 			break
 	check(player.position.x >= 370.0 and airborne <= 3 and max_ground_error <= 6.0, "Original collision and running climb the drawn slope onto the ridge")
+	var camera_distance: float = scene.camera.position.x - initial_camera_x
+	var far_distance: float = scene.far_visible_rect().position.x - initial_far_x
+	check(camera_distance > 100.0 and absf(far_distance - camera_distance * 0.28) <= 1.0,
+		"The far skyline moves at 0.28 of the foreground speed within one native pixel")
+	check(scene.far_covers_view() and scene.far_background.position == scene.far_background.position.round(),
+		"The skyline and sky cover the full camera while climbing the slope")
 	key(KEY_SHIFT, false)
 	key(KEY_D, false)
 	await ticks(12)
@@ -106,6 +122,8 @@ func run() -> void:
 	check(scene.camera.position.x >= half.x and scene.camera.position.y >= half.y
 		and scene.camera.position.x <= scene.world_size.x - half.x and scene.camera.position.y <= scene.world_size.y - half.y,
 		"The camera stays inside the native image during a jump")
+	check(scene.far_covers_view() and scene.far_background.position.y == 0.0,
+		"The 256px far sky covers the full jump viewport without a vertical gap")
 	await ticks(65)
 	check(player.is_on_floor() and absf(player.position.y - grounded_y) <= 2.0, "The original jump lands on the same native surface")
 	key(KEY_A, true)
@@ -119,6 +137,8 @@ func run() -> void:
 	player.velocity = Vector2.ZERO
 	await ticks(6)
 	check(absf(scene.camera.position.x - (scene.world_size.x - 160.0)) <= 1.0, "The camera shows the last local 320px portion of the panorama")
+	check(scene.far_covers_view() and scene.far_visible_rect().end.x < scene.world_size.x,
+		"The full-length far panorama covers the map end without a short repeat")
 	key(KEY_D, true)
 	key(KEY_SHIFT, true)
 	await ticks(40)

@@ -1,0 +1,140 @@
+{
+  "date": "2026-10-20",
+  "files": [
+    {
+      "path": "battlefield_far_12288x512.png",
+      "bytes": 956308,
+      "sha256": "c5441523970108e68308b48e2405e7211bfaa51a0c2a5aa30d1ef9e72f179d7b"
+    },
+    {
+      "path": "battlefield_far_native.png",
+      "bytes": 757992,
+      "sha256": "886e17aa3e2cb42c00d6cdf66b627c462d3811219d2f23d50d002a90be64be9d"
+    },
+    {
+      "path": "far_in_game_preview_4x.png",
+      "bytes": 82073,
+      "sha256": "cd0d33a4f0415330b54bc75a8aef9cf1866a8ffce3c7cf1ee1409a941a3a0da1"
+    },
+    {
+      "path": "generation_prompts.json",
+      "bytes": 7992,
+      "sha256": "b68b343bc757c760290f17240770da3aec3c218e1731eecb3573ff268e261465"
+    },
+    {
+      "path": "layer_info.json",
+      "bytes": 412,
+      "sha256": "f0b669691f6425f007fbda50abb90307ce97eb1633d5c689922c2392e9ff615d"
+    },
+    {
+      "path": "README.txt",
+      "bytes": 1799,
+      "sha256": "275de454a484659dd01aaa87820fa8e8dcec4823a1101ffc539d51a85e9ee277"
+    },
+    {
+      "path": "run_test_evidence/00_start.png",
+      "bytes": 63096,
+      "sha256": "7353c21e8b86da123d4c522d40249b3a9b0a3d491b643a56352935c7a84acbb5"
+    },
+    {
+      "path": "run_test_evidence/01_slope.png",
+      "bytes": 54686,
+      "sha256": "16c01df3eaa82b23eb4f724bd6707bb66970f0c6dfd7214fc86fcc2691efb9cc"
+    },
+    {
+      "path": "run_test_evidence/02_ridge.png",
+      "bytes": 57634,
+      "sha256": "deb6ddd8f78a93f7b392d5c55438d51d49c1996948f81eac0b67ba2893d7fcb2"
+    },
+    {
+      "path": "run_test_evidence/03_segment_02.png",
+      "bytes": 51145,
+      "sha256": "084db0f1bf09ae2327325babae4ad3b601900a1f03eb7e35ebdc22ae847685f2"
+    },
+    {
+      "path": "run_test_evidence/04_segment_03.png",
+      "bytes": 57694,
+      "sha256": "640fedf3396fd20bca2fe7e1762d72a504ab458b6c44698aebd63311d7e19d82"
+    },
+    {
+      "path": "run_test_evidence/05_segment_04.png",
+      "bytes": 55643,
+      "sha256": "7943bb4d022cf7841252d3b7fea3ab6214e46d6b150ac2e461efc1bb27bc9466"
+    },
+    {
+      "path": "run_test_evidence/06_segment_05.png",
+      "bytes": 55695,
+      "sha256": "077bdddb3359751c9b3d9131fe280f2046a48e44839e9a096a832a50fa5cf044"
+    },
+    {
+      "path": "run_test_evidence/07_segment_06.png",
+      "bytes": 60156,
+      "sha256": "94249334e70e9216efd52c916645348dc857db64b7c01dcaf3515d8c46a30023"
+    },
+    {
+      "path": "run_test_evidence/08_segment_07.png",
+      "bytes": 59419,
+      "sha256": "b87079f1384e60de53119b9c55349c28b6c1f59d62b9db727974d96136a5a6f2"
+    },
+    {
+      "path": "run_test_evidence/09_segment_08.png",
+      "bytes": 57195,
+      "sha256": "a2c99bb9082e2296967e2e4c97b3e36e6acadaee7dc89b9dc4a6ea5f4cfa366c"
+    },
+    {
+      "path": "run_test_evidence/99_end.png",
+      "bytes": 61306,
+      "sha256": "2419a258843ddcd0e51d99dceda5dd4ca340002c272ee05024cb51421a8e7ff1"
+    },
+    {
+      "path": "run_test_evidence/smoke_report.json",
+      "bytes": 7777,
+      "sha256": "82be4599c1f5350b9408e54dab4fe967340f7fa5acc5a38c9abb3c611eab2561"
+    },
+    {
+      "path": "run_test_evidence/test_report.json",
+      "bytes": 89,
+      "sha256": "9a7c3bbaefc5b63afe4962cf7145494b60770b3f80deb6ffa5afd0946cb04c15"
+    },
+    {
+      "path": "source_segments/far_01.png",
+      "bytes": 1226558,
+      "sha256": "4ef605cc39185b6365f580865f6fc957f4f7945e3917105ebf91f7efd5e5ec87"
+    },
+    {
+      "path": "source_segments/far_02.png",
+      "bytes": 1281525,
+      "sha256": "6d110bdf9603d8872e3868c06277a17ab77ce6a173c88f1d86983e4d20f09c8b"
+    },
+    {
+      "path": "source_segments/far_03.png",
+      "bytes": 1241583,
+      "sha256": "1306ead73b72949d3f446833e72afb0cdb6f2dd05fe2206800e23a32cfe42864"
+    },
+    {
+      "path": "source_segments/far_04.png",
+      "bytes": 1230095,
+      "sha256": "d14f8ecc4273e285df70659510c2b6f375b9f59de418dfb4a9c3a5ab0504a565"
+    },
+    {
+      "path": "source_segments/far_05.png",
+      "bytes": 1307041,
+      "sha256": "60f6ff2fd6705179be025bc55be00bcb60d10a2ba275b00fef75c5705e16d382"
+    },
+    {
+      "path": "source_segments/far_06.png",
+      "bytes": 1285729,
+      "sha256": "30f4e137befed63351147060b9747de583d79de0c99f28d72a10c5ba7f887630"
+    },
+    {
+      "path": "source_segments/far_07.png",
+      "bytes": 1247040,
+      "sha256": "9f76fb6f6318388ca45658c5421527c60e1d34d159c2bc8bd0e550719f04e747"
+    },
+    {
+      "path": "source_segments/far_08.png",
+      "bytes": 1211197,
+      "sha256": "e8f2bc06d156b8b19a8193ac93a074724b99a9074f12e1c14d91fb6bb53e38ed"
+    }
+  ]
+}

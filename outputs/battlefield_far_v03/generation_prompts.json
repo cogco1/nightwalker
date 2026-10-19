@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-20",
+  "mode": "built-in-imagegen",
+  "local_compositing_authorized": true,
+  "common_prompt": "Use case: stylized-concept.\nAsset type: one 3:1 wide segment of a VERY LONG DISTANT PARALLAX BACKGROUND for a pixel-art side-scrolling game. The final entire panorama will be composed from unique segments.\nCanvas WIDE 3:1 landscape, approximately 2304x768 output proportion, visually on a 768x256 native-pixel grid. This is a single continuous scene, no panels, border, text or labels.\nCRITICAL DEPTH: these are DISTANT skyscrapers, office towers, industrial factories and chimneys behind the playable near architecture. Smaller, flatter, less detailed and lower contrast than foreground buildings. Strict side-view silhouette elevation, no perspective roadway or isometric geometry.\nSTYLE: genuine low-resolution game PIXEL ART with obvious hard square pixels, stepped edges, restrained 32-48 color palette and simple clusters. No photorealistic render, dense microtexture, soft focus or smooth blur. Distance comes from lower contrast and simpler shapes. Crisp pixels remain intact.\nPALETTE: cool dark blue-violet late-evening atmosphere. Sky navy #182138, upper sky a little darker; distant building silhouettes #293a52 and #34465e, muted slate #41546b for a few closer distant towers. Atmosphere is calm and oppressive, not black emptiness. Very sparse, gentle CYAN and MUTED MAGENTA neon strips #538b9b and #796083, 1-2 native pixel lines and a few lit windows, much dimmer than a player's bright sword glow. No giant signs, readable text or brightly saturated cyberpunk billboards.\nCOMPOSITION CONSTANTS FOR JOINING: upper quarter mostly quiet blue-violet sky with minimal pixel-banded tonal change. No prominent moon, sun, stars, beams, cloud shapes or unique object at the frame edge. Skyline bases around y=155 of 256 native pixels (about 61% canvas height); tall buildings begin at y=30-70 and shorter factory masses near y=105-150. A few landmark tower tops may reach y=25. Distant base haze fills below y=155, in very dark desaturated blue, without sandy ground or near objects. The entire image is OPAQUE with continuous sky and low haze. Leave the outermost left/right 8% relatively quiet sky and low skyline silhouettes only so no large buildings are clipped.\nDensity about60% across the width, with multiple building groups separated by generous sky gaps. Buildings must be visible above a foreground ground line at y=168. Skyline occupies the upper/middle half, NOT only a tiny stripe along the bottom. Put enough high-rise/industrial silhouettes in the first quarter too.\nONLY DISTANT SCENERY: NO yellow sand foreground, no thick near steel wall, no walkable platforms, no ground collision design, no player, NPCs, characters, vehicles, weapons, pickup/interactive objects, HUD, UI, arrows or text.\n",
+  "sections": [
+    "DISTANT SECTOR 1: an atmospheric city-factory edge. A distinct cluster of 4 narrow SKYSCRAPERS in left-center, irregular flat and stepped roofs, subtle cyan roofline and a few lavender upper windows. A low distant FACTORY with sawtooth roofs and three slim smokestacks sits to right-center. A second smaller tower cluster anchors the far right interior. Clearly readable silhouettes, enough space between masses, all distant and subdued. This will be seen at the START of the run so make the high-rises and factory recognizable.",
+    "DISTANT SECTOR 2: a dense remote industrial-city skyline with a tall flat-roof corporate tower near left-center, two damaged residential towers near center, then a compact boiler factory with two offset chimneys. Delicate teal horizontal light on one office roof, very sparse desaturated violet windows on another. Between groups are dark hazy architectural gaps. A few low factory roofs nearer the horizon, no foreground steel walls. All smaller distant forms.",
+    "DISTANT SECTOR 3: distant heavy manufacturing district with low broad factory halls, a group of 5 slender exhaust stacks and cooling-block silhouettes, plus a handful of narrow office towers rising well above the roofline. Keep smoke minimal as blocky faint grey-blue wisps if used. A subdued purple industrial window line and occasional dim cyan slit. Distinct skyline rhythm with low halls and high vertical stacks.",
+    "DISTANT SECTOR 4: a far city commercial cluster with one tall stepped-crown tower, 3 medium slab buildings and small lower utility blocks. Narrow rooftop aerial shapes, only a few lit windows. A low factory silhouette on the right to tie the city to the industrial setting. Cool haze gives depth, no smooth photographic blur. Slight cyan and muted violet neon on two buildings.",
+    "DISTANT SECTOR 5: a quieter outer manufacturing skyline. Long low factory rooflines and three cooling blocks near the horizon, separated by broad dark sky openings. A single tall thin office tower and a small 3-building group supply vertical accents. Muted cyan window lines and a few purple stack warning pixels, very subtle. No bright illuminated signs. All geometry distant and atmospheric.",
+    "DISTANT SECTOR 6: the remotest high-density city core. A cluster of 7 varied slender skyscrapers with staggered heights and blocky stepped crowns, a few dim cyan vertical ribbons and muted lavender roof lights. Smaller factory silhouettes form a lower band at their bases. Clear restrained silhouettes with still generous sky above, not an oversaturated neon city. No names or readable advertising.",
+    "DISTANT SECTOR 7: distant steel and energy district. A broad angular power-station silhouette with four slender smokestacks of unequal height, a narrow service bridge across two low factory structures, and an offset cluster of 3 slab high-rises. Minimal smoke and very dark blue haze. Only occasional small muted cyan and violet light traces. Keep major structures away from edge.",
+    "DISTANT SECTOR 8: far outskirts fading into a continuing industrial city. Two separated high-rise clusters, a remote low warehouse group, a slim chimney and several tiny service-roof silhouettes. End with quiet sky and low skyline rhythm to continue beyond right edge. A sparse muted magenta window line on one tower, cyan on another. Same distant scale, cool dark palette and horizon height."
+  ],
+  "sources": [
+    {
+      "segment": 1,
+      "source_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-7bbb4eb4-9cef-4cf6-8bc3-5a219f1c39e7.png",
+      "file": "far_01.png"
+    },
+    {
+      "segment": 2,
+      "source_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-63cf97e8-0525-478a-bf26-c483c6cc31eb.png",
+      "file": "far_02.png"
+    },
+    {
+      "segment": 3,
+      "source_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-9e199183-5164-46e1-9401-1e30bb4a07e5.png",
+      "file": "far_03.png"
+    },
+    {
+      "segment": 4,
+      "source_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-4b94e596-505e-446b-9116-c90a5b6cf957.png",
+      "file": "far_04.png"
+    },
+    {
+      "segment": 5,
+      "source_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-7883f01e-00bd-421e-96f5-15b084cc40c1.png",
+      "file": "far_05.png"
+    },
+    {
+      "segment": 6,
+      "source_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-a66a22c7-0975-4d2e-9d18-e57f801a2d4f.png",
+      "file": "far_06.png"
+    },
+    {
+      "segment": 7,
+      "source_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-2fc5b4e9-f5f1-424d-9611-2d7fd9092a9f.png",
+      "file": "far_07.png"
+    },
+    {
+      "segment": 8,
+      "source_path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-ac35476d-3ca3-452e-9a9b-2940f4a0efa0.png",
+      "file": "far_08.png"
+    }
+  ]
+}
