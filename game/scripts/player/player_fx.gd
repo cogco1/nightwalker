@@ -57,9 +57,9 @@ func _on_swing_released(move: StringName) -> void:
 	if move != &"heavy_slash":
 		return
 	var player := get_parent()
-	var origin: Vector2 = player.attack_origin()
-	if int(player.view_mode) == 1:
-		origin = player.global_position + Vector2(0, -22)
+	if int(player.view_mode) != 1:
+		return
+	var origin: Vector2 = player.global_position + Vector2(0, -22)
 	var direction: Vector2 = player.attack_direction
 	var reach := CHARGE_SLASH.REACH
 	var ray := get_world_2d().direct_space_state.intersect_ray(

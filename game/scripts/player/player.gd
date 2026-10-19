@@ -67,7 +67,6 @@ const DIVE_SPEED := 360.0
 # A confirmed hold coils without an opening light, and a full hold fires heavy_slash
 # move (moves_long_blade.gd), which always resolves as a critical.
 const PRIMARY_TAP_SECONDS := 0.24
-const CHARGE_POSE_FRAME := 3
 const SIDE_CHARGE_POSE_FRAME := 6
 const CHARGE_FULL_SECONDS := 0.55
 # After a hold is confirmed, coil side poses 0..6 (top-down 0..3) with a small backstep.
@@ -315,7 +314,7 @@ func _physics_process(delta: float) -> void:
 			# The press waits for this swing's dodge window.
 			_intents[&"dash"]["expires"] = combat_time + DASH_BUFFER_SECONDS
 	# A possible tap keeps its locomotion pose. Only a confirmed hold enters the charge animation.
-	if not chase_takeoff and not _primary_press.is_empty() and _mouse_attack_held and state==State.FREE and not is_crouching and (view_mode==ViewMode.TOP_DOWN or (was_grounded and velocity.y>=0.0)):
+	if view_mode == ViewMode.SIDE_VIEW and not chase_takeoff and not _primary_press.is_empty() and _mouse_attack_held and state==State.FREE and not is_crouching and was_grounded and velocity.y>=0.0:
 		if combat_time-float(_primary_press.at)>=PRIMARY_TAP_SECONDS:
 			_begin_charge(combat_time-float(_primary_press.at))
 	# Released taps are processed while attacking too; holding never auto-chains.
@@ -534,7 +533,11 @@ func _input(event: InputEvent) -> void:
 			if _shift_gesture.held:
 				_shift_gesture.consume()
 			var direction := _movement_input()
-			if view_mode == ViewMode.SIDE_VIEW and _shift_gesture.held and not is_instance_valid(_counter_target) and not is_crouching and direction.x != 0.0:
+			if view_mode == ViewMode.TOP_DOWN:
+				# Top-down attacks commit on press. Holding never enters charge or attacks again on release.
+				_primary_press.clear()
+				_press(&"light")
+			elif _shift_gesture.held and not is_instance_valid(_counter_target) and not is_crouching and direction.x != 0.0:
 				_shift_gesture.consume()
 				_press(&"dash", DASH_BUFFER_SECONDS)
 				_intents[&"dash"]["direction"] = signf(direction.x)
@@ -1346,7 +1349,7 @@ func _on_animation_finished() -> void:
 	if move.has("followup_seconds"):
 		_followup_from = _string_id
 		_followup_until = combat_time + recovery + float(move.followup_seconds)
-	var coil: bool = not _primary_press.is_empty() and _mouse_attack_held and combat_time-float(_primary_press.at)>=PRIMARY_TAP_SECONDS and move.get("chain", false) and (view_mode == ViewMode.TOP_DOWN or is_on_floor())
+	var coil: bool = view_mode == ViewMode.SIDE_VIEW and not _primary_press.is_empty() and _mouse_attack_held and combat_time-float(_primary_press.at)>=PRIMARY_TAP_SECONDS and move.get("chain", false) and is_on_floor()
 	stage_is_critical = false
 	_clear_attack_intents()
 	if move.get("dodge", false):
@@ -1365,14 +1368,16 @@ func _on_animation_finished() -> void:
 
 
 func _charge_animation() -> String:
-	return (String(MOVESET.MOVES[&"heavy_slash"].side_anim) if view_mode==ViewMode.SIDE_VIEW else "attack3")+"_"+facing
+	return String(MOVESET.MOVES[&"heavy_slash"].side_anim) + "_" + facing
 
 
 func _charge_pose_limit() -> int:
-	return SIDE_CHARGE_POSE_FRAME if view_mode==ViewMode.SIDE_VIEW else CHARGE_POSE_FRAME
+	return SIDE_CHARGE_POSE_FRAME
 
 
 func _begin_charge(held_seconds := 0.0) -> void:
+	if view_mode != ViewMode.SIDE_VIEW:
+		return
 	_clear_followup()
 	state = State.CHARGE
 	_charge_started_at = combat_time-held_seconds
@@ -1383,7 +1388,7 @@ func _begin_charge(held_seconds := 0.0) -> void:
 
 
 func _update_charge(delta: float, grounded: bool) -> void:
-	if view_mode == ViewMode.SIDE_VIEW and not grounded:
+	if view_mode != ViewMode.SIDE_VIEW or not grounded:
 		_cancel_charge()
 		return
 	if _mouse_attack_held:
@@ -1400,10 +1405,7 @@ func _update_charge(delta: float, grounded: bool) -> void:
 		if coil < 1.0 and _charge_announced:
 			# Settle back into the stance while coiling.
 			var back := -_facing_vector() * CHARGE_BACKSTEP / (CHARGE_FULL_SECONDS * CHARGE_COIL_PORTION-PRIMARY_TAP_SECONDS)
-			if view_mode == ViewMode.TOP_DOWN:
-				velocity = back
-			else:
-				velocity.x = back.x
+			velocity.x = back.x
 		var tip := _blade_tip_for_frame(sprite.frame)
 		var tick := int(charge_time * 20.0) != int((charge_time - delta) * 20.0)
 		if tick and _charge_announced:

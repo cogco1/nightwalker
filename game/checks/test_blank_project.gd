@@ -121,6 +121,7 @@ func _run() -> void:
 	probe.free()
 	await tap(KEY_TAB)
 	check(world.player.view_mode == 0, "Tab opens empty top-down view")
+	await verify_top_down_attacks()
 	start = world.player.position
 	key(KEY_W, true)
 	await tick(12)
@@ -140,6 +141,15 @@ func _run() -> void:
 	check(not world.session.settings_open and not paused, "settings closes")
 	await tap(KEY_TAB)
 	check(world.player.view_mode == 1, "Tab returns to empty side view")
+	await tick(10)
+	mouse(MOUSE_BUTTON_LEFT, true)
+	await tick(40)
+	check(world.player.is_charging, "side-view charging survives a view switch")
+	mouse(MOUSE_BUTTON_LEFT, false)
+	await tick(7)
+	check(world.player.move_id == &"heavy_slash" and world.player.fx.charge_slash.release_count == 1,
+		"side-view charge still releases its blue-white slash after switching back")
+	await tick(45)
 	for frames in [TOP, SIDE]:
 		for animation in frames.get_animation_names():
 			for index in range(frames.get_frame_count(animation)):
@@ -161,8 +171,7 @@ func verify_charge_shape() -> void:
 	root.add_child(fx)
 	var origin := Vector2(160, 90)
 	for fps in [30, 60, 144]:
-		for setting in [[Vector2.RIGHT, true], [Vector2.LEFT, true], [Vector2.UP, false],
-				[Vector2.DOWN, false], [Vector2.LEFT, false], [Vector2.RIGHT, false]]:
+		for setting in [[Vector2.RIGHT, true], [Vector2.LEFT, true]]:
 			fx.release(origin, setting[0], CHARGE_FX.REACH, setting[1])
 			for _frame in range(ceili(CHARGE_FX.LIFE * fps) + 2):
 				fx.step(1.0 / fps)
@@ -197,3 +206,57 @@ func verify_charge_shape() -> void:
 		fx.release(origin, Vector2.RIGHT, CHARGE_FX.REACH, true)
 	check(fx.cuts.size() == CHARGE_FX.MAX_CUTS, "rapid requests cannot stack unlimited effects")
 	fx.free()
+
+
+func verify_top_down_attacks() -> void:
+	var player: CharacterBody2D = world.player
+	var stats := {"started": 0, "ready": 0, "attacks": 0, "charged_moves": 0}
+	player.charge_started.connect(func() -> void: stats.started += 1)
+	player.charge_ready.connect(func() -> void: stats.ready += 1)
+	player.move_started.connect(func(move: StringName) -> void:
+		stats.attacks += 1
+		if move == &"heavy_slash": stats.charged_moves += 1)
+	for facing in ["up", "down", "left", "right"]:
+		player.position = Vector2(160, 96)
+		player.facing = facing
+		player.show_idle()
+		var previous_attacks: int = stats.attacks
+		mouse(MOUSE_BUTTON_LEFT, true)
+		await tick(2)
+		check(player.is_attacking and player.move_id == &"attack1", "top-down press attacks immediately: " + facing)
+		var charged := false
+		for _frame in range(65):
+			await tick(1)
+			charged = charged or player.is_charging
+		check(not charged and not player.is_attacking, "top-down long hold finishes as an ordinary attack: " + facing)
+		check(stats.attacks == previous_attacks + 1, "holding does not auto-repeat top-down attacks: " + facing)
+		var before_move: Vector2 = player.position
+		key(KEY_D, true)
+		await tick(12)
+		key(KEY_D, false)
+		await tick(8)
+		check(player.position.x > before_move.x + 4, "holding attack does not charge-lock top-down movement: " + facing)
+		mouse(MOUSE_BUTTON_LEFT, false)
+		await tick(5)
+		check(not player.is_attacking and stats.attacks == previous_attacks + 1, "release adds no top-down attack: " + facing)
+	# A held second click during a combo must not enter charge after the preceding swing ends.
+	var before_combo: int = stats.attacks
+	mouse(MOUSE_BUTTON_LEFT, true)
+	await tick(2)
+	mouse(MOUSE_BUTTON_LEFT, false)
+	await tick(7)
+	mouse(MOUSE_BUTTON_LEFT, true)
+	var combo_charged := false
+	for _frame in range(80):
+		await tick(1)
+		combo_charged = combo_charged or player.is_charging
+	mouse(MOUSE_BUTTON_LEFT, false)
+	await tick(5)
+	check(stats.attacks >= before_combo + 2, "top-down light combos still work")
+	check(not combo_charged and stats.started == 0 and stats.ready == 0 and stats.charged_moves == 0,
+		"top-down clicks and held combos never start or release a charge")
+	player._begin_charge(1.0)
+	check(not player.is_charging, "charge entry rejects the top-down view")
+	player.fx._on_swing_released(&"heavy_slash")
+	check(player.fx.charge_slash.release_count == 0 and player.fx.charge_slash.cuts.is_empty(),
+		"top-down view cannot emit the charged slash effect")
