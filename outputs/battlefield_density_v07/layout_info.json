@@ -1,0 +1,40 @@
+{
+  "version": 7,
+  "art_size": [
+    6144,
+    512
+  ],
+  "origin": [
+    0,
+    -256
+  ],
+  "buildings": 15,
+  "vehicles": 7,
+  "building_types": [
+    "gatehouse.png",
+    "megafactory.png",
+    "refinery.png",
+    "tower.png",
+    "warehouse.png"
+  ],
+  "colliders": 88,
+  "material_sections": 8,
+  "ground_collision_unchanged": true,
+  "elevator": {
+    "id": "mill_lift",
+    "x": 5040,
+    "width": 64,
+    "bottom_y": 168,
+    "top_y": -85,
+    "speed": 40,
+    "deck_height": 4,
+    "call_range": 28,
+    "sprite": "res://assets/battlefield_traversal/industrial_lift.png",
+    "sprite_offset": [
+      0,
+      -55
+    ],
+    "landing_surface_id": "mega_01_left_roof"
+  },
+  "foreground_sha256": "a3dc0228d677c4042c48cde8ef6c21636de2657971c91941af6d20fec3c995bf"
+}

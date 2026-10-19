@@ -204,3 +204,139 @@ func run_course() -> Dictionary:
 		and scene.mid_covers_view() and scene.far_covers_view(), "The course camera stays covered by every native art layer")
 	return {"setup_relocations": 1, "intermediate_relocations": 0, "waypoints": legs,
 		"completed": not legs.is_empty() and legs.size() == scene.route_waypoints.size() and bool(legs[-1].passed)}
+
+
+func _press_interact() -> void:
+	scene._key(KEY_E, true)
+	await scene._ticks(1)
+	scene._key(KEY_E, false)
+
+
+func _walk_to_x(target: float, limit := 240) -> void:
+	for _tick in range(limit):
+		var dx := target - player.position.x
+		_steer(0 if absf(dx) <= 2.0 else int(signf(dx)))
+		await scene._ticks(1)
+		if absf(dx) <= 2.0 and absf(player.velocity.x) < 0.1:
+			break
+	_steer(0)
+	await scene._ticks(8)
+
+
+func _ride_elevator(label: String) -> Dictionary:
+	var lift: AnimatableBody2D = scene.elevator
+	var start: Vector2 = player.position
+	var start_y: float = lift.position.y
+	await _press_interact()
+	scene._check(lift.moving, "A fresh E input starts the docked cage for " + label)
+	var ticks := 0
+	var grounded_ticks := 0
+	var platform_ticks := 0
+	var max_error := 0.0
+	var minimum_camera_y: float = scene.camera.position.y
+	var target_y: float = lift.target_y
+	var captured := false
+	while lift.moving and ticks < 1800:
+		await scene._ticks(1)
+		ticks += 1
+		if player.is_on_floor():
+			grounded_ticks += 1
+		var contact := support()
+		if String(contact.id) == String(lift.get_meta("surface_id")):
+			platform_ticks += 1
+		max_error = maxf(max_error, absf(player.position.y - lift.position.y))
+		minimum_camera_y = minf(minimum_camera_y, scene.camera.position.y)
+		if ticks == 12:
+			await _press_interact()
+			scene._check(lift.target_y == target_y, "E cannot reverse a moving cage during " + label)
+		if not captured and absf(lift.position.y - start_y) > absf(target_y - start_y) * 0.5:
+			await scene._capture("elevator_" + label + "_mid")
+			captured = true
+	await scene._ticks(12)
+	scene._check(not lift.moving and is_equal_approx(lift.position.y, target_y), "The cage stops exactly at the landing for " + label)
+	scene._check(ticks > 60 and grounded_ticks >= ticks - 3 and platform_ticks >= ticks - 4,
+		"Normal CharacterBody2D floor contact carries the hero throughout " + label)
+	scene._check(max_error <= 2.0 and absf((player.position.y - start.y) - (target_y - start_y)) <= 2.0,
+		"The real moving deck carries the hero without a forced rider offset during " + label)
+	scene._check(absf(player.position.x - start.x) <= 1.0 and player.scale == Vector2.ONE,
+		"Riding preserves hero control position and native scale during " + label)
+	await scene._capture("elevator_" + label + "_dock")
+	return {"name": label, "start": [start.x, start.y], "end": [player.position.x, player.position.y],
+		"platform_start_y": start_y, "platform_end_y": lift.position.y, "target_y": target_y,
+		"physics_ticks": ticks, "grounded_ticks": grounded_ticks, "platform_contact_ticks": platform_ticks,
+		"max_foot_error": max_error, "minimum_camera_y": minimum_camera_y}
+
+
+func run_elevator() -> Dictionary:
+	var lift: AnimatableBody2D = scene.elevator
+	scene.CONTROLS.release_actions()
+	player.clear_input_buffer()
+	player.velocity = Vector2.ZERO
+	# A separate test setup starts on the adjacent sand. Boarding, riding and
+	# disembarking after this point all use ordinary input and actual collisions.
+	player.position = Vector2(lift.position.x - 80.0, lift.bottom_y - 1.0)
+	await scene._ticks(12)
+	await _press_interact()
+	scene._check(not lift.moving and lift.position.y == lift.bottom_y, "E outside the landing's range cannot call or start the elevator")
+	await _walk_to_x(lift.position.x + lift.width / 2.0)
+	scene._check(player.is_on_floor() and absf(player.position.x - lift.position.x - lift.width / 2.0) <= 3.0,
+		"The unchanged hero walks from the sand into the open industrial cage")
+	var up := await _ride_elevator("01_up")
+	scene._check(float(up.minimum_camera_y) <= lift.top_y - 60.0 and scene.foreground_covers_view()
+		and scene.near_covers_view() and scene.mid_covers_view() and scene.far_covers_view(),
+		"The camera follows the rising rider while every panorama covers the high landing")
+	await _walk_to_x(lift.position.x + lift.width + 18.0)
+	var roof_contact := support()
+	var roof_id := String(scene.traversal_layout.elevator.get("landing_surface_id", ""))
+	scene._check(player.is_on_floor() and absf(player.position.y - lift.top_y) <= 2.0
+		and not String(roof_contact.id) in ["", "ground", String(lift.get_meta("surface_id"))]
+		and (roof_id.is_empty() or String(roof_contact.id) == roof_id),
+		"The rider freely walks out of the cage onto the giant building's real roof")
+	await scene._capture("elevator_02_roof_exit")
+	var roof_position: Vector2 = player.position
+	await _press_interact()
+	scene._check(lift.moving and lift.target_y == lift.bottom_y, "The landing control sends the empty cage down")
+	for _tick in range(1800):
+		await scene._ticks(1)
+		if not lift.moving:
+			break
+	scene._check(player.is_on_floor() and player.position.distance_to(roof_position) <= 1.0,
+		"Leaving the platform releases the hero; an empty descending cage cannot drag the roof rider")
+	await _walk_to_x(lift.position.x + lift.width + lift.call_range + 14.0)
+	await _press_interact()
+	scene._check(not lift.moving and lift.position.y == lift.bottom_y, "E beyond the upper call range leaves the empty cage at the bottom")
+	await _walk_to_x(lift.position.x + lift.width + 18.0)
+	await _press_interact()
+	scene._check(lift.moving and lift.target_y == lift.top_y, "E at the upper landing calls the distant cage up")
+	for _tick in range(1800):
+		await scene._ticks(1)
+		if not lift.moving:
+			break
+	scene._check(lift.position.y == lift.top_y and player.is_on_floor(), "The called empty cage docks beside the waiting hero")
+	await _walk_to_x(lift.position.x + lift.width / 2.0)
+	var down := await _ride_elevator("03_down")
+	await _walk_to_x(lift.position.x - 26.0)
+	var ground_contact := support()
+	scene._check(player.is_on_floor() and String(ground_contact.id) == "ground"
+		and absf(player.position.y - lift.bottom_y) <= 2.0,
+		"The rider walks out of the docked cage onto the original sand without losing control")
+	await scene._capture("elevator_04_ground_exit")
+	await _walk_to_x(lift.position.x + lift.width / 2.0)
+	await _press_interact()
+	await scene._ticks(90)
+	var moving_exit_y: float = lift.position.y
+	await _walk_to_x(lift.position.x - 18.0)
+	await scene._ticks(90)
+	var moving_exit_contact := support()
+	scene._check(moving_exit_y < lift.bottom_y - 40.0 and player.is_on_floor()
+		and String(moving_exit_contact.id) == "ground" and player.position.x < lift.position.x - 6.0,
+		"The hero can walk off a moving cage edge and land independently on the sand")
+	scene._check(lift.moving and lift.target_y == lift.top_y,
+		"The empty cage continues its commanded journey after the moving rider steps off")
+	await scene._capture("elevator_05_moving_exit")
+	return {"setup_relocations": 1, "intermediate_relocations": 0, "rides": [up, down],
+		"roof_surface_id": roof_contact.id, "empty_cage_round_trip": true,
+		"moving_edge_exit": {"cage_y_at_exit": moving_exit_y, "landed_surface_id": moving_exit_contact.id,
+			"player": [player.position.x, player.position.y]},
+		"bottom_stop": lift.bottom_y, "top_stop": lift.top_y, "speed": lift.speed,
+		"landing_range": lift.call_range, "final_position": [player.position.x, player.position.y]}

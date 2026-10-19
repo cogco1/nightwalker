@@ -1,0 +1,182 @@
+{
+  "recorded_at_utc": "2026-10-19T23:01:02.566363+00:00",
+  "godot_executable": "D:/浏览器下载/Godot_v4.7.2-stable_win64.exe/Godot_v4.7.2-stable_win64.exe",
+  "version": "4.7.2.stable.official.ed1daf0bf",
+  "runs": {
+    "version": {
+      "exit_code": 0,
+      "stdout": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\v07_version_stdout.log",
+      "stderr": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\v07_version_stderr.log",
+      "stderr_bytes": 0,
+      "last_output_at_utc": "2026-10-19T22:56:03.589824+00:00"
+    },
+    "import": {
+      "exit_code": 0,
+      "stdout": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\v07_import_stdout.log",
+      "stderr": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\v07_import_stderr.log",
+      "stderr_bytes": 0,
+      "last_output_at_utc": "2026-10-19T22:56:06.872522+00:00"
+    },
+    "quick": {
+      "exit_code": 0,
+      "stdout": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\v07_quick_stdout.log",
+      "stderr": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\v07_quick_stderr.log",
+      "stderr_bytes": 0,
+      "last_output_at_utc": "2026-10-19T22:56:23.883321+00:00",
+      "report": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\test_report.json",
+      "checks": 51,
+      "passed": true,
+      "failures": []
+    },
+    "headless": {
+      "exit_code": 0,
+      "stdout": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\v07_headless_stdout.log",
+      "stderr": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\v07_headless_stderr.log",
+      "stderr_bytes": 0,
+      "last_output_at_utc": "2026-10-19T22:58:30.570679+00:00",
+      "report": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\headless_report_v07.json",
+      "checks": 275,
+      "passed": true,
+      "failures": [],
+      "headless": true,
+      "screenshots": 0,
+      "ground_distance": 6075.76220703125,
+      "vehicle_jumps": 7,
+      "course_completed": true,
+      "course_waypoints": 14,
+      "elevator_rides": [
+        {
+          "end": [
+            5071.68359375,
+            -85.0644836425781
+          ],
+          "grounded_ticks": 379,
+          "max_foot_error": 0.0644836624487652,
+          "minimum_camera_y": -149.0,
+          "name": "01_up",
+          "physics_ticks": 379,
+          "platform_contact_ticks": 379,
+          "platform_end_y": -85.0,
+          "platform_start_y": 168.0,
+          "start": [
+            5071.68359375,
+            167.9765625
+          ],
+          "target_y": -85.0
+        },
+        {
+          "end": [
+            5071.68359375,
+            167.935516357422
+          ],
+          "grounded_ticks": 379,
+          "max_foot_error": 0.0644838809967041,
+          "minimum_camera_y": -149.0,
+          "name": "03_down",
+          "physics_ticks": 379,
+          "platform_contact_ticks": 377,
+          "platform_end_y": 168.0,
+          "platform_start_y": -85.0,
+          "start": [
+            5071.68359375,
+            -85.0644836425781
+          ],
+          "target_y": 168.0
+        }
+      ],
+      "elevator_roof_surface": "mega_01_left_roof",
+      "moving_edge_exit": {
+        "cage_y_at_exit": 107.999778747559,
+        "landed_surface_id": "ground",
+        "player": [
+          5022.0,
+          167.991485595703
+        ]
+      }
+    },
+    "gpu": {
+      "exit_code": 0,
+      "stdout": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\v07_gpu_stdout.log",
+      "stderr": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\v07_gpu_stderr.log",
+      "stderr_bytes": 0,
+      "last_output_at_utc": "2026-10-19T23:00:28.943947+00:00",
+      "report": "E:\\CodexWorkspace\\Nightwalker\\game\\evidence\\battlefield_run_test\\gpu_report_v07.json",
+      "checks": 477,
+      "passed": true,
+      "failures": [],
+      "headless": false,
+      "screenshots": 33,
+      "ground_distance": 6075.76220703125,
+      "vehicle_jumps": 7,
+      "course_completed": true,
+      "course_waypoints": 14,
+      "elevator_rides": [
+        {
+          "end": [
+            5071.68359375,
+            -85.0644836425781
+          ],
+          "grounded_ticks": 379,
+          "max_foot_error": 0.0644836624487652,
+          "minimum_camera_y": -149.0,
+          "name": "01_up",
+          "physics_ticks": 379,
+          "platform_contact_ticks": 379,
+          "platform_end_y": -85.0,
+          "platform_start_y": 168.0,
+          "start": [
+            5071.68359375,
+            167.9765625
+          ],
+          "target_y": -85.0
+        },
+        {
+          "end": [
+            5071.68359375,
+            167.935516357422
+          ],
+          "grounded_ticks": 379,
+          "max_foot_error": 0.0644838809967041,
+          "minimum_camera_y": -149.0,
+          "name": "03_down",
+          "physics_ticks": 379,
+          "platform_contact_ticks": 377,
+          "platform_end_y": 168.0,
+          "platform_start_y": -85.0,
+          "start": [
+            5071.68359375,
+            -85.0644836425781
+          ],
+          "target_y": 168.0
+        }
+      ],
+      "elevator_roof_surface": "mega_01_left_roof",
+      "moving_edge_exit": {
+        "cage_y_at_exit": 107.999778747559,
+        "landed_surface_id": "ground",
+        "player": [
+          5022.0,
+          167.991485595703
+        ]
+      }
+    }
+  },
+  "passed": true,
+  "native_viewport": [
+    320,
+    180
+  ],
+  "art_canvas": [
+    6144,
+    512
+  ],
+  "backdrop_origin": [
+    0,
+    -256
+  ],
+  "runtime_sha256": {
+    "game\\scripts\\battlefield_run_test.gd": "9b6393fe904bb42c47a7bdf325e66f017f646e746b844a985467872f83d3e18b",
+    "game\\scripts\\battlefield_elevator.gd": "ef3fd7f6ca142b7033b23156ef726831226552cdf97e6916b932e52f41dd3909",
+    "game\\assets\\battlefield_traversal\\layout.json": "14dd4ea04f4d52b3219f1e55af5c1ec29a9c0c0e950bbddea30ff1cec915285e"
+  }
+}

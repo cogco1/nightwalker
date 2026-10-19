@@ -91,6 +91,25 @@ func run() -> void:
 		"The playable buildings and cars use a native transparent foreground")
 	check(not scene.traversal_colliders.is_empty() and scene.traversal_terrain.get_child_count() == scene.traversal_layout.colliders.size(),
 		"Traversal colliders are built once from the delivered layout")
+	check(scene.elevator != null, "The delivered dense battlefield includes the giant building's industrial elevator")
+	if scene.elevator != null:
+		var lift: AnimatableBody2D = scene.elevator
+		check(lift.sync_to_physics and lift.process_physics_priority < player.process_physics_priority
+			and lift.collision_layer == 1 and lift.collision_mask == 0,
+			"The industrial cage uses synchronized moving-body physics before the unchanged hero")
+		check(lift.position.y == lift.bottom_y and lift.target_y == lift.bottom_y
+			and lift.top_y < lift.bottom_y and lift.speed > 0.0 and not lift.moving,
+			"The elevator begins docked at the bottom with distinct ordered landings")
+		check(lift.cage.scale == Vector2.ONE and lift.cage.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST
+			and lift.drawn_rect().position == lift.drawn_rect().position.round(),
+			"The moving cage preserves native scale, nearest sampling and integer drawing")
+		check(lift.get_child(0) is CollisionShape2D and lift.get_child(0).one_way_collision
+			and is_equal_approx(lift.get_child(0).shape.size.x, lift.width),
+			"The visible cage deck is backed by a matching one-way moving collision surface")
+		key(KEY_E, true)
+		await ticks(1)
+		key(KEY_E, false)
+		check(not lift.moving and lift.hint(player).is_empty(), "The dedicated E input cannot start an elevator outside either landing range")
 	check(scene.far_background.z_index < scene.mid_background.z_index and scene.mid_background.z_index < scene.background.z_index
 		and scene.background.z_index < scene.foreground.z_index and scene.foreground.z_index < player.z_index
 		and scene.far_background.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST
@@ -221,7 +240,7 @@ func finish() -> void:
 	if _finished:
 		return
 	_finished = true
-	for code in [KEY_A, KEY_D, KEY_SHIFT, KEY_SPACE, KEY_R]:
+	for code in [KEY_A, KEY_D, KEY_SHIFT, KEY_SPACE, KEY_R, KEY_E]:
 		key(code, false)
 	CONTROLS.release_actions()
 	var report := {"suite": "battlefield_run_test", "checks": checks, "failures": failures, "passed": failures.is_empty()}

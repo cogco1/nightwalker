@@ -1,5 +1,5 @@
 {
-  "version": 6,
+  "version": 7,
   "origin": [
     0,
     -256
@@ -115,11 +115,11 @@
       "asset": "gatehouse.png",
       "kind": "building",
       "position": [
-        4800,
+        4416,
         -88
       ],
       "rect": [
-        4800,
+        4416,
         -88,
         256,
         256
@@ -263,6 +263,225 @@
         "sedan_03_body"
       ],
       "body_id": "sedan_03_body"
+    },
+    {
+      "id": "warehouse_01",
+      "asset": "warehouse.png",
+      "kind": "building",
+      "position": [
+        1856,
+        -24
+      ],
+      "rect": [
+        1856,
+        -24,
+        256,
+        192
+      ],
+      "surfaces": [
+        "warehouse_01_roof",
+        "warehouse_01_second_floor",
+        "warehouse_01_left_landing"
+      ]
+    },
+    {
+      "id": "refinery_01",
+      "asset": "refinery.png",
+      "kind": "building",
+      "position": [
+        2136,
+        -88
+      ],
+      "rect": [
+        2136,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "refinery_01_upper_catwalk",
+        "refinery_01_lower_catwalk",
+        "refinery_01_upper_landing",
+        "refinery_01_lower_landing",
+        "refinery_01_stairs_upper",
+        "refinery_01_stairs_middle",
+        "refinery_01_stairs_lower"
+      ]
+    },
+    {
+      "id": "warehouse_02",
+      "asset": "warehouse.png",
+      "kind": "building",
+      "position": [
+        2440,
+        -24
+      ],
+      "rect": [
+        2440,
+        -24,
+        256,
+        192
+      ],
+      "surfaces": [
+        "warehouse_02_roof",
+        "warehouse_02_second_floor",
+        "warehouse_02_left_landing"
+      ]
+    },
+    {
+      "id": "refinery_02",
+      "asset": "refinery.png",
+      "kind": "building",
+      "position": [
+        2728,
+        -88
+      ],
+      "rect": [
+        2728,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "refinery_02_upper_catwalk",
+        "refinery_02_lower_catwalk",
+        "refinery_02_upper_landing",
+        "refinery_02_lower_landing",
+        "refinery_02_stairs_upper",
+        "refinery_02_stairs_middle",
+        "refinery_02_stairs_lower"
+      ]
+    },
+    {
+      "id": "warehouse_03",
+      "asset": "warehouse.png",
+      "kind": "building",
+      "position": [
+        2992,
+        -24
+      ],
+      "rect": [
+        2992,
+        -24,
+        256,
+        192
+      ],
+      "surfaces": [
+        "warehouse_03_roof",
+        "warehouse_03_second_floor",
+        "warehouse_03_left_landing"
+      ]
+    },
+    {
+      "id": "warehouse_04",
+      "asset": "warehouse.png",
+      "kind": "building",
+      "position": [
+        3512,
+        -24
+      ],
+      "rect": [
+        3512,
+        -24,
+        256,
+        192
+      ],
+      "surfaces": [
+        "warehouse_04_roof",
+        "warehouse_04_second_floor",
+        "warehouse_04_left_landing"
+      ]
+    },
+    {
+      "id": "refinery_03",
+      "asset": "refinery.png",
+      "kind": "building",
+      "position": [
+        3808,
+        -88
+      ],
+      "rect": [
+        3808,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "refinery_03_upper_catwalk",
+        "refinery_03_lower_catwalk",
+        "refinery_03_upper_landing",
+        "refinery_03_lower_landing",
+        "refinery_03_stairs_upper",
+        "refinery_03_stairs_middle",
+        "refinery_03_stairs_lower"
+      ]
+    },
+    {
+      "id": "warehouse_05",
+      "asset": "warehouse.png",
+      "kind": "building",
+      "position": [
+        4096,
+        -24
+      ],
+      "rect": [
+        4096,
+        -24,
+        256,
+        192
+      ],
+      "surfaces": [
+        "warehouse_05_roof",
+        "warehouse_05_second_floor",
+        "warehouse_05_left_landing"
+      ]
+    },
+    {
+      "id": "refinery_04",
+      "asset": "refinery.png",
+      "kind": "building",
+      "position": [
+        4672,
+        -88
+      ],
+      "rect": [
+        4672,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "refinery_04_upper_catwalk",
+        "refinery_04_lower_catwalk",
+        "refinery_04_upper_landing",
+        "refinery_04_lower_landing",
+        "refinery_04_stairs_upper",
+        "refinery_04_stairs_middle",
+        "refinery_04_stairs_lower"
+      ]
+    },
+    {
+      "id": "mega_01",
+      "asset": "megafactory.png",
+      "kind": "building",
+      "position": [
+        5088,
+        -152
+      ],
+      "rect": [
+        5088,
+        -152,
+        1024,
+        320
+      ],
+      "surfaces": [
+        "mega_01_left_roof",
+        "mega_01_raised_roof",
+        "mega_01_main_roof",
+        "mega_01_second_floor_left",
+        "mega_01_second_floor",
+        "mega_01_east_catwalk"
+      ]
     }
   ],
   "colliders": [
@@ -701,7 +920,7 @@
     {
       "id": "gate_03_left_landing",
       "rect": [
-        4800,
+        4416,
         97,
         48,
         5
@@ -713,7 +932,7 @@
     {
       "id": "gate_03_second_floor",
       "rect": [
-        4857,
+        4473,
         99,
         161,
         5
@@ -725,7 +944,7 @@
     {
       "id": "gate_03_right_landing",
       "rect": [
-        5023,
+        4639,
         112,
         33,
         5
@@ -737,7 +956,7 @@
     {
       "id": "gate_03_roof",
       "rect": [
-        4830,
+        4446,
         55,
         202,
         5
@@ -2407,6 +2626,738 @@
       "one_way": false,
       "kind": "vehicle",
       "fixture_id": "sedan_03"
+    },
+    {
+      "id": "warehouse_01_roof",
+      "rect": [
+        1887,
+        53,
+        200,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "warehouse_01"
+    },
+    {
+      "id": "warehouse_01_second_floor",
+      "rect": [
+        1912,
+        106,
+        176,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_01"
+    },
+    {
+      "id": "warehouse_01_left_landing",
+      "rect": [
+        1856,
+        116,
+        42,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_01"
+    },
+    {
+      "id": "refinery_01_upper_catwalk",
+      "rect": [
+        2196,
+        29,
+        169,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "refinery_01_lower_catwalk",
+      "rect": [
+        2136,
+        91,
+        233,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "refinery_01_upper_landing",
+      "rect": [
+        2383,
+        49,
+        9,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "refinery_01_lower_landing",
+      "rect": [
+        2376,
+        106,
+        16,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "refinery_01_stairs_upper",
+      "polygon": [
+        [
+          2365,
+          29
+        ],
+        [
+          2385,
+          49
+        ],
+        [
+          2385,
+          54
+        ],
+        [
+          2365,
+          34
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "refinery_01_stairs_middle",
+      "polygon": [
+        [
+          2365,
+          91
+        ],
+        [
+          2386,
+          106
+        ],
+        [
+          2386,
+          111
+        ],
+        [
+          2365,
+          96
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "refinery_01_stairs_lower",
+      "polygon": [
+        [
+          2364,
+          135
+        ],
+        [
+          2389,
+          167
+        ],
+        [
+          2389,
+          172
+        ],
+        [
+          2364,
+          140
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "warehouse_02_roof",
+      "rect": [
+        2471,
+        53,
+        200,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "warehouse_02"
+    },
+    {
+      "id": "warehouse_02_second_floor",
+      "rect": [
+        2496,
+        106,
+        176,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_02"
+    },
+    {
+      "id": "warehouse_02_left_landing",
+      "rect": [
+        2440,
+        116,
+        42,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_02"
+    },
+    {
+      "id": "refinery_02_upper_catwalk",
+      "rect": [
+        2788,
+        29,
+        169,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "refinery_02_lower_catwalk",
+      "rect": [
+        2728,
+        91,
+        233,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "refinery_02_upper_landing",
+      "rect": [
+        2975,
+        49,
+        9,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "refinery_02_lower_landing",
+      "rect": [
+        2968,
+        106,
+        16,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "refinery_02_stairs_upper",
+      "polygon": [
+        [
+          2957,
+          29
+        ],
+        [
+          2977,
+          49
+        ],
+        [
+          2977,
+          54
+        ],
+        [
+          2957,
+          34
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "refinery_02_stairs_middle",
+      "polygon": [
+        [
+          2957,
+          91
+        ],
+        [
+          2978,
+          106
+        ],
+        [
+          2978,
+          111
+        ],
+        [
+          2957,
+          96
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "refinery_02_stairs_lower",
+      "polygon": [
+        [
+          2956,
+          135
+        ],
+        [
+          2981,
+          167
+        ],
+        [
+          2981,
+          172
+        ],
+        [
+          2956,
+          140
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "warehouse_03_roof",
+      "rect": [
+        3023,
+        53,
+        200,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "warehouse_03"
+    },
+    {
+      "id": "warehouse_03_second_floor",
+      "rect": [
+        3048,
+        106,
+        176,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_03"
+    },
+    {
+      "id": "warehouse_03_left_landing",
+      "rect": [
+        2992,
+        116,
+        42,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_03"
+    },
+    {
+      "id": "warehouse_04_roof",
+      "rect": [
+        3543,
+        53,
+        200,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "warehouse_04"
+    },
+    {
+      "id": "warehouse_04_second_floor",
+      "rect": [
+        3568,
+        106,
+        176,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_04"
+    },
+    {
+      "id": "warehouse_04_left_landing",
+      "rect": [
+        3512,
+        116,
+        42,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_04"
+    },
+    {
+      "id": "refinery_03_upper_catwalk",
+      "rect": [
+        3868,
+        29,
+        169,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "refinery_03_lower_catwalk",
+      "rect": [
+        3808,
+        91,
+        233,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "refinery_03_upper_landing",
+      "rect": [
+        4055,
+        49,
+        9,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "refinery_03_lower_landing",
+      "rect": [
+        4048,
+        106,
+        16,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "refinery_03_stairs_upper",
+      "polygon": [
+        [
+          4037,
+          29
+        ],
+        [
+          4057,
+          49
+        ],
+        [
+          4057,
+          54
+        ],
+        [
+          4037,
+          34
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "refinery_03_stairs_middle",
+      "polygon": [
+        [
+          4037,
+          91
+        ],
+        [
+          4058,
+          106
+        ],
+        [
+          4058,
+          111
+        ],
+        [
+          4037,
+          96
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "refinery_03_stairs_lower",
+      "polygon": [
+        [
+          4036,
+          135
+        ],
+        [
+          4061,
+          167
+        ],
+        [
+          4061,
+          172
+        ],
+        [
+          4036,
+          140
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "warehouse_05_roof",
+      "rect": [
+        4127,
+        53,
+        200,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "warehouse_05"
+    },
+    {
+      "id": "warehouse_05_second_floor",
+      "rect": [
+        4152,
+        106,
+        176,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_05"
+    },
+    {
+      "id": "warehouse_05_left_landing",
+      "rect": [
+        4096,
+        116,
+        42,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_05"
+    },
+    {
+      "id": "refinery_04_upper_catwalk",
+      "rect": [
+        4732,
+        29,
+        169,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "refinery_04_lower_catwalk",
+      "rect": [
+        4672,
+        91,
+        233,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "refinery_04_upper_landing",
+      "rect": [
+        4919,
+        49,
+        9,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "refinery_04_lower_landing",
+      "rect": [
+        4912,
+        106,
+        16,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "refinery_04_stairs_upper",
+      "polygon": [
+        [
+          4901,
+          29
+        ],
+        [
+          4921,
+          49
+        ],
+        [
+          4921,
+          54
+        ],
+        [
+          4901,
+          34
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "refinery_04_stairs_middle",
+      "polygon": [
+        [
+          4901,
+          91
+        ],
+        [
+          4922,
+          106
+        ],
+        [
+          4922,
+          111
+        ],
+        [
+          4901,
+          96
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "refinery_04_stairs_lower",
+      "polygon": [
+        [
+          4900,
+          135
+        ],
+        [
+          4925,
+          167
+        ],
+        [
+          4925,
+          172
+        ],
+        [
+          4900,
+          140
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "mega_01_left_roof",
+      "rect": [
+        5096,
+        -85,
+        182,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "mega_01"
+    },
+    {
+      "id": "mega_01_raised_roof",
+      "rect": [
+        5282,
+        -77,
+        70,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "mega_01"
+    },
+    {
+      "id": "mega_01_main_roof",
+      "rect": [
+        5352,
+        -61,
+        695,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "mega_01"
+    },
+    {
+      "id": "mega_01_second_floor_left",
+      "rect": [
+        5287,
+        50,
+        97,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "mega_01"
+    },
+    {
+      "id": "mega_01_second_floor",
+      "rect": [
+        5388,
+        42,
+        569,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "mega_01"
+    },
+    {
+      "id": "mega_01_east_catwalk",
+      "rect": [
+        5964,
+        63,
+        141,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "mega_01"
     }
   ],
   "waypoints": [
@@ -2536,5 +3487,150 @@
       ],
       "mode": "walk"
     }
-  ]
+  ],
+  "ground_materials": [
+    {
+      "id": "surface_1",
+      "asset": "ground_grating.png",
+      "position": [
+        1088,
+        168
+      ],
+      "source_crop": [
+        0,
+        13,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_2",
+      "asset": "ground_concrete.png",
+      "position": [
+        1856,
+        168
+      ],
+      "source_crop": [
+        0,
+        21,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_3",
+      "asset": "ground_covers.png",
+      "position": [
+        2440,
+        168
+      ],
+      "source_crop": [
+        0,
+        12,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_4",
+      "asset": "ground_grating.png",
+      "position": [
+        3072,
+        168
+      ],
+      "source_crop": [
+        0,
+        13,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_5",
+      "asset": "ground_concrete.png",
+      "position": [
+        3776,
+        168
+      ],
+      "source_crop": [
+        0,
+        21,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_6",
+      "asset": "ground_covers.png",
+      "position": [
+        4416,
+        168
+      ],
+      "source_crop": [
+        0,
+        12,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_7",
+      "asset": "ground_grating.png",
+      "position": [
+        5024,
+        168
+      ],
+      "source_crop": [
+        0,
+        13,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_8",
+      "asset": "ground_concrete.png",
+      "position": [
+        5536,
+        168
+      ],
+      "source_crop": [
+        0,
+        21,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    }
+  ],
+  "elevator": {
+    "id": "mill_lift",
+    "x": 5040,
+    "width": 64,
+    "bottom_y": 168,
+    "top_y": -85,
+    "speed": 40,
+    "deck_height": 4,
+    "call_range": 28,
+    "sprite": "res://assets/battlefield_traversal/industrial_lift.png",
+    "sprite_offset": [
+      0,
+      -55
+    ],
+    "landing_surface_id": "mega_01_left_roof"
+  },
+  "elevator_shaft": {
+    "asset": "lift_shaft.png",
+    "position": [
+      5024,
+      -152
+    ]
+  }
 }

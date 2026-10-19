@@ -1,0 +1,507 @@
+{
+  "version": 7,
+  "palette_reference": "outputs\\battlefield_tall_v05\\battlefield_near_native.png",
+  "palette_colors": 64,
+  "material_sheet_crops": {
+    "ground_concrete": [
+      0,
+      298,
+      1254,
+      400
+    ],
+    "ground_grating": [
+      0,
+      571,
+      1254,
+      691
+    ],
+    "ground_covers": [
+      0,
+      871,
+      1254,
+      995
+    ]
+  },
+  "assets": {
+    "megafactory": {
+      "source": "outputs\\battlefield_density_v07\\source_art\\megafactory.png",
+      "source_canvas": [
+        2206,
+        713
+      ],
+      "source_cutout_rect": [
+        2,
+        0,
+        2206,
+        698
+      ],
+      "source_sha256": "76053c9085545d496e24dc80782ddb324dda02a18b2f3b472f5a801372895282",
+      "matte_edge_pixels_removed": 0,
+      "name": "megafactory",
+      "native_canvas": [
+        1024,
+        320
+      ],
+      "source_cutout_size": [
+        2204,
+        698
+      ],
+      "uniform_scale": 0.4584527220630373,
+      "nearest_resized_size": [
+        1010,
+        320
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        1010,
+        320
+      ],
+      "resized_cutout": [
+        1010,
+        320
+      ],
+      "placement": [
+        7,
+        0
+      ],
+      "used_rect": [
+        7,
+        0,
+        1017,
+        320
+      ],
+      "bottom_baseline_exclusive": 320,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 62,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "native_sha256": "8832f654893b08d8f0ae4234dacb922c3425eeb7c68fb3b94bb89a5b9ab7a886"
+    },
+    "industrial_lift": {
+      "source": "outputs\\battlefield_density_v07\\source_art\\industrial_lift.png",
+      "source_canvas": [
+        1254,
+        1254
+      ],
+      "source_cutout_rect": [
+        217,
+        265,
+        1038,
+        1074
+      ],
+      "source_sha256": "13f19f8c1053e59b87afad72ca29750ab9fde515425b968d17efed25896e8571",
+      "matte_edge_pixels_removed": 0,
+      "name": "industrial_lift",
+      "native_canvas": [
+        64,
+        64
+      ],
+      "source_cutout_size": [
+        821,
+        809
+      ],
+      "uniform_scale": 0.0779537149817296,
+      "nearest_resized_size": [
+        64,
+        63
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        64,
+        63
+      ],
+      "resized_cutout": [
+        64,
+        63
+      ],
+      "placement": [
+        0,
+        1
+      ],
+      "used_rect": [
+        0,
+        1,
+        64,
+        64
+      ],
+      "bottom_baseline_exclusive": 64,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 36,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "native_sha256": "6ad046e0daadd0bc35657d3f1af48c40a8991bd6211ae9eb65f40aedf2a2eed4"
+    },
+    "lift_shaft": {
+      "source": "outputs\\battlefield_density_v07\\source_art\\lift_shaft.png",
+      "source_canvas": [
+        793,
+        1983
+      ],
+      "source_cutout_rect": [
+        142,
+        87,
+        651,
+        1895
+      ],
+      "source_sha256": "7bac8a7d81bdb836ee31c4efd0961fbca85e4b2c1a5493d6e0bfc39cce7069ca",
+      "matte_edge_pixels_removed": 0,
+      "name": "lift_shaft",
+      "native_canvas": [
+        96,
+        320
+      ],
+      "source_cutout_size": [
+        509,
+        1808
+      ],
+      "uniform_scale": 0.17699115044247787,
+      "nearest_resized_size": [
+        90,
+        320
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        90,
+        320
+      ],
+      "resized_cutout": [
+        90,
+        320
+      ],
+      "placement": [
+        3,
+        0
+      ],
+      "used_rect": [
+        3,
+        0,
+        93,
+        320
+      ],
+      "bottom_baseline_exclusive": 320,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 44,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "native_sha256": "36a2065bde57cb154dbac554c8b384698a3e86bfa6294c0e0e7caf75c96442cc"
+    },
+    "ground_concrete": {
+      "source": "outputs\\battlefield_density_v07\\source_art\\ground_concrete.png",
+      "source_canvas": [
+        1254,
+        102
+      ],
+      "source_cutout_rect": [
+        25,
+        0,
+        1230,
+        102
+      ],
+      "source_sha256": "61f5369aea1e908fba71dacbdd388872defc4c3ee80e48553eeaac4e7e45b56f",
+      "matte_edge_pixels_removed": 0,
+      "name": "ground_concrete",
+      "native_canvas": [
+        512,
+        64
+      ],
+      "source_cutout_size": [
+        1205,
+        102
+      ],
+      "uniform_scale": 0.42489626556016596,
+      "nearest_resized_size": [
+        512,
+        43
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        512,
+        43
+      ],
+      "resized_cutout": [
+        512,
+        43
+      ],
+      "placement": [
+        0,
+        21
+      ],
+      "used_rect": [
+        0,
+        21,
+        512,
+        64
+      ],
+      "bottom_baseline_exclusive": 64,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 51,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "native_sha256": "fabb9746d19bb3a8aa8a23e62eb408d6f757e8dcaf1c4aa9f4426c0fd8e162cd"
+    },
+    "ground_grating": {
+      "source": "outputs\\battlefield_density_v07\\source_art\\ground_grating.png",
+      "source_canvas": [
+        1254,
+        120
+      ],
+      "source_cutout_rect": [
+        19,
+        0,
+        1234,
+        120
+      ],
+      "source_sha256": "c01e0ebc2f1c7020f5e0d7365382f89b0e32cd53ec6ac89fbe95dbfbafe20552",
+      "matte_edge_pixels_removed": 0,
+      "name": "ground_grating",
+      "native_canvas": [
+        512,
+        64
+      ],
+      "source_cutout_size": [
+        1215,
+        120
+      ],
+      "uniform_scale": 0.4213991769547325,
+      "nearest_resized_size": [
+        512,
+        51
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        512,
+        51
+      ],
+      "resized_cutout": [
+        512,
+        51
+      ],
+      "placement": [
+        0,
+        13
+      ],
+      "used_rect": [
+        0,
+        13,
+        512,
+        64
+      ],
+      "bottom_baseline_exclusive": 64,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 54,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "native_sha256": "2c1a49dbb31c5e5dcc83dda9dc3751235703d63c920cec82b3ddf49fd01124c5"
+    },
+    "ground_covers": {
+      "source": "outputs\\battlefield_density_v07\\source_art\\ground_covers.png",
+      "source_canvas": [
+        1254,
+        124
+      ],
+      "source_cutout_rect": [
+        19,
+        0,
+        1235,
+        124
+      ],
+      "source_sha256": "6b21501f0af673fa4f0b515ed4458757cc15a97bad848b2c138c535a5d6984cf",
+      "matte_edge_pixels_removed": 0,
+      "name": "ground_covers",
+      "native_canvas": [
+        512,
+        64
+      ],
+      "source_cutout_size": [
+        1216,
+        124
+      ],
+      "uniform_scale": 0.42105263157894735,
+      "nearest_resized_size": [
+        512,
+        52
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        512,
+        52
+      ],
+      "resized_cutout": [
+        512,
+        52
+      ],
+      "placement": [
+        0,
+        12
+      ],
+      "used_rect": [
+        0,
+        12,
+        512,
+        64
+      ],
+      "bottom_baseline_exclusive": 64,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 48,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "native_sha256": "34e4a83221010bd68926a15a43946caa5de7f350e41dccf8fc581a4bda75aae5"
+    },
+    "warehouse": {
+      "source": "outputs\\battlefield_density_v07\\source_art\\warehouse.png",
+      "source_canvas": [
+        1254,
+        1254
+      ],
+      "source_cutout_rect": [
+        11,
+        456,
+        1243,
+        1156
+      ],
+      "source_sha256": "fba7499684c9a0e940a29d3dff06bfd5ca05b0c03d49f8ce48b857a918f456ca",
+      "matte_edge_pixels_removed": 0,
+      "name": "warehouse",
+      "native_canvas": [
+        256,
+        192
+      ],
+      "source_cutout_size": [
+        1232,
+        700
+      ],
+      "uniform_scale": 0.2077922077922078,
+      "nearest_resized_size": [
+        256,
+        145
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        256,
+        145
+      ],
+      "resized_cutout": [
+        256,
+        145
+      ],
+      "placement": [
+        0,
+        47
+      ],
+      "used_rect": [
+        0,
+        47,
+        256,
+        192
+      ],
+      "bottom_baseline_exclusive": 192,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 51,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "native_sha256": "fc8d6a8321aca6b5c115612e697f603542197017900127a8ae278117ed382600"
+    },
+    "refinery": {
+      "source": "outputs\\battlefield_density_v07\\source_art\\refinery.png",
+      "source_canvas": [
+        1322,
+        1190
+      ],
+      "source_cutout_rect": [
+        10,
+        39,
+        1317,
+        1116
+      ],
+      "source_sha256": "ce5ac3f5edb9e24bfb397447524d2b7754e29e50107410eec8781bba6e269ebc",
+      "matte_edge_pixels_removed": 0,
+      "name": "refinery",
+      "native_canvas": [
+        256,
+        256
+      ],
+      "source_cutout_size": [
+        1307,
+        1077
+      ],
+      "uniform_scale": 0.19586840091813312,
+      "nearest_resized_size": [
+        256,
+        211
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        256,
+        211
+      ],
+      "resized_cutout": [
+        256,
+        211
+      ],
+      "placement": [
+        0,
+        45
+      ],
+      "used_rect": [
+        0,
+        45,
+        256,
+        256
+      ],
+      "bottom_baseline_exclusive": 256,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 47,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "native_sha256": "2e6d8946be0aced99b1eebe47dd925e11d2aff7e76311fcd75119e3cbcc5202e"
+    }
+  }
+}

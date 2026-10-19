@@ -1,0 +1,3283 @@
+{
+  "airborne_ticks": 356,
+  "art_origin": [
+    0.0,
+    -256.0
+  ],
+  "art_size": [
+    6144,
+    512
+  ],
+  "camera_distance": 5824.0,
+  "checkpoints": [
+    {
+      "animation": "idle_right",
+      "camera": [
+        160.0,
+        160.0
+      ],
+      "far_position": [
+        0.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        0.0,
+        326.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        0.0,
+        326.0,
+        320,
+        180
+      ],
+      "ground_y": 224.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 454,
+          "matched_colors": 20,
+          "matched_detail_samples": 60,
+          "matched_samples": 454
+        },
+        "foreground": {
+          "exposed_samples": 0,
+          "matched_colors": 0,
+          "matched_detail_samples": 0,
+          "matched_samples": 0
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          30.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 1175,
+          "matched_colors": 56,
+          "matched_detail_samples": 845,
+          "matched_samples": 1175
+        },
+        "near": {
+          "exposed_samples": 1890,
+          "matched_colors": 63,
+          "matched_detail_samples": 1356,
+          "matched_samples": 1890
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        0.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        0.0,
+        326.0,
+        320,
+        180
+      ],
+      "name": "00_start",
+      "near_source_rect": [
+        0.0,
+        326.0,
+        320,
+        180
+      ],
+      "player": [
+        40.0,
+        223.998031616211
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/00_start.png",
+      "running": false
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        249.0,
+        115.0
+      ],
+      "far_position": [
+        64.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        25.0,
+        281.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        89.0,
+        281.0,
+        320,
+        180
+      ],
+      "ground_y": 183.168619791667,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 450,
+          "matched_colors": 27,
+          "matched_detail_samples": 178,
+          "matched_samples": 450
+        },
+        "foreground": {
+          "exposed_samples": 0,
+          "matched_colors": 0,
+          "matched_detail_samples": 0,
+          "matched_samples": 0
+        },
+        "hero_excluded_samples": 88,
+        "hero_exclusion_rect": [
+          84.0,
+          125.0,
+          44.0,
+          33.0
+        ],
+        "mid": {
+          "exposed_samples": 1289,
+          "matched_colors": 57,
+          "matched_detail_samples": 900,
+          "matched_samples": 1289
+        },
+        "near": {
+          "exposed_samples": 1773,
+          "matched_colors": 60,
+          "matched_detail_samples": 1426,
+          "matched_samples": 1772
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        37.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        52.0,
+        281.0,
+        320,
+        180
+      ],
+      "name": "01_slope",
+      "near_source_rect": [
+        89.0,
+        281.0,
+        320,
+        180
+      ],
+      "player": [
+        201.2470703125,
+        179.088897705078
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/01_slope.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        448.0,
+        104.0
+      ],
+      "far_position": [
+        207.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        81.0,
+        270.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        288.0,
+        270.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 221,
+          "matched_colors": 22,
+          "matched_detail_samples": 72,
+          "matched_samples": 221
+        },
+        "foreground": {
+          "exposed_samples": 50,
+          "matched_colors": 17,
+          "matched_detail_samples": 46,
+          "matched_samples": 50
+        },
+        "hero_excluded_samples": 88,
+        "hero_exclusion_rect": [
+          84.0,
+          125.0,
+          44.0,
+          33.0
+        ],
+        "mid": {
+          "exposed_samples": 515,
+          "matched_colors": 48,
+          "matched_detail_samples": 337,
+          "matched_samples": 515
+        },
+        "near": {
+          "exposed_samples": 2726,
+          "matched_colors": 60,
+          "matched_detail_samples": 2205,
+          "matched_samples": 2726
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        121.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        167.0,
+        270.0,
+        320,
+        180
+      ],
+      "name": "02_ridge",
+      "near_source_rect": [
+        288.0,
+        270.0,
+        320,
+        180
+      ],
+      "player": [
+        400.461669921875,
+        167.978424072266
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/02_ridge.png",
+      "running": true
+    },
+    {
+      "animation": "air_idle_right",
+      "camera": [
+        978.0,
+        61.0
+      ],
+      "far_position": [
+        589.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        229.0,
+        227.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        818.0,
+        227.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 408,
+          "matched_colors": 26,
+          "matched_detail_samples": 153,
+          "matched_samples": 408
+        },
+        "foreground": {
+          "exposed_samples": 2205,
+          "matched_colors": 46,
+          "matched_detail_samples": 1896,
+          "matched_samples": 2205
+        },
+        "hero_excluded_samples": 80,
+        "hero_exclusion_rect": [
+          96.0,
+          122.0,
+          38.0,
+          33.0
+        ],
+        "mid": {
+          "exposed_samples": 344,
+          "matched_colors": 47,
+          "matched_detail_samples": 248,
+          "matched_samples": 344
+        },
+        "near": {
+          "exposed_samples": 563,
+          "matched_colors": 42,
+          "matched_detail_samples": 479,
+          "matched_samples": 563
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        344.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        474.0,
+        227.0,
+        320,
+        180
+      ],
+      "name": "03_segment_02",
+      "near_source_rect": [
+        818.0,
+        227.0,
+        320,
+        180
+      ],
+      "player": [
+        929.652648925781,
+        125.341018676758
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/03_segment_02.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        1745.0,
+        104.0
+      ],
+      "far_position": [
+        1141.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        444.0,
+        270.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        1585.0,
+        270.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 114,
+          "matched_colors": 14,
+          "matched_detail_samples": 14,
+          "matched_samples": 114
+        },
+        "foreground": {
+          "exposed_samples": 571,
+          "matched_colors": 37,
+          "matched_detail_samples": 517,
+          "matched_samples": 571
+        },
+        "hero_excluded_samples": 88,
+        "hero_exclusion_rect": [
+          83.0,
+          125.0,
+          45.0,
+          33.0
+        ],
+        "mid": {
+          "exposed_samples": 289,
+          "matched_colors": 52,
+          "matched_detail_samples": 194,
+          "matched_samples": 289
+        },
+        "near": {
+          "exposed_samples": 2538,
+          "matched_colors": 60,
+          "matched_detail_samples": 2005,
+          "matched_samples": 2538
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        666.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        919.0,
+        270.0,
+        320,
+        180
+      ],
+      "name": "04_segment_03",
+      "near_source_rect": [
+        1585.0,
+        270.0,
+        320,
+        180
+      ],
+      "player": [
+        1697.15710449219,
+        167.925216674805
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/04_segment_03.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        2514.0,
+        104.0
+      ],
+      "far_position": [
+        1695.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        659.0,
+        270.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        2354.0,
+        270.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 74,
+          "matched_colors": 11,
+          "matched_detail_samples": 14,
+          "matched_samples": 74
+        },
+        "foreground": {
+          "exposed_samples": 1842,
+          "matched_colors": 43,
+          "matched_detail_samples": 1592,
+          "matched_samples": 1842
+        },
+        "hero_excluded_samples": 88,
+        "hero_exclusion_rect": [
+          84.0,
+          125.0,
+          44.0,
+          33.0
+        ],
+        "mid": {
+          "exposed_samples": 758,
+          "matched_colors": 60,
+          "matched_detail_samples": 393,
+          "matched_samples": 758
+        },
+        "near": {
+          "exposed_samples": 838,
+          "matched_colors": 52,
+          "matched_detail_samples": 681,
+          "matched_samples": 838
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        989.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        1365.0,
+        270.0,
+        320,
+        180
+      ],
+      "name": "05_segment_04",
+      "near_source_rect": [
+        2354.0,
+        270.0,
+        320,
+        180
+      ],
+      "player": [
+        2465.5458984375,
+        167.925247192383
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/05_segment_04.png",
+      "running": true
+    },
+    {
+      "animation": "jump_right",
+      "camera": [
+        3282.0,
+        92.0
+      ],
+      "far_position": [
+        2248.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        874.0,
+        258.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        3122.0,
+        258.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 145,
+          "matched_colors": 22,
+          "matched_detail_samples": 51,
+          "matched_samples": 145
+        },
+        "foreground": {
+          "exposed_samples": 2596,
+          "matched_colors": 50,
+          "matched_detail_samples": 2226,
+          "matched_samples": 2595
+        },
+        "hero_excluded_samples": 99,
+        "hero_exclusion_rect": [
+          99.0,
+          122.0,
+          44.0,
+          35.0
+        ],
+        "mid": {
+          "exposed_samples": 48,
+          "matched_colors": 20,
+          "matched_detail_samples": 30,
+          "matched_samples": 48
+        },
+        "near": {
+          "exposed_samples": 712,
+          "matched_colors": 44,
+          "matched_detail_samples": 559,
+          "matched_samples": 712
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        1311.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        1811.0,
+        258.0,
+        320,
+        180
+      ],
+      "name": "06_segment_05",
+      "near_source_rect": [
+        3122.0,
+        258.0,
+        320,
+        180
+      ],
+      "player": [
+        3234.03759765625,
+        155.874694824219
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/06_segment_05.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        4049.0,
+        104.0
+      ],
+      "far_position": [
+        2800.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        1089.0,
+        270.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        3889.0,
+        270.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 0,
+          "matched_colors": 0,
+          "matched_detail_samples": 0,
+          "matched_samples": 0
+        },
+        "foreground": {
+          "exposed_samples": 2277,
+          "matched_colors": 45,
+          "matched_detail_samples": 2036,
+          "matched_samples": 2277
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          94.0,
+          123.0,
+          35.0,
+          35.0
+        ],
+        "mid": {
+          "exposed_samples": 273,
+          "matched_colors": 47,
+          "matched_detail_samples": 153,
+          "matched_samples": 273
+        },
+        "near": {
+          "exposed_samples": 969,
+          "matched_colors": 43,
+          "matched_detail_samples": 702,
+          "matched_samples": 968
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        1633.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        2256.0,
+        270.0,
+        320,
+        180
+      ],
+      "name": "07_segment_06",
+      "near_source_rect": [
+        3889.0,
+        270.0,
+        320,
+        180
+      ],
+      "player": [
+        4000.96069335938,
+        167.925262451172
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/07_segment_06.png",
+      "running": true
+    },
+    {
+      "animation": "jump_right",
+      "camera": [
+        4817.0,
+        75.0
+      ],
+      "far_position": [
+        3353.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        1304.0,
+        241.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        4657.0,
+        241.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 307,
+          "matched_colors": 21,
+          "matched_detail_samples": 48,
+          "matched_samples": 307
+        },
+        "foreground": {
+          "exposed_samples": 1851,
+          "matched_colors": 40,
+          "matched_detail_samples": 1692,
+          "matched_samples": 1851
+        },
+        "hero_excluded_samples": 88,
+        "hero_exclusion_rect": [
+          94.0,
+          121.0,
+          45.0,
+          34.0
+        ],
+        "mid": {
+          "exposed_samples": 150,
+          "matched_colors": 33,
+          "matched_detail_samples": 112,
+          "matched_samples": 150
+        },
+        "near": {
+          "exposed_samples": 1204,
+          "matched_colors": 46,
+          "matched_detail_samples": 977,
+          "matched_samples": 1204
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        1956.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        2701.0,
+        241.0,
+        320,
+        180
+      ],
+      "name": "08_segment_07",
+      "near_source_rect": [
+        4657.0,
+        241.0,
+        320,
+        180
+      ],
+      "player": [
+        4769.1064453125,
+        139.146575927734
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/08_segment_07.png",
+      "running": true
+    },
+    {
+      "animation": "run_right",
+      "camera": [
+        5585.0,
+        104.0
+      ],
+      "far_position": [
+        3906.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        1519.0,
+        270.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        5425.0,
+        270.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 0,
+          "matched_colors": 0,
+          "matched_detail_samples": 0,
+          "matched_samples": 0
+        },
+        "foreground": {
+          "exposed_samples": 3107,
+          "matched_colors": 49,
+          "matched_detail_samples": 2618,
+          "matched_samples": 3107
+        },
+        "hero_excluded_samples": 88,
+        "hero_exclusion_rect": [
+          81.0,
+          125.0,
+          47.0,
+          33.0
+        ],
+        "mid": {
+          "exposed_samples": 0,
+          "matched_colors": 0,
+          "matched_detail_samples": 0,
+          "matched_samples": 0
+        },
+        "near": {
+          "exposed_samples": 405,
+          "matched_colors": 41,
+          "matched_detail_samples": 327,
+          "matched_samples": 405
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        2279.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        3146.0,
+        270.0,
+        320,
+        180
+      ],
+      "name": "09_segment_08",
+      "near_source_rect": [
+        5425.0,
+        270.0,
+        320,
+        180
+      ],
+      "player": [
+        5537.44921875,
+        167.925231933594
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/09_segment_08.png",
+      "running": true
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        5984.0,
+        104.0
+      ],
+      "far_position": [
+        4193.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        1631.0,
+        270.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        5824.0,
+        270.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 148,
+          "matched_colors": 18,
+          "matched_detail_samples": 53,
+          "matched_samples": 148
+        },
+        "foreground": {
+          "exposed_samples": 2629,
+          "matched_colors": 46,
+          "matched_detail_samples": 2199,
+          "matched_samples": 2629
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          282.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 347,
+          "matched_colors": 44,
+          "matched_detail_samples": 219,
+          "matched_samples": 347
+        },
+        "near": {
+          "exposed_samples": 395,
+          "matched_colors": 51,
+          "matched_detail_samples": 287,
+          "matched_samples": 395
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        2446.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        3378.0,
+        270.0,
+        320,
+        180
+      ],
+      "name": "99_end",
+      "near_source_rect": [
+        5824.0,
+        270.0,
+        320,
+        180
+      ],
+      "player": [
+        6115.76220703125,
+        167.925231933594
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/99_end.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        578.0,
+        104.0
+      ],
+      "far_position": [
+        301.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        117.0,
+        270.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        418.0,
+        270.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 283,
+          "matched_colors": 27,
+          "matched_detail_samples": 115,
+          "matched_samples": 283
+        },
+        "foreground": {
+          "exposed_samples": 606,
+          "matched_colors": 35,
+          "matched_detail_samples": 532,
+          "matched_samples": 606
+        },
+        "hero_excluded_samples": 72,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          34.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 82,
+          "matched_colors": 30,
+          "matched_detail_samples": 62,
+          "matched_samples": 82
+        },
+        "near": {
+          "exposed_samples": 2557,
+          "matched_colors": 58,
+          "matched_detail_samples": 2025,
+          "matched_samples": 2557
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        176.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        242.0,
+        270.0,
+        320,
+        180
+      ],
+      "name": "course_00_start",
+      "near_source_rect": [
+        418.0,
+        270.0,
+        320,
+        180
+      ],
+      "player": [
+        530.0,
+        167.9765625
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_00_start.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        659.0,
+        83.0
+      ],
+      "far_position": [
+        359.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        140.0,
+        249.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        499.0,
+        249.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 633,
+          "matched_colors": 24,
+          "matched_detail_samples": 170,
+          "matched_samples": 633
+        },
+        "foreground": {
+          "exposed_samples": 899,
+          "matched_colors": 36,
+          "matched_detail_samples": 784,
+          "matched_samples": 899
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 486,
+          "matched_colors": 52,
+          "matched_detail_samples": 352,
+          "matched_samples": 486
+        },
+        "near": {
+          "exposed_samples": 1501,
+          "matched_colors": 49,
+          "matched_detail_samples": 1254,
+          "matched_samples": 1501
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        210.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        289.0,
+        249.0,
+        320,
+        180
+      ],
+      "name": "course_01_sedan_roof",
+      "near_source_rect": [
+        499.0,
+        249.0,
+        320,
+        180
+      ],
+      "player": [
+        611.348693847656,
+        146.92497253418
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_01_sedan_roof.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        711.0,
+        33.0
+      ],
+      "far_position": [
+        397.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        154.0,
+        199.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        551.0,
+        199.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 1585,
+          "matched_colors": 29,
+          "matched_detail_samples": 299,
+          "matched_samples": 1585
+        },
+        "foreground": {
+          "exposed_samples": 857,
+          "matched_colors": 40,
+          "matched_detail_samples": 725,
+          "matched_samples": 857
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 330,
+          "matched_colors": 47,
+          "matched_detail_samples": 259,
+          "matched_samples": 330
+        },
+        "near": {
+          "exposed_samples": 747,
+          "matched_colors": 43,
+          "matched_detail_samples": 605,
+          "matched_samples": 747
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        231.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        320.0,
+        199.0,
+        320,
+        180
+      ],
+      "name": "course_02_gate_left_landing",
+      "near_source_rect": [
+        551.0,
+        199.0,
+        320,
+        180
+      ],
+      "player": [
+        663.032592773438,
+        96.9908142089844
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_02_gate_left_landing.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        768.0,
+        35.0
+      ],
+      "far_position": [
+        438.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        170.0,
+        201.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        608.0,
+        201.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 1479,
+          "matched_colors": 29,
+          "matched_detail_samples": 307,
+          "matched_samples": 1479
+        },
+        "foreground": {
+          "exposed_samples": 874,
+          "matched_colors": 37,
+          "matched_detail_samples": 758,
+          "matched_samples": 874
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 435,
+          "matched_colors": 47,
+          "matched_detail_samples": 337,
+          "matched_samples": 435
+        },
+        "near": {
+          "exposed_samples": 731,
+          "matched_colors": 42,
+          "matched_detail_samples": 592,
+          "matched_samples": 731
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        255.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        353.0,
+        201.0,
+        320,
+        180
+      ],
+      "name": "course_03_gate_second_floor",
+      "near_source_rect": [
+        608.0,
+        201.0,
+        320,
+        180
+      ],
+      "player": [
+        719.716430664063,
+        98.9634704589844
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_03_gate_second_floor.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        807.0,
+        -9.0
+      ],
+      "far_position": [
+        466.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        181.0,
+        157.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        647.0,
+        157.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 2213,
+          "matched_colors": 28,
+          "matched_detail_samples": 421,
+          "matched_samples": 2213
+        },
+        "foreground": {
+          "exposed_samples": 454,
+          "matched_colors": 31,
+          "matched_detail_samples": 411,
+          "matched_samples": 454
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 442,
+          "matched_colors": 54,
+          "matched_detail_samples": 338,
+          "matched_samples": 442
+        },
+        "near": {
+          "exposed_samples": 410,
+          "matched_colors": 37,
+          "matched_detail_samples": 339,
+          "matched_samples": 410
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        272.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        375.0,
+        157.0,
+        320,
+        180
+      ],
+      "name": "course_04_gate_roof",
+      "near_source_rect": [
+        647.0,
+        157.0,
+        320,
+        180
+      ],
+      "player": [
+        759.402526855469,
+        54.9975357055664
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_04_gate_roof.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        909.0,
+        -9.0
+      ],
+      "far_position": [
+        539.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        210.0,
+        157.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        749.0,
+        157.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 1812,
+          "matched_colors": 31,
+          "matched_detail_samples": 381,
+          "matched_samples": 1812
+        },
+        "foreground": {
+          "exposed_samples": 1128,
+          "matched_colors": 45,
+          "matched_detail_samples": 963,
+          "matched_samples": 1128
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 405,
+          "matched_colors": 49,
+          "matched_detail_samples": 341,
+          "matched_samples": 405
+        },
+        "near": {
+          "exposed_samples": 174,
+          "matched_colors": 33,
+          "matched_detail_samples": 146,
+          "matched_samples": 174
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        315.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        434.0,
+        157.0,
+        320,
+        180
+      ],
+      "name": "course_05_gate_roof_edge",
+      "near_source_rect": [
+        749.0,
+        157.0,
+        320,
+        180
+      ],
+      "player": [
+        861.086364746094,
+        54.9975357055664
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_05_gate_roof_edge.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        982.0,
+        26.0
+      ],
+      "far_position": [
+        592.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        230.0,
+        192.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        822.0,
+        192.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 853,
+          "matched_colors": 27,
+          "matched_detail_samples": 244,
+          "matched_samples": 853
+        },
+        "foreground": {
+          "exposed_samples": 1954,
+          "matched_colors": 48,
+          "matched_detail_samples": 1660,
+          "matched_samples": 1954
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 322,
+          "matched_colors": 47,
+          "matched_detail_samples": 235,
+          "matched_samples": 322
+        },
+        "near": {
+          "exposed_samples": 390,
+          "matched_colors": 44,
+          "matched_detail_samples": 325,
+          "matched_samples": 390
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        345.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        477.0,
+        192.0,
+        320,
+        180
+      ],
+      "name": "course_06_tower_low_landing",
+      "near_source_rect": [
+        822.0,
+        192.0,
+        320,
+        180
+      ],
+      "player": [
+        933.774475097656,
+        89.9251098632813
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_06_tower_low_landing.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        1037.0,
+        -26.0
+      ],
+      "far_position": [
+        631.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        246.0,
+        140.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        877.0,
+        140.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 1744,
+          "matched_colors": 26,
+          "matched_detail_samples": 248,
+          "matched_samples": 1744
+        },
+        "foreground": {
+          "exposed_samples": 1297,
+          "matched_colors": 46,
+          "matched_detail_samples": 1093,
+          "matched_samples": 1297
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 243,
+          "matched_colors": 40,
+          "matched_detail_samples": 184,
+          "matched_samples": 243
+        },
+        "near": {
+          "exposed_samples": 235,
+          "matched_colors": 35,
+          "matched_detail_samples": 194,
+          "matched_samples": 235
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        368.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        509.0,
+        140.0,
+        320,
+        180
+      ],
+      "name": "course_07_tower_second_floor",
+      "near_source_rect": [
+        877.0,
+        140.0,
+        320,
+        180
+      ],
+      "player": [
+        989.242797851563,
+        37.9967346191406
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_07_tower_second_floor.png",
+      "running": false
+    },
+    {
+      "animation": "idle_left",
+      "camera": [
+        981.0,
+        -72.0
+      ],
+      "far_position": [
+        591.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        230.0,
+        94.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        821.0,
+        94.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 2576,
+          "matched_colors": 24,
+          "matched_detail_samples": 273,
+          "matched_samples": 2576
+        },
+        "foreground": {
+          "exposed_samples": 783,
+          "matched_colors": 43,
+          "matched_detail_samples": 639,
+          "matched_samples": 783
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          88.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 158,
+          "matched_colors": 31,
+          "matched_detail_samples": 116,
+          "matched_samples": 158
+        },
+        "near": {
+          "exposed_samples": 2,
+          "matched_colors": 2,
+          "matched_detail_samples": 1,
+          "matched_samples": 2
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        345.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        476.0,
+        94.0,
+        320,
+        180
+      ],
+      "name": "course_08_tower_upper_landing",
+      "near_source_rect": [
+        821.0,
+        94.0,
+        320,
+        180
+      ],
+      "player": [
+        932.652648925781,
+        -8.02230739593506
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_08_tower_upper_landing.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        1056.0,
+        -106.0
+      ],
+      "far_position": [
+        645.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        251.0,
+        60.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        896.0,
+        60.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 2982,
+          "matched_colors": 26,
+          "matched_detail_samples": 162,
+          "matched_samples": 2982
+        },
+        "foreground": {
+          "exposed_samples": 386,
+          "matched_colors": 32,
+          "matched_detail_samples": 342,
+          "matched_samples": 386
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 151,
+          "matched_colors": 41,
+          "matched_detail_samples": 107,
+          "matched_samples": 151
+        },
+        "near": {
+          "exposed_samples": 0,
+          "matched_colors": 0,
+          "matched_detail_samples": 0,
+          "matched_samples": 0
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        376.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        520.0,
+        60.0,
+        320,
+        180
+      ],
+      "name": "course_09_tower_roof",
+      "near_source_rect": [
+        896.0,
+        60.0,
+        320,
+        180
+      ],
+      "player": [
+        1007.83355712891,
+        -42.0597763061523
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_09_tower_roof.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        1152.0,
+        -106.0
+      ],
+      "far_position": [
+        714.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        278.0,
+        60.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        992.0,
+        60.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 2686,
+          "matched_colors": 18,
+          "matched_detail_samples": 36,
+          "matched_samples": 2686
+        },
+        "foreground": {
+          "exposed_samples": 286,
+          "matched_colors": 29,
+          "matched_detail_samples": 247,
+          "matched_samples": 286
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 531,
+          "matched_colors": 52,
+          "matched_detail_samples": 321,
+          "matched_samples": 531
+        },
+        "near": {
+          "exposed_samples": 16,
+          "matched_colors": 10,
+          "matched_detail_samples": 15,
+          "matched_samples": 16
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        417.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        575.0,
+        60.0,
+        320,
+        180
+      ],
+      "name": "course_10_tower_roof_edge",
+      "near_source_rect": [
+        992.0,
+        60.0,
+        320,
+        180
+      ],
+      "player": [
+        1103.51733398438,
+        -42.0597763061523
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_10_tower_roof_edge.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        1265.0,
+        104.0
+      ],
+      "far_position": [
+        796.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        309.0,
+        270.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        1105.0,
+        270.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 72,
+          "matched_colors": 12,
+          "matched_detail_samples": 24,
+          "matched_samples": 72
+        },
+        "foreground": {
+          "exposed_samples": 1176,
+          "matched_colors": 42,
+          "matched_detail_samples": 1065,
+          "matched_samples": 1176
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 485,
+          "matched_colors": 51,
+          "matched_detail_samples": 337,
+          "matched_samples": 485
+        },
+        "near": {
+          "exposed_samples": 1786,
+          "matched_colors": 53,
+          "matched_detail_samples": 1487,
+          "matched_samples": 1786
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        464.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        641.0,
+        270.0,
+        320,
+        180
+      ],
+      "name": "course_11_return_to_sand",
+      "near_source_rect": [
+        1105.0,
+        270.0,
+        320,
+        180
+      ],
+      "player": [
+        1217.20092773438,
+        167.976943969727
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_11_return_to_sand.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        1322.0,
+        69.0
+      ],
+      "far_position": [
+        837.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        325.0,
+        235.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        1162.0,
+        235.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 305,
+          "matched_colors": 21,
+          "matched_detail_samples": 57,
+          "matched_samples": 305
+        },
+        "foreground": {
+          "exposed_samples": 579,
+          "matched_colors": 36,
+          "matched_detail_samples": 519,
+          "matched_samples": 579
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 1018,
+          "matched_colors": 57,
+          "matched_detail_samples": 657,
+          "matched_samples": 1018
+        },
+        "near": {
+          "exposed_samples": 1617,
+          "matched_colors": 50,
+          "matched_detail_samples": 1302,
+          "matched_samples": 1617
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        488.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        674.0,
+        235.0,
+        320,
+        180
+      ],
+      "name": "course_12_truck_cab",
+      "near_source_rect": [
+        1162.0,
+        235.0,
+        320,
+        180
+      ],
+      "player": [
+        1273.94018554688,
+        132.987518310547
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_12_truck_cab.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        1371.0,
+        86.0
+      ],
+      "far_position": [
+        872.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        339.0,
+        252.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        1211.0,
+        252.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 302,
+          "matched_colors": 19,
+          "matched_detail_samples": 15,
+          "matched_samples": 302
+        },
+        "foreground": {
+          "exposed_samples": 998,
+          "matched_colors": 36,
+          "matched_detail_samples": 893,
+          "matched_samples": 998
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 880,
+          "matched_colors": 59,
+          "matched_detail_samples": 601,
+          "matched_samples": 880
+        },
+        "near": {
+          "exposed_samples": 1339,
+          "matched_colors": 49,
+          "matched_detail_samples": 1092,
+          "matched_samples": 1339
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        509.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        702.0,
+        252.0,
+        320,
+        180
+      ],
+      "name": "course_13_truck_flatbed",
+      "near_source_rect": [
+        1211.0,
+        252.0,
+        320,
+        180
+      ],
+      "player": [
+        1323.40222167969,
+        149.963684082031
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_13_truck_flatbed.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        1455.0,
+        104.0
+      ],
+      "far_position": [
+        932.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        363.0,
+        270.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        1295.0,
+        270.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 404,
+          "matched_colors": 21,
+          "matched_detail_samples": 71,
+          "matched_samples": 404
+        },
+        "foreground": {
+          "exposed_samples": 1693,
+          "matched_colors": 42,
+          "matched_detail_samples": 1487,
+          "matched_samples": 1693
+        },
+        "hero_excluded_samples": 81,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 704,
+          "matched_colors": 55,
+          "matched_detail_samples": 413,
+          "matched_samples": 704
+        },
+        "near": {
+          "exposed_samples": 718,
+          "matched_colors": 46,
+          "matched_detail_samples": 600,
+          "matched_samples": 718
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        544.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        751.0,
+        270.0,
+        320,
+        180
+      ],
+      "name": "course_14_route_exit",
+      "near_source_rect": [
+        1295.0,
+        270.0,
+        320,
+        180
+      ],
+      "player": [
+        1407.01525878906,
+        167.925231933594
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/course_14_route_exit.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        5120.0,
+        -23.0
+      ],
+      "far_position": [
+        3571.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        1389.0,
+        143.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        4960.0,
+        143.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 1155,
+          "matched_colors": 23,
+          "matched_detail_samples": 70,
+          "matched_samples": 1155
+        },
+        "foreground": {
+          "exposed_samples": 1177,
+          "matched_colors": 41,
+          "matched_detail_samples": 914,
+          "matched_samples": 1177
+        },
+        "hero_excluded_samples": 256,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          34.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 114,
+          "matched_colors": 18,
+          "matched_detail_samples": 86,
+          "matched_samples": 114
+        },
+        "near": {
+          "exposed_samples": 898,
+          "matched_colors": 48,
+          "matched_detail_samples": 731,
+          "matched_samples": 898
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        2083.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        2877.0,
+        143.0,
+        320,
+        180
+      ],
+      "name": "elevator_01_up_mid",
+      "near_source_rect": [
+        4960.0,
+        143.0,
+        320,
+        180
+      ],
+      "player": [
+        5071.68359375,
+        41.2687492370605
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/elevator_01_up_mid.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        5120.0,
+        -149.0
+      ],
+      "far_position": [
+        3571.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        1389.0,
+        17.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        4960.0,
+        17.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 2715,
+          "matched_colors": 7,
+          "matched_detail_samples": 9,
+          "matched_samples": 2715
+        },
+        "foreground": {
+          "exposed_samples": 319,
+          "matched_colors": 27,
+          "matched_detail_samples": 261,
+          "matched_samples": 319
+        },
+        "hero_excluded_samples": 564,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          34.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 2,
+          "matched_colors": 1,
+          "matched_detail_samples": 2,
+          "matched_samples": 2
+        },
+        "near": {
+          "exposed_samples": 0,
+          "matched_colors": 0,
+          "matched_detail_samples": 0,
+          "matched_samples": 0
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        2083.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        2877.0,
+        17.0,
+        320,
+        180
+      ],
+      "name": "elevator_01_up_dock",
+      "near_source_rect": [
+        4960.0,
+        17.0,
+        320,
+        180
+      ],
+      "player": [
+        5071.68359375,
+        -85.0644836425781
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/elevator_01_up_dock.png",
+      "running": false
+    },
+    {
+      "animation": "idle_right",
+      "camera": [
+        5170.0,
+        -149.0
+      ],
+      "far_position": [
+        3607.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        1403.0,
+        17.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        5010.0,
+        17.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 2603,
+          "matched_colors": 6,
+          "matched_detail_samples": 3,
+          "matched_samples": 2603
+        },
+        "foreground": {
+          "exposed_samples": 346,
+          "matched_colors": 36,
+          "matched_detail_samples": 303,
+          "matched_samples": 346
+        },
+        "hero_excluded_samples": 645,
+        "hero_exclusion_rect": [
+          102.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 0,
+          "matched_colors": 0,
+          "matched_detail_samples": 0,
+          "matched_samples": 0
+        },
+        "near": {
+          "exposed_samples": 6,
+          "matched_colors": 5,
+          "matched_detail_samples": 6,
+          "matched_samples": 6
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        2104.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        2906.0,
+        17.0,
+        320,
+        180
+      ],
+      "name": "elevator_02_roof_exit",
+      "near_source_rect": [
+        5010.0,
+        17.0,
+        320,
+        180
+      ],
+      "player": [
+        5122.3671875,
+        -85.0644836425781
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/elevator_02_roof_exit.png",
+      "running": false
+    },
+    {
+      "animation": "idle_left",
+      "camera": [
+        5120.0,
+        -22.0
+      ],
+      "far_position": [
+        3571.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        1389.0,
+        144.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        4960.0,
+        144.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 1161,
+          "matched_colors": 23,
+          "matched_detail_samples": 69,
+          "matched_samples": 1161
+        },
+        "foreground": {
+          "exposed_samples": 1165,
+          "matched_colors": 43,
+          "matched_detail_samples": 929,
+          "matched_samples": 1165
+        },
+        "hero_excluded_samples": 256,
+        "hero_exclusion_rect": [
+          89.0,
+          122.0,
+          34.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 117,
+          "matched_colors": 20,
+          "matched_detail_samples": 78,
+          "matched_samples": 117
+        },
+        "near": {
+          "exposed_samples": 901,
+          "matched_colors": 48,
+          "matched_detail_samples": 745,
+          "matched_samples": 901
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        2083.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        2877.0,
+        144.0,
+        320,
+        180
+      ],
+      "name": "elevator_03_down_mid",
+      "near_source_rect": [
+        4960.0,
+        144.0,
+        320,
+        180
+      ],
+      "player": [
+        5071.68359375,
+        41.6021575927734
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/elevator_03_down_mid.png",
+      "running": false
+    },
+    {
+      "animation": "idle_left",
+      "camera": [
+        5120.0,
+        104.0
+      ],
+      "far_position": [
+        3571.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        1389.0,
+        270.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        4960.0,
+        270.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 96,
+          "matched_colors": 16,
+          "matched_detail_samples": 15,
+          "matched_samples": 96
+        },
+        "foreground": {
+          "exposed_samples": 1033,
+          "matched_colors": 38,
+          "matched_detail_samples": 836,
+          "matched_samples": 1033
+        },
+        "hero_excluded_samples": 564,
+        "hero_exclusion_rect": [
+          89.0,
+          122.0,
+          34.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 85,
+          "matched_colors": 32,
+          "matched_detail_samples": 61,
+          "matched_samples": 85
+        },
+        "near": {
+          "exposed_samples": 1822,
+          "matched_colors": 54,
+          "matched_detail_samples": 1446,
+          "matched_samples": 1822
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        2083.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        2877.0,
+        270.0,
+        320,
+        180
+      ],
+      "name": "elevator_03_down_dock",
+      "near_source_rect": [
+        4960.0,
+        270.0,
+        320,
+        180
+      ],
+      "player": [
+        5071.68359375,
+        167.935516357422
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/elevator_03_down_dock.png",
+      "running": false
+    },
+    {
+      "animation": "idle_left",
+      "camera": [
+        5062.0,
+        104.0
+      ],
+      "far_position": [
+        3529.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        1373.0,
+        270.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        4902.0,
+        270.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 32,
+          "matched_colors": 14,
+          "matched_detail_samples": 1,
+          "matched_samples": 32
+        },
+        "foreground": {
+          "exposed_samples": 761,
+          "matched_colors": 41,
+          "matched_detail_samples": 635,
+          "matched_samples": 761
+        },
+        "hero_excluded_samples": 645,
+        "hero_exclusion_rect": [
+          88.0,
+          122.0,
+          35.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 94,
+          "matched_colors": 38,
+          "matched_detail_samples": 66,
+          "matched_samples": 94
+        },
+        "near": {
+          "exposed_samples": 2068,
+          "matched_colors": 52,
+          "matched_detail_samples": 1631,
+          "matched_samples": 2068
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        2059.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        2843.0,
+        270.0,
+        320,
+        180
+      ],
+      "name": "elevator_04_ground_exit",
+      "near_source_rect": [
+        4902.0,
+        270.0,
+        320,
+        180
+      ],
+      "player": [
+        5014.0,
+        167.935516357422
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/elevator_04_ground_exit.png",
+      "running": false
+    },
+    {
+      "animation": "idle_left",
+      "camera": [
+        5070.0,
+        104.0
+      ],
+      "far_position": [
+        3535.0,
+        -256.0
+      ],
+      "far_source_rect": [
+        1375.0,
+        270.0,
+        320,
+        180
+      ],
+      "foreground_source_rect": [
+        4910.0,
+        270.0,
+        320,
+        180
+      ],
+      "ground_y": 168.0,
+      "layer_render_evidence": {
+        "far": {
+          "exposed_samples": 49,
+          "matched_colors": 15,
+          "matched_detail_samples": 17,
+          "matched_samples": 49
+        },
+        "foreground": {
+          "exposed_samples": 986,
+          "matched_colors": 42,
+          "matched_detail_samples": 851,
+          "matched_samples": 986
+        },
+        "hero_excluded_samples": 88,
+        "hero_exclusion_rect": [
+          89.0,
+          122.0,
+          34.0,
+          36.0
+        ],
+        "mid": {
+          "exposed_samples": 98,
+          "matched_colors": 41,
+          "matched_detail_samples": 72,
+          "matched_samples": 98
+        },
+        "near": {
+          "exposed_samples": 2379,
+          "matched_colors": 56,
+          "matched_detail_samples": 1880,
+          "matched_samples": 2379
+        },
+        "sample_stride": 4
+      },
+      "mid_position": [
+        2062.0,
+        -256.0
+      ],
+      "mid_source_rect": [
+        2848.0,
+        270.0,
+        320,
+        180
+      ],
+      "name": "elevator_05_moving_exit",
+      "near_source_rect": [
+        4910.0,
+        270.0,
+        320,
+        180
+      ],
+      "player": [
+        5022.0,
+        167.991485595703
+      ],
+      "png": "E:/CodexWorkspace/Nightwalker/game/evidence/battlefield_run_test/elevator_05_moving_exit.png",
+      "running": false
+    }
+  ],
+  "checks": 477,
+  "course": {
+    "completed": true,
+    "intermediate_relocations": 0,
+    "setup_relocations": 1,
+    "waypoints": [
+      {
+        "airborne_ticks": 40,
+        "id": "sedan_roof",
+        "jump_presses": 1,
+        "mode": "jump",
+        "passed": true,
+        "physics_ticks": 90,
+        "position": [
+          611.348693847656,
+          146.92497253418
+        ],
+        "stair_contact_ticks": 0,
+        "stair_surface_ids": [],
+        "start": [
+          530.0,
+          167.9765625
+        ],
+        "support_error": 0.0750274658203125,
+        "surface_id": "sedan_01_body",
+        "target": [
+          612.0,
+          147.0
+        ],
+        "target_y_error": 0.0750274658203125
+      },
+      {
+        "airborne_ticks": 64,
+        "id": "gate_left_landing",
+        "jump_presses": 2,
+        "mode": "jump",
+        "passed": true,
+        "physics_ticks": 70,
+        "position": [
+          663.032592773438,
+          96.9908142089844
+        ],
+        "stair_contact_ticks": 0,
+        "stair_surface_ids": [],
+        "start": [
+          611.348693847656,
+          146.92497253418
+        ],
+        "support_error": 0.009185791015625,
+        "surface_id": "gate_01_left_landing",
+        "target": [
+          664.0,
+          97.0
+        ],
+        "target_y_error": 0.009185791015625
+      },
+      {
+        "airborne_ticks": 0,
+        "id": "gate_second_floor",
+        "jump_presses": 0,
+        "mode": "walk",
+        "passed": true,
+        "physics_ticks": 61,
+        "position": [
+          719.716430664063,
+          98.9634704589844
+        ],
+        "stair_contact_ticks": 0,
+        "stair_surface_ids": [],
+        "start": [
+          663.032592773438,
+          96.9908142089844
+        ],
+        "support_error": 0.036529541015625,
+        "surface_id": "gate_01_second_floor",
+        "target": [
+          720.0,
+          99.0
+        ],
+        "target_y_error": 0.036529541015625
+      },
+      {
+        "airborne_ticks": 66,
+        "id": "gate_roof",
+        "jump_presses": 2,
+        "mode": "jump",
+        "passed": true,
+        "physics_ticks": 72,
+        "position": [
+          759.402526855469,
+          54.9975357055664
+        ],
+        "stair_contact_ticks": 0,
+        "stair_surface_ids": [],
+        "start": [
+          719.716430664063,
+          98.9634704589844
+        ],
+        "support_error": 0.00246429443359375,
+        "surface_id": "gate_01_roof",
+        "target": [
+          760.0,
+          55.0
+        ],
+        "target_y_error": 0.00246429443359375
+      },
+      {
+        "airborne_ticks": 0,
+        "id": "gate_roof_edge",
+        "jump_presses": 0,
+        "mode": "walk",
+        "passed": true,
+        "physics_ticks": 107,
+        "position": [
+          861.086364746094,
+          54.9975357055664
+        ],
+        "stair_contact_ticks": 0,
+        "stair_surface_ids": [],
+        "start": [
+          759.402526855469,
+          54.9975357055664
+        ],
+        "support_error": 0.00246429443359375,
+        "surface_id": "gate_01_roof",
+        "target": [
+          862.0,
+          55.0
+        ],
+        "target_y_error": 0.00246429443359375
+      },
+      {
+        "airborne_ticks": 52,
+        "id": "tower_low_landing",
+        "jump_presses": 1,
+        "mode": "jump",
+        "passed": true,
+        "physics_ticks": 77,
+        "position": [
+          933.774475097656,
+          89.9251098632813
+        ],
+        "stair_contact_ticks": 0,
+        "stair_surface_ids": [],
+        "start": [
+          861.086364746094,
+          54.9975357055664
+        ],
+        "support_error": 0.07489013671875,
+        "surface_id": "tower_01_left_landing",
+        "target": [
+          934.0,
+          90.0
+        ],
+        "target_y_error": 0.07489013671875
+      },
+      {
+        "airborne_ticks": 0,
+        "id": "tower_second_floor",
+        "jump_presses": 0,
+        "mode": "walk",
+        "passed": true,
+        "physics_ticks": 146,
+        "position": [
+          989.242797851563,
+          37.9967346191406
+        ],
+        "stair_contact_ticks": 102,
+        "stair_surface_ids": [
+          "tower_01_stairs_lower_left"
+        ],
+        "start": [
+          933.774475097656,
+          89.9251098632813
+        ],
+        "support_error": 0.003265380859375,
+        "surface_id": "tower_01_second_floor",
+        "target": [
+          990.0,
+          38.0
+        ],
+        "target_y_error": 0.003265380859375
+      },
+      {
+        "airborne_ticks": 0,
+        "id": "tower_upper_landing",
+        "jump_presses": 0,
+        "mode": "walk",
+        "passed": true,
+        "physics_ticks": 129,
+        "position": [
+          932.652648925781,
+          -8.02230739593506
+        ],
+        "stair_contact_ticks": 96,
+        "stair_surface_ids": [
+          "tower_01_stairs_upper_left",
+          "tower_01_stairs_roof_left"
+        ],
+        "start": [
+          989.242797851563,
+          37.9967346191406
+        ],
+        "support_error": 0.0223073959350586,
+        "surface_id": "tower_01_upper_landing",
+        "target": [
+          932.0,
+          -8.0
+        ],
+        "target_y_error": 0.0223073959350586
+      },
+      {
+        "airborne_ticks": 0,
+        "id": "tower_roof",
+        "jump_presses": 0,
+        "mode": "walk",
+        "passed": true,
+        "physics_ticks": 133,
+        "position": [
+          1007.83355712891,
+          -42.0597763061523
+        ],
+        "stair_contact_ticks": 65,
+        "stair_surface_ids": [
+          "tower_01_stairs_roof_left"
+        ],
+        "start": [
+          932.652648925781,
+          -8.02230739593506
+        ],
+        "support_error": 0.0597763061523438,
+        "surface_id": "tower_01_roof",
+        "target": [
+          1008.0,
+          -42.0
+        ],
+        "target_y_error": 0.0597763061523438
+      },
+      {
+        "airborne_ticks": 0,
+        "id": "tower_roof_edge",
+        "jump_presses": 0,
+        "mode": "walk",
+        "passed": true,
+        "physics_ticks": 100,
+        "position": [
+          1103.51733398438,
+          -42.0597763061523
+        ],
+        "stair_contact_ticks": 0,
+        "stair_surface_ids": [],
+        "start": [
+          1007.83355712891,
+          -42.0597763061523
+        ],
+        "support_error": 0.0597763061523438,
+        "surface_id": "tower_01_roof",
+        "target": [
+          1104.0,
+          -42.0
+        ],
+        "target_y_error": 0.0597763061523438
+      },
+      {
+        "airborne_ticks": 49,
+        "id": "return_to_sand",
+        "jump_presses": 0,
+        "mode": "walk",
+        "passed": true,
+        "physics_ticks": 127,
+        "position": [
+          1217.20092773438,
+          167.976943969727
+        ],
+        "stair_contact_ticks": 0,
+        "stair_surface_ids": [],
+        "start": [
+          1103.51733398438,
+          -42.0597763061523
+        ],
+        "support_error": 0.0230560302734375,
+        "surface_id": "ground",
+        "target": [
+          1218.0,
+          168.0
+        ],
+        "target_y_error": 0.0230560302734375
+      },
+      {
+        "airborne_ticks": 35,
+        "id": "truck_cab",
+        "jump_presses": 1,
+        "mode": "jump",
+        "passed": true,
+        "physics_ticks": 70,
+        "position": [
+          1273.94018554688,
+          132.987518310547
+        ],
+        "stair_contact_ticks": 0,
+        "stair_surface_ids": [],
+        "start": [
+          1217.20092773438,
+          167.976943969727
+        ],
+        "support_error": 0.982574462890625,
+        "surface_id": "truck_01_body",
+        "target": [
+          1274.0,
+          134.0
+        ],
+        "target_y_error": 1.01248168945313
+      },
+      {
+        "airborne_ticks": 12,
+        "id": "truck_flatbed",
+        "jump_presses": 0,
+        "mode": "walk",
+        "passed": true,
+        "physics_ticks": 55,
+        "position": [
+          1323.40222167969,
+          149.963684082031
+        ],
+        "stair_contact_ticks": 0,
+        "stair_surface_ids": [],
+        "start": [
+          1273.94018554688,
+          132.987518310547
+        ],
+        "support_error": 0.03631591796875,
+        "surface_id": "truck_01_body",
+        "target": [
+          1324.0,
+          150.0
+        ],
+        "target_y_error": 0.03631591796875
+      },
+      {
+        "airborne_ticks": 15,
+        "id": "route_exit",
+        "jump_presses": 0,
+        "mode": "walk",
+        "passed": true,
+        "physics_ticks": 90,
+        "position": [
+          1407.01525878906,
+          167.925231933594
+        ],
+        "stair_contact_ticks": 0,
+        "stair_surface_ids": [],
+        "start": [
+          1323.40222167969,
+          149.963684082031
+        ],
+        "support_error": 0.07476806640625,
+        "surface_id": "ground",
+        "target": [
+          1408.0,
+          168.0
+        ],
+        "target_y_error": 0.07476806640625
+      }
+    ]
+  },
+  "distance": 6075.76220703125,
+  "elevator": {
+    "bottom_stop": 168.0,
+    "empty_cage_round_trip": true,
+    "final_position": [
+      5022.0,
+      167.991485595703
+    ],
+    "intermediate_relocations": 0,
+    "landing_range": 28.0,
+    "moving_edge_exit": {
+      "cage_y_at_exit": 107.999778747559,
+      "landed_surface_id": "ground",
+      "player": [
+        5022.0,
+        167.991485595703
+      ]
+    },
+    "rides": [
+      {
+        "end": [
+          5071.68359375,
+          -85.0644836425781
+        ],
+        "grounded_ticks": 379,
+        "max_foot_error": 0.0644836624487652,
+        "minimum_camera_y": -149.0,
+        "name": "01_up",
+        "physics_ticks": 379,
+        "platform_contact_ticks": 379,
+        "platform_end_y": -85.0,
+        "platform_start_y": 168.0,
+        "start": [
+          5071.68359375,
+          167.9765625
+        ],
+        "target_y": -85.0
+      },
+      {
+        "end": [
+          5071.68359375,
+          167.935516357422
+        ],
+        "grounded_ticks": 379,
+        "max_foot_error": 0.0644838809967041,
+        "minimum_camera_y": -149.0,
+        "name": "03_down",
+        "physics_ticks": 379,
+        "platform_contact_ticks": 377,
+        "platform_end_y": 168.0,
+        "platform_start_y": -85.0,
+        "start": [
+          5071.68359375,
+          -85.0644836425781
+        ],
+        "target_y": 168.0
+      }
+    ],
+    "roof_surface_id": "mega_01_left_roof",
+    "setup_relocations": 1,
+    "speed": 40.0,
+    "top_stop": -85.0
+  },
+  "failures": [],
+  "far_background": "res://assets/battlefield_far_background/battlefield_far_native.png",
+  "far_scroll_ratio": 0.28,
+  "far_source_distance": 1631.0,
+  "final_camera": [
+    5070.0,
+    104.0
+  ],
+  "final_player": [
+    5022.0,
+    167.991485595703
+  ],
+  "foreground": "res://assets/battlefield_traversal/foreground_native.png",
+  "ground_distance": 6075.76220703125,
+  "ground_final_player": [
+    6115.76220703125,
+    167.925231933594
+  ],
+  "ground_physics_ticks": 2662,
+  "ground_source": "res://assets/battlefield_layer_01/ground_profile.json",
+  "ground_traversal": {
+    "actual_takeoffs": 7,
+    "ground_support_ticks": 2136,
+    "max_ground_error": 4.07995096842447,
+    "max_vehicle_support_error": 1.50503540039063,
+    "unexpected_airborne_ticks": 0,
+    "vehicle_jump_events": [
+      {
+        "actual_takeoff": true,
+        "airborne_ticks": 49,
+        "initial_upward_velocity": -225.0,
+        "max_rise": 42.7555541992188,
+        "takeoff": [
+          529.260986328125,
+          167.978424072266
+        ],
+        "vehicle_id": "sedan_01"
+      },
+      {
+        "actual_takeoff": true,
+        "airborne_ticks": 45,
+        "initial_upward_velocity": -225.0,
+        "max_rise": 42.7175750732422,
+        "takeoff": [
+          881.352355957031,
+          167.925262451172
+        ],
+        "vehicle_id": "van_01"
+      },
+      {
+        "actual_takeoff": true,
+        "airborne_ticks": 58,
+        "initial_upward_velocity": -225.0,
+        "max_rise": 42.7175598144531,
+        "takeoff": [
+          1208.27661132813,
+          167.925247192383
+        ],
+        "vehicle_id": "truck_01"
+      },
+      {
+        "actual_takeoff": true,
+        "airborne_ticks": 49,
+        "initial_upward_velocity": -225.0,
+        "max_rise": 42.7175445556641,
+        "takeoff": [
+          1761.55847167969,
+          167.925216674805
+        ],
+        "vehicle_id": "sedan_02"
+      },
+      {
+        "actual_takeoff": true,
+        "airborne_ticks": 46,
+        "initial_upward_velocity": -225.0,
+        "max_rise": 42.7175598144531,
+        "takeoff": [
+          3072.7587890625,
+          167.925247192383
+        ],
+        "vehicle_id": "van_02"
+      },
+      {
+        "actual_takeoff": true,
+        "airborne_ticks": 59,
+        "initial_upward_velocity": -225.0,
+        "max_rise": 42.7175445556641,
+        "takeoff": [
+          3489.34301757813,
+          167.925216674805
+        ],
+        "vehicle_id": "truck_02"
+      },
+      {
+        "actual_takeoff": true,
+        "airborne_ticks": 50,
+        "initial_upward_velocity": -225.0,
+        "max_rise": 42.7175750732422,
+        "takeoff": [
+          4688.6123046875,
+          167.925262451172
+        ],
+        "vehicle_id": "sedan_03"
+      }
+    ],
+    "vehicle_types": {
+      "wreck_sedan.png": {
+        "contact_ticks": 54,
+        "max_support_error": 0.99871826171875
+      },
+      "wreck_truck.png": {
+        "contact_ticks": 54,
+        "max_support_error": 1.50503540039063
+      },
+      "wreck_van.png": {
+        "contact_ticks": 62,
+        "max_support_error": 0.0759735107421875
+      }
+    },
+    "vehicles_cleared": 7
+  },
+  "headless": false,
+  "layer_render_totals": {
+    "far": {
+      "exposed_samples": 30061,
+      "matched_detail_samples": 3650,
+      "matched_samples": 30061,
+      "max_matched_colors": 31,
+      "visible_checkpoints": 31
+    },
+    "foreground": {
+      "exposed_samples": 36885,
+      "matched_detail_samples": 31669,
+      "matched_samples": 36884,
+      "max_matched_colors": 50,
+      "visible_checkpoints": 31
+    },
+    "mid": {
+      "exposed_samples": 12370,
+      "matched_detail_samples": 8456,
+      "matched_samples": 12370,
+      "max_matched_colors": 60,
+      "visible_checkpoints": 31
+    },
+    "near": {
+      "exposed_samples": 34310,
+      "matched_detail_samples": 27420,
+      "matched_samples": 34308,
+      "max_matched_colors": 63,
+      "visible_checkpoints": 31
+    }
+  },
+  "max_ground_error": 4.07995096842447,
+  "measured_far_scroll_ratio": 0.280048076923077,
+  "measured_mid_scroll_ratio": 0.580013736263736,
+  "mid_background": "res://assets/battlefield_mid_background/battlefield_mid_native.png",
+  "mid_scroll_ratio": 0.58,
+  "mid_source_distance": 3378.0,
+  "passed": true,
+  "physics_ticks": 2662,
+  "renderer": "gl_compatibility",
+  "running_ticks": 2654,
+  "stair_floor_max_degrees": 65.0000006704249,
+  "traversal_layout": "res://assets/battlefield_traversal/layout.json",
+  "world_size": [
+    6144,
+    256
+  ]
+}

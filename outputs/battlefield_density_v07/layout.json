@@ -1,0 +1,3636 @@
+{
+  "version": 7,
+  "origin": [
+    0,
+    -256
+  ],
+  "art_size": [
+    6144,
+    512
+  ],
+  "ground_unchanged": true,
+  "route_start": [
+    530,
+    168
+  ],
+  "fixtures": [
+    {
+      "id": "gate_01",
+      "asset": "gatehouse.png",
+      "kind": "building",
+      "position": [
+        640,
+        -88
+      ],
+      "rect": [
+        640,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "gate_01_left_landing",
+        "gate_01_second_floor",
+        "gate_01_right_landing",
+        "gate_01_roof"
+      ]
+    },
+    {
+      "id": "tower_01",
+      "asset": "tower.png",
+      "kind": "building",
+      "position": [
+        912,
+        -88
+      ],
+      "rect": [
+        912,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "tower_01_left_landing",
+        "tower_01_right_landing",
+        "tower_01_second_floor",
+        "tower_01_upper_landing",
+        "tower_01_roof",
+        "tower_01_roof_right",
+        "tower_01_stairs_lower_left",
+        "tower_01_stairs_upper_left",
+        "tower_01_stairs_roof_left",
+        "tower_01_stairs_lower_right"
+      ]
+    },
+    {
+      "id": "gate_02",
+      "asset": "gatehouse.png",
+      "kind": "building",
+      "position": [
+        1376,
+        -88
+      ],
+      "rect": [
+        1376,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "gate_02_left_landing",
+        "gate_02_second_floor",
+        "gate_02_right_landing",
+        "gate_02_roof"
+      ]
+    },
+    {
+      "id": "tower_02",
+      "asset": "tower.png",
+      "kind": "building",
+      "position": [
+        3200,
+        -88
+      ],
+      "rect": [
+        3200,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "tower_02_left_landing",
+        "tower_02_right_landing",
+        "tower_02_second_floor",
+        "tower_02_upper_landing",
+        "tower_02_roof",
+        "tower_02_roof_right",
+        "tower_02_stairs_lower_left",
+        "tower_02_stairs_upper_left",
+        "tower_02_stairs_roof_left",
+        "tower_02_stairs_lower_right"
+      ]
+    },
+    {
+      "id": "gate_03",
+      "asset": "gatehouse.png",
+      "kind": "building",
+      "position": [
+        4416,
+        -88
+      ],
+      "rect": [
+        4416,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "gate_03_left_landing",
+        "gate_03_second_floor",
+        "gate_03_right_landing",
+        "gate_03_roof"
+      ]
+    },
+    {
+      "id": "sedan_01",
+      "asset": "wreck_sedan.png",
+      "kind": "vehicle",
+      "position": [
+        560,
+        120
+      ],
+      "rect": [
+        560,
+        120,
+        96,
+        48
+      ],
+      "surfaces": [
+        "sedan_01_body"
+      ],
+      "body_id": "sedan_01_body"
+    },
+    {
+      "id": "van_01",
+      "asset": "wreck_van.png",
+      "kind": "vehicle",
+      "position": [
+        912,
+        104
+      ],
+      "rect": [
+        912,
+        104,
+        112,
+        64
+      ],
+      "surfaces": [
+        "van_01_body"
+      ],
+      "body_id": "van_01_body"
+    },
+    {
+      "id": "truck_01",
+      "asset": "wreck_truck.png",
+      "kind": "vehicle",
+      "position": [
+        1240,
+        104
+      ],
+      "rect": [
+        1240,
+        104,
+        128,
+        64
+      ],
+      "surfaces": [
+        "truck_01_body"
+      ],
+      "body_id": "truck_01_body"
+    },
+    {
+      "id": "sedan_02",
+      "asset": "wreck_sedan.png",
+      "kind": "vehicle",
+      "position": [
+        1792,
+        120
+      ],
+      "rect": [
+        1792,
+        120,
+        96,
+        48
+      ],
+      "surfaces": [
+        "sedan_02_body"
+      ],
+      "body_id": "sedan_02_body"
+    },
+    {
+      "id": "van_02",
+      "asset": "wreck_van.png",
+      "kind": "vehicle",
+      "position": [
+        3104,
+        104
+      ],
+      "rect": [
+        3104,
+        104,
+        112,
+        64
+      ],
+      "surfaces": [
+        "van_02_body"
+      ],
+      "body_id": "van_02_body"
+    },
+    {
+      "id": "truck_02",
+      "asset": "wreck_truck.png",
+      "kind": "vehicle",
+      "position": [
+        3520,
+        104
+      ],
+      "rect": [
+        3520,
+        104,
+        128,
+        64
+      ],
+      "surfaces": [
+        "truck_02_body"
+      ],
+      "body_id": "truck_02_body"
+    },
+    {
+      "id": "sedan_03",
+      "asset": "wreck_sedan.png",
+      "kind": "vehicle",
+      "position": [
+        4720,
+        120
+      ],
+      "rect": [
+        4720,
+        120,
+        96,
+        48
+      ],
+      "surfaces": [
+        "sedan_03_body"
+      ],
+      "body_id": "sedan_03_body"
+    },
+    {
+      "id": "warehouse_01",
+      "asset": "warehouse.png",
+      "kind": "building",
+      "position": [
+        1856,
+        -24
+      ],
+      "rect": [
+        1856,
+        -24,
+        256,
+        192
+      ],
+      "surfaces": [
+        "warehouse_01_roof",
+        "warehouse_01_second_floor",
+        "warehouse_01_left_landing"
+      ]
+    },
+    {
+      "id": "refinery_01",
+      "asset": "refinery.png",
+      "kind": "building",
+      "position": [
+        2136,
+        -88
+      ],
+      "rect": [
+        2136,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "refinery_01_upper_catwalk",
+        "refinery_01_lower_catwalk",
+        "refinery_01_upper_landing",
+        "refinery_01_lower_landing",
+        "refinery_01_stairs_upper",
+        "refinery_01_stairs_middle",
+        "refinery_01_stairs_lower"
+      ]
+    },
+    {
+      "id": "warehouse_02",
+      "asset": "warehouse.png",
+      "kind": "building",
+      "position": [
+        2440,
+        -24
+      ],
+      "rect": [
+        2440,
+        -24,
+        256,
+        192
+      ],
+      "surfaces": [
+        "warehouse_02_roof",
+        "warehouse_02_second_floor",
+        "warehouse_02_left_landing"
+      ]
+    },
+    {
+      "id": "refinery_02",
+      "asset": "refinery.png",
+      "kind": "building",
+      "position": [
+        2728,
+        -88
+      ],
+      "rect": [
+        2728,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "refinery_02_upper_catwalk",
+        "refinery_02_lower_catwalk",
+        "refinery_02_upper_landing",
+        "refinery_02_lower_landing",
+        "refinery_02_stairs_upper",
+        "refinery_02_stairs_middle",
+        "refinery_02_stairs_lower"
+      ]
+    },
+    {
+      "id": "warehouse_03",
+      "asset": "warehouse.png",
+      "kind": "building",
+      "position": [
+        2992,
+        -24
+      ],
+      "rect": [
+        2992,
+        -24,
+        256,
+        192
+      ],
+      "surfaces": [
+        "warehouse_03_roof",
+        "warehouse_03_second_floor",
+        "warehouse_03_left_landing"
+      ]
+    },
+    {
+      "id": "warehouse_04",
+      "asset": "warehouse.png",
+      "kind": "building",
+      "position": [
+        3512,
+        -24
+      ],
+      "rect": [
+        3512,
+        -24,
+        256,
+        192
+      ],
+      "surfaces": [
+        "warehouse_04_roof",
+        "warehouse_04_second_floor",
+        "warehouse_04_left_landing"
+      ]
+    },
+    {
+      "id": "refinery_03",
+      "asset": "refinery.png",
+      "kind": "building",
+      "position": [
+        3808,
+        -88
+      ],
+      "rect": [
+        3808,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "refinery_03_upper_catwalk",
+        "refinery_03_lower_catwalk",
+        "refinery_03_upper_landing",
+        "refinery_03_lower_landing",
+        "refinery_03_stairs_upper",
+        "refinery_03_stairs_middle",
+        "refinery_03_stairs_lower"
+      ]
+    },
+    {
+      "id": "warehouse_05",
+      "asset": "warehouse.png",
+      "kind": "building",
+      "position": [
+        4096,
+        -24
+      ],
+      "rect": [
+        4096,
+        -24,
+        256,
+        192
+      ],
+      "surfaces": [
+        "warehouse_05_roof",
+        "warehouse_05_second_floor",
+        "warehouse_05_left_landing"
+      ]
+    },
+    {
+      "id": "refinery_04",
+      "asset": "refinery.png",
+      "kind": "building",
+      "position": [
+        4672,
+        -88
+      ],
+      "rect": [
+        4672,
+        -88,
+        256,
+        256
+      ],
+      "surfaces": [
+        "refinery_04_upper_catwalk",
+        "refinery_04_lower_catwalk",
+        "refinery_04_upper_landing",
+        "refinery_04_lower_landing",
+        "refinery_04_stairs_upper",
+        "refinery_04_stairs_middle",
+        "refinery_04_stairs_lower"
+      ]
+    },
+    {
+      "id": "mega_01",
+      "asset": "megafactory.png",
+      "kind": "building",
+      "position": [
+        5088,
+        -152
+      ],
+      "rect": [
+        5088,
+        -152,
+        1024,
+        320
+      ],
+      "surfaces": [
+        "mega_01_left_roof",
+        "mega_01_raised_roof",
+        "mega_01_main_roof",
+        "mega_01_second_floor_left",
+        "mega_01_second_floor",
+        "mega_01_east_catwalk"
+      ]
+    }
+  ],
+  "colliders": [
+    {
+      "id": "gate_01_left_landing",
+      "rect": [
+        640,
+        97,
+        48,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "gate_01"
+    },
+    {
+      "id": "gate_01_second_floor",
+      "rect": [
+        697,
+        99,
+        161,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "gate_01"
+    },
+    {
+      "id": "gate_01_right_landing",
+      "rect": [
+        863,
+        112,
+        33,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "gate_01"
+    },
+    {
+      "id": "gate_01_roof",
+      "rect": [
+        670,
+        55,
+        202,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "gate_01"
+    },
+    {
+      "id": "tower_01_left_landing",
+      "rect": [
+        912,
+        90,
+        49,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "tower_01"
+    },
+    {
+      "id": "tower_01_right_landing",
+      "rect": [
+        1126,
+        104,
+        42,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "tower_01"
+    },
+    {
+      "id": "tower_01_second_floor",
+      "rect": [
+        966,
+        38,
+        201,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "tower_01"
+    },
+    {
+      "id": "tower_01_upper_landing",
+      "rect": [
+        912,
+        -8,
+        39,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "tower_01"
+    },
+    {
+      "id": "tower_01_roof",
+      "rect": [
+        967,
+        -42,
+        153,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "tower_01"
+    },
+    {
+      "id": "tower_01_roof_right",
+      "rect": [
+        1120,
+        -40,
+        48,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "tower_01"
+    },
+    {
+      "id": "tower_01_stairs_lower_left",
+      "polygon": [
+        [
+          950,
+          90
+        ],
+        [
+          981,
+          38
+        ],
+        [
+          981,
+          44
+        ],
+        [
+          950,
+          96
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "tower_01"
+    },
+    {
+      "id": "tower_01_stairs_upper_left",
+      "polygon": [
+        [
+          949,
+          -8
+        ],
+        [
+          980,
+          38
+        ],
+        [
+          980,
+          44
+        ],
+        [
+          949,
+          -2
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "tower_01"
+    },
+    {
+      "id": "tower_01_stairs_roof_left",
+      "polygon": [
+        [
+          949,
+          -8
+        ],
+        [
+          970,
+          -42
+        ],
+        [
+          970,
+          -36
+        ],
+        [
+          949,
+          -2
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "tower_01"
+    },
+    {
+      "id": "tower_01_stairs_lower_right",
+      "polygon": [
+        [
+          1108,
+          38
+        ],
+        [
+          1150,
+          104
+        ],
+        [
+          1150,
+          110
+        ],
+        [
+          1108,
+          44
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "tower_01"
+    },
+    {
+      "id": "gate_02_left_landing",
+      "rect": [
+        1376,
+        97,
+        48,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "gate_02"
+    },
+    {
+      "id": "gate_02_second_floor",
+      "rect": [
+        1433,
+        99,
+        161,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "gate_02"
+    },
+    {
+      "id": "gate_02_right_landing",
+      "rect": [
+        1599,
+        112,
+        33,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "gate_02"
+    },
+    {
+      "id": "gate_02_roof",
+      "rect": [
+        1406,
+        55,
+        202,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "gate_02"
+    },
+    {
+      "id": "tower_02_left_landing",
+      "rect": [
+        3200,
+        90,
+        49,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "tower_02"
+    },
+    {
+      "id": "tower_02_right_landing",
+      "rect": [
+        3414,
+        104,
+        42,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "tower_02"
+    },
+    {
+      "id": "tower_02_second_floor",
+      "rect": [
+        3254,
+        38,
+        201,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "tower_02"
+    },
+    {
+      "id": "tower_02_upper_landing",
+      "rect": [
+        3200,
+        -8,
+        39,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "tower_02"
+    },
+    {
+      "id": "tower_02_roof",
+      "rect": [
+        3255,
+        -42,
+        153,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "tower_02"
+    },
+    {
+      "id": "tower_02_roof_right",
+      "rect": [
+        3408,
+        -40,
+        48,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "tower_02"
+    },
+    {
+      "id": "tower_02_stairs_lower_left",
+      "polygon": [
+        [
+          3238,
+          90
+        ],
+        [
+          3269,
+          38
+        ],
+        [
+          3269,
+          44
+        ],
+        [
+          3238,
+          96
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "tower_02"
+    },
+    {
+      "id": "tower_02_stairs_upper_left",
+      "polygon": [
+        [
+          3237,
+          -8
+        ],
+        [
+          3268,
+          38
+        ],
+        [
+          3268,
+          44
+        ],
+        [
+          3237,
+          -2
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "tower_02"
+    },
+    {
+      "id": "tower_02_stairs_roof_left",
+      "polygon": [
+        [
+          3237,
+          -8
+        ],
+        [
+          3258,
+          -42
+        ],
+        [
+          3258,
+          -36
+        ],
+        [
+          3237,
+          -2
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "tower_02"
+    },
+    {
+      "id": "tower_02_stairs_lower_right",
+      "polygon": [
+        [
+          3396,
+          38
+        ],
+        [
+          3438,
+          104
+        ],
+        [
+          3438,
+          110
+        ],
+        [
+          3396,
+          44
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "tower_02"
+    },
+    {
+      "id": "gate_03_left_landing",
+      "rect": [
+        4416,
+        97,
+        48,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "gate_03"
+    },
+    {
+      "id": "gate_03_second_floor",
+      "rect": [
+        4473,
+        99,
+        161,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "gate_03"
+    },
+    {
+      "id": "gate_03_right_landing",
+      "rect": [
+        4639,
+        112,
+        33,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "gate_03"
+    },
+    {
+      "id": "gate_03_roof",
+      "rect": [
+        4446,
+        55,
+        202,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "gate_03"
+    },
+    {
+      "id": "sedan_01_body",
+      "polygon": [
+        [
+          562,
+          158
+        ],
+        [
+          566,
+          156
+        ],
+        [
+          570,
+          155
+        ],
+        [
+          574,
+          153
+        ],
+        [
+          578,
+          152
+        ],
+        [
+          582,
+          153
+        ],
+        [
+          586,
+          153
+        ],
+        [
+          590,
+          151
+        ],
+        [
+          594,
+          149
+        ],
+        [
+          598,
+          147
+        ],
+        [
+          602,
+          147
+        ],
+        [
+          606,
+          147
+        ],
+        [
+          610,
+          147
+        ],
+        [
+          614,
+          147
+        ],
+        [
+          618,
+          147
+        ],
+        [
+          622,
+          147
+        ],
+        [
+          626,
+          147
+        ],
+        [
+          630,
+          149
+        ],
+        [
+          634,
+          151
+        ],
+        [
+          638,
+          153
+        ],
+        [
+          642,
+          152
+        ],
+        [
+          646,
+          151
+        ],
+        [
+          650,
+          154
+        ],
+        [
+          653,
+          158
+        ],
+        [
+          653,
+          168
+        ],
+        [
+          562,
+          168
+        ]
+      ],
+      "top_profile": [
+        [
+          562,
+          158
+        ],
+        [
+          566,
+          156
+        ],
+        [
+          570,
+          155
+        ],
+        [
+          574,
+          153
+        ],
+        [
+          578,
+          152
+        ],
+        [
+          582,
+          153
+        ],
+        [
+          586,
+          153
+        ],
+        [
+          590,
+          151
+        ],
+        [
+          594,
+          149
+        ],
+        [
+          598,
+          147
+        ],
+        [
+          602,
+          147
+        ],
+        [
+          606,
+          147
+        ],
+        [
+          610,
+          147
+        ],
+        [
+          614,
+          147
+        ],
+        [
+          618,
+          147
+        ],
+        [
+          622,
+          147
+        ],
+        [
+          626,
+          147
+        ],
+        [
+          630,
+          149
+        ],
+        [
+          634,
+          151
+        ],
+        [
+          638,
+          153
+        ],
+        [
+          642,
+          152
+        ],
+        [
+          646,
+          151
+        ],
+        [
+          650,
+          154
+        ],
+        [
+          653,
+          158
+        ]
+      ],
+      "one_way": false,
+      "kind": "vehicle",
+      "fixture_id": "sedan_01"
+    },
+    {
+      "id": "van_01_body",
+      "polygon": [
+        [
+          914,
+          145
+        ],
+        [
+          918,
+          136
+        ],
+        [
+          922,
+          134
+        ],
+        [
+          926,
+          134
+        ],
+        [
+          930,
+          135
+        ],
+        [
+          934,
+          134
+        ],
+        [
+          938,
+          135
+        ],
+        [
+          942,
+          135
+        ],
+        [
+          946,
+          135
+        ],
+        [
+          950,
+          135
+        ],
+        [
+          954,
+          135
+        ],
+        [
+          958,
+          135
+        ],
+        [
+          962,
+          136
+        ],
+        [
+          966,
+          136
+        ],
+        [
+          970,
+          136
+        ],
+        [
+          974,
+          136
+        ],
+        [
+          978,
+          136
+        ],
+        [
+          982,
+          136
+        ],
+        [
+          986,
+          136
+        ],
+        [
+          990,
+          136
+        ],
+        [
+          994,
+          138
+        ],
+        [
+          998,
+          142
+        ],
+        [
+          1002,
+          144
+        ],
+        [
+          1006,
+          148
+        ],
+        [
+          1010,
+          149
+        ],
+        [
+          1014,
+          149
+        ],
+        [
+          1018,
+          151
+        ],
+        [
+          1021,
+          153
+        ],
+        [
+          1021,
+          168
+        ],
+        [
+          914,
+          168
+        ]
+      ],
+      "top_profile": [
+        [
+          914,
+          145
+        ],
+        [
+          918,
+          136
+        ],
+        [
+          922,
+          134
+        ],
+        [
+          926,
+          134
+        ],
+        [
+          930,
+          135
+        ],
+        [
+          934,
+          134
+        ],
+        [
+          938,
+          135
+        ],
+        [
+          942,
+          135
+        ],
+        [
+          946,
+          135
+        ],
+        [
+          950,
+          135
+        ],
+        [
+          954,
+          135
+        ],
+        [
+          958,
+          135
+        ],
+        [
+          962,
+          136
+        ],
+        [
+          966,
+          136
+        ],
+        [
+          970,
+          136
+        ],
+        [
+          974,
+          136
+        ],
+        [
+          978,
+          136
+        ],
+        [
+          982,
+          136
+        ],
+        [
+          986,
+          136
+        ],
+        [
+          990,
+          136
+        ],
+        [
+          994,
+          138
+        ],
+        [
+          998,
+          142
+        ],
+        [
+          1002,
+          144
+        ],
+        [
+          1006,
+          148
+        ],
+        [
+          1010,
+          149
+        ],
+        [
+          1014,
+          149
+        ],
+        [
+          1018,
+          151
+        ],
+        [
+          1021,
+          153
+        ]
+      ],
+      "one_way": false,
+      "kind": "vehicle",
+      "fixture_id": "van_01"
+    },
+    {
+      "id": "truck_01_body",
+      "polygon": [
+        [
+          1242,
+          153
+        ],
+        [
+          1246,
+          149
+        ],
+        [
+          1250,
+          147
+        ],
+        [
+          1254,
+          146
+        ],
+        [
+          1258,
+          140
+        ],
+        [
+          1262,
+          135
+        ],
+        [
+          1266,
+          134
+        ],
+        [
+          1270,
+          134
+        ],
+        [
+          1274,
+          134
+        ],
+        [
+          1278,
+          133
+        ],
+        [
+          1282,
+          135
+        ],
+        [
+          1286,
+          138
+        ],
+        [
+          1290,
+          150
+        ],
+        [
+          1294,
+          150
+        ],
+        [
+          1298,
+          150
+        ],
+        [
+          1302,
+          150
+        ],
+        [
+          1306,
+          150
+        ],
+        [
+          1310,
+          149
+        ],
+        [
+          1314,
+          150
+        ],
+        [
+          1318,
+          150
+        ],
+        [
+          1322,
+          150
+        ],
+        [
+          1326,
+          150
+        ],
+        [
+          1330,
+          150
+        ],
+        [
+          1334,
+          150
+        ],
+        [
+          1338,
+          150
+        ],
+        [
+          1342,
+          150
+        ],
+        [
+          1346,
+          150
+        ],
+        [
+          1350,
+          150
+        ],
+        [
+          1354,
+          150
+        ],
+        [
+          1358,
+          150
+        ],
+        [
+          1362,
+          148
+        ],
+        [
+          1365,
+          149
+        ],
+        [
+          1365,
+          168
+        ],
+        [
+          1242,
+          168
+        ]
+      ],
+      "top_profile": [
+        [
+          1242,
+          153
+        ],
+        [
+          1246,
+          149
+        ],
+        [
+          1250,
+          147
+        ],
+        [
+          1254,
+          146
+        ],
+        [
+          1258,
+          140
+        ],
+        [
+          1262,
+          135
+        ],
+        [
+          1266,
+          134
+        ],
+        [
+          1270,
+          134
+        ],
+        [
+          1274,
+          134
+        ],
+        [
+          1278,
+          133
+        ],
+        [
+          1282,
+          135
+        ],
+        [
+          1286,
+          138
+        ],
+        [
+          1290,
+          150
+        ],
+        [
+          1294,
+          150
+        ],
+        [
+          1298,
+          150
+        ],
+        [
+          1302,
+          150
+        ],
+        [
+          1306,
+          150
+        ],
+        [
+          1310,
+          149
+        ],
+        [
+          1314,
+          150
+        ],
+        [
+          1318,
+          150
+        ],
+        [
+          1322,
+          150
+        ],
+        [
+          1326,
+          150
+        ],
+        [
+          1330,
+          150
+        ],
+        [
+          1334,
+          150
+        ],
+        [
+          1338,
+          150
+        ],
+        [
+          1342,
+          150
+        ],
+        [
+          1346,
+          150
+        ],
+        [
+          1350,
+          150
+        ],
+        [
+          1354,
+          150
+        ],
+        [
+          1358,
+          150
+        ],
+        [
+          1362,
+          148
+        ],
+        [
+          1365,
+          149
+        ]
+      ],
+      "one_way": false,
+      "kind": "vehicle",
+      "fixture_id": "truck_01"
+    },
+    {
+      "id": "sedan_02_body",
+      "polygon": [
+        [
+          1794,
+          158
+        ],
+        [
+          1798,
+          156
+        ],
+        [
+          1802,
+          155
+        ],
+        [
+          1806,
+          153
+        ],
+        [
+          1810,
+          152
+        ],
+        [
+          1814,
+          153
+        ],
+        [
+          1818,
+          153
+        ],
+        [
+          1822,
+          151
+        ],
+        [
+          1826,
+          149
+        ],
+        [
+          1830,
+          147
+        ],
+        [
+          1834,
+          147
+        ],
+        [
+          1838,
+          147
+        ],
+        [
+          1842,
+          147
+        ],
+        [
+          1846,
+          147
+        ],
+        [
+          1850,
+          147
+        ],
+        [
+          1854,
+          147
+        ],
+        [
+          1858,
+          147
+        ],
+        [
+          1862,
+          149
+        ],
+        [
+          1866,
+          151
+        ],
+        [
+          1870,
+          153
+        ],
+        [
+          1874,
+          152
+        ],
+        [
+          1878,
+          151
+        ],
+        [
+          1882,
+          154
+        ],
+        [
+          1885,
+          158
+        ],
+        [
+          1885,
+          168
+        ],
+        [
+          1794,
+          168
+        ]
+      ],
+      "top_profile": [
+        [
+          1794,
+          158
+        ],
+        [
+          1798,
+          156
+        ],
+        [
+          1802,
+          155
+        ],
+        [
+          1806,
+          153
+        ],
+        [
+          1810,
+          152
+        ],
+        [
+          1814,
+          153
+        ],
+        [
+          1818,
+          153
+        ],
+        [
+          1822,
+          151
+        ],
+        [
+          1826,
+          149
+        ],
+        [
+          1830,
+          147
+        ],
+        [
+          1834,
+          147
+        ],
+        [
+          1838,
+          147
+        ],
+        [
+          1842,
+          147
+        ],
+        [
+          1846,
+          147
+        ],
+        [
+          1850,
+          147
+        ],
+        [
+          1854,
+          147
+        ],
+        [
+          1858,
+          147
+        ],
+        [
+          1862,
+          149
+        ],
+        [
+          1866,
+          151
+        ],
+        [
+          1870,
+          153
+        ],
+        [
+          1874,
+          152
+        ],
+        [
+          1878,
+          151
+        ],
+        [
+          1882,
+          154
+        ],
+        [
+          1885,
+          158
+        ]
+      ],
+      "one_way": false,
+      "kind": "vehicle",
+      "fixture_id": "sedan_02"
+    },
+    {
+      "id": "van_02_body",
+      "polygon": [
+        [
+          3106,
+          145
+        ],
+        [
+          3110,
+          136
+        ],
+        [
+          3114,
+          134
+        ],
+        [
+          3118,
+          134
+        ],
+        [
+          3122,
+          135
+        ],
+        [
+          3126,
+          134
+        ],
+        [
+          3130,
+          135
+        ],
+        [
+          3134,
+          135
+        ],
+        [
+          3138,
+          135
+        ],
+        [
+          3142,
+          135
+        ],
+        [
+          3146,
+          135
+        ],
+        [
+          3150,
+          135
+        ],
+        [
+          3154,
+          136
+        ],
+        [
+          3158,
+          136
+        ],
+        [
+          3162,
+          136
+        ],
+        [
+          3166,
+          136
+        ],
+        [
+          3170,
+          136
+        ],
+        [
+          3174,
+          136
+        ],
+        [
+          3178,
+          136
+        ],
+        [
+          3182,
+          136
+        ],
+        [
+          3186,
+          138
+        ],
+        [
+          3190,
+          142
+        ],
+        [
+          3194,
+          144
+        ],
+        [
+          3198,
+          148
+        ],
+        [
+          3202,
+          149
+        ],
+        [
+          3206,
+          149
+        ],
+        [
+          3210,
+          151
+        ],
+        [
+          3213,
+          153
+        ],
+        [
+          3213,
+          168
+        ],
+        [
+          3106,
+          168
+        ]
+      ],
+      "top_profile": [
+        [
+          3106,
+          145
+        ],
+        [
+          3110,
+          136
+        ],
+        [
+          3114,
+          134
+        ],
+        [
+          3118,
+          134
+        ],
+        [
+          3122,
+          135
+        ],
+        [
+          3126,
+          134
+        ],
+        [
+          3130,
+          135
+        ],
+        [
+          3134,
+          135
+        ],
+        [
+          3138,
+          135
+        ],
+        [
+          3142,
+          135
+        ],
+        [
+          3146,
+          135
+        ],
+        [
+          3150,
+          135
+        ],
+        [
+          3154,
+          136
+        ],
+        [
+          3158,
+          136
+        ],
+        [
+          3162,
+          136
+        ],
+        [
+          3166,
+          136
+        ],
+        [
+          3170,
+          136
+        ],
+        [
+          3174,
+          136
+        ],
+        [
+          3178,
+          136
+        ],
+        [
+          3182,
+          136
+        ],
+        [
+          3186,
+          138
+        ],
+        [
+          3190,
+          142
+        ],
+        [
+          3194,
+          144
+        ],
+        [
+          3198,
+          148
+        ],
+        [
+          3202,
+          149
+        ],
+        [
+          3206,
+          149
+        ],
+        [
+          3210,
+          151
+        ],
+        [
+          3213,
+          153
+        ]
+      ],
+      "one_way": false,
+      "kind": "vehicle",
+      "fixture_id": "van_02"
+    },
+    {
+      "id": "truck_02_body",
+      "polygon": [
+        [
+          3522,
+          153
+        ],
+        [
+          3526,
+          149
+        ],
+        [
+          3530,
+          147
+        ],
+        [
+          3534,
+          146
+        ],
+        [
+          3538,
+          140
+        ],
+        [
+          3542,
+          135
+        ],
+        [
+          3546,
+          134
+        ],
+        [
+          3550,
+          134
+        ],
+        [
+          3554,
+          134
+        ],
+        [
+          3558,
+          133
+        ],
+        [
+          3562,
+          135
+        ],
+        [
+          3566,
+          138
+        ],
+        [
+          3570,
+          150
+        ],
+        [
+          3574,
+          150
+        ],
+        [
+          3578,
+          150
+        ],
+        [
+          3582,
+          150
+        ],
+        [
+          3586,
+          150
+        ],
+        [
+          3590,
+          149
+        ],
+        [
+          3594,
+          150
+        ],
+        [
+          3598,
+          150
+        ],
+        [
+          3602,
+          150
+        ],
+        [
+          3606,
+          150
+        ],
+        [
+          3610,
+          150
+        ],
+        [
+          3614,
+          150
+        ],
+        [
+          3618,
+          150
+        ],
+        [
+          3622,
+          150
+        ],
+        [
+          3626,
+          150
+        ],
+        [
+          3630,
+          150
+        ],
+        [
+          3634,
+          150
+        ],
+        [
+          3638,
+          150
+        ],
+        [
+          3642,
+          148
+        ],
+        [
+          3645,
+          149
+        ],
+        [
+          3645,
+          168
+        ],
+        [
+          3522,
+          168
+        ]
+      ],
+      "top_profile": [
+        [
+          3522,
+          153
+        ],
+        [
+          3526,
+          149
+        ],
+        [
+          3530,
+          147
+        ],
+        [
+          3534,
+          146
+        ],
+        [
+          3538,
+          140
+        ],
+        [
+          3542,
+          135
+        ],
+        [
+          3546,
+          134
+        ],
+        [
+          3550,
+          134
+        ],
+        [
+          3554,
+          134
+        ],
+        [
+          3558,
+          133
+        ],
+        [
+          3562,
+          135
+        ],
+        [
+          3566,
+          138
+        ],
+        [
+          3570,
+          150
+        ],
+        [
+          3574,
+          150
+        ],
+        [
+          3578,
+          150
+        ],
+        [
+          3582,
+          150
+        ],
+        [
+          3586,
+          150
+        ],
+        [
+          3590,
+          149
+        ],
+        [
+          3594,
+          150
+        ],
+        [
+          3598,
+          150
+        ],
+        [
+          3602,
+          150
+        ],
+        [
+          3606,
+          150
+        ],
+        [
+          3610,
+          150
+        ],
+        [
+          3614,
+          150
+        ],
+        [
+          3618,
+          150
+        ],
+        [
+          3622,
+          150
+        ],
+        [
+          3626,
+          150
+        ],
+        [
+          3630,
+          150
+        ],
+        [
+          3634,
+          150
+        ],
+        [
+          3638,
+          150
+        ],
+        [
+          3642,
+          148
+        ],
+        [
+          3645,
+          149
+        ]
+      ],
+      "one_way": false,
+      "kind": "vehicle",
+      "fixture_id": "truck_02"
+    },
+    {
+      "id": "sedan_03_body",
+      "polygon": [
+        [
+          4722,
+          158
+        ],
+        [
+          4726,
+          156
+        ],
+        [
+          4730,
+          155
+        ],
+        [
+          4734,
+          153
+        ],
+        [
+          4738,
+          152
+        ],
+        [
+          4742,
+          153
+        ],
+        [
+          4746,
+          153
+        ],
+        [
+          4750,
+          151
+        ],
+        [
+          4754,
+          149
+        ],
+        [
+          4758,
+          147
+        ],
+        [
+          4762,
+          147
+        ],
+        [
+          4766,
+          147
+        ],
+        [
+          4770,
+          147
+        ],
+        [
+          4774,
+          147
+        ],
+        [
+          4778,
+          147
+        ],
+        [
+          4782,
+          147
+        ],
+        [
+          4786,
+          147
+        ],
+        [
+          4790,
+          149
+        ],
+        [
+          4794,
+          151
+        ],
+        [
+          4798,
+          153
+        ],
+        [
+          4802,
+          152
+        ],
+        [
+          4806,
+          151
+        ],
+        [
+          4810,
+          154
+        ],
+        [
+          4813,
+          158
+        ],
+        [
+          4813,
+          168
+        ],
+        [
+          4722,
+          168
+        ]
+      ],
+      "top_profile": [
+        [
+          4722,
+          158
+        ],
+        [
+          4726,
+          156
+        ],
+        [
+          4730,
+          155
+        ],
+        [
+          4734,
+          153
+        ],
+        [
+          4738,
+          152
+        ],
+        [
+          4742,
+          153
+        ],
+        [
+          4746,
+          153
+        ],
+        [
+          4750,
+          151
+        ],
+        [
+          4754,
+          149
+        ],
+        [
+          4758,
+          147
+        ],
+        [
+          4762,
+          147
+        ],
+        [
+          4766,
+          147
+        ],
+        [
+          4770,
+          147
+        ],
+        [
+          4774,
+          147
+        ],
+        [
+          4778,
+          147
+        ],
+        [
+          4782,
+          147
+        ],
+        [
+          4786,
+          147
+        ],
+        [
+          4790,
+          149
+        ],
+        [
+          4794,
+          151
+        ],
+        [
+          4798,
+          153
+        ],
+        [
+          4802,
+          152
+        ],
+        [
+          4806,
+          151
+        ],
+        [
+          4810,
+          154
+        ],
+        [
+          4813,
+          158
+        ]
+      ],
+      "one_way": false,
+      "kind": "vehicle",
+      "fixture_id": "sedan_03"
+    },
+    {
+      "id": "warehouse_01_roof",
+      "rect": [
+        1887,
+        53,
+        200,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "warehouse_01"
+    },
+    {
+      "id": "warehouse_01_second_floor",
+      "rect": [
+        1912,
+        106,
+        176,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_01"
+    },
+    {
+      "id": "warehouse_01_left_landing",
+      "rect": [
+        1856,
+        116,
+        42,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_01"
+    },
+    {
+      "id": "refinery_01_upper_catwalk",
+      "rect": [
+        2196,
+        29,
+        169,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "refinery_01_lower_catwalk",
+      "rect": [
+        2136,
+        91,
+        233,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "refinery_01_upper_landing",
+      "rect": [
+        2383,
+        49,
+        9,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "refinery_01_lower_landing",
+      "rect": [
+        2376,
+        106,
+        16,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "refinery_01_stairs_upper",
+      "polygon": [
+        [
+          2365,
+          29
+        ],
+        [
+          2385,
+          49
+        ],
+        [
+          2385,
+          54
+        ],
+        [
+          2365,
+          34
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "refinery_01_stairs_middle",
+      "polygon": [
+        [
+          2365,
+          91
+        ],
+        [
+          2386,
+          106
+        ],
+        [
+          2386,
+          111
+        ],
+        [
+          2365,
+          96
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "refinery_01_stairs_lower",
+      "polygon": [
+        [
+          2364,
+          135
+        ],
+        [
+          2389,
+          167
+        ],
+        [
+          2389,
+          172
+        ],
+        [
+          2364,
+          140
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_01"
+    },
+    {
+      "id": "warehouse_02_roof",
+      "rect": [
+        2471,
+        53,
+        200,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "warehouse_02"
+    },
+    {
+      "id": "warehouse_02_second_floor",
+      "rect": [
+        2496,
+        106,
+        176,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_02"
+    },
+    {
+      "id": "warehouse_02_left_landing",
+      "rect": [
+        2440,
+        116,
+        42,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_02"
+    },
+    {
+      "id": "refinery_02_upper_catwalk",
+      "rect": [
+        2788,
+        29,
+        169,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "refinery_02_lower_catwalk",
+      "rect": [
+        2728,
+        91,
+        233,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "refinery_02_upper_landing",
+      "rect": [
+        2975,
+        49,
+        9,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "refinery_02_lower_landing",
+      "rect": [
+        2968,
+        106,
+        16,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "refinery_02_stairs_upper",
+      "polygon": [
+        [
+          2957,
+          29
+        ],
+        [
+          2977,
+          49
+        ],
+        [
+          2977,
+          54
+        ],
+        [
+          2957,
+          34
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "refinery_02_stairs_middle",
+      "polygon": [
+        [
+          2957,
+          91
+        ],
+        [
+          2978,
+          106
+        ],
+        [
+          2978,
+          111
+        ],
+        [
+          2957,
+          96
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "refinery_02_stairs_lower",
+      "polygon": [
+        [
+          2956,
+          135
+        ],
+        [
+          2981,
+          167
+        ],
+        [
+          2981,
+          172
+        ],
+        [
+          2956,
+          140
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_02"
+    },
+    {
+      "id": "warehouse_03_roof",
+      "rect": [
+        3023,
+        53,
+        200,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "warehouse_03"
+    },
+    {
+      "id": "warehouse_03_second_floor",
+      "rect": [
+        3048,
+        106,
+        176,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_03"
+    },
+    {
+      "id": "warehouse_03_left_landing",
+      "rect": [
+        2992,
+        116,
+        42,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_03"
+    },
+    {
+      "id": "warehouse_04_roof",
+      "rect": [
+        3543,
+        53,
+        200,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "warehouse_04"
+    },
+    {
+      "id": "warehouse_04_second_floor",
+      "rect": [
+        3568,
+        106,
+        176,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_04"
+    },
+    {
+      "id": "warehouse_04_left_landing",
+      "rect": [
+        3512,
+        116,
+        42,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_04"
+    },
+    {
+      "id": "refinery_03_upper_catwalk",
+      "rect": [
+        3868,
+        29,
+        169,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "refinery_03_lower_catwalk",
+      "rect": [
+        3808,
+        91,
+        233,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "refinery_03_upper_landing",
+      "rect": [
+        4055,
+        49,
+        9,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "refinery_03_lower_landing",
+      "rect": [
+        4048,
+        106,
+        16,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "refinery_03_stairs_upper",
+      "polygon": [
+        [
+          4037,
+          29
+        ],
+        [
+          4057,
+          49
+        ],
+        [
+          4057,
+          54
+        ],
+        [
+          4037,
+          34
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "refinery_03_stairs_middle",
+      "polygon": [
+        [
+          4037,
+          91
+        ],
+        [
+          4058,
+          106
+        ],
+        [
+          4058,
+          111
+        ],
+        [
+          4037,
+          96
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "refinery_03_stairs_lower",
+      "polygon": [
+        [
+          4036,
+          135
+        ],
+        [
+          4061,
+          167
+        ],
+        [
+          4061,
+          172
+        ],
+        [
+          4036,
+          140
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_03"
+    },
+    {
+      "id": "warehouse_05_roof",
+      "rect": [
+        4127,
+        53,
+        200,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "warehouse_05"
+    },
+    {
+      "id": "warehouse_05_second_floor",
+      "rect": [
+        4152,
+        106,
+        176,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_05"
+    },
+    {
+      "id": "warehouse_05_left_landing",
+      "rect": [
+        4096,
+        116,
+        42,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "warehouse_05"
+    },
+    {
+      "id": "refinery_04_upper_catwalk",
+      "rect": [
+        4732,
+        29,
+        169,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "refinery_04_lower_catwalk",
+      "rect": [
+        4672,
+        91,
+        233,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "refinery_04_upper_landing",
+      "rect": [
+        4919,
+        49,
+        9,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "refinery_04_lower_landing",
+      "rect": [
+        4912,
+        106,
+        16,
+        4
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "refinery_04_stairs_upper",
+      "polygon": [
+        [
+          4901,
+          29
+        ],
+        [
+          4921,
+          49
+        ],
+        [
+          4921,
+          54
+        ],
+        [
+          4901,
+          34
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "refinery_04_stairs_middle",
+      "polygon": [
+        [
+          4901,
+          91
+        ],
+        [
+          4922,
+          106
+        ],
+        [
+          4922,
+          111
+        ],
+        [
+          4901,
+          96
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "refinery_04_stairs_lower",
+      "polygon": [
+        [
+          4900,
+          135
+        ],
+        [
+          4925,
+          167
+        ],
+        [
+          4925,
+          172
+        ],
+        [
+          4900,
+          140
+        ]
+      ],
+      "one_way": true,
+      "kind": "stairs",
+      "fixture_id": "refinery_04"
+    },
+    {
+      "id": "mega_01_left_roof",
+      "rect": [
+        5096,
+        -85,
+        182,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "mega_01"
+    },
+    {
+      "id": "mega_01_raised_roof",
+      "rect": [
+        5282,
+        -77,
+        70,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "mega_01"
+    },
+    {
+      "id": "mega_01_main_roof",
+      "rect": [
+        5352,
+        -61,
+        695,
+        5
+      ],
+      "one_way": true,
+      "kind": "roof",
+      "fixture_id": "mega_01"
+    },
+    {
+      "id": "mega_01_second_floor_left",
+      "rect": [
+        5287,
+        50,
+        97,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "mega_01"
+    },
+    {
+      "id": "mega_01_second_floor",
+      "rect": [
+        5388,
+        42,
+        569,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "mega_01"
+    },
+    {
+      "id": "mega_01_east_catwalk",
+      "rect": [
+        5964,
+        63,
+        141,
+        5
+      ],
+      "one_way": true,
+      "kind": "floor",
+      "fixture_id": "mega_01"
+    }
+  ],
+  "waypoints": [
+    {
+      "id": "sedan_roof",
+      "surface_id": "sedan_01_body",
+      "position": [
+        612,
+        147
+      ],
+      "mode": "jump"
+    },
+    {
+      "id": "gate_left_landing",
+      "surface_id": "gate_01_left_landing",
+      "position": [
+        664,
+        97
+      ],
+      "mode": "jump"
+    },
+    {
+      "id": "gate_second_floor",
+      "surface_id": "gate_01_second_floor",
+      "position": [
+        720,
+        99
+      ],
+      "mode": "walk"
+    },
+    {
+      "id": "gate_roof",
+      "surface_id": "gate_01_roof",
+      "position": [
+        760,
+        55
+      ],
+      "mode": "jump"
+    },
+    {
+      "id": "gate_roof_edge",
+      "surface_id": "gate_01_roof",
+      "position": [
+        862,
+        55
+      ],
+      "mode": "walk"
+    },
+    {
+      "id": "tower_low_landing",
+      "surface_id": "tower_01_left_landing",
+      "position": [
+        934,
+        90
+      ],
+      "mode": "jump"
+    },
+    {
+      "id": "tower_second_floor",
+      "surface_id": "tower_01_second_floor",
+      "position": [
+        990,
+        38
+      ],
+      "mode": "walk"
+    },
+    {
+      "id": "tower_upper_landing",
+      "surface_id": "tower_01_upper_landing",
+      "position": [
+        932,
+        -8
+      ],
+      "mode": "walk"
+    },
+    {
+      "id": "tower_roof",
+      "surface_id": "tower_01_roof",
+      "position": [
+        1008,
+        -42
+      ],
+      "mode": "walk"
+    },
+    {
+      "id": "tower_roof_edge",
+      "surface_id": "tower_01_roof",
+      "position": [
+        1104,
+        -42
+      ],
+      "mode": "walk"
+    },
+    {
+      "id": "return_to_sand",
+      "surface_id": "ground",
+      "position": [
+        1218,
+        168
+      ],
+      "mode": "walk"
+    },
+    {
+      "id": "truck_cab",
+      "surface_id": "truck_01_body",
+      "position": [
+        1274,
+        134
+      ],
+      "mode": "jump"
+    },
+    {
+      "id": "truck_flatbed",
+      "surface_id": "truck_01_body",
+      "position": [
+        1324,
+        150
+      ],
+      "mode": "walk"
+    },
+    {
+      "id": "route_exit",
+      "surface_id": "ground",
+      "position": [
+        1408,
+        168
+      ],
+      "mode": "walk"
+    }
+  ],
+  "ground_materials": [
+    {
+      "id": "surface_1",
+      "asset": "ground_grating.png",
+      "position": [
+        1088,
+        168
+      ],
+      "source_crop": [
+        0,
+        13,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_2",
+      "asset": "ground_concrete.png",
+      "position": [
+        1856,
+        168
+      ],
+      "source_crop": [
+        0,
+        21,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_3",
+      "asset": "ground_covers.png",
+      "position": [
+        2440,
+        168
+      ],
+      "source_crop": [
+        0,
+        12,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_4",
+      "asset": "ground_grating.png",
+      "position": [
+        3072,
+        168
+      ],
+      "source_crop": [
+        0,
+        13,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_5",
+      "asset": "ground_concrete.png",
+      "position": [
+        3776,
+        168
+      ],
+      "source_crop": [
+        0,
+        21,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_6",
+      "asset": "ground_covers.png",
+      "position": [
+        4416,
+        168
+      ],
+      "source_crop": [
+        0,
+        12,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_7",
+      "asset": "ground_grating.png",
+      "position": [
+        5024,
+        168
+      ],
+      "source_crop": [
+        0,
+        13,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    },
+    {
+      "id": "surface_8",
+      "asset": "ground_concrete.png",
+      "position": [
+        5536,
+        168
+      ],
+      "source_crop": [
+        0,
+        21,
+        512,
+        64
+      ],
+      "collision": "original ground"
+    }
+  ],
+  "elevator": {
+    "id": "mill_lift",
+    "x": 5040,
+    "width": 64,
+    "bottom_y": 168,
+    "top_y": -85,
+    "speed": 40,
+    "deck_height": 4,
+    "call_range": 28,
+    "sprite": "res://assets/battlefield_traversal/industrial_lift.png",
+    "sprite_offset": [
+      0,
+      -55
+    ],
+    "landing_surface_id": "mega_01_left_roof"
+  },
+  "elevator_shaft": {
+    "asset": "lift_shaft.png",
+    "position": [
+      5024,
+      -152
+    ]
+  }
+}

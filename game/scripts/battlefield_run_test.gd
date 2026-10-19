@@ -5,6 +5,8 @@ extends Node2D
 const PLAYER_SCENE = preload("res://scenes/player.tscn")
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
+const ELEVATOR = preload("res://scripts/battlefield_elevator.gd")
+const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 const BACKGROUND_PATH := "res://assets/battlefield_layer_01/battlefield_layer_01_native.png"
 const FAR_BACKGROUND_PATH := "res://assets/battlefield_far_background/battlefield_far_native.png"
 const MID_BACKGROUND_PATH := "res://assets/battlefield_mid_background/battlefield_mid_native.png"
@@ -32,6 +34,8 @@ var traversal_terrain: Node2D
 var traversal_layout: Dictionary = {}
 var traversal_colliders: Dictionary = {}
 var route_waypoints: Array[Dictionary] = []
+var elevator: AnimatableBody2D
+var elevator_hint: Label
 var terrain: StaticBody2D
 var ground_points := PackedVector2Array()
 var world_size := WORLD_TERRAIN_SIZE
@@ -51,13 +55,13 @@ func _ready() -> void:
 	window.content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
 	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
 	window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_INTEGER
-	DisplayServer.window_set_title("夜行者 · 超长战场跑步试玩")
+	DisplayServer.window_set_title("夜行者 · 密集工业战场与工业电梯 v07")
 	_smoke = OS.get_cmdline_user_args().has("--battlefield-smoke")
 	if _smoke:
 		CONTROLS.settings_path = "user://battlefield_smoke_keybindings.cfg"
 		CONTROLS.current = CONTROLS.defaults()
 	CONTROLS.install()
-	if not _build_background() or not _load_ground() or not _build_traversal():
+	if not _build_background() or not _load_ground() or not _build_traversal() or not _build_elevator():
 		if _smoke:
 			get_tree().quit(2)
 		return
@@ -73,6 +77,7 @@ func _ready() -> void:
 	print("远景: 同宽长图 / scale 1；水平视差 %.2f；天空覆盖完整镜头高度。" % FAR_SCROLL_RATIO)
 	print("中景: 同宽透明楼群与工厂 / scale 1；水平视差 %.2f。" % MID_SCROLL_RATIO)
 	print("可踩地形: 破车、二楼与楼顶；沿用原跳跃 / 二段跳；镜头可向上跟随至 y=-256。")
+	print("末段工业电梯: 靠近停靠口按 E 呼叫，站上笼体后按 E 出发；可自由走出平台。")
 	if _smoke:
 		_run_smoke.call_deferred()
 
@@ -173,6 +178,26 @@ func _build_traversal() -> bool:
 			push_error("Battlefield traversal waypoint needs a position and an existing surface_id.")
 			return false
 		route_waypoints.append(point)
+	return true
+
+
+func _build_elevator() -> bool:
+	var data: Variant = traversal_layout.get("elevator", {})
+	if not data is Dictionary:
+		push_error("Battlefield elevator layout must be a dictionary.")
+		return false
+	if data.is_empty():
+		return true
+	elevator = ELEVATOR.new()
+	if not elevator.configure(data):
+		elevator.free()
+		elevator = null
+		return false
+	add_child(elevator)
+	var canvas := CanvasLayer.new()
+	canvas.name = "ElevatorPrompt"
+	add_child(canvas)
+	elevator_hint = PIXEL_UI.label(canvas, Vector2(5, 164), Vector2(310, 14), "", 10, true, PIXEL_UI.small_font())
 	return true
 
 
@@ -279,6 +304,8 @@ func _physics_process(_delta: float) -> void:
 	if not is_equal_approx(limited_x, player.position.x):
 		player.position.x = limited_x
 		player.velocity.x = 0.0
+	if elevator_hint != null:
+		elevator_hint.text = elevator.hint(player)
 	_follow_player()
 
 
@@ -328,7 +355,12 @@ func foreground_covers_view() -> bool:
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if _smoke or not event.is_pressed() or event.is_echo():
+	if not event.is_pressed() or event.is_echo():
+		return
+	if CONTROLS.is_interact(event) and elevator != null and ready_for_test:
+		elevator.activate(player)
+		return
+	if _smoke:
 		return
 	var key_event := event as InputEventKey
 	var code := key_event.physical_keycode if key_event.physical_keycode != 0 else key_event.keycode
@@ -370,8 +402,8 @@ func _pixel_matches(actual: Color, expected: Color, tolerance: float = 1.5 / 255
 
 
 func _layer_pixel_evidence(rendered: Image) -> Dictionary:
-	# Smoke-only: compare the top exposed source layer with the GPU frame. Mask just
-	# the hero's drawn frame and glow, so character pixels cannot count as art errors.
+	# Smoke-only: compare exposed panorama pixels with the GPU frame. The hero,
+	# moving cage and interaction prompt are drawn independently of these sources.
 	var images := {"foreground": foreground.texture.get_image(), "near": background.texture.get_image(), "mid": mid_background.texture.get_image(), "far": far_background.texture.get_image()}
 	var origins := {"foreground": Vector2i(foreground_visible_rect().position), "near": Vector2i(near_visible_rect().position), "mid": Vector2i(mid_visible_rect().position), "far": Vector2i(far_visible_rect().position)}
 	var evidence: Dictionary = {}
@@ -382,10 +414,13 @@ func _layer_pixel_evidence(rendered: Image) -> Dictionary:
 	var hero_pixels := Rect2(frame_texture.get_image().get_used_rect())
 	var camera_origin := camera.position - Vector2(VIEWPORT_SIZE) / 2.0
 	var hero_rect := Rect2(player.sprite.global_position + player.sprite.offset - camera_origin + hero_pixels.position, hero_pixels.size).grow(4.0)
+	var cage_rect: Rect2 = elevator.drawn_rect() if elevator != null else Rect2()
+	cage_rect.position -= camera_origin
+	var prompt_rect := Rect2(Vector2(5, 164), Vector2(310, 14)) if elevator_hint != null and not elevator_hint.text.is_empty() else Rect2()
 	var excluded := 0
 	for y in range(0, VIEWPORT_SIZE.y, 4):
 		for x in range(0, VIEWPORT_SIZE.x, 4):
-			if hero_rect.has_point(Vector2(x, y)):
+			if hero_rect.has_point(Vector2(x, y)) or cage_rect.has_point(Vector2(x, y)) or prompt_rect.has_point(Vector2(x, y)):
 				excluded += 1
 				continue
 			for layer in ART_RENDER_LAYERS:
@@ -550,6 +585,9 @@ func _run_smoke() -> void:
 	smoke_report["ground_distance"] = player.position.x - start_x
 	smoke_report["ground_physics_ticks"] = elapsed_ticks
 	smoke_report["course"] = await traversal_driver.run_course()
+	_check(elevator != null, "The giant building includes a working industrial elevator")
+	if elevator != null:
+		smoke_report["elevator"] = await traversal_driver.run_elevator()
 	if DisplayServer.get_name() != "headless":
 		for layer in ART_RENDER_LAYERS:
 			var totals: Dictionary = _smoke_layer_totals[layer]
