@@ -1,0 +1,634 @@
+{
+  "version": 10,
+  "steam_texture": "res://assets/battlefield_ambient/steam_large.png",
+  "steam_frames": [
+    3,
+    2
+  ],
+  "steam_anchor": [
+    24,
+    59
+  ],
+  "lights": [
+    {
+      "id": "near_starter_window",
+      "layer": "near",
+      "rect": [
+        254,
+        342,
+        8,
+        11
+      ],
+      "period": 3.096,
+      "phase": 0.2,
+      "min_gain": 0.28,
+      "max_gain": 1.35
+    },
+    {
+      "id": "near_low_factory",
+      "layer": "near",
+      "rect": [
+        358,
+        365,
+        26,
+        10
+      ],
+      "period": 4.248,
+      "phase": 1.7,
+      "min_gain": 0.28,
+      "max_gain": 1.35
+    },
+    {
+      "id": "near_sawtooth_01",
+      "layer": "near",
+      "rect": [
+        540,
+        345,
+        15,
+        11
+      ],
+      "period": 4.824,
+      "phase": 2.1,
+      "min_gain": 0.28,
+      "max_gain": 1.35
+    },
+    {
+      "id": "near_sawtooth_02",
+      "layer": "near",
+      "rect": [
+        846,
+        344,
+        26,
+        10
+      ],
+      "period": 3.528,
+      "phase": 3.1,
+      "min_gain": 0.28,
+      "max_gain": 1.35
+    },
+    {
+      "id": "mid_early_window",
+      "layer": "mid",
+      "rect": [
+        134,
+        340,
+        23,
+        11
+      ],
+      "period": 5.112,
+      "phase": 0.7,
+      "min_gain": 0.35,
+      "max_gain": 1.45
+    },
+    {
+      "id": "mid_early_lower_window",
+      "layer": "mid",
+      "rect": [
+        140,
+        377,
+        15,
+        9
+      ],
+      "period": 5.976,
+      "phase": 4.4,
+      "min_gain": 0.35,
+      "max_gain": 1.45
+    },
+    {
+      "id": "mid_highrise_warm_01",
+      "layer": "mid",
+      "rect": [
+        941,
+        286,
+        9,
+        10
+      ],
+      "period": 4.104,
+      "phase": 2.3,
+      "min_gain": 0.35,
+      "max_gain": 1.45
+    },
+    {
+      "id": "mid_highrise_warm_02",
+      "layer": "mid",
+      "rect": [
+        949,
+        326,
+        9,
+        9
+      ],
+      "period": 6.264,
+      "phase": 6.1,
+      "min_gain": 0.35,
+      "max_gain": 1.45
+    },
+    {
+      "id": "mid_factory_pane",
+      "layer": "mid",
+      "rect": [
+        1304,
+        308,
+        10,
+        15
+      ],
+      "period": 4.68,
+      "phase": 3.2,
+      "min_gain": 0.35,
+      "max_gain": 1.45
+    },
+    {
+      "id": "mid_late_factory",
+      "layer": "mid",
+      "rect": [
+        3380,
+        274,
+        7,
+        11
+      ],
+      "period": 5.544,
+      "phase": 4.0,
+      "min_gain": 0.35,
+      "max_gain": 1.45
+    },
+    {
+      "id": "far_factory_window_01",
+      "layer": "far",
+      "rect": [
+        459,
+        353,
+        2,
+        5
+      ],
+      "period": 6.552,
+      "phase": 2.8,
+      "min_gain": 0.42,
+      "max_gain": 1.55
+    },
+    {
+      "id": "far_factory_window_02",
+      "layer": "far",
+      "rect": [
+        508,
+        353,
+        2,
+        5
+      ],
+      "period": 5.688,
+      "phase": 5.2,
+      "min_gain": 0.42,
+      "max_gain": 1.55
+    }
+  ],
+  "steam": [
+    {
+      "id": "near_low_exhaust",
+      "layer": "near",
+      "position": [
+        355,
+        325
+      ],
+      "period": 2.028,
+      "phase": 0.1,
+      "opacity": 0.56
+    },
+    {
+      "id": "near_starter_stack",
+      "layer": "near",
+      "position": [
+        254,
+        291
+      ],
+      "period": 2.457,
+      "phase": 1.4,
+      "opacity": 0.56
+    },
+    {
+      "id": "mid_twin_stack_01",
+      "layer": "mid",
+      "position": [
+        692,
+        138
+      ],
+      "period": 2.769,
+      "phase": 2.3,
+      "opacity": 0.38
+    },
+    {
+      "id": "mid_twin_stack_02",
+      "layer": "mid",
+      "position": [
+        727,
+        174
+      ],
+      "period": 2.652,
+      "phase": 4.1,
+      "opacity": 0.38
+    },
+    {
+      "id": "mid_factory_stack_01",
+      "layer": "mid",
+      "position": [
+        1234,
+        173
+      ],
+      "period": 3.081,
+      "phase": 0.8,
+      "opacity": 0.38
+    },
+    {
+      "id": "mid_factory_stack_02",
+      "layer": "mid",
+      "position": [
+        1321,
+        134
+      ],
+      "period": 3.276,
+      "phase": 3.7,
+      "opacity": 0.38
+    },
+    {
+      "id": "mid_works_stack",
+      "layer": "mid",
+      "position": [
+        1604,
+        120
+      ],
+      "period": 3.159,
+      "phase": 5.2,
+      "opacity": 0.38
+    },
+    {
+      "id": "mid_late_stack",
+      "layer": "mid",
+      "position": [
+        3366,
+        117
+      ],
+      "period": 2.964,
+      "phase": 2.9,
+      "opacity": 0.38
+    },
+    {
+      "id": "far_three_stack",
+      "layer": "far",
+      "position": [
+        498,
+        244
+      ],
+      "period": 3.666,
+      "phase": 4.2,
+      "opacity": 0.26
+    },
+    {
+      "id": "far_existing_plume",
+      "layer": "far",
+      "position": [
+        1931,
+        201
+      ],
+      "period": 3.939,
+      "phase": 6.8,
+      "opacity": 0.26
+    }
+  ],
+  "stars": [
+    {
+      "id": "star_01",
+      "position": [
+        38,
+        120
+      ],
+      "period": 3.384,
+      "phase": 0.0,
+      "opacity": 0.473
+    },
+    {
+      "id": "star_02",
+      "position": [
+        188,
+        59
+      ],
+      "period": 3.823,
+      "phase": 1.37,
+      "opacity": 0.56
+    },
+    {
+      "id": "star_03",
+      "position": [
+        374,
+        271
+      ],
+      "period": 4.262,
+      "phase": 2.74,
+      "opacity": 0.647
+    },
+    {
+      "id": "star_04",
+      "position": [
+        550,
+        142
+      ],
+      "period": 4.702,
+      "phase": 4.11,
+      "opacity": 0.473
+    },
+    {
+      "id": "star_05",
+      "position": [
+        745,
+        188
+      ],
+      "period": 5.141,
+      "phase": 5.48,
+      "opacity": 0.56
+    },
+    {
+      "id": "star_06",
+      "position": [
+        905,
+        101
+      ],
+      "period": 5.58,
+      "phase": 6.85,
+      "opacity": 0.647
+    },
+    {
+      "id": "star_07",
+      "position": [
+        1066,
+        110
+      ],
+      "period": 6.019,
+      "phase": 8.22,
+      "opacity": 0.473
+    },
+    {
+      "id": "star_08",
+      "position": [
+        1240,
+        68
+      ],
+      "period": 3.384,
+      "phase": 9.59,
+      "opacity": 0.56
+    },
+    {
+      "id": "star_09",
+      "position": [
+        1429,
+        164
+      ],
+      "period": 3.823,
+      "phase": 10.96,
+      "opacity": 0.647
+    },
+    {
+      "id": "star_10",
+      "position": [
+        1593,
+        89
+      ],
+      "period": 4.262,
+      "phase": 12.33,
+      "opacity": 0.473
+    },
+    {
+      "id": "star_11",
+      "position": [
+        1758,
+        110
+      ],
+      "period": 4.702,
+      "phase": 13.7,
+      "opacity": 0.56
+    },
+    {
+      "id": "star_12",
+      "position": [
+        1920,
+        91
+      ],
+      "period": 5.141,
+      "phase": 15.07,
+      "opacity": 0.647
+    }
+  ],
+  "dust": {
+    "count": 16,
+    "opacity": 0.32,
+    "speed": 14.0,
+    "lengths": [
+      1,
+      2,
+      3
+    ]
+  },
+  "evidence_cameras": [
+    [
+      400,
+      104
+    ],
+    [
+      1008,
+      -106
+    ],
+    [
+      5120,
+      -149
+    ]
+  ],
+  "steam_frame_size": [
+    64,
+    64
+  ],
+  "steam_min_alpha": 0.3,
+  "update_hz": 16,
+  "vehicle_effects": {
+    "random_seed": 0,
+    "variants": [
+      {
+        "id": "hood",
+        "smoke": {
+          "texture": "res://assets/battlefield_ambient/vehicle_hood_smoke.png",
+          "frame_size": [
+            64,
+            64
+          ],
+          "frames": [
+            3,
+            2
+          ],
+          "anchor": [
+            32,
+            58
+          ]
+        },
+        "fire": {
+          "texture": "res://assets/battlefield_ambient/vehicle_hood_fire.png",
+          "frame_size": [
+            64,
+            64
+          ],
+          "frames": [
+            3,
+            2
+          ],
+          "anchor": [
+            32,
+            58
+          ]
+        }
+      },
+      {
+        "id": "cabin",
+        "smoke": {
+          "texture": "res://assets/battlefield_ambient/vehicle_cabin_smoke.png",
+          "frame_size": [
+            64,
+            64
+          ],
+          "frames": [
+            3,
+            2
+          ],
+          "anchor": [
+            32,
+            58
+          ]
+        },
+        "fire": {
+          "texture": "res://assets/battlefield_ambient/vehicle_cabin_fire.png",
+          "frame_size": [
+            64,
+            64
+          ],
+          "frames": [
+            3,
+            2
+          ],
+          "anchor": [
+            32,
+            58
+          ]
+        }
+      },
+      {
+        "id": "engine",
+        "smoke": {
+          "texture": "res://assets/battlefield_ambient/vehicle_engine_smoke.png",
+          "frame_size": [
+            64,
+            64
+          ],
+          "frames": [
+            3,
+            2
+          ],
+          "anchor": [
+            32,
+            58
+          ]
+        },
+        "fire": {
+          "texture": "res://assets/battlefield_ambient/vehicle_engine_fire.png",
+          "frame_size": [
+            64,
+            64
+          ],
+          "frames": [
+            3,
+            2
+          ],
+          "anchor": [
+            32,
+            58
+          ]
+        }
+      }
+    ],
+    "emitters": [
+      {
+        "id": "sedan_01",
+        "vehicle_id": "sedan_01",
+        "position": [
+          579,
+          152
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      },
+      {
+        "id": "van_01",
+        "vehicle_id": "van_01",
+        "position": [
+          1009,
+          149
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      },
+      {
+        "id": "truck_01",
+        "vehicle_id": "truck_01",
+        "position": [
+          1253,
+          147
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      },
+      {
+        "id": "sedan_02",
+        "vehicle_id": "sedan_02",
+        "position": [
+          1811,
+          152
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      },
+      {
+        "id": "van_02",
+        "vehicle_id": "van_02",
+        "position": [
+          3201,
+          149
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      },
+      {
+        "id": "truck_02",
+        "vehicle_id": "truck_02",
+        "position": [
+          3533,
+          147
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      },
+      {
+        "id": "sedan_03",
+        "vehicle_id": "sedan_03",
+        "position": [
+          4739,
+          152
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      }
+    ],
+    "smoke_period": [
+      1.7,
+      2.7
+    ],
+    "fire_period": [
+      0.5,
+      0.85
+    ],
+    "jitter": [
+      1,
+      0
+    ]
+  }
+}

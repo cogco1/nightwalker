@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+战场跑步试玩 | A/D 左右移动 | 长按 Shift 奔跑 | 空格 跳跃 | R 返回起点 | Esc 退出
+原生像素: 背景 6144×512 / y=-256 / scale 1；地形 6144×256；主角 scale 1；视口 320×180。
+远景: 同宽长图 / scale 1；水平视差 0.28；天空覆盖完整镜头高度。
+中景: 同宽透明楼群与工厂 / scale 1；水平视差 0.58。
+可踩地形: 破车、二楼与楼顶；沿用原跳跃 / 二段跳；镜头可向上跟随至 y=-256。
+末段工业电梯: 靠近停靠口按 E 呼叫，站上笼体后按 E 出发；可自由走出平台。
+{"checks":67,"failures":[],"passed":true,"suite":"battlefield_run_test"}

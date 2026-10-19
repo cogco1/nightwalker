@@ -53,3 +53,12 @@
 GPU 烟雾测试额外保存 `ambient_animation_00.png` 至 `ambient_animation_11.png`：固定正常镜头 `[400,104]`，连续1.375秒、8Hz、320×180原生画面；可供真实渲染 GIF 预览。另存 `ambient_sky_animation_00.png` 至 `ambient_sky_animation_11.png`（报告 `sky_animation_frames`），固定高处镜头 `[1008,-106]`，以相同8Hz时序展示中景烟囱与稀疏远空星点。`ambient_probe_{lights,steam,stars,dust}_{a,b}.png` 分别记录相同镜头的两个实际时刻，每类必须在自身效果小矩形内产生可见的 GPU 像素差异。证据捕捉期间暂停人物和电梯物理，结束立即恢复；其余路线测试继续使用真实物理输入。状态与像素证据记入 `smoke_report.json` 的 `ambient`。
 
 蒸汽保持原生像素绘制与固定烟根，通过重绘更宽、更高的64px帧扩大可见烟羽，未放大旧贴图。v09仍为12处灯、10处烟、12颗星和16粒沙的50对象固定池。
+
+
+废车烟火 v10：`ambient.json.vehicle_effects` 将7辆原有废车分别绑定烟与小火苗，新增14个预创建 Sprite，连同原环境共64个固定对象。每个外观包含独立烟/火图集（`texture/frame_size/frames/anchor`），原生 scale 1、nearest、二值透明边；至少3种外观通过洗牌袋分配，保证整张地图实际出现不同形态。
+
+- `emitters` 包含 `id/vehicle_id/position`（世界像素坐标），可独立指定 `smoke_position/fire_position` 和 `smoke_opacity/fire_opacity`。烧灼点位于损坏的发动机盖，纹理与车辆碰撞保持原样；烟/火在车图前、主角后绘制，没有新增伤害或空气墙。
+- 启动时一次选择外观、独立烟/火相位、`smoke_period/fire_period` 范围内的周期与 `jitter` 范围内的整数偏移。随后只更新既定帧与透明度，不逐帧重抽或移动烟根。`random_seed=0` 每次启动随机；指定正32位种子可重现，实际种子和分配写入运行报告。
+- 所有图集帧的非透明包围框只在加载时缓存，烟/火复用原有16Hz更新与节点池；火苗保持低小，烟灰采用现有工业色系。
+
+GPU新增 `ambient_vehicle_animation_00..11.png`（镜头 `[616,104]`，原生320×180、8Hz）展示第一辆车与站在车顶的主角，报告为 `ambient.vehicle_animation_frames`。`ambient_probe_vehicle_smoke_{a,b}.png` 与 `ambient_probe_vehicle_fire_{a,b}.png` 验证真实帧内像素变化；`vehicle_seed/vehicle_assignments` 记录实际启动选择。原地面、7辆车真实跳跃、14站可踩路线、电梯和原图比对继续完整执行。仅剔除当前烟/火帧自身的小包围框，没有取消车辆图或楼体的比对。

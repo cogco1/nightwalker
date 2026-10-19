@@ -1,0 +1,676 @@
+{
+  "mode": "built-in imagegen",
+  "alpha_values": [
+    0,
+    255
+  ],
+  "runtime_scale": 1,
+  "smoke_palette_colors": 64,
+  "fire_palette": [
+    [
+      48,
+      27,
+      21
+    ],
+    [
+      92,
+      37,
+      19
+    ],
+    [
+      150,
+      57,
+      16
+    ],
+    [
+      206,
+      91,
+      17
+    ],
+    [
+      238,
+      143,
+      33
+    ],
+    [
+      255,
+      196,
+      71
+    ],
+    [
+      255,
+      221,
+      126
+    ]
+  ],
+  "normalization": "nearest 48px art in 64px canvas, warm/neutral layers separated, fixed integer emitter",
+  "variants": [
+    {
+      "id": "hood",
+      "source": "outputs\\battlefield_ambient_v10\\source_art\\hood_combined_sheet.png",
+      "source_sha256": "515c1c4dfa5c24c954914276f8eb1ec0932a570fa3f46cab831bc1ca3c9bdc2f",
+      "native_frame_size": [
+        64,
+        64
+      ],
+      "native_sheet_size": [
+        192,
+        128
+      ],
+      "drawing_size": [
+        48,
+        48
+      ],
+      "anchor": [
+        32,
+        58
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "source_rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "translation": [
+            11,
+            14
+          ],
+          "smoke": {
+            "used_rect": [
+              28,
+              24,
+              44,
+              55
+            ],
+            "opaque_pixels": 167
+          },
+          "fire": {
+            "used_rect": [
+              27,
+              48,
+              40,
+              59
+            ],
+            "opaque_pixels": 59
+          }
+        },
+        {
+          "index": 1,
+          "source_rect": [
+            512,
+            0,
+            512,
+            512
+          ],
+          "translation": [
+            10,
+            14
+          ],
+          "smoke": {
+            "used_rect": [
+              27,
+              21,
+              45,
+              56
+            ],
+            "opaque_pixels": 207
+          },
+          "fire": {
+            "used_rect": [
+              27,
+              50,
+              40,
+              59
+            ],
+            "opaque_pixels": 63
+          }
+        },
+        {
+          "index": 2,
+          "source_rect": [
+            1024,
+            0,
+            512,
+            512
+          ],
+          "translation": [
+            8,
+            14
+          ],
+          "smoke": {
+            "used_rect": [
+              27,
+              22,
+              45,
+              57
+            ],
+            "opaque_pixels": 203
+          },
+          "fire": {
+            "used_rect": [
+              27,
+              51,
+              40,
+              59
+            ],
+            "opaque_pixels": 56
+          }
+        },
+        {
+          "index": 3,
+          "source_rect": [
+            0,
+            512,
+            512,
+            512
+          ],
+          "translation": [
+            10,
+            17
+          ],
+          "smoke": {
+            "used_rect": [
+              28,
+              23,
+              45,
+              56
+            ],
+            "opaque_pixels": 199
+          },
+          "fire": {
+            "used_rect": [
+              26,
+              50,
+              39,
+              59
+            ],
+            "opaque_pixels": 47
+          }
+        },
+        {
+          "index": 4,
+          "source_rect": [
+            512,
+            512,
+            512,
+            512
+          ],
+          "translation": [
+            9,
+            17
+          ],
+          "smoke": {
+            "used_rect": [
+              27,
+              23,
+              45,
+              55
+            ],
+            "opaque_pixels": 196
+          },
+          "fire": {
+            "used_rect": [
+              26,
+              51,
+              39,
+              59
+            ],
+            "opaque_pixels": 52
+          }
+        },
+        {
+          "index": 5,
+          "source_rect": [
+            1024,
+            512,
+            512,
+            512
+          ],
+          "translation": [
+            7,
+            17
+          ],
+          "smoke": {
+            "used_rect": [
+              27,
+              24,
+              43,
+              54
+            ],
+            "opaque_pixels": 177
+          },
+          "fire": {
+            "used_rect": [
+              26,
+              48,
+              39,
+              59
+            ],
+            "opaque_pixels": 57
+          }
+        }
+      ]
+    },
+    {
+      "id": "cabin",
+      "source": "outputs\\battlefield_ambient_v10\\source_art\\cabin_combined_sheet.png",
+      "source_sha256": "2f307aad8af791d0c276decce5a8c4b2f1948ce76533face2d3844132d62b0b3",
+      "native_frame_size": [
+        64,
+        64
+      ],
+      "native_sheet_size": [
+        192,
+        128
+      ],
+      "drawing_size": [
+        48,
+        48
+      ],
+      "anchor": [
+        32,
+        58
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "source_rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "translation": [
+            10,
+            15
+          ],
+          "smoke": {
+            "used_rect": [
+              29,
+              24,
+              50,
+              54
+            ],
+            "opaque_pixels": 209
+          },
+          "fire": {
+            "used_rect": [
+              27,
+              43,
+              39,
+              59
+            ],
+            "opaque_pixels": 55
+          }
+        },
+        {
+          "index": 1,
+          "source_rect": [
+            512,
+            0,
+            512,
+            512
+          ],
+          "translation": [
+            10,
+            15
+          ],
+          "smoke": {
+            "used_rect": [
+              27,
+              24,
+              48,
+              54
+            ],
+            "opaque_pixels": 269
+          },
+          "fire": {
+            "used_rect": [
+              25,
+              46,
+              44,
+              59
+            ],
+            "opaque_pixels": 75
+          }
+        },
+        {
+          "index": 2,
+          "source_rect": [
+            1024,
+            0,
+            512,
+            512
+          ],
+          "translation": [
+            11,
+            15
+          ],
+          "smoke": {
+            "used_rect": [
+              27,
+              24,
+              50,
+              56
+            ],
+            "opaque_pixels": 251
+          },
+          "fire": {
+            "used_rect": [
+              27,
+              48,
+              40,
+              59
+            ],
+            "opaque_pixels": 54
+          }
+        },
+        {
+          "index": 3,
+          "source_rect": [
+            0,
+            512,
+            512,
+            512
+          ],
+          "translation": [
+            8,
+            17
+          ],
+          "smoke": {
+            "used_rect": [
+              25,
+              24,
+              49,
+              53
+            ],
+            "opaque_pixels": 228
+          },
+          "fire": {
+            "used_rect": [
+              24,
+              51,
+              37,
+              59
+            ],
+            "opaque_pixels": 54
+          }
+        },
+        {
+          "index": 4,
+          "source_rect": [
+            512,
+            512,
+            512,
+            512
+          ],
+          "translation": [
+            11,
+            18
+          ],
+          "smoke": {
+            "used_rect": [
+              27,
+              25,
+              50,
+              54
+            ],
+            "opaque_pixels": 213
+          },
+          "fire": {
+            "used_rect": [
+              26,
+              44,
+              45,
+              59
+            ],
+            "opaque_pixels": 60
+          }
+        },
+        {
+          "index": 5,
+          "source_rect": [
+            1024,
+            512,
+            512,
+            512
+          ],
+          "translation": [
+            11,
+            18
+          ],
+          "smoke": {
+            "used_rect": [
+              29,
+              29,
+              49,
+              55
+            ],
+            "opaque_pixels": 166
+          },
+          "fire": {
+            "used_rect": [
+              26,
+              47,
+              44,
+              59
+            ],
+            "opaque_pixels": 58
+          }
+        }
+      ]
+    },
+    {
+      "id": "engine",
+      "source": "outputs\\battlefield_ambient_v10\\source_art\\engine_combined_sheet.png",
+      "source_sha256": "5cadc9f6b2bd04ea9dc87e7d0caac8dce6a737a9387e3d19a6e24febb3f22750",
+      "native_frame_size": [
+        64,
+        64
+      ],
+      "native_sheet_size": [
+        192,
+        128
+      ],
+      "drawing_size": [
+        48,
+        48
+      ],
+      "anchor": [
+        32,
+        58
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "source_rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "translation": [
+            8,
+            18
+          ],
+          "smoke": {
+            "used_rect": [
+              24,
+              28,
+              48,
+              54
+            ],
+            "opaque_pixels": 180
+          },
+          "fire": {
+            "used_rect": [
+              28,
+              50,
+              36,
+              59
+            ],
+            "opaque_pixels": 32
+          }
+        },
+        {
+          "index": 1,
+          "source_rect": [
+            512,
+            0,
+            512,
+            512
+          ],
+          "translation": [
+            9,
+            18
+          ],
+          "smoke": {
+            "used_rect": [
+              26,
+              27,
+              49,
+              56
+            ],
+            "opaque_pixels": 174
+          },
+          "fire": {
+            "used_rect": [
+              27,
+              51,
+              37,
+              59
+            ],
+            "opaque_pixels": 36
+          }
+        },
+        {
+          "index": 2,
+          "source_rect": [
+            1024,
+            0,
+            512,
+            512
+          ],
+          "translation": [
+            8,
+            18
+          ],
+          "smoke": {
+            "used_rect": [
+              22,
+              27,
+              46,
+              53
+            ],
+            "opaque_pixels": 166
+          },
+          "fire": {
+            "used_rect": [
+              26,
+              50,
+              37,
+              59
+            ],
+            "opaque_pixels": 39
+          }
+        },
+        {
+          "index": 3,
+          "source_rect": [
+            0,
+            512,
+            512,
+            512
+          ],
+          "translation": [
+            10,
+            19
+          ],
+          "smoke": {
+            "used_rect": [
+              26,
+              27,
+              52,
+              55
+            ],
+            "opaque_pixels": 197
+          },
+          "fire": {
+            "used_rect": [
+              29,
+              50,
+              38,
+              59
+            ],
+            "opaque_pixels": 42
+          }
+        },
+        {
+          "index": 4,
+          "source_rect": [
+            512,
+            512,
+            512,
+            512
+          ],
+          "translation": [
+            10,
+            19
+          ],
+          "smoke": {
+            "used_rect": [
+              28,
+              25,
+              52,
+              53
+            ],
+            "opaque_pixels": 142
+          },
+          "fire": {
+            "used_rect": [
+              28,
+              51,
+              39,
+              59
+            ],
+            "opaque_pixels": 42
+          }
+        },
+        {
+          "index": 5,
+          "source_rect": [
+            1024,
+            512,
+            512,
+            512
+          ],
+          "translation": [
+            9,
+            19
+          ],
+          "smoke": {
+            "used_rect": [
+              25,
+              24,
+              51,
+              53
+            ],
+            "opaque_pixels": 143
+          },
+          "fire": {
+            "used_rect": [
+              28,
+              52,
+              38,
+              59
+            ],
+            "opaque_pixels": 38
+          }
+        }
+      ]
+    }
+  ]
+}

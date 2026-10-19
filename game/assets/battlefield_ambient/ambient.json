@@ -1,5 +1,5 @@
 {
-  "version": 9,
+  "version": 10,
   "steam_texture": "res://assets/battlefield_ambient/steam_large.png",
   "steam_frames": [
     3,
@@ -442,5 +442,193 @@
     64
   ],
   "steam_min_alpha": 0.3,
-  "update_hz": 16
+  "update_hz": 16,
+  "vehicle_effects": {
+    "random_seed": 0,
+    "variants": [
+      {
+        "id": "hood",
+        "smoke": {
+          "texture": "res://assets/battlefield_ambient/vehicle_hood_smoke.png",
+          "frame_size": [
+            64,
+            64
+          ],
+          "frames": [
+            3,
+            2
+          ],
+          "anchor": [
+            32,
+            58
+          ]
+        },
+        "fire": {
+          "texture": "res://assets/battlefield_ambient/vehicle_hood_fire.png",
+          "frame_size": [
+            64,
+            64
+          ],
+          "frames": [
+            3,
+            2
+          ],
+          "anchor": [
+            32,
+            58
+          ]
+        }
+      },
+      {
+        "id": "cabin",
+        "smoke": {
+          "texture": "res://assets/battlefield_ambient/vehicle_cabin_smoke.png",
+          "frame_size": [
+            64,
+            64
+          ],
+          "frames": [
+            3,
+            2
+          ],
+          "anchor": [
+            32,
+            58
+          ]
+        },
+        "fire": {
+          "texture": "res://assets/battlefield_ambient/vehicle_cabin_fire.png",
+          "frame_size": [
+            64,
+            64
+          ],
+          "frames": [
+            3,
+            2
+          ],
+          "anchor": [
+            32,
+            58
+          ]
+        }
+      },
+      {
+        "id": "engine",
+        "smoke": {
+          "texture": "res://assets/battlefield_ambient/vehicle_engine_smoke.png",
+          "frame_size": [
+            64,
+            64
+          ],
+          "frames": [
+            3,
+            2
+          ],
+          "anchor": [
+            32,
+            58
+          ]
+        },
+        "fire": {
+          "texture": "res://assets/battlefield_ambient/vehicle_engine_fire.png",
+          "frame_size": [
+            64,
+            64
+          ],
+          "frames": [
+            3,
+            2
+          ],
+          "anchor": [
+            32,
+            58
+          ]
+        }
+      }
+    ],
+    "emitters": [
+      {
+        "id": "sedan_01",
+        "vehicle_id": "sedan_01",
+        "position": [
+          579,
+          152
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      },
+      {
+        "id": "van_01",
+        "vehicle_id": "van_01",
+        "position": [
+          1009,
+          149
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      },
+      {
+        "id": "truck_01",
+        "vehicle_id": "truck_01",
+        "position": [
+          1253,
+          147
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      },
+      {
+        "id": "sedan_02",
+        "vehicle_id": "sedan_02",
+        "position": [
+          1811,
+          152
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      },
+      {
+        "id": "van_02",
+        "vehicle_id": "van_02",
+        "position": [
+          3201,
+          149
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      },
+      {
+        "id": "truck_02",
+        "vehicle_id": "truck_02",
+        "position": [
+          3533,
+          147
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      },
+      {
+        "id": "sedan_03",
+        "vehicle_id": "sedan_03",
+        "position": [
+          4739,
+          152
+        ],
+        "smoke_opacity": 0.63,
+        "fire_opacity": 0.94
+      }
+    ],
+    "smoke_period": [
+      1.7,
+      2.7
+    ],
+    "fire_period": [
+      0.5,
+      0.85
+    ],
+    "jitter": [
+      1,
+      0
+    ]
+  }
 }

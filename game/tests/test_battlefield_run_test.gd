@@ -122,7 +122,7 @@ func run() -> void:
 		"The middle panorama covers the initial viewport on whole pixels")
 	var ambient: Node = scene.ambient
 	check(ambient != null and not ambient.effects.is_empty(), "The standalone battlefield loads a finite ambient pool")
-	var kind_counts := {"lights": 0, "steam": 0, "stars": 0, "dust": 0}
+	var kind_counts := {"lights": 0, "steam": 0, "stars": 0, "dust": 0, "vehicle_smoke": 0, "vehicle_fire": 0}
 	var layered := true
 	var native := true
 	var lamp_regions := true
@@ -143,25 +143,66 @@ func run() -> void:
 			steam_roots_fixed = steam_roots_fixed and node.position == (effect.anchor - Vector2(float(emitter[0]), float(emitter[1]))).round()
 		if effect.kind == "stars":
 			layered = layered and effect.layer == "far" and node.size == Vector2.ONE
-		before.append([node.position, node.modulate, (node as Sprite2D).frame if effect.kind == "steam" else -1])
+		before.append([node.position, node.modulate, (node as Sprite2D).frame if node is Sprite2D else -1])
 	check(int(kind_counts.lights) > 0 and int(kind_counts.steam) > 0 and int(kind_counts.stars) > 0 \
-		and int(kind_counts.dust) == 16 and ambient.effects.size() == 50,
-		"The stronger ambient effects use exactly 50 reusable objects including 16 sand grains")
+		and int(kind_counts.dust) == 16 and int(kind_counts.vehicle_smoke) == 7 and int(kind_counts.vehicle_fire) == 7 and ambient.effects.size() == 64,
+		"The ambient pool contains 64 objects including exactly seven paired vehicle smoke/fire emitters")
 	check(layered, "Lights and steam inherit their panorama depth; one-pixel stars belong only to the far sky")
 	check(native and lamp_regions, "Ambient coordinates stay integer and lamps reuse exact source window regions")
+	var chosen_variants: Dictionary = {}
+	var chosen_phases: Dictionary = {}
+	var chosen_speeds: Dictionary = {}
+	for choice: Dictionary in ambient.vehicle_assignments:
+		chosen_variants[choice.variant_id] = true
+		chosen_phases[choice.smoke_phase] = true
+		chosen_speeds[choice.fire_period] = true
+	check(ambient.vehicle_seed > 0 and ambient.vehicle_seed <= 4294967295 and ambient.vehicle_assignments.size() == 7 and chosen_variants.size() >= 3 and chosen_phases.size() >= 6 and chosen_speeds.size() >= 6,
+		"Seven cars really choose at least three art variants and independently randomized phases and speeds")
+	var vehicle_anchor_ok := true
+	var vehicle_depth_ok := true
+	var vehicle_art_ok := true
+	var vehicle_textures := {"vehicle_smoke": {}, "vehicle_fire": {}}
+	for effect: Dictionary in ambient.effects:
+		if not String(effect.kind).begins_with("vehicle_"):
+			continue
+		var node := effect.node as Sprite2D
+		vehicle_depth_ok = vehicle_depth_ok and node.get_parent() == scene and node.z_index == scene.foreground.z_index \
+			and node.get_index() > scene.foreground.get_index() and node.z_index < player.z_index
+		var fixture: Dictionary = {}
+		for candidate: Dictionary in scene.traversal_layout.fixtures:
+			if String(candidate.id) == String(effect.vehicle_id):
+				fixture = candidate
+		if fixture.is_empty():
+			vehicle_anchor_ok = false
+		else:
+			var raw: Array = fixture.rect
+			vehicle_anchor_ok = vehicle_anchor_ok and Rect2(float(raw[0]), float(raw[1]), float(raw[2]), float(raw[3])).has_point(effect.anchor) \
+				and node.position == (effect.anchor - Vector2(effect.atlas.anchor)).round()
+		vehicle_textures[effect.kind][node.texture.resource_path] = true
+		vehicle_art_ok = vehicle_art_ok and node.texture.get_image().detect_alpha() == Image.ALPHA_BIT and node.hframes * node.vframes >= 6
+		for used: Rect2 in effect.atlas.used:
+			vehicle_art_ok = vehicle_art_ok and used.has_area()
+			if effect.kind == "vehicle_fire":
+				vehicle_art_ok = vehicle_art_ok and used.size.y <= 28.0
+	check(vehicle_anchor_ok, "Vehicle smoke and fire stay fixed to real car bodies without moving their collision or art")
+	check(vehicle_depth_ok, "Vehicle smoke/fire draw above the car source and below the unchanged hero")
+	check(vehicle_art_ok and vehicle_textures.vehicle_smoke.size() >= 3 and vehicle_textures.vehicle_fire.size() >= 3,
+		"Cars use at least three real transparent six-frame smoke/fire atlases with low native flames")
+	var assignment_snapshot := JSON.stringify(ambient.vehicle_assignments)
 	var node_count := scene.get_tree().get_node_count()
 	ambient.update_at(ambient.elapsed + 0.8)
 	var changes := 0
 	for index in range(ambient.effects.size()):
 		var effect: Dictionary = ambient.effects[index]
 		var node: Node2D = effect.node
-		if before[index] != [node.position, node.modulate, (node as Sprite2D).frame if effect.kind == "steam" else -1]:
+		if before[index] != [node.position, node.modulate, (node as Sprite2D).frame if node is Sprite2D else -1]:
 			changes += 1
 		native = native and node.position == node.position.round() and not node is CollisionObject2D
 		if effect.kind == "steam":
 			steam_roots_fixed = steam_roots_fixed and node.position == before[index][0]
 	check(changes > 0 and scene.get_tree().get_node_count() == node_count and native,
 		"Ambient time really changes existing pixels without creating nodes, fractional positions or collisions")
+	check(JSON.stringify(ambient.vehicle_assignments) == assignment_snapshot, "Vehicle variants, phase offsets and speeds remain fixed while time advances")
 	check(steam_roots_fixed, "Steam stays anchored at every real chimney mouth through different animation phases")
 	var steam_continuous := true
 	for effect: Dictionary in ambient.effects:

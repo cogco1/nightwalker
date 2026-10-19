@@ -376,8 +376,9 @@ func run_ambient() -> Dictionary:
 	var count_before: int = scene.get_tree().get_node_count()
 	var report := {"pool_size": ambient.effects.size(), "update_hz": ambient.update_hz, "draw_scale": 1,
 		"steam_frame_size": [ambient.steam_frame_size.x, ambient.steam_frame_size.y],
-		"kind_counts": {"lights": 0, "steam": 0, "stars": 0, "dust": 0},
-		"animation_frames": [], "sky_animation_frames": [], "gpu_probes": [], "intermediate_node_allocations": 0}
+		"kind_counts": {"lights": 0, "steam": 0, "stars": 0, "dust": 0, "vehicle_smoke": 0, "vehicle_fire": 0},
+		"animation_frames": [], "sky_animation_frames": [], "vehicle_animation_frames": [],
+		"vehicle_seed": ambient.vehicle_seed, "vehicle_assignments": ambient.vehicle_assignments.duplicate(true), "gpu_probes": [], "intermediate_node_allocations": 0}
 	for effect: Dictionary in ambient.effects:
 		report.kind_counts[effect.kind] += 1
 		var node: Node2D = effect.node
@@ -385,6 +386,12 @@ func run_ambient() -> Dictionary:
 		if effect.kind != "dust":
 			scene._check(node.get_parent() == ambient._layer(effect.layer) and node.z_index == 0,
 				"Ambient inherits the exact panorama depth: " + String(effect.id))
+	var variants: Dictionary = {}
+	for choice: Dictionary in ambient.vehicle_assignments:
+		variants[choice.variant_id] = true
+	scene._check(ambient.vehicle_assignments.size() == 7 and variants.size() >= 3,
+		"The live vehicle pool really uses at least three randomized visual variants across seven wrecks")
+	var assignment_snapshot := JSON.stringify(ambient.vehicle_assignments)
 	var initial: Array = []
 	for effect: Dictionary in ambient.effects:
 		initial.append([effect.node.position, effect.node.modulate])
@@ -396,6 +403,7 @@ func run_ambient() -> Dictionary:
 			state_changes += 1
 	scene._check(state_changes > 0 and scene.get_tree().get_node_count() == count_before,
 		"Real ambient time changes the fixed pool without per-frame node creation")
+	scene._check(JSON.stringify(ambient.vehicle_assignments) == assignment_snapshot, "Vehicle startup choices never reroll as the animation runs")
 	report["state_changes"] = state_changes
 	if DisplayServer.get_name() != "headless":
 		# Freeze only this evidence interval: the earlier/later terrain, roof and lift tests use real physics.
@@ -429,7 +437,19 @@ func run_ambient() -> Dictionary:
 			scene._check(frame.save_png(path) == OK, "Write continuous native sky ambient frame %02d" % index)
 			report.sky_animation_frames.append({"png": ProjectSettings.globalize_path(path), "time": time,
 				"camera": [1008, -106], "effects": ambient.visible_effects()})
-		for kind in ["lights", "steam", "stars", "dust"]:
+		player.position = Vector2(612, 147)
+		scene.camera.position = Vector2(616, 104)
+		scene.camera.force_update_scroll()
+		scene.far_background.position.x = roundf((616.0 - 160.0) * (1.0 - scene.FAR_SCROLL_RATIO))
+		scene.mid_background.position.x = roundf((616.0 - 160.0) * (1.0 - scene.MID_SCROLL_RATIO))
+		for index in range(12):
+			var time := 1.0 + float(index) / 8.0
+			var frame := await _ambient_frame(time)
+			var path: String = scene.OUTPUT + "ambient_vehicle_animation_%02d.png" % index
+			scene._check(frame.save_png(path) == OK, "Write continuous native vehicle smoke/fire frame %02d" % index)
+			report.vehicle_animation_frames.append({"png": ProjectSettings.globalize_path(path), "time": time,
+				"camera": [616, 104], "effects": ambient.visible_effects()})
+		for kind in ["lights", "steam", "stars", "dust", "vehicle_smoke", "vehicle_fire"]:
 			var probe := {"kind": kind, "changed_pixels": 0, "camera": [], "first_png": "", "second_png": ""}
 			var tried := 0
 			for effect: Dictionary in ambient.effects:
@@ -441,7 +461,7 @@ func run_ambient() -> Dictionary:
 					var anchor: Vector2 = effect.anchor
 					var ratio: float = scene.FAR_SCROLL_RATIO if effect.layer == "far" else (scene.MID_SCROLL_RATIO if effect.layer == "mid" else 1.0)
 					camera_x = clampf((anchor.x - 160.0) / ratio + 160.0, 160.0, 5984.0)
-					camera_y = clampf(anchor.y - 256.0 - (15.0 if kind == "steam" else 0.0), -166.0, 166.0)
+					camera_y = clampf(anchor.y - 48.0 if effect.layer == "world" else anchor.y - 256.0 - (15.0 if kind == "steam" else 0.0), -166.0, 166.0)
 				scene.camera.position = Vector2(camera_x, camera_y).round()
 				scene.camera.force_update_scroll()
 				scene.far_background.position.x = roundf((scene.camera.position.x - 160.0) * (1.0 - scene.FAR_SCROLL_RATIO))
