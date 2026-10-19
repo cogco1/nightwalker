@@ -90,7 +90,7 @@ func open() -> void:
 	waiting_slot = ""
 	panel.show()
 	refresh()
-	show_status(CONTROLS.load_notice if not CONTROLS.load_notice.is_empty() else "E 固定交互，F 固定俯视处决；点击按键后录入单键。")
+	show_status(CONTROLS.load_notice if not CONTROLS.load_notice.is_empty() else "点击按键后录入单键；攻击键使用鼠标。")
 	buttons["move_up"].grab_focus()
 
 

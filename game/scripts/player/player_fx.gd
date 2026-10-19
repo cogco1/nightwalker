@@ -8,8 +8,6 @@ extends Node2D
 ## It listens to the player's public move_started signal to size the blade arcs; it never reads player state.
 ## Decorative randomness has its own generator, so effects never shift the player's critical-hit rolls.
 
-const IMPACT_V2 = preload("res://scripts/player/impact_v2.gd")
-const CHARGED_DRAW = preload("res://scripts/player/charged_draw.gd")
 const MAX_BLADE_PIXELS := 330
 const WHITE := Color("f2f8ff")
 const BLUE := Color("8ebce8")
@@ -32,8 +30,6 @@ var afterimages: Array[Dictionary] = []
 var rng := RandomNumberGenerator.new()
 var arc_width := 1
 var _glow: Node2D
-var contact_fx: Node2D
-var draw_cut: Node2D
 
 
 func _ready() -> void:
@@ -46,12 +42,6 @@ func _ready() -> void:
 	_glow.material = additive
 	add_child(_glow)
 	_glow.draw.connect(_draw_glow)
-	contact_fx = IMPACT_V2.new()
-	contact_fx.name = "ContactInk"
-	add_child(contact_fx)
-	draw_cut=CHARGED_DRAW.new()
-	draw_cut.name="ChargedDraw"
-	add_child(draw_cut)
 	var owner_player := get_parent()
 	if owner_player != null and owner_player.has_signal("move_started"):
 		owner_player.move_started.connect(_on_move_started)
@@ -77,10 +67,9 @@ func sparks(point: Vector2) -> void:
 		add({"position": point.round(), "velocity": Vector2(-32 + index * 16, -35 + abs(index - 2) * 16), "life": 0.14, "color": WHITE if index % 2 == 0 else BLUE})
 
 
-# Slash mark across the target along the swing, rays bursting from the contact, shockwave rings, shards,
-# embers and (critical / heavy) focus lines. The hit-stop freezes on the frame these are spawned in.
-func impact(point: Vector2, weight: StringName, direction: Vector2, _feet: Vector2, killed := false, substance: StringName = &"flesh", crimson := false) -> void:
-	contact_fx.contact(point, weight, direction, killed, substance, crimson)
+# Small neutral contact sparks; no ink cuts, blood spray or execution halo.
+func impact(point: Vector2, _weight: StringName, _direction: Vector2, _feet: Vector2) -> void:
+	sparks(point)
 
 
 ## Preserved v1 hit shapes, callable from legacy_dash_hit_feedback.gd; disabled for thrusts by default.
@@ -175,8 +164,6 @@ func ghost(texture: Texture2D, at: Vector2, life: float) -> void:
 
 
 func step(delta: float) -> void:
-	contact_fx.step(delta)
-	draw_cut.step(delta)
 	for index in range(afterimages.size() - 1, -1, -1):
 		afterimages[index]["life"] = float(afterimages[index]["life"]) - delta
 		if float(afterimages[index]["life"]) <= 0.0:

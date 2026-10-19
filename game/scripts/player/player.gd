@@ -10,7 +10,7 @@ signal special_started(kind: String, direction: Vector2)
 signal landing_impact(point: Vector2)
 ## Once per attack stage on first contact: light / critical / heavy. GameSession maps it to a hit-stop.
 signal impact(weight: StringName, direction: Vector2)
-## Every contact that shows hit feedback, where it landed (kill folded into weight); the impact prototype reads it.
+## Contact position and weight for combat observers.
 signal struck(point: Vector2, weight: StringName, direction: Vector2, killed: bool)
 ## Every attack or special start, with the move id (attack1-3, crouch_stab, air_attack1-3, rising_slash, ...).
 signal move_started(move: StringName)
@@ -154,7 +154,6 @@ var _critical_stop_emitted := false
 var _normal_stop_emitted := false
 var _kill_stop_emitted := false
 var _swing_release_emitted := false
-var _draw_cut_emitted := false
 var _rng := RandomNumberGenerator.new()
 var _mouse_attack_held := false
 # Mouse edges are recorded during pauses; only physics may start a charge or convert a tap into a swing.
@@ -432,13 +431,6 @@ func _physics_process(delta: float) -> void:
 	if dash_step:
 		_apply_dash_hits(dash_from, dash_end)
 	if is_attacking and _in_active_frames():
-		if move.get("draw_cut",false) and not _draw_cut_emitted:
-			_draw_cut_emitted=true
-			var reach:=float(move.box.reach)+float(move.box.length)/2.0+(MOVESET.SIDE_EXTRA_REACH if view_mode==ViewMode.SIDE_VIEW else 0.0)
-			var ray:=get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(attack_origin(),attack_origin()+attack_direction*reach,1))
-			if not ray.is_empty():reach=minf(reach,attack_origin().distance_to(ray.position))
-			var origin:=global_position if view_mode==ViewMode.SIDE_VIEW else attack_origin()+Vector2(-attack_direction.y,attack_direction.x)*17.0
-			fx.draw_cut.release(origin,attack_direction,reach)
 		if not move.get("pierce", false):
 			_apply_attack_hits()
 		_update_blade_trail()
@@ -858,7 +850,6 @@ func _start_move(id: StringName) -> void:
 	_normal_stop_emitted = false
 	_kill_stop_emitted = false
 	_swing_release_emitted = false
-	_draw_cut_emitted = false
 	match move.get("crit", &"none"):
 		&"roll":
 			critical_rolls += 1
@@ -1022,8 +1013,7 @@ func _resolve_hit(target: Node, point: Vector2, row: Dictionary = {}) -> bool:
 	var weight := _impact_weight(row)
 	var health: Variant = target.get("hp")
 	var killed: bool = health != null and int(health) <= 0
-	var substance: StringName = target.get_meta("hit_material", &"flesh")
-	fx.impact(point, weight, attack_direction, global_position, killed, substance, row.get("draw_cut",false))
+	fx.impact(point, weight, attack_direction, global_position)
 	struck.emit(point, &"kill" if killed else weight, attack_direction, killed)
 	var first_critical := stage_is_critical and not _critical_stop_emitted
 	var first_normal := not stage_is_critical and not _normal_stop_emitted
@@ -1727,7 +1717,6 @@ func _blade_tip_for_frame(frame: int) -> Vector2:
 
 
 func _update_blade_trail() -> void:
-	if move.get("draw_cut",false):return
 	if sprite.frame == _last_blade_frame:
 		return
 	var tip := _blade_tip_for_frame(sprite.frame)
