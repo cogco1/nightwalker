@@ -1,0 +1,39 @@
+{
+  "version": "battlefield-v01-persistent-elevation",
+  "date": "2026-10-19",
+  "mode": "built-in-imagegen",
+  "art_only": true,
+  "game_modified": false,
+  "seamless_pixel_alignment": false,
+  "preview_width": 6358,
+  "preview_height": 729,
+  "files": [
+    {
+      "file": "01_战场_钢墙与上坡.png",
+      "width": 2120,
+      "height": 742,
+      "bytes": 1874566,
+      "sha256": "d01a126d47bc3848a8b0c5508620a29bf4f8be1926e763c69858dd902d1faf4e",
+      "preview_x": 0,
+      "preview_y": 0
+    },
+    {
+      "file": "02_战场_高地工厂.png",
+      "width": 2119,
+      "height": 742,
+      "bytes": 1935917,
+      "sha256": "842943a4343df53efe140dab808a999f93755faee85f5111210eaeefa394f172",
+      "preview_x": 2120,
+      "preview_y": -13
+    },
+    {
+      "file": "03_战场_高地楼群.png",
+      "width": 2119,
+      "height": 742,
+      "bytes": 1874298,
+      "sha256": "b364af06b2e01080efbbe8cac6efb2d9e84af0130d4082212848688b7ca07d8e",
+      "preview_x": 4239,
+      "preview_y": -10
+    }
+  ]
+}
