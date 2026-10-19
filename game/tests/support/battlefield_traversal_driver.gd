@@ -340,3 +340,145 @@ func run_elevator() -> Dictionary:
 			"player": [player.position.x, player.position.y]},
 		"bottom_stop": lift.bottom_y, "top_stop": lift.top_y, "speed": lift.speed,
 		"landing_range": lift.call_range, "final_position": [player.position.x, player.position.y]}
+
+
+func _ambient_frame(time: float, kind: String = "") -> Image:
+	scene.ambient.update_at(time)
+	for effect: Dictionary in scene.ambient.effects:
+		if not kind.is_empty() and String(effect.kind) != kind:
+			effect.node.visible = false
+	await scene.get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	return scene.get_viewport().get_texture().get_image()
+
+
+func _changed_pixels(first: Image, second: Image, effects: Array) -> int:
+	var count := 0
+	var rects: Array[Rect2] = []
+	for effect: Dictionary in effects:
+		var raw: Array = effect.rect
+		rects.append(Rect2(Vector2(float(raw[0]), float(raw[1])) - scene.camera.position + Vector2(160, 90), Vector2(float(raw[2]), float(raw[3]))))
+	for y in range(first.get_height()):
+		for x in range(first.get_width()):
+			for rect: Rect2 in rects:
+				if rect.has_point(Vector2(x, y)) and not scene._pixel_matches(first.get_pixel(x, y), second.get_pixel(x, y)):
+					count += 1
+					break
+	return count
+
+
+func run_ambient() -> Dictionary:
+	var ambient: Node = scene.ambient
+	var saved_time: float = ambient.elapsed
+	var saved_position: Vector2 = player.position
+	var saved_camera: Vector2 = scene.camera.position
+	var saved_animation: bool = player.sprite.is_playing()
+	var count_before: int = scene.get_tree().get_node_count()
+	var report := {"pool_size": ambient.effects.size(), "update_hz": 12, "draw_scale": 1,
+		"kind_counts": {"lights": 0, "steam": 0, "stars": 0, "dust": 0},
+		"animation_frames": [], "sky_animation_frames": [], "gpu_probes": [], "intermediate_node_allocations": 0}
+	for effect: Dictionary in ambient.effects:
+		report.kind_counts[effect.kind] += 1
+		var node: Node2D = effect.node
+		scene._check(node.scale == Vector2.ONE and node.position == node.position.round(), "Native ambient coordinates: " + String(effect.id))
+		if effect.kind != "dust":
+			scene._check(node.get_parent() == ambient._layer(effect.layer) and node.z_index == 0,
+				"Ambient inherits the exact panorama depth: " + String(effect.id))
+	var initial: Array = []
+	for effect: Dictionary in ambient.effects:
+		initial.append([effect.node.position, effect.node.modulate])
+	ambient.update_at(saved_time + 0.8)
+	var state_changes := 0
+	for index in range(ambient.effects.size()):
+		var node: Node2D = ambient.effects[index].node
+		if initial[index] != [node.position, node.modulate]:
+			state_changes += 1
+	scene._check(state_changes > 0 and scene.get_tree().get_node_count() == count_before,
+		"Real ambient time changes the fixed pool without per-frame node creation")
+	report["state_changes"] = state_changes
+	if DisplayServer.get_name() != "headless":
+		# Freeze only this evidence interval: the earlier/later terrain, roof and lift tests use real physics.
+		scene.set_physics_process(false)
+		player.set_physics_process(false)
+		player.sprite.pause()
+		if scene.elevator != null:
+			scene.elevator.set_physics_process(false)
+		ambient.set_process(false)
+		player.position = Vector2(400, scene.ground_y_at(400))
+		player.velocity = Vector2.ZERO
+		scene.camera.position = Vector2(400, 104)
+		scene.camera.force_update_scroll()
+		scene.far_background.position.x = roundf((400.0 - 160.0) * (1.0 - scene.FAR_SCROLL_RATIO))
+		scene.mid_background.position.x = roundf((400.0 - 160.0) * (1.0 - scene.MID_SCROLL_RATIO))
+		for index in range(12):
+			var time := 1.0 + float(index) / 8.0
+			var frame := await _ambient_frame(time)
+			var path: String = scene.OUTPUT + "ambient_animation_%02d.png" % index
+			scene._check(frame.save_png(path) == OK, "Write continuous native ambient frame %02d" % index)
+			report.animation_frames.append({"png": ProjectSettings.globalize_path(path), "time": time,
+				"camera": [400, 104], "effects": ambient.visible_effects()})
+		scene.camera.position = Vector2(1008, -106)
+		scene.camera.force_update_scroll()
+		scene.far_background.position.x = roundf((1008.0 - 160.0) * (1.0 - scene.FAR_SCROLL_RATIO))
+		scene.mid_background.position.x = roundf((1008.0 - 160.0) * (1.0 - scene.MID_SCROLL_RATIO))
+		for index in range(12):
+			var time := 1.0 + float(index) / 8.0
+			var frame := await _ambient_frame(time)
+			var path: String = scene.OUTPUT + "ambient_sky_animation_%02d.png" % index
+			scene._check(frame.save_png(path) == OK, "Write continuous native sky ambient frame %02d" % index)
+			report.sky_animation_frames.append({"png": ProjectSettings.globalize_path(path), "time": time,
+				"camera": [1008, -106], "effects": ambient.visible_effects()})
+		for kind in ["lights", "steam", "stars", "dust"]:
+			var probe := {"kind": kind, "changed_pixels": 0, "camera": [], "first_png": "", "second_png": ""}
+			var tried := 0
+			for effect: Dictionary in ambient.effects:
+				if effect.kind != kind:
+					continue
+				var camera_x := 400.0
+				var camera_y := 104.0
+				if kind != "dust":
+					var anchor: Vector2 = effect.anchor
+					var ratio: float = scene.FAR_SCROLL_RATIO if effect.layer == "far" else (scene.MID_SCROLL_RATIO if effect.layer == "mid" else 1.0)
+					camera_x = clampf((anchor.x - 160.0) / ratio + 160.0, 160.0, 5984.0)
+					camera_y = clampf(anchor.y - 256.0 - (15.0 if kind == "steam" else 0.0), -166.0, 166.0)
+				scene.camera.position = Vector2(camera_x, camera_y).round()
+				scene.camera.force_update_scroll()
+				scene.far_background.position.x = roundf((scene.camera.position.x - 160.0) * (1.0 - scene.FAR_SCROLL_RATIO))
+				scene.mid_background.position.x = roundf((scene.camera.position.x - 160.0) * (1.0 - scene.MID_SCROLL_RATIO))
+				var period := float(effect.data.get("period", 3.0))
+				var phase := float(effect.data.get("phase", 0.0))
+				var first_time := (2.20 - phase) * period if kind != "dust" else 1.0
+				var second_time := (2.72 - phase) * period if kind != "dust" else 2.6
+				var first := await _ambient_frame(first_time, kind)
+				var first_effects: Array = ambient.visible_effects()
+				var second := await _ambient_frame(second_time, kind)
+				var changed := _changed_pixels(first, second, first_effects + ambient.visible_effects())
+				tried += 1
+				if changed > int(probe.changed_pixels):
+					var prefix: String = scene.OUTPUT + "ambient_probe_" + kind
+					first.save_png(prefix + "_a.png")
+					second.save_png(prefix + "_b.png")
+					probe = {"kind": kind, "changed_pixels": changed, "camera": [scene.camera.position.x, scene.camera.position.y],
+						"first_png": ProjectSettings.globalize_path(prefix + "_a.png"), "second_png": ProjectSettings.globalize_path(prefix + "_b.png"),
+						"first_time": first_time, "second_time": second_time, "first_effects": first_effects, "second_effects": ambient.visible_effects()}
+				if changed >= (2 if kind == "stars" else 4):
+					break
+				if tried >= 12:
+					break
+			scene._check(int(probe.changed_pixels) > 0, "GPU renders real, unoccluded two-frame motion for " + kind)
+			report.gpu_probes.append(probe)
+		player.position = saved_position
+		player.velocity = Vector2.ZERO
+		player.set_physics_process(true)
+		if saved_animation:
+			player.sprite.play()
+		scene.set_physics_process(true)
+		if scene.elevator != null:
+			scene.elevator.set_physics_process(true)
+		ambient.set_process(true)
+	scene.camera.position = saved_camera
+	scene._follow_player()
+	ambient.update_at(saved_time)
+	report["intermediate_node_allocations"] = scene.get_tree().get_node_count() - count_before
+	scene._check(int(report.intermediate_node_allocations) == 0, "Ambient playback keeps its fixed node pool")
+	return report

@@ -6,6 +6,7 @@ const PLAYER_SCENE = preload("res://scenes/player.tscn")
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
 const ELEVATOR = preload("res://scripts/battlefield_elevator.gd")
+const AMBIENT = preload("res://scripts/battlefield_ambient.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 const BACKGROUND_PATH := "res://assets/battlefield_layer_01/battlefield_layer_01_native.png"
 const FAR_BACKGROUND_PATH := "res://assets/battlefield_far_background/battlefield_far_native.png"
@@ -34,6 +35,7 @@ var traversal_terrain: Node2D
 var traversal_layout: Dictionary = {}
 var traversal_colliders: Dictionary = {}
 var route_waypoints: Array[Dictionary] = []
+var ambient: Node
 var elevator: AnimatableBody2D
 var elevator_hint: Label
 var terrain: StaticBody2D
@@ -55,13 +57,13 @@ func _ready() -> void:
 	window.content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
 	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
 	window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_INTEGER
-	DisplayServer.window_set_title("夜行者 · 密集工业战场与工业电梯 v07")
+	window.title = "夜行者 · 工业风沙与环境动态 v08"
 	_smoke = OS.get_cmdline_user_args().has("--battlefield-smoke")
 	if _smoke:
 		CONTROLS.settings_path = "user://battlefield_smoke_keybindings.cfg"
 		CONTROLS.current = CONTROLS.defaults()
 	CONTROLS.install()
-	if not _build_background() or not _load_ground() or not _build_traversal() or not _build_elevator():
+	if not _build_background() or not _load_ground() or not _build_traversal() or not _build_elevator() or not _build_ambient():
 		if _smoke:
 			get_tree().quit(2)
 		return
@@ -69,6 +71,7 @@ func _ready() -> void:
 	_build_player()
 	_build_camera()
 	_follow_player()
+	ambient.update_at(0.0)
 	ready_for_test = true
 	print("战场跑步试玩 | %s/%s 左右移动 | 长按 %s 奔跑 | %s 跳跃 | %s 返回起点 | Esc 退出" % [
 		CONTROLS.hint_text("move_left"), CONTROLS.hint_text("move_right"),
@@ -198,6 +201,17 @@ func _build_elevator() -> bool:
 	canvas.name = "ElevatorPrompt"
 	add_child(canvas)
 	elevator_hint = PIXEL_UI.label(canvas, Vector2(5, 164), Vector2(310, 14), "", 10, true, PIXEL_UI.small_font())
+	return true
+
+
+func _build_ambient() -> bool:
+	ambient = AMBIENT.new()
+	if not ambient.configure(self):
+		ambient.free()
+		ambient = null
+		return false
+	ambient.name = "BattlefieldAmbient"
+	add_child(ambient)
 	return true
 
 
@@ -417,11 +431,24 @@ func _layer_pixel_evidence(rendered: Image) -> Dictionary:
 	var cage_rect: Rect2 = elevator.drawn_rect() if elevator != null else Rect2()
 	cage_rect.position -= camera_origin
 	var prompt_rect := Rect2(Vector2(5, 164), Vector2(310, 14)) if elevator_hint != null and not elevator_hint.text.is_empty() else Rect2()
+	var ambient_rects: Array[Rect2] = []
+	for effect: Dictionary in ambient.visible_effects():
+		var data: Array = effect.rect
+		ambient_rects.append(Rect2(Vector2(float(data[0]), float(data[1])) - camera_origin, Vector2(float(data[2]), float(data[3]))))
+	var ambient_excluded := 0
 	var excluded := 0
 	for y in range(0, VIEWPORT_SIZE.y, 4):
 		for x in range(0, VIEWPORT_SIZE.x, 4):
 			if hero_rect.has_point(Vector2(x, y)) or cage_rect.has_point(Vector2(x, y)) or prompt_rect.has_point(Vector2(x, y)):
 				excluded += 1
+				continue
+			var dynamic_pixel := false
+			for rect: Rect2 in ambient_rects:
+				if rect.has_point(Vector2(x, y)):
+					dynamic_pixel = true
+					break
+			if dynamic_pixel:
+				ambient_excluded += 1
 				continue
 			for layer in ART_RENDER_LAYERS:
 				var source: Image = images[layer]
@@ -445,6 +472,8 @@ func _layer_pixel_evidence(rendered: Image) -> Dictionary:
 	for layer in ART_RENDER_LAYERS:
 		evidence[layer]["matched_colors"] = colors[layer].size()
 	evidence["sample_stride"] = 4
+	evidence["ambient_excluded_samples"] = ambient_excluded
+	evidence["ambient_effects"] = ambient.visible_effects()
 	evidence["hero_excluded_samples"] = excluded
 	evidence["hero_exclusion_rect"] = [hero_rect.position.x, hero_rect.position.y, hero_rect.size.x, hero_rect.size.y]
 	return evidence
@@ -584,6 +613,7 @@ func _run_smoke() -> void:
 	smoke_report["ground_final_player"] = [player.position.x, player.position.y]
 	smoke_report["ground_distance"] = player.position.x - start_x
 	smoke_report["ground_physics_ticks"] = elapsed_ticks
+	smoke_report["ambient"] = await traversal_driver.run_ambient()
 	smoke_report["course"] = await traversal_driver.run_course()
 	_check(elevator != null, "The giant building includes a working industrial elevator")
 	if elevator != null:

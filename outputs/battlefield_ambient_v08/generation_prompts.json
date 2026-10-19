@@ -1,0 +1,12 @@
+{
+  "mode": "built-in-imagegen",
+  "date": "2026-10-20",
+  "assets": [
+    {
+      "key": "steam",
+      "path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-7d9940c1-2ee8-49bf-bd50-7fa1776c80ab.png",
+      "prompt": "Use case: stylized-concept. Asset: low-resolution industrial STEAM animation sprite sheet for a 2D side-view pixel game. Reference is ONLY the muted warm-steel gray/brown palette and coarse pixel-art grid of the factory; do NOT draw the reference building. Draw ONLY SIX frames of a SMALL, subtle dusty-gray steam plume, on true transparent RGBA. EXACT layout: 3 equal square cells across, 2 equal square cells down; no drawn grid, margins between cells are transparent. Whole sheet 3:2 landscape. Each cell corresponds to a native32x32-pixel sprite, so whole sheet native96x64. All six frames share identical fixed emission point at cell-local(16,29), start as narrow wisp at bottom, curl/expand upward and gently RIGHT under a light breeze; heights24–28 native pixels and width14–22 native pixels. Reading order left-to-right then next row: thin fresh puff, rising puff, expanding wisp, open curling wisp, breaking into sparse wisps, dissolving wisp. Shape evolution smooth enough to loop/crossfade or sequence at8fps without teleporting. No large dramatic smoke cloud, flames, chimney, factory, hardware, background, ground, dust on ground, stars, people, letters/numbers/UI/captions or frame outlines. Crisp deliberately coarse 1-native-pixel clusters, limited4–6 shades of muted warm gray smoke, subtly mottled/stippled edges that dissolve into TRUE empty transparency. No blur, smooth gradients, antialiasing, white glow or drop shadow outside silhouette. Keep the three columns and two rows equally spaced and each plume inside its own cell. Dark industrial mood, not bright white cartoon smoke; the game will apply low opacity at runtime.",
+      "workspace_source": "outputs/battlefield_ambient_v08/source_art/steam_sheet.png"
+    }
+  ]
+}

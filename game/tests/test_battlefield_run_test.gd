@@ -120,6 +120,53 @@ func run() -> void:
 		"The far skyline covers the initial viewport on whole pixels")
 	check(scene.mid_covers_view() and scene.mid_background.position == scene.mid_background.position.round(),
 		"The middle panorama covers the initial viewport on whole pixels")
+	var ambient: Node = scene.ambient
+	check(ambient != null and not ambient.effects.is_empty(), "The standalone battlefield loads a finite ambient pool")
+	var kind_counts := {"lights": 0, "steam": 0, "stars": 0, "dust": 0}
+	var layered := true
+	var native := true
+	var lamp_regions := true
+	var before: Array = []
+	var steam_roots_fixed := true
+	for effect: Dictionary in ambient.effects:
+		kind_counts[effect.kind] += 1
+		var node: Node2D = effect.node
+		native = native and node.scale == Vector2.ONE and node.position == node.position.round()
+		if effect.kind != "dust":
+			layered = layered and node.get_parent() == ambient._layer(effect.layer) and node.z_index == 0
+		if effect.kind == "lights":
+			var lamp := node as Sprite2D
+			lamp_regions = lamp_regions and lamp.texture == lamp.get_parent().texture and lamp.region_enabled \
+				and lamp.region_filter_clip_enabled and lamp.region_rect == effect.rect and not lamp.centered
+		if effect.kind == "steam":
+			var emitter: Array = ambient.settings.get("steam_anchor", [16, 29])
+			steam_roots_fixed = steam_roots_fixed and node.position == (effect.anchor - Vector2(float(emitter[0]), float(emitter[1]))).round()
+		if effect.kind == "stars":
+			layered = layered and effect.layer == "far" and node.size == Vector2.ONE
+		before.append([node.position, node.modulate, (node as Sprite2D).frame if effect.kind == "steam" else -1])
+	check(int(kind_counts.lights) > 0 and int(kind_counts.steam) > 0 and int(kind_counts.stars) > 0 \
+		and int(kind_counts.dust) > 0 and int(kind_counts.dust) <= 16 and ambient.effects.size() <= 100,
+		"Lights, steam, sparse stars and sand use a bounded reusable pool")
+	check(layered, "Lights and steam inherit their panorama depth; one-pixel stars belong only to the far sky")
+	check(native and lamp_regions, "Ambient coordinates stay integer and lamps reuse exact source window regions")
+	var node_count := scene.get_tree().get_node_count()
+	ambient.update_at(ambient.elapsed + 0.8)
+	var changes := 0
+	for index in range(ambient.effects.size()):
+		var effect: Dictionary = ambient.effects[index]
+		var node: Node2D = effect.node
+		if before[index] != [node.position, node.modulate, (node as Sprite2D).frame if effect.kind == "steam" else -1]:
+			changes += 1
+		native = native and node.position == node.position.round() and not node is CollisionObject2D
+		if effect.kind == "steam":
+			steam_roots_fixed = steam_roots_fixed and node.position == before[index][0]
+	check(changes > 0 and scene.get_tree().get_node_count() == node_count and native,
+		"Ambient time really changes existing pixels without creating nodes, fractional positions or collisions")
+	check(steam_roots_fixed, "Steam stays anchored at every real chimney mouth through different animation phases")
+	var steam_image: Image = load(String(ambient.settings.steam_texture)).get_image()
+	check(steam_image.get_size() == Vector2i(96, 64) and steam_image.detect_alpha() == Image.ALPHA_BIT \
+		and ambient._steam_used.size() == 6,
+		"Steam uses six 32px frames with binary transparent edges at native scale")
 	var initial_camera_x: float = scene.camera.position.x
 	var initial_far_x: float = scene.far_visible_rect().position.x
 	var initial_mid_x: float = scene.mid_visible_rect().position.x

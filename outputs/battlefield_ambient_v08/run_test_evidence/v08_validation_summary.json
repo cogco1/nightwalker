@@ -1,0 +1,42 @@
+[
+  {
+    "phase": "version",
+    "returncode": 0,
+    "seconds": 0.05,
+    "stderr_bytes": 0,
+    "engine": "4.7.2.stable.official.ed1daf0bf"
+  },
+  {
+    "phase": "import",
+    "returncode": 0,
+    "seconds": 3.47,
+    "stderr_bytes": 0
+  },
+  {
+    "phase": "quick",
+    "returncode": 0,
+    "seconds": 10.02,
+    "stderr_bytes": 0,
+    "checks": 58,
+    "passed": true,
+    "failures": []
+  },
+  {
+    "phase": "headless",
+    "returncode": 0,
+    "seconds": 107.33,
+    "stderr_bytes": 0,
+    "checks": 355,
+    "passed": true,
+    "failures": []
+  },
+  {
+    "phase": "gpu",
+    "returncode": 0,
+    "seconds": 108.95,
+    "stderr_bytes": 0,
+    "checks": 585,
+    "passed": true,
+    "failures": []
+  }
+]

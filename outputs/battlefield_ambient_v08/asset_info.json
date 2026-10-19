@@ -1,0 +1,201 @@
+{
+  "source_art": "built-in-imagegen",
+  "source_sha256": "40053b3321a0244858fbc6c308ceb5a43b8139fc03e2b16c1d8b16d99411b88a",
+  "native_sha256": "d39ed264609c01dcc4fe91dc60da37d5cbae2031f1dc104fc6fc1210c1213fbd",
+  "sheet_size": [
+    96,
+    64
+  ],
+  "frame_size": [
+    32,
+    32
+  ],
+  "hframes": 3,
+  "vframes": 2,
+  "palette_colors": 64,
+  "alpha_values": [
+    0,
+    255
+  ],
+  "sampling": "nearest",
+  "emitter": [
+    16,
+    29
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "source_rect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "native_bounds_before_align": [
+        13,
+        12,
+        20,
+        30
+      ],
+      "native_translation": [
+        1,
+        0
+      ],
+      "emitter": [
+        16,
+        29
+      ],
+      "used_rect": [
+        14,
+        12,
+        21,
+        30
+      ]
+    },
+    {
+      "index": 1,
+      "source_rect": [
+        512,
+        0,
+        512,
+        512
+      ],
+      "native_bounds_before_align": [
+        12,
+        12,
+        22,
+        30
+      ],
+      "native_translation": [
+        2,
+        0
+      ],
+      "emitter": [
+        16,
+        29
+      ],
+      "used_rect": [
+        14,
+        12,
+        24,
+        30
+      ]
+    },
+    {
+      "index": 2,
+      "source_rect": [
+        1024,
+        0,
+        512,
+        512
+      ],
+      "native_bounds_before_align": [
+        11,
+        8,
+        24,
+        30
+      ],
+      "native_translation": [
+        2,
+        0
+      ],
+      "emitter": [
+        16,
+        29
+      ],
+      "used_rect": [
+        13,
+        8,
+        26,
+        30
+      ]
+    },
+    {
+      "index": 3,
+      "source_rect": [
+        0,
+        512,
+        512,
+        512
+      ],
+      "native_bounds_before_align": [
+        12,
+        4,
+        28,
+        28
+      ],
+      "native_translation": [
+        1,
+        2
+      ],
+      "emitter": [
+        16,
+        29
+      ],
+      "used_rect": [
+        13,
+        6,
+        29,
+        30
+      ]
+    },
+    {
+      "index": 4,
+      "source_rect": [
+        512,
+        512,
+        512,
+        512
+      ],
+      "native_bounds_before_align": [
+        11,
+        4,
+        25,
+        28
+      ],
+      "native_translation": [
+        2,
+        2
+      ],
+      "emitter": [
+        16,
+        29
+      ],
+      "used_rect": [
+        13,
+        6,
+        27,
+        30
+      ]
+    },
+    {
+      "index": 5,
+      "source_rect": [
+        1024,
+        512,
+        512,
+        512
+      ],
+      "native_bounds_before_align": [
+        11,
+        7,
+        22,
+        28
+      ],
+      "native_translation": [
+        2,
+        2
+      ],
+      "emitter": [
+        16,
+        29
+      ],
+      "used_rect": [
+        13,
+        9,
+        24,
+        30
+      ]
+    }
+  ]
+}
