@@ -11,6 +11,9 @@ const FAR_SCROLL_RATIO := 0.28
 const MID_SCROLL_RATIO := 0.58
 const GROUND_PATH := "res://assets/battlefield_layer_01/ground_profile.json"
 const VIEWPORT_SIZE := Vector2i(320, 180)
+const WORLD_TERRAIN_SIZE := Vector2i(6144, 256)
+const ART_SIZE := Vector2i(6144, 512)
+const ART_ORIGIN := Vector2(0, -256)
 const OUTPUT := "res://evidence/battlefield_run_test/"
 const EDGE_MARGIN := 12.0
 const START_X := 40.0
@@ -22,11 +25,13 @@ var far_background: Sprite2D
 var mid_background: Sprite2D
 var terrain: StaticBody2D
 var ground_points := PackedVector2Array()
-var world_size := Vector2i.ZERO
+var world_size := WORLD_TERRAIN_SIZE
+var art_size := Vector2i.ZERO
 var ground_source := ""
 var ready_for_test := false
 var smoke_report: Dictionary = {}
 var _smoke := false
+var _smoke_layer_totals: Dictionary = {}
 
 
 func _ready() -> void:
@@ -55,7 +60,7 @@ func _ready() -> void:
 	print("战场跑步试玩 | %s/%s 左右移动 | 长按 %s 奔跑 | %s 跳跃 | %s 返回起点 | Esc 退出" % [
 		CONTROLS.hint_text("move_left"), CONTROLS.hint_text("move_right"),
 		CONTROLS.hint_text("run"), CONTROLS.hint_text("jump"), CONTROLS.hint_text("reset_arena")])
-	print("原生像素: 背景 %d×%d / scale 1；主角 scale 1；视口 320×180，整数 nearest。" % [world_size.x, world_size.y])
+	print("原生像素: 背景 %d×%d / y=-256 / scale 1；地形 %d×%d；主角 scale 1；视口 320×180。" % [art_size.x, art_size.y, world_size.x, world_size.y])
 	print("远景: 同宽长图 / scale 1；水平视差 %.2f；天空覆盖完整镜头高度。" % FAR_SCROLL_RATIO)
 	print("中景: 同宽透明楼群与工厂 / scale 1；水平视差 %.2f。" % MID_SCROLL_RATIO)
 	if _smoke:
@@ -67,21 +72,22 @@ func _build_background() -> bool:
 	if texture == null:
 		push_error("Battlefield background is missing: " + BACKGROUND_PATH)
 		return false
-	world_size = Vector2i(texture.get_width(), texture.get_height())
-	if world_size.x < VIEWPORT_SIZE.x or world_size.y < VIEWPORT_SIZE.y:
-		push_error("Battlefield must be at least as large as the native viewport.")
+	art_size = Vector2i(texture.get_width(), texture.get_height())
+	if art_size != ART_SIZE:
+		push_error("Battlefield artwork must be 6144x512; terrain bounds remain 6144x256.")
 		return false
 	var far_texture := load(FAR_BACKGROUND_PATH) as Texture2D
 	if far_texture == null:
 		push_error("Battlefield far background is missing: " + FAR_BACKGROUND_PATH)
 		return false
-	if Vector2i(far_texture.get_width(), far_texture.get_height()) != world_size:
+	if Vector2i(far_texture.get_width(), far_texture.get_height()) != art_size:
 		push_error("Battlefield far background must share the native panorama dimensions.")
 		return false
 	far_background = Sprite2D.new()
 	far_background.name = "BattlefieldFarBackground"
 	far_background.texture = far_texture
 	far_background.centered = false
+	far_background.position = ART_ORIGIN
 	far_background.z_index = -20
 	far_background.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(far_background)
@@ -89,13 +95,14 @@ func _build_background() -> bool:
 	if mid_texture == null:
 		push_error("Battlefield middle background is missing: " + MID_BACKGROUND_PATH)
 		return false
-	if Vector2i(mid_texture.get_width(), mid_texture.get_height()) != world_size:
+	if Vector2i(mid_texture.get_width(), mid_texture.get_height()) != art_size:
 		push_error("Battlefield middle background must share the native panorama dimensions.")
 		return false
 	mid_background = Sprite2D.new()
 	mid_background.name = "BattlefieldMidBackground"
 	mid_background.texture = mid_texture
 	mid_background.centered = false
+	mid_background.position = ART_ORIGIN
 	mid_background.z_index = -15
 	mid_background.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(mid_background)
@@ -103,6 +110,7 @@ func _build_background() -> bool:
 	background.name = "BattlefieldBackground"
 	background.texture = texture
 	background.centered = false
+	background.position = ART_ORIGIN
 	background.z_index = -10
 	background.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(background)
@@ -116,7 +124,7 @@ func _load_ground() -> bool:
 		if parsed is Dictionary:
 			raw_points = parsed.get("points", parsed.get("ground_points", parsed.get("surface_points", [])))
 			if int(parsed.get("width", world_size.x)) != world_size.x or int(parsed.get("height", world_size.y)) != world_size.y:
-				push_error("Battlefield ground profile dimensions do not match its native background.")
+				push_error("Battlefield ground profile dimensions do not match the unchanged terrain bounds.")
 				return false
 		else:
 			raw_points = parsed
@@ -232,7 +240,7 @@ func far_visible_rect() -> Rect2:
 
 
 func far_covers_view() -> bool:
-	return Rect2(Vector2.ZERO, Vector2(world_size)).encloses(far_visible_rect())
+	return Rect2(Vector2.ZERO, far_background.texture.get_size()).encloses(far_visible_rect())
 
 
 func mid_visible_rect() -> Rect2:
@@ -240,7 +248,15 @@ func mid_visible_rect() -> Rect2:
 
 
 func mid_covers_view() -> bool:
-	return Rect2(Vector2.ZERO, Vector2(world_size)).encloses(mid_visible_rect())
+	return Rect2(Vector2.ZERO, mid_background.texture.get_size()).encloses(mid_visible_rect())
+
+
+func near_visible_rect() -> Rect2:
+	return Rect2(camera.position - Vector2(VIEWPORT_SIZE) / 2.0 - background.position, Vector2(VIEWPORT_SIZE))
+
+
+func near_covers_view() -> bool:
+	return Rect2(Vector2.ZERO, background.texture.get_size()).encloses(near_visible_rect())
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -280,45 +296,62 @@ func _check(ok: bool, label: String) -> void:
 		push_error("Battlefield smoke: " + label)
 
 
+func _pixel_matches(actual: Color, expected: Color, tolerance: float = 1.5 / 255.0) -> bool:
+	return absf(actual.r - expected.r) <= tolerance and absf(actual.g - expected.g) <= tolerance \
+		and absf(actual.b - expected.b) <= tolerance
+
+
 func _layer_pixel_evidence(rendered: Image) -> Dictionary:
-	# Smoke-only evidence: compare exposed middle/far samples with the actual GPU frame.
-	# No image inspection or per-pixel work is used by normal gameplay.
-	var near_image := background.texture.get_image()
-	var mid_image := mid_background.texture.get_image()
-	var far_image := far_background.texture.get_image()
-	var camera_origin := Vector2i(camera.position - Vector2(VIEWPORT_SIZE) / 2.0)
-	var mid_origin := Vector2i(mid_visible_rect().position)
-	var far_origin := Vector2i(far_visible_rect().position)
-	var far_matched := 0
-	var mid_matched := 0
-	var far_colors: Dictionary = {}
-	var mid_colors: Dictionary = {}
+	# Smoke-only: compare the top exposed source layer with the GPU frame. Mask just
+	# the hero's drawn frame and glow, so character pixels cannot count as art errors.
+	var images := {"near": background.texture.get_image(), "mid": mid_background.texture.get_image(), "far": far_background.texture.get_image()}
+	var origins := {"near": Vector2i(near_visible_rect().position), "mid": Vector2i(mid_visible_rect().position), "far": Vector2i(far_visible_rect().position)}
+	var evidence: Dictionary = {}
+	var colors := {"near": {}, "mid": {}, "far": {}}
+	for layer in ["near", "mid", "far"]:
+		evidence[layer] = {"exposed_samples": 0, "matched_samples": 0, "matched_detail_samples": 0}
+	var frame_texture: Texture2D = player.sprite.sprite_frames.get_frame_texture(player.sprite.animation, player.sprite.frame)
+	var hero_pixels := Rect2(frame_texture.get_image().get_used_rect())
+	var camera_origin := camera.position - Vector2(VIEWPORT_SIZE) / 2.0
+	var hero_rect := Rect2(player.sprite.global_position + player.sprite.offset - camera_origin + hero_pixels.position, hero_pixels.size).grow(4.0)
+	var excluded := 0
 	for y in range(0, VIEWPORT_SIZE.y, 4):
 		for x in range(0, VIEWPORT_SIZE.x, 4):
-			if near_image.get_pixel(camera_origin.x + x, camera_origin.y + y).a > 0.0:
+			if hero_rect.has_point(Vector2(x, y)):
+				excluded += 1
 				continue
-			var middle := mid_image.get_pixel(mid_origin.x + x, mid_origin.y + y)
-			var is_middle := middle.a >= 0.99
-			if middle.a > 0.0 and not is_middle:
-				continue
-			var expected := middle if is_middle else far_image.get_pixel(far_origin.x + x, far_origin.y + y)
-			var actual := rendered.get_pixel(x, y)
-			if expected.a >= 0.99 and absf(actual.r - expected.r) <= 1.5 / 255.0 \
-					and absf(actual.g - expected.g) <= 1.5 / 255.0 and absf(actual.b - expected.b) <= 1.5 / 255.0:
-				if is_middle:
-					mid_matched += 1
-					mid_colors[expected.to_rgba32()] = true
-				else:
-					far_matched += 1
-					far_colors[expected.to_rgba32()] = true
-	return {"matched_far_samples": far_matched, "matched_far_colors": far_colors.size(),
-		"matched_mid_samples": mid_matched, "matched_mid_colors": mid_colors.size(), "sample_stride": 4}
+			for layer in ["near", "mid", "far"]:
+				var source: Image = images[layer]
+				var point: Vector2i = origins[layer] + Vector2i(x, y)
+				var expected := source.get_pixelv(point)
+				if expected.a <= 0.0:
+					continue
+				# Binary source alpha is separately checked; never compare through a translucent occluder.
+				if expected.a < 0.99:
+					break
+				evidence[layer]["exposed_samples"] += 1
+				if _pixel_matches(rendered.get_pixel(x, y), expected):
+					evidence[layer]["matched_samples"] += 1
+					colors[layer][expected.to_rgba32()] = true
+					var right := source.get_pixel(mini(point.x + 1, source.get_width() - 1), point.y)
+					var below := source.get_pixel(point.x, mini(point.y + 1, source.get_height() - 1))
+					if (right.a >= 0.99 and not _pixel_matches(right, expected, 6.0 / 255.0)) \
+							or (below.a >= 0.99 and not _pixel_matches(below, expected, 6.0 / 255.0)):
+						evidence[layer]["matched_detail_samples"] += 1
+				break
+	for layer in ["near", "mid", "far"]:
+		evidence[layer]["matched_colors"] = colors[layer].size()
+	evidence["sample_stride"] = 4
+	evidence["hero_excluded_samples"] = excluded
+	evidence["hero_exclusion_rect"] = [hero_rect.position.x, hero_rect.position.y, hero_rect.size.x, hero_rect.size.y]
+	return evidence
 
 
 func _capture(label: String) -> void:
 	var entry := {"name": label, "player": [player.position.x, player.position.y],
 		"ground_y": ground_y_at(player.position.x), "camera": [camera.position.x, camera.position.y],
 		"running": bool(player.is_running), "animation": String(player.sprite.animation),
+		"near_source_rect": [near_visible_rect().position.x, near_visible_rect().position.y, VIEWPORT_SIZE.x, VIEWPORT_SIZE.y],
 		"far_position": [far_background.position.x, far_background.position.y],
 		"far_source_rect": [far_visible_rect().position.x, far_visible_rect().position.y, VIEWPORT_SIZE.x, VIEWPORT_SIZE.y],
 		"mid_position": [mid_background.position.x, mid_background.position.y],
@@ -327,6 +360,7 @@ func _capture(label: String) -> void:
 	_check(far_background.position == far_background.position.round(), "Far panorama stays on whole native pixels at " + label)
 	_check(mid_covers_view(), "Middle panorama covers the full viewport at " + label)
 	_check(mid_background.position == mid_background.position.round(), "Middle panorama stays on whole native pixels at " + label)
+	_check(near_covers_view(), "Near panorama covers the full viewport at " + label)
 	if DisplayServer.get_name() != "headless":
 		await RenderingServer.frame_post_draw
 		var image := get_viewport().get_texture().get_image()
@@ -335,10 +369,18 @@ func _capture(label: String) -> void:
 		if image != null:
 			var layer_evidence := _layer_pixel_evidence(image)
 			entry["layer_render_evidence"] = layer_evidence
-			_check(int(layer_evidence.matched_far_samples) >= 64 and int(layer_evidence.matched_far_colors) >= 5,
-				"GPU frame visibly renders the detailed far panorama at " + label)
-			_check(int(layer_evidence.matched_mid_samples) >= 16 and int(layer_evidence.matched_mid_colors) >= 5,
-				"GPU frame visibly renders the detailed middle panorama at " + label)
+			for layer in ["near", "mid", "far"]:
+				var samples: Dictionary = layer_evidence[layer]
+				var exposed := int(samples.exposed_samples)
+				var matched := int(samples.matched_samples)
+				_check(exposed == 0 or float(matched) / exposed >= 0.995,
+					"Exposed %s pixels match their native source at %s" % [layer, label])
+				_smoke_layer_totals[layer]["exposed_samples"] += exposed
+				_smoke_layer_totals[layer]["matched_samples"] += matched
+				_smoke_layer_totals[layer]["matched_detail_samples"] += int(samples.matched_detail_samples)
+				_smoke_layer_totals[layer]["max_matched_colors"] = maxi(int(_smoke_layer_totals[layer].max_matched_colors), int(samples.matched_colors))
+				if exposed > 0:
+					_smoke_layer_totals[layer]["visible_checkpoints"] += 1
 			_check(image.save_png(path) == OK, "Write screenshot " + label)
 			entry["png"] = ProjectSettings.globalize_path(path)
 	smoke_report["checkpoints"].append(entry)
@@ -347,10 +389,14 @@ func _capture(label: String) -> void:
 func _run_smoke() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUTPUT))
 	smoke_report = {"checks": 0, "failures": [], "checkpoints": [], "world_size": [world_size.x, world_size.y],
+		"art_size": [art_size.x, art_size.y], "art_origin": [ART_ORIGIN.x, ART_ORIGIN.y],
 		"ground_source": ground_source, "max_ground_error": 0.0, "airborne_ticks": 0, "running_ticks": 0,
 		"far_background": FAR_BACKGROUND_PATH, "far_scroll_ratio": FAR_SCROLL_RATIO,
 		"mid_background": MID_BACKGROUND_PATH, "mid_scroll_ratio": MID_SCROLL_RATIO,
 		"renderer": RenderingServer.get_current_rendering_method(), "headless": DisplayServer.get_name() == "headless"}
+	for layer in ["near", "mid", "far"]:
+		_smoke_layer_totals[layer] = {"exposed_samples": 0, "matched_samples": 0, "matched_detail_samples": 0,
+			"max_matched_colors": 0, "visible_checkpoints": 0}
 	await _ticks(12)
 	_check(player.view_mode == 1 and player.is_on_floor(), "Existing side-view hero starts grounded")
 	_check(player.scale == Vector2.ONE and background.scale == Vector2.ONE and far_background.scale == Vector2.ONE
@@ -359,6 +405,9 @@ func _run_smoke() -> void:
 		"Middle buildings draw between the distant skyline and original terrain")
 	_check(get_tree().root.content_scale_size == VIEWPORT_SIZE, "Viewport stays 320x180")
 	_check(ground_source == GROUND_PATH, "Terrain comes from the delivered ground profile")
+	_check(world_size == WORLD_TERRAIN_SIZE and art_size == ART_SIZE, "Tall artwork preserves the original 6144x256 terrain bounds")
+	_check(background.position.y == ART_ORIGIN.y and mid_background.position.y == ART_ORIGIN.y
+		and far_background.position.y == ART_ORIGIN.y, "Every native art layer extends upward from y=-256")
 	await _capture("00_start")
 	var start_x := player.position.x
 	var start_camera_x := camera.position.x
@@ -422,6 +471,13 @@ func _run_smoke() -> void:
 	smoke_report["mid_source_distance"] = mid_distance
 	smoke_report["measured_far_scroll_ratio"] = far_distance / camera_distance if camera_distance > 0.0 else 0.0
 	smoke_report["measured_mid_scroll_ratio"] = mid_distance / camera_distance if camera_distance > 0.0 else 0.0
+	if DisplayServer.get_name() != "headless":
+		for layer in ["near", "mid", "far"]:
+			var totals: Dictionary = _smoke_layer_totals[layer]
+			_check(int(totals.matched_samples) >= 256 and int(totals.matched_detail_samples) >= 64
+				and int(totals.max_matched_colors) >= 8,
+				"Route visibly renders sufficient varied native details from the " + layer + " layer")
+		smoke_report["layer_render_totals"] = _smoke_layer_totals
 	smoke_report["distance"] = player.position.x - start_x
 	smoke_report["physics_ticks"] = elapsed_ticks
 	smoke_report["final_player"] = [player.position.x, player.position.y]

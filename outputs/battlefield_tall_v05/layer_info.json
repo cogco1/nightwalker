@@ -1,0 +1,709 @@
+{
+  "date": "2026-10-20",
+  "origin": [
+    0,
+    -256
+  ],
+  "world_size": [
+    6144,
+    256
+  ],
+  "native_art_size": [
+    6144,
+    512
+  ],
+  "ground": {
+    "baseline": "outputs\\battlefield_depth_v04\\battlefield_near_native.png",
+    "ground_pixels_unchanged": true,
+    "preserved_ground_pixel_count": 530452,
+    "ground_rgba_sha256": "d1c6ff4ea3af4582efd85858deae9905045bb0a219baf0d923454d9745bcd26f",
+    "ground_points_world": [
+      [
+        0,
+        224
+      ],
+      [
+        140,
+        224
+      ],
+      [
+        224,
+        168
+      ],
+      [
+        6144,
+        168
+      ]
+    ],
+    "palette_strategy": "preserve all existing near colors"
+  },
+  "near": {
+    "role": "main_architecture",
+    "native_size": [
+      6144,
+      512
+    ],
+    "art_size": [
+      6144,
+      512
+    ],
+    "world_size": [
+      6144,
+      256
+    ],
+    "display_size": [
+      12288,
+      1024
+    ],
+    "origin": [
+      0,
+      -256
+    ],
+    "scroll_scale_x": 1.0,
+    "z_index": -10,
+    "architecture_height_target": "approximately 2x, redrawn by imagegen",
+    "pixel_scale": 1,
+    "opaque": false,
+    "alpha_values": [
+      0,
+      255
+    ],
+    "colors": 64,
+    "native_sha256": "0e751f057b6dafbf06edd9dcfdf631ed29076c42ee1ab43cc0734a2d686113b8",
+    "display_sha256": "ad0bf20e43c4cfee2b614c5dde642689adc7f6aec99db2ef793d2d01f265cc88",
+    "runtime_path": "game\\assets\\battlefield_layer_01\\battlefield_layer_01_native.png",
+    "source_art": "built-in-imagegen",
+    "source_sections": 8,
+    "sections": [
+      {
+        "section": 1,
+        "source": "outputs\\battlefield_tall_v05\\near_sources\\near_01.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 401,
+        "vertical_offset": 23,
+        "target_flat_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 50.0,
+          "p95_column_height": 100.0,
+          "max_height": 132
+        },
+        "silhouette_height_new": {
+          "median_column_height": 107.0,
+          "p95_column_height": 192.0,
+          "max_height": 252
+        },
+        "median_height_ratio": 2.14
+      },
+      {
+        "section": 2,
+        "source": "outputs\\battlefield_tall_v05\\near_sources\\near_02.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 394,
+        "vertical_offset": 30,
+        "target_flat_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 57.0,
+          "p95_column_height": 85.0,
+          "max_height": 111
+        },
+        "silhouette_height_new": {
+          "median_column_height": 116.0,
+          "p95_column_height": 162.0,
+          "max_height": 200
+        },
+        "median_height_ratio": 2.0351
+      },
+      {
+        "section": 3,
+        "source": "outputs\\battlefield_tall_v05\\near_sources\\near_03.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 417,
+        "vertical_offset": 7,
+        "target_flat_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 75.0,
+          "p95_column_height": 138.0,
+          "max_height": 165
+        },
+        "silhouette_height_new": {
+          "median_column_height": 154.0,
+          "p95_column_height": 298.65,
+          "max_height": 322
+        },
+        "median_height_ratio": 2.0533
+      },
+      {
+        "section": 4,
+        "source": "outputs\\battlefield_tall_v05\\near_sources\\near_04.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 399,
+        "vertical_offset": 25,
+        "target_flat_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 70.0,
+          "p95_column_height": 81.0,
+          "max_height": 82
+        },
+        "silhouette_height_new": {
+          "median_column_height": 156.0,
+          "p95_column_height": 177.0,
+          "max_height": 186
+        },
+        "median_height_ratio": 2.2286
+      },
+      {
+        "section": 5,
+        "source": "outputs\\battlefield_tall_v05\\near_sources\\near_05.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 401,
+        "vertical_offset": 23,
+        "target_flat_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 50.0,
+          "p95_column_height": 69.0,
+          "max_height": 72
+        },
+        "silhouette_height_new": {
+          "median_column_height": 132.0,
+          "p95_column_height": 202.0,
+          "max_height": 206
+        },
+        "median_height_ratio": 2.64
+      },
+      {
+        "section": 6,
+        "source": "outputs\\battlefield_tall_v05\\near_sources\\near_06.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 399,
+        "vertical_offset": 25,
+        "target_flat_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 95.0,
+          "p95_column_height": 133.64999999999998,
+          "max_height": 155
+        },
+        "silhouette_height_new": {
+          "median_column_height": 181.0,
+          "p95_column_height": 265.0,
+          "max_height": 292
+        },
+        "median_height_ratio": 1.9053
+      },
+      {
+        "section": 7,
+        "source": "outputs\\battlefield_tall_v05\\near_sources\\near_07.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 410,
+        "vertical_offset": 14,
+        "target_flat_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 79.0,
+          "p95_column_height": 118.0,
+          "max_height": 118
+        },
+        "silhouette_height_new": {
+          "median_column_height": 166.0,
+          "p95_column_height": 239.0,
+          "max_height": 239
+        },
+        "median_height_ratio": 2.1013
+      },
+      {
+        "section": 8,
+        "source": "outputs\\battlefield_tall_v05\\near_sources\\near_08.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 407,
+        "vertical_offset": 17,
+        "target_flat_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 48.0,
+          "p95_column_height": 103.0,
+          "max_height": 119
+        },
+        "silhouette_height_new": {
+          "median_column_height": 110.0,
+          "p95_column_height": 191.0,
+          "max_height": 220
+        },
+        "median_height_ratio": 2.2917
+      }
+    ],
+    "palette_strategy": "use the approved v04 layer's fixed visible RGB palette",
+    "palette_baseline": "outputs\\battlefield_depth_v04\\battlefield_near_native.png"
+  },
+  "mid": {
+    "role": "middle_buildings_and_factories",
+    "native_size": [
+      6144,
+      512
+    ],
+    "art_size": [
+      6144,
+      512
+    ],
+    "world_size": [
+      6144,
+      256
+    ],
+    "display_size": [
+      12288,
+      1024
+    ],
+    "origin": [
+      0,
+      -256
+    ],
+    "scroll_scale_x": 0.58,
+    "z_index": -15,
+    "architecture_height_target": "approximately 2x, redrawn by imagegen",
+    "pixel_scale": 1,
+    "opaque": false,
+    "alpha_values": [
+      0,
+      255
+    ],
+    "colors": 63,
+    "native_sha256": "ee7f5fcf4504a2549867ec460d9c4a6a58a60ed52dec6d38c573bcfb0b1c138a",
+    "display_sha256": "d39c7080252ad7c540d3a205bdd3f372a93f247f5f946b3ac9cae127f67f2215",
+    "runtime_path": "game\\assets\\battlefield_mid_background\\battlefield_mid_native.png",
+    "source_art": "built-in-imagegen",
+    "source_sections": 8,
+    "sections": [
+      {
+        "section": 1,
+        "source": "outputs\\battlefield_tall_v05\\mid_sources\\mid_01.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 434,
+        "vertical_offset": -10,
+        "target_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 72.0,
+          "p95_column_height": 166.0,
+          "max_height": 169
+        },
+        "silhouette_height_new": {
+          "median_column_height": 152.0,
+          "p95_column_height": 326.0,
+          "max_height": 343
+        },
+        "median_height_ratio": 2.1111
+      },
+      {
+        "section": 2,
+        "source": "outputs\\battlefield_tall_v05\\mid_sources\\mid_02.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 433,
+        "vertical_offset": -9,
+        "target_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 103.0,
+          "p95_column_height": 153.0,
+          "max_height": 167
+        },
+        "silhouette_height_new": {
+          "median_column_height": 207.0,
+          "p95_column_height": 319.0,
+          "max_height": 340
+        },
+        "median_height_ratio": 2.0097
+      },
+      {
+        "section": 3,
+        "source": "outputs\\battlefield_tall_v05\\mid_sources\\mid_03.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 449,
+        "vertical_offset": -25,
+        "target_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 78.0,
+          "p95_column_height": 147.35000000000002,
+          "max_height": 172
+        },
+        "silhouette_height_new": {
+          "median_column_height": 164.5,
+          "p95_column_height": 287.0,
+          "max_height": 306
+        },
+        "median_height_ratio": 2.109
+      },
+      {
+        "section": 4,
+        "source": "outputs\\battlefield_tall_v05\\mid_sources\\mid_04.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 426,
+        "vertical_offset": -2,
+        "target_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 79.0,
+          "p95_column_height": 144.0,
+          "max_height": 155
+        },
+        "silhouette_height_new": {
+          "median_column_height": 160.0,
+          "p95_column_height": 286.0,
+          "max_height": 309
+        },
+        "median_height_ratio": 2.0253
+      },
+      {
+        "section": 5,
+        "source": "outputs\\battlefield_tall_v05\\mid_sources\\mid_05.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 425,
+        "vertical_offset": -1,
+        "target_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 74.0,
+          "p95_column_height": 150.0,
+          "max_height": 172
+        },
+        "silhouette_height_new": {
+          "median_column_height": 151.0,
+          "p95_column_height": 292.0,
+          "max_height": 310
+        },
+        "median_height_ratio": 2.0405
+      },
+      {
+        "section": 6,
+        "source": "outputs\\battlefield_tall_v05\\mid_sources\\mid_06.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 428,
+        "vertical_offset": -4,
+        "target_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 80.0,
+          "p95_column_height": 144.0,
+          "max_height": 167
+        },
+        "silhouette_height_new": {
+          "median_column_height": 162.0,
+          "p95_column_height": 259.0,
+          "max_height": 288
+        },
+        "median_height_ratio": 2.025
+      },
+      {
+        "section": 7,
+        "source": "outputs\\battlefield_tall_v05\\mid_sources\\mid_07.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 440,
+        "vertical_offset": -16,
+        "target_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 95.5,
+          "p95_column_height": 137.0,
+          "max_height": 160
+        },
+        "silhouette_height_new": {
+          "median_column_height": 207.5,
+          "p95_column_height": 282.0,
+          "max_height": 331
+        },
+        "median_height_ratio": 2.1728
+      },
+      {
+        "section": 8,
+        "source": "outputs\\battlefield_tall_v05\\mid_sources\\mid_08.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_foot": 439,
+        "vertical_offset": -15,
+        "target_foot": 424,
+        "silhouette_height_old": {
+          "median_column_height": 81.0,
+          "p95_column_height": 158.0,
+          "max_height": 159
+        },
+        "silhouette_height_new": {
+          "median_column_height": 160.0,
+          "p95_column_height": 280.0,
+          "max_height": 293
+        },
+        "median_height_ratio": 1.9753
+      }
+    ],
+    "palette_strategy": "use the approved v04 layer's fixed visible RGB palette",
+    "palette_baseline": "outputs\\battlefield_depth_v04\\battlefield_mid_native.png",
+    "brightness_calibration": {
+      "method": "one uniform visible-RGB gain, then approved fixed palette",
+      "gain": 0.7921933376819341,
+      "baseline_visible_mean_luma": 51.008912397897106,
+      "source_visible_mean_luma": 64.38947409878017,
+      "calibrated_visible_mean_luma": 51.00947056776822,
+      "output_visible_mean_luma": 49.88309309355999
+    }
+  },
+  "far": {
+    "role": "distant_city_and_industry",
+    "native_size": [
+      6144,
+      512
+    ],
+    "art_size": [
+      6144,
+      512
+    ],
+    "world_size": [
+      6144,
+      256
+    ],
+    "display_size": [
+      12288,
+      1024
+    ],
+    "origin": [
+      0,
+      -256
+    ],
+    "scroll_scale_x": 0.28,
+    "z_index": -20,
+    "architecture_height_target": "approximately 2x, redrawn by imagegen",
+    "pixel_scale": 1,
+    "opaque": true,
+    "alpha_values": [
+      255
+    ],
+    "colors": 41,
+    "native_sha256": "59b99a6f3044665ed56ee6cae9dce775746fb5e61594bed975fbccd53d6ed8c4",
+    "display_sha256": "956797be73fbdc3e31027fb1a27c850caacb93adc2ca42717988d24d61352c45",
+    "runtime_path": "game\\assets\\battlefield_far_background\\battlefield_far_native.png",
+    "source_art": "built-in-imagegen",
+    "source_sections": 8,
+    "sections": [
+      {
+        "section": 1,
+        "source": "outputs\\battlefield_tall_v05\\far_sources\\far_01.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_horizon": 424,
+        "vertical_offset": -18,
+        "target_horizon": 406
+      },
+      {
+        "section": 2,
+        "source": "outputs\\battlefield_tall_v05\\far_sources\\far_02.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_horizon": 424,
+        "vertical_offset": -18,
+        "target_horizon": 406
+      },
+      {
+        "section": 3,
+        "source": "outputs\\battlefield_tall_v05\\far_sources\\far_03.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_horizon": 424,
+        "vertical_offset": -18,
+        "target_horizon": 406
+      },
+      {
+        "section": 4,
+        "source": "outputs\\battlefield_tall_v05\\far_sources\\far_04.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_horizon": 424,
+        "vertical_offset": -18,
+        "target_horizon": 406
+      },
+      {
+        "section": 5,
+        "source": "outputs\\battlefield_tall_v05\\far_sources\\far_05.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_horizon": 424,
+        "vertical_offset": -18,
+        "target_horizon": 406
+      },
+      {
+        "section": 6,
+        "source": "outputs\\battlefield_tall_v05\\far_sources\\far_06.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_horizon": 424,
+        "vertical_offset": -18,
+        "target_horizon": 406
+      },
+      {
+        "section": 7,
+        "source": "outputs\\battlefield_tall_v05\\far_sources\\far_07.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_horizon": 424,
+        "vertical_offset": -18,
+        "target_horizon": 406
+      },
+      {
+        "section": 8,
+        "source": "outputs\\battlefield_tall_v05\\far_sources\\far_08.png",
+        "source_size": [
+          1536,
+          1024
+        ],
+        "normalized_size": [
+          768,
+          512
+        ],
+        "source_horizon": 424,
+        "vertical_offset": -18,
+        "target_horizon": 406
+      }
+    ],
+    "palette_strategy": "use the approved v04 layer's fixed visible RGB palette",
+    "palette_baseline": "outputs\\battlefield_depth_v04\\battlefield_far_native.png"
+  }
+}

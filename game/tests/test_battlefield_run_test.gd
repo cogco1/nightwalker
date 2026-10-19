@@ -53,18 +53,33 @@ func run() -> void:
 	var player: CharacterBody2D = scene.player
 	var mid_image := Image.new()
 	var mid_load_status := mid_image.load_png_from_buffer(FileAccess.get_file_as_bytes(scene.MID_BACKGROUND_PATH))
+	var near_image := Image.new()
+	var near_load_status := near_image.load_png_from_buffer(FileAccess.get_file_as_bytes(scene.BACKGROUND_PATH))
+	var far_image := Image.new()
+	var far_load_status := far_image.load_png_from_buffer(FileAccess.get_file_as_bytes(scene.FAR_BACKGROUND_PATH))
 	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/boot.tscn", "The normal chapter entry point is unchanged")
 	check(player.view_mode == 1 and player.is_on_floor(), "The shipped side-view player stands on the new lowland")
 	check(player.scale == Vector2.ONE and scene.background.scale == Vector2.ONE and scene.far_background.scale == Vector2.ONE
 		and scene.mid_background.scale == Vector2.ONE and scene.camera.zoom == Vector2.ONE,
 		"Hero, all three panoramas and camera preserve the native pixel grid")
+	check(scene.world_size == Vector2i(6144, 256) and scene.art_size == Vector2i(6144, 512)
+		and scene.background.texture.get_size() == Vector2(scene.art_size),
+		"The taller art canvas is separate from the original terrain dimensions")
+	check(scene.background.position == Vector2(0, -256) and scene.mid_background.position.y == -256.0
+		and scene.far_background.position.y == -256.0,
+		"All three native art layers extend upward without moving the ground or hero")
+	check(scene.near_covers_view() and scene.near_visible_rect().position.y == scene.camera.position.y - 90.0 + 256.0,
+		"Near-source sampling includes the negative art origin and stays inside the tall canvas")
 	check(scene.far_background.texture.resource_path == scene.FAR_BACKGROUND_PATH
-		and scene.far_background.texture.get_size() == Vector2(scene.world_size),
+		and scene.far_background.texture.get_size() == Vector2(scene.art_size),
 		"The distant city uses its own full-width native panorama")
 	check(scene.mid_background.texture.resource_path == scene.MID_BACKGROUND_PATH
-		and scene.mid_background.texture.get_size() == Vector2(scene.world_size)
+		and scene.mid_background.texture.get_size() == Vector2(scene.art_size)
 		and mid_load_status == OK and mid_image.detect_alpha() == Image.ALPHA_BIT,
 		"The middle buildings use their own transparent full-width native panorama")
+	check(near_load_status == OK and near_image.detect_alpha() == Image.ALPHA_BIT
+		and far_load_status == OK and far_image.detect_alpha() == Image.ALPHA_NONE,
+		"Near buildings preserve binary cutout edges and the tall far sky remains opaque")
 	check(scene.far_background.z_index < scene.mid_background.z_index and scene.mid_background.z_index < scene.background.z_index
 		and scene.far_background.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST
 		and scene.mid_background.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST,
@@ -79,6 +94,9 @@ func run() -> void:
 	check(root.content_scale_size == Vector2i(320, 180) and root.content_scale_stretch == Window.CONTENT_SCALE_STRETCH_INTEGER,
 		"The original 320x180 integer viewport is preserved")
 	check(scene.ground_source == scene.GROUND_PATH, "Collision follows the delivered surface profile")
+	check(scene.ground_y_at(40.0) == 224.0 and scene.ground_y_at(400.0) == 168.0
+		and scene.camera.limit_top == 0 and scene.camera.limit_bottom == 256,
+		"Building height leaves the original ground heights and vertical camera limits unchanged")
 	check(player.get_node("Sprite").sprite_frames.resource_path == "res://assets/side_view.tres", "The existing side-view animation library is reused")
 	check(player.get_node("Sprite").material != null, "The existing hero material is preserved")
 	for code in [KEY_F7, KEY_F8]:
@@ -137,11 +155,13 @@ func run() -> void:
 	var half := Vector2(160, 90)
 	check(scene.camera.position.x >= half.x and scene.camera.position.y >= half.y
 		and scene.camera.position.x <= scene.world_size.x - half.x and scene.camera.position.y <= scene.world_size.y - half.y,
-		"The camera stays inside the native image during a jump")
-	check(scene.far_covers_view() and scene.far_background.position.y == 0.0,
-		"The 256px far sky covers the full jump viewport without a vertical gap")
-	check(scene.mid_covers_view() and scene.mid_background.position.y == 0.0,
+		"The camera stays inside the original terrain bounds during a jump")
+	check(scene.far_covers_view() and scene.far_background.position.y == -256.0,
+		"The 512px far sky covers the full jump viewport from its negative origin")
+	check(scene.mid_covers_view() and scene.mid_background.position.y == -256.0,
 		"The middle panorama preserves native vertical alignment during a jump")
+	check(scene.near_covers_view() and scene.near_visible_rect().position.y >= 256.0,
+		"Near-source sampling remains inside the taller canvas during a jump")
 	await ticks(65)
 	check(player.is_on_floor() and absf(player.position.y - grounded_y) <= 2.0, "The original jump lands on the same native surface")
 	key(KEY_A, true)
@@ -155,10 +175,12 @@ func run() -> void:
 	player.velocity = Vector2.ZERO
 	await ticks(6)
 	check(absf(scene.camera.position.x - (scene.world_size.x - 160.0)) <= 1.0, "The camera shows the last local 320px portion of the panorama")
-	check(scene.far_covers_view() and scene.far_visible_rect().end.x < scene.world_size.x,
+	check(scene.far_covers_view() and scene.far_visible_rect().end.x < scene.art_size.x,
 		"The full-length far panorama covers the map end without a short repeat")
-	check(scene.mid_covers_view() and scene.mid_visible_rect().end.x < scene.world_size.x,
+	check(scene.mid_covers_view() and scene.mid_visible_rect().end.x < scene.art_size.x,
 		"The full-length middle panorama covers the map end without a short repeat")
+	check(scene.near_covers_view() and scene.near_visible_rect().end.x == scene.art_size.x,
+		"The final near viewport reaches the art edge without sampling past its bounds")
 	key(KEY_D, true)
 	key(KEY_SHIFT, true)
 	await ticks(40)
