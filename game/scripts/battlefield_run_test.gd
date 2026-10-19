@@ -4,9 +4,12 @@ extends Node2D
 
 const PLAYER_SCENE = preload("res://scenes/player.tscn")
 const CONTROLS = preload("res://scripts/core/controls.gd")
+const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
 const BACKGROUND_PATH := "res://assets/battlefield_layer_01/battlefield_layer_01_native.png"
 const FAR_BACKGROUND_PATH := "res://assets/battlefield_far_background/battlefield_far_native.png"
 const MID_BACKGROUND_PATH := "res://assets/battlefield_mid_background/battlefield_mid_native.png"
+const FOREGROUND_PATH := "res://assets/battlefield_traversal/foreground_native.png"
+const TRAVERSAL_LAYOUT_PATH := "res://assets/battlefield_traversal/layout.json"
 const FAR_SCROLL_RATIO := 0.28
 const MID_SCROLL_RATIO := 0.58
 const GROUND_PATH := "res://assets/battlefield_layer_01/ground_profile.json"
@@ -14,6 +17,7 @@ const VIEWPORT_SIZE := Vector2i(320, 180)
 const WORLD_TERRAIN_SIZE := Vector2i(6144, 256)
 const ART_SIZE := Vector2i(6144, 512)
 const ART_ORIGIN := Vector2(0, -256)
+const ART_RENDER_LAYERS := ["foreground", "near", "mid", "far"]
 const OUTPUT := "res://evidence/battlefield_run_test/"
 const EDGE_MARGIN := 12.0
 const START_X := 40.0
@@ -23,6 +27,11 @@ var camera: Camera2D
 var background: Sprite2D
 var far_background: Sprite2D
 var mid_background: Sprite2D
+var foreground: Sprite2D
+var traversal_terrain: Node2D
+var traversal_layout: Dictionary = {}
+var traversal_colliders: Dictionary = {}
+var route_waypoints: Array[Dictionary] = []
 var terrain: StaticBody2D
 var ground_points := PackedVector2Array()
 var world_size := WORLD_TERRAIN_SIZE
@@ -48,7 +57,7 @@ func _ready() -> void:
 		CONTROLS.settings_path = "user://battlefield_smoke_keybindings.cfg"
 		CONTROLS.current = CONTROLS.defaults()
 	CONTROLS.install()
-	if not _build_background() or not _load_ground():
+	if not _build_background() or not _load_ground() or not _build_traversal():
 		if _smoke:
 			get_tree().quit(2)
 		return
@@ -63,6 +72,7 @@ func _ready() -> void:
 	print("原生像素: 背景 %d×%d / y=-256 / scale 1；地形 %d×%d；主角 scale 1；视口 320×180。" % [art_size.x, art_size.y, world_size.x, world_size.y])
 	print("远景: 同宽长图 / scale 1；水平视差 %.2f；天空覆盖完整镜头高度。" % FAR_SCROLL_RATIO)
 	print("中景: 同宽透明楼群与工厂 / scale 1；水平视差 %.2f。" % MID_SCROLL_RATIO)
+	print("可踩地形: 破车、二楼与楼顶；沿用原跳跃 / 二段跳；镜头可向上跟随至 y=-256。")
 	if _smoke:
 		_run_smoke.call_deferred()
 
@@ -114,6 +124,55 @@ func _build_background() -> bool:
 	background.z_index = -10
 	background.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(background)
+	return true
+
+
+func _build_traversal() -> bool:
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(TRAVERSAL_LAYOUT_PATH))
+	if not parsed is Dictionary or not parsed.get("colliders", null) is Array:
+		push_error("Battlefield traversal layout needs a colliders array: " + TRAVERSAL_LAYOUT_PATH)
+		return false
+	traversal_layout = parsed
+	var texture := load(FOREGROUND_PATH) as Texture2D
+	if texture == null or Vector2i(texture.get_size()) != art_size:
+		push_error("Battlefield traversal foreground must share the 6144x512 native canvas.")
+		return false
+	foreground = Sprite2D.new()
+	foreground.name = "TraversalForeground"
+	foreground.texture = texture
+	foreground.centered = false
+	foreground.position = ART_ORIGIN
+	foreground.z_index = 0
+	foreground.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	add_child(foreground)
+	traversal_terrain = Node2D.new()
+	traversal_terrain.name = "TraversalTerrain"
+	add_child(traversal_terrain)
+	for item: Variant in traversal_layout.colliders:
+		if not item is Dictionary or String(item.get("id", "")).is_empty():
+			push_error("Battlefield traversal collider needs an id.")
+			return false
+		var id := String(item.id)
+		if traversal_colliders.has(id) or (not item.has("rect") and not item.has("polygon")):
+			push_error("Invalid or duplicate battlefield traversal collider: " + id)
+			return false
+		var body := LEVEL_KIT.add_layout_collider(traversal_terrain, item)
+		body.set_meta("surface_id", id)
+		traversal_colliders[id] = body
+	var waypoints: Variant = traversal_layout.get("waypoints", [])
+	var route: Variant = traversal_layout.get("route", {})
+	if waypoints is Array and waypoints.is_empty() and route is Dictionary:
+		waypoints = route.get("waypoints", [])
+	if not waypoints is Array:
+		push_error("Battlefield traversal waypoints must be an array.")
+		return false
+	for point: Variant in waypoints:
+		var surface_id := String(point.get("surface_id", "")) if point is Dictionary else ""
+		if not point is Dictionary or not point.get("position", null) is Array or point.position.size() != 2 \
+				or (surface_id != "ground" and not traversal_colliders.has(surface_id)):
+			push_error("Battlefield traversal waypoint needs a position and an existing surface_id.")
+			return false
+		route_waypoints.append(point)
 	return true
 
 
@@ -181,6 +240,7 @@ func _build_player() -> void:
 	player.view_mode = 1
 	player.scale = Vector2.ONE
 	player.floor_snap_length = 10.0
+	player.floor_max_angle = deg_to_rad(65.0)
 	player.position = Vector2(START_X, ground_y_at(START_X) - 1.0)
 	player.z_index = 1
 	add_child(player)
@@ -192,7 +252,7 @@ func _build_camera() -> void:
 	camera.zoom = Vector2.ONE
 	camera.position_smoothing_enabled = false
 	camera.limit_left = 0
-	camera.limit_top = 0
+	camera.limit_top = int(ART_ORIGIN.y)
 	camera.limit_right = world_size.x
 	camera.limit_bottom = world_size.y
 	camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
@@ -227,7 +287,7 @@ func _follow_player() -> void:
 	var target := player.position + Vector2(48, -64)
 	camera.position = Vector2(
 		clampf(target.x, half.x, world_size.x - half.x),
-		clampf(target.y, half.y, world_size.y - half.y)).round()
+		clampf(target.y, ART_ORIGIN.y + half.y, world_size.y - half.y)).round()
 	camera.force_update_scroll()
 	# One integer translation per layer keeps every pixel native-sized. Both 6144px
 	# panoramas cover this map without short repeats or runtime tile loops.
@@ -257,6 +317,14 @@ func near_visible_rect() -> Rect2:
 
 func near_covers_view() -> bool:
 	return Rect2(Vector2.ZERO, background.texture.get_size()).encloses(near_visible_rect())
+
+
+func foreground_visible_rect() -> Rect2:
+	return Rect2(camera.position - Vector2(VIEWPORT_SIZE) / 2.0 - foreground.position, Vector2(VIEWPORT_SIZE))
+
+
+func foreground_covers_view() -> bool:
+	return Rect2(Vector2.ZERO, foreground.texture.get_size()).encloses(foreground_visible_rect())
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -304,11 +372,11 @@ func _pixel_matches(actual: Color, expected: Color, tolerance: float = 1.5 / 255
 func _layer_pixel_evidence(rendered: Image) -> Dictionary:
 	# Smoke-only: compare the top exposed source layer with the GPU frame. Mask just
 	# the hero's drawn frame and glow, so character pixels cannot count as art errors.
-	var images := {"near": background.texture.get_image(), "mid": mid_background.texture.get_image(), "far": far_background.texture.get_image()}
-	var origins := {"near": Vector2i(near_visible_rect().position), "mid": Vector2i(mid_visible_rect().position), "far": Vector2i(far_visible_rect().position)}
+	var images := {"foreground": foreground.texture.get_image(), "near": background.texture.get_image(), "mid": mid_background.texture.get_image(), "far": far_background.texture.get_image()}
+	var origins := {"foreground": Vector2i(foreground_visible_rect().position), "near": Vector2i(near_visible_rect().position), "mid": Vector2i(mid_visible_rect().position), "far": Vector2i(far_visible_rect().position)}
 	var evidence: Dictionary = {}
-	var colors := {"near": {}, "mid": {}, "far": {}}
-	for layer in ["near", "mid", "far"]:
+	var colors := {"foreground": {}, "near": {}, "mid": {}, "far": {}}
+	for layer in ART_RENDER_LAYERS:
 		evidence[layer] = {"exposed_samples": 0, "matched_samples": 0, "matched_detail_samples": 0}
 	var frame_texture: Texture2D = player.sprite.sprite_frames.get_frame_texture(player.sprite.animation, player.sprite.frame)
 	var hero_pixels := Rect2(frame_texture.get_image().get_used_rect())
@@ -320,7 +388,7 @@ func _layer_pixel_evidence(rendered: Image) -> Dictionary:
 			if hero_rect.has_point(Vector2(x, y)):
 				excluded += 1
 				continue
-			for layer in ["near", "mid", "far"]:
+			for layer in ART_RENDER_LAYERS:
 				var source: Image = images[layer]
 				var point: Vector2i = origins[layer] + Vector2i(x, y)
 				var expected := source.get_pixelv(point)
@@ -339,7 +407,7 @@ func _layer_pixel_evidence(rendered: Image) -> Dictionary:
 							or (below.a >= 0.99 and not _pixel_matches(below, expected, 6.0 / 255.0)):
 						evidence[layer]["matched_detail_samples"] += 1
 				break
-	for layer in ["near", "mid", "far"]:
+	for layer in ART_RENDER_LAYERS:
 		evidence[layer]["matched_colors"] = colors[layer].size()
 	evidence["sample_stride"] = 4
 	evidence["hero_excluded_samples"] = excluded
@@ -351,6 +419,7 @@ func _capture(label: String) -> void:
 	var entry := {"name": label, "player": [player.position.x, player.position.y],
 		"ground_y": ground_y_at(player.position.x), "camera": [camera.position.x, camera.position.y],
 		"running": bool(player.is_running), "animation": String(player.sprite.animation),
+		"foreground_source_rect": [foreground_visible_rect().position.x, foreground_visible_rect().position.y, VIEWPORT_SIZE.x, VIEWPORT_SIZE.y],
 		"near_source_rect": [near_visible_rect().position.x, near_visible_rect().position.y, VIEWPORT_SIZE.x, VIEWPORT_SIZE.y],
 		"far_position": [far_background.position.x, far_background.position.y],
 		"far_source_rect": [far_visible_rect().position.x, far_visible_rect().position.y, VIEWPORT_SIZE.x, VIEWPORT_SIZE.y],
@@ -361,6 +430,7 @@ func _capture(label: String) -> void:
 	_check(mid_covers_view(), "Middle panorama covers the full viewport at " + label)
 	_check(mid_background.position == mid_background.position.round(), "Middle panorama stays on whole native pixels at " + label)
 	_check(near_covers_view(), "Near panorama covers the full viewport at " + label)
+	_check(foreground_covers_view(), "Traversal foreground covers the full viewport at " + label)
 	if DisplayServer.get_name() != "headless":
 		await RenderingServer.frame_post_draw
 		var image := get_viewport().get_texture().get_image()
@@ -369,7 +439,7 @@ func _capture(label: String) -> void:
 		if image != null:
 			var layer_evidence := _layer_pixel_evidence(image)
 			entry["layer_render_evidence"] = layer_evidence
-			for layer in ["near", "mid", "far"]:
+			for layer in ART_RENDER_LAYERS:
 				var samples: Dictionary = layer_evidence[layer]
 				var exposed := int(samples.exposed_samples)
 				var matched := int(samples.matched_samples)
@@ -393,22 +463,27 @@ func _run_smoke() -> void:
 		"ground_source": ground_source, "max_ground_error": 0.0, "airborne_ticks": 0, "running_ticks": 0,
 		"far_background": FAR_BACKGROUND_PATH, "far_scroll_ratio": FAR_SCROLL_RATIO,
 		"mid_background": MID_BACKGROUND_PATH, "mid_scroll_ratio": MID_SCROLL_RATIO,
+		"foreground": FOREGROUND_PATH, "traversal_layout": TRAVERSAL_LAYOUT_PATH,
+		"stair_floor_max_degrees": rad_to_deg(player.floor_max_angle),
 		"renderer": RenderingServer.get_current_rendering_method(), "headless": DisplayServer.get_name() == "headless"}
-	for layer in ["near", "mid", "far"]:
+	for layer in ART_RENDER_LAYERS:
 		_smoke_layer_totals[layer] = {"exposed_samples": 0, "matched_samples": 0, "matched_detail_samples": 0,
 			"max_matched_colors": 0, "visible_checkpoints": 0}
 	await _ticks(12)
 	_check(player.view_mode == 1 and player.is_on_floor(), "Existing side-view hero starts grounded")
-	_check(player.scale == Vector2.ONE and background.scale == Vector2.ONE and far_background.scale == Vector2.ONE
+	_check(player.scale == Vector2.ONE and foreground.scale == Vector2.ONE and background.scale == Vector2.ONE and far_background.scale == Vector2.ONE
 		and mid_background.scale == Vector2.ONE and camera.zoom == Vector2.ONE, "All world art uses native scale 1")
-	_check(far_background.z_index < mid_background.z_index and mid_background.z_index < background.z_index,
-		"Middle buildings draw between the distant skyline and original terrain")
+	_check(far_background.z_index < mid_background.z_index and mid_background.z_index < background.z_index
+		and background.z_index < foreground.z_index and foreground.z_index < player.z_index,
+		"Traversal foreground renders above the three background layers and below the hero")
 	_check(get_tree().root.content_scale_size == VIEWPORT_SIZE, "Viewport stays 320x180")
 	_check(ground_source == GROUND_PATH, "Terrain comes from the delivered ground profile")
 	_check(world_size == WORLD_TERRAIN_SIZE and art_size == ART_SIZE, "Tall artwork preserves the original 6144x256 terrain bounds")
 	_check(background.position.y == ART_ORIGIN.y and mid_background.position.y == ART_ORIGIN.y
-		and far_background.position.y == ART_ORIGIN.y, "Every native art layer extends upward from y=-256")
+		and far_background.position.y == ART_ORIGIN.y and foreground.position == ART_ORIGIN,
+		"Every native art layer extends upward from y=-256")
 	await _capture("00_start")
+	var traversal_driver: Variant = load("res://tests/support/battlefield_traversal_driver.gd").new(self)
 	var start_x := player.position.x
 	var start_camera_x := camera.position.x
 	var start_far_x := far_visible_rect().position.x
@@ -428,14 +503,15 @@ func _run_smoke() -> void:
 		# the existing Shift gesture ignores repeated presses while already held.
 		_key(int(CONTROLS.current["move_right"]), true)
 		_key(int(CONTROLS.current["run"]), true)
+		traversal_driver.before_ground_tick()
 		await _ticks(1)
+		traversal_driver.after_ground_tick()
 		elapsed_ticks += 1
 		if player.is_running:
 			smoke_report["running_ticks"] += 1
 		if not player.is_on_floor():
 			smoke_report["airborne_ticks"] += 1
-		var error := absf(player.position.y - ground_y_at(player.position.x))
-		smoke_report["max_ground_error"] = maxf(smoke_report["max_ground_error"], error)
+		smoke_report["max_ground_error"] = traversal_driver.max_ground_error
 		stalled_ticks = stalled_ticks + 1 if player.position.x - previous_x < 0.05 else 0
 		previous_x = player.position.x
 		if stalled_ticks > 90 or player.position.y > world_size.y + 40:
@@ -454,12 +530,11 @@ func _run_smoke() -> void:
 	await _capture("99_end")
 	_check(player.position.x >= world_size.x - 32.0, "Hero runs from the first lowland to the far end")
 	_check(target_index == targets.size(), "Every background segment is reached")
-	_check(float(smoke_report["max_ground_error"]) <= 6.0, "Feet follow the drawn surface within six native pixels")
-	_check(int(smoke_report["airborne_ticks"]) <= 3, "Running stays grounded over the slope and segment seams")
+	smoke_report["ground_traversal"] = traversal_driver.finish_ground_run()
 	_check(int(smoke_report["running_ticks"]) > 60 and not player.is_running, "Held original run input runs, then releases normally")
 	_check(absf(player.velocity.x) < 0.1, "Hero stops normally at the end")
 	_check(absf(camera.position.x - (world_size.x - VIEWPORT_SIZE.x / 2.0)) <= 1.0, "Camera follows to the final native viewport")
-	_check(player.scale == Vector2.ONE and background.scale == Vector2.ONE and far_background.scale == Vector2.ONE
+	_check(player.scale == Vector2.ONE and foreground.scale == Vector2.ONE and background.scale == Vector2.ONE and far_background.scale == Vector2.ONE
 		and mid_background.scale == Vector2.ONE and camera.zoom == Vector2.ONE, "Traversal preserves native art scales")
 	var camera_distance := camera.position.x - start_camera_x
 	var far_distance := far_visible_rect().position.x - start_far_x
@@ -471,14 +546,18 @@ func _run_smoke() -> void:
 	smoke_report["mid_source_distance"] = mid_distance
 	smoke_report["measured_far_scroll_ratio"] = far_distance / camera_distance if camera_distance > 0.0 else 0.0
 	smoke_report["measured_mid_scroll_ratio"] = mid_distance / camera_distance if camera_distance > 0.0 else 0.0
+	smoke_report["ground_final_player"] = [player.position.x, player.position.y]
+	smoke_report["ground_distance"] = player.position.x - start_x
+	smoke_report["ground_physics_ticks"] = elapsed_ticks
+	smoke_report["course"] = await traversal_driver.run_course()
 	if DisplayServer.get_name() != "headless":
-		for layer in ["near", "mid", "far"]:
+		for layer in ART_RENDER_LAYERS:
 			var totals: Dictionary = _smoke_layer_totals[layer]
 			_check(int(totals.matched_samples) >= 256 and int(totals.matched_detail_samples) >= 64
 				and int(totals.max_matched_colors) >= 8,
 				"Route visibly renders sufficient varied native details from the " + layer + " layer")
 		smoke_report["layer_render_totals"] = _smoke_layer_totals
-	smoke_report["distance"] = player.position.x - start_x
+	smoke_report["distance"] = smoke_report["ground_distance"]
 	smoke_report["physics_ticks"] = elapsed_ticks
 	smoke_report["final_player"] = [player.position.x, player.position.y]
 	smoke_report["final_camera"] = [camera.position.x, camera.position.y]

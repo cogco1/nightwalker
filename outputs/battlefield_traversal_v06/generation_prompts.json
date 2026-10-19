@@ -1,0 +1,52 @@
+{
+  "mode": "built-in-imagegen",
+  "date": "2026-10-20",
+  "request": "Walkable second floors, rooftops, and wrecked vehicles integrated as solid playable terrain",
+  "assets": [
+    {
+      "key": "gatehouse",
+      "prompt": "A low-resolution 2D SIDE-VIEW platform game architectural module, transparent RGBA. A derelict industrial gatehouse with exposed SECOND FLOOR and flat walkable roof. Wide composition approx 1.6:1 cutout silhouette on a square canvas. Two tall human-scale storeys, each sized so a 28px game character fits comfortably; no people. Building body worn concrete and steel, warm gray-brown #66645a, gunmetal #41494d, dark openings #272d30, restrained rust #70523d, small dim amber windows. Same moody steel-and-yellow-sand industrial city style as the game, subdued light, clear coarse 1px native pixel detail.\nGameplay-readable CUTAWAY facade: open ground-level passage across the entire module, second-floor open catwalk with dark interior behind it, flat roof deck. Wide unmistakable horizontal metal floor lip across second floor and roof, thin pale steel / muted ochre edge at every walkable surface. Add two broad attached external maintenance landings at half-floor heights on opposite sides, each linked to real steel supports; all floor decks have clear upper surfaces, railings behind the standing plane. Keep the entire cutout architecture visible and grounded, no isometric camera. No surrounding sand, no terrain, no sky, no painted shadows/fog outside silhouette, no text/UI/labels, no NPCs. Pixel art only, no smooth painting. Transparent background.",
+      "path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-5a520b1f-2527-408d-9936-29a5a65c5bd1.png",
+      "workspace_source": "outputs/battlefield_traversal_v06/source_art/gatehouse.png",
+      "source_sha256": "0c0fa606c7184897f0f7cd1813871ced6112c72ec3a8ea4832629bb3ed60c1fd"
+    },
+    {
+      "key": "tower",
+      "prompt": "An isolated low-resolution 2D SIDE-VIEW industrial tower module for a pixel-platform game, transparent RGBA, square canvas. A taller ruined steel-and-concrete mill building with flat walkable roof, visibly open SECOND FLOOR deck and external maintenance landings that create a climbable zigzag path to the roof. Roughly three industrial storeys high, with large doors/windows sized for a 28px native game character rather than tiny toy scale. No humans.\nBody has thick gunmetal pillars, worn gray-brown concrete, broken dark window bays, rusty pipes and muted steel braces, subdued industrial night brightness; warm neutral steel #505753, concrete #6b675b, rust #705540, dark openings #252e32, only sparse dim amber window light. Pixel grid crisp and coarse, same low-resolution steel city art, no blur.\nEvery landing must attach physically to beams/walls. Broad exposed ledges alternate along the left and right sides at HALF-STOREY intervals; flat roof and second-floor catwalk are wide and visually clear. Thin pale steel/ochre rim along actual walkable upper edges. Ground floor has a clear open passage, facade pillars are behind play plane. Roof and landings clear of clutter, guardrails behind standing plane. Entire silhouette visible with breathing room. No sand, ground slab, backdrop, sky, external fog/soft shadow, characters, text/UI or perspective. Actual alpha transparency.",
+      "path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-9426eff4-2a72-4b36-be02-f40a3c9c8780.png",
+      "workspace_source": "outputs/battlefield_traversal_v06/source_art/tower.png",
+      "source_sha256": "60cd1227a3682a99b0b506f227c32a374639f151f54593af02a9ccd755f796eb"
+    },
+    {
+      "key": "wreck_sedan",
+      "prompt": "Isolated side-on wrecked sedan for a low-resolution 2D pixel platform game. Squashed, abandoned, dented steel car, hood crumpled downward, broken dark windshield, rusty gray body, collapsed rear. Car still forms a readable walkable silhouette: low sloping crushed hood, broad almost flat cabin/roof top and bent trunk, usable stepping surface. Two damaged tires touch one common baseline. Muted worn gunmetal gray, dusty concrete-gray, rust brown, very small ochre highlights; subdued brightness matching dark industrial steel buildings and yellow sand. Crisp coarse 1px native pixel clusters, game sprite, true transparent RGBA. Wide approx3:1 object, all parts visible, no people/driver, no text, logos, UI, ground, sky, fog or surrounding shadow. Flat exact SIDE VIEW, no isometric angle.",
+      "path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-017f0372-a79a-47d1-85c0-ce2f2241d92f.png",
+      "workspace_source": "outputs/battlefield_traversal_v06/source_art/wreck_sedan.png",
+      "source_sha256": "2869c0b531dc1927f84a0d9b64e526bc96a1c334e1e27cf521301eab65f57c76"
+    },
+    {
+      "key": "wreck_van",
+      "prompt": "An isolated damaged industrial delivery van, exact SIDE VIEW, low-resolution pixel-platform game sprite, transparent RGBA. Abandoned van with dented body, smashed front hood, broken dark windows, bent side panels, collapsed wheel arches, two damaged wheels on common baseline. Large flat slightly crushed roof and low crumpled nose form believable surfaces a game character can jump onto. A little taller than a sedan, but clearly a wreck and not a tall truck. Restrained gunmetal and warm gray steel, dusty rust brown, tiny dim ochre rim highlights; no bright blue or saturated colored paint. Crisp low-res 1px native clusters matching moody industrial city art. Wide approx 2.7:1 cutout, full silhouette visible. No people, logos, text/UI, floor, background, fog, smoke or external shadow. Actual alpha.",
+      "path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-cc88085e-da12-4395-92e1-7a5ac8d588b9.png",
+      "workspace_source": "outputs/battlefield_traversal_v06/source_art/wreck_van.png",
+      "source_sha256": "2d044e000693b7c6d72af2f7c5e1c15f55a6ada30cf2b6b3cd11a7238860aff4"
+    },
+    {
+      "key": "wreck_truck",
+      "prompt": "An isolated ruined small industrial flatbed truck, exact SIDE VIEW, low-resolution pixel-platform game sprite, true transparent RGBA. Broken driver cabin on the left, crumpled engine hood sloping down, shallow empty steel flatbed on the right, damaged tires on same baseline. Cabin roof and long empty flatbed form two clear flat walkable stepping levels, no tall cargo, no people. Heavily dented, dusty steel-gray body, dark broken glass, restrained rust-brown corners, muted ochre industrial edge paint in tiny amounts. Same subdued gunmetal/concrete industrial palette; low-resolution crisp blocky 1px detail, hard pixel edges, no soft painting. Wide3:1 entire object, all parts visible. No text, logos, background, ground, sky, extra debris around wheels, fog or surrounding shadow.",
+      "path": "C:\\Users\\31459\\.codex\\generated_images\\01a13585-e7c6-7633-9b84-d80f33782b30\\exec-3d3d5bc5-584d-4081-8833-e45543a2ef65.png",
+      "workspace_source": "outputs/battlefield_traversal_v06/source_art/wreck_truck.png",
+      "source_sha256": "f6aea8f8721582fc157792fa9d869d92413d340d8c6eae14ca6ca34df477ab8a"
+    },
+    {
+      "key": "gatehouse_door_edit",
+      "mode": "precise-object-edit",
+      "prompt": "Use case: precise-object-edit. Edit this EXACT square 256x256 native pixel-art gatehouse sprite, keeping the complete same composition, pixel grid, all alpha silhouette, roof deck, second-floor deck, support columns and external platforms in exactly their original positions.\nOnly modify the obvious PERSON DOORS along the upper second-floor corridor. Make their openings taller so a 28px-tall character can plausibly pass: door openings should be 33–35 NATIVE pixels tall. Keep their original widths, color, industrial style, and their bottom thresholds fixed at the second-floor level near native y187. Raise their lintels upward toward native y152–154, just below the overhead beam. The existing corridor's floor-to-roof height is 43px; do not change it. The small glowing grilles can remain small service panels/windows.\nAbsolutely preserve the roof top line at y143, floor lip at y187, left landing y185, right landing y200, bottom baseline y256. Do not widen, move or reshape the building, change its scale, redraw decorative columns, introduce new structures, brighten/darken or recolor the image. Maintain original limited warm steel/concrete pixel palette and true transparent background. Crisp coarse 1px-native pixel clusters, no blur. Output the same complete square sprite with ONLY taller human door openings; no text or people.\n",
+      "edit_target": "game/assets/battlefield_traversal/gatehouse.png (before door composite)",
+      "path": "outputs/battlefield_traversal_v06/source_art/gatehouse_door_edit.png",
+      "use": "Only generated door pixels are composited by the offline builder; existing alpha and decks preserved.",
+      "workspace_source": "outputs/battlefield_traversal_v06/source_art/gatehouse_door_edit.png",
+      "source_sha256": "7d979ca972c4e4367aadb41b47d47b964e27dd82c5f7442ed7eda1c08046855d"
+    }
+  ]
+}

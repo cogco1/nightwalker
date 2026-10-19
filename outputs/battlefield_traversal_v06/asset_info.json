@@ -1,0 +1,349 @@
+{
+  "date": "2026-10-20",
+  "palette_reference": "outputs\\battlefield_tall_v05\\battlefield_near_native.png",
+  "palette_reference_sha256": "0e751f057b6dafbf06edd9dcfdf631ed29076c42ee1ab43cc0734a2d686113b8",
+  "palette_colors": 64,
+  "assets": {
+    "gatehouse": {
+      "source": "outputs\\battlefield_traversal_v06\\source_art\\gatehouse.png",
+      "source_canvas": [
+        1586,
+        992
+      ],
+      "source_cutout_rect": [
+        22,
+        12,
+        1571,
+        938
+      ],
+      "source_sha256": "0c0fa606c7184897f0f7cd1813871ced6112c72ec3a8ea4832629bb3ed60c1fd",
+      "matte_edge_pixels_removed": 0,
+      "name": "gatehouse",
+      "native_canvas": [
+        256,
+        256
+      ],
+      "source_cutout_size": [
+        1549,
+        926
+      ],
+      "uniform_scale": 0.16526791478373143,
+      "nearest_resized_size": [
+        256,
+        153
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        256,
+        153
+      ],
+      "resized_cutout": [
+        256,
+        153
+      ],
+      "placement": [
+        0,
+        103
+      ],
+      "used_rect": [
+        0,
+        103,
+        256,
+        256
+      ],
+      "bottom_baseline_exclusive": 256,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 50,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "person_door_composite": {
+        "source": "outputs\\battlefield_traversal_v06\\source_art\\gatehouse_door_edit.png",
+        "source_sha256": "7d979ca972c4e4367aadb41b47d47b964e27dd82c5f7442ed7eda1c08046855d",
+        "reference_crop": [
+          57,
+          156,
+          78,
+          187
+        ],
+        "generated_pixel_crop": [
+          279,
+          764,
+          382,
+          916
+        ],
+        "native_size": [
+          23,
+          34
+        ],
+        "placements": [
+          [
+            57,
+            153
+          ],
+          [
+            193,
+            153
+          ]
+        ],
+        "alpha_and_decks_preserved": true
+      },
+      "native_sha256": "61e59be360634de478973e54275e87db41ecdd61adcd9c7f0900631aef774f05",
+      "delivered_path": "outputs\\battlefield_traversal_v06\\asset_images\\gatehouse.png",
+      "runtime_path": "game\\assets\\battlefield_traversal\\gatehouse.png"
+    },
+    "tower": {
+      "source": "outputs\\battlefield_traversal_v06\\source_art\\tower.png",
+      "source_canvas": [
+        1254,
+        1254
+      ],
+      "source_cutout_rect": [
+        52,
+        43,
+        1213,
+        1203
+      ],
+      "source_sha256": "60cd1227a3682a99b0b506f227c32a374639f151f54593af02a9ccd755f796eb",
+      "matte_edge_pixels_removed": 0,
+      "name": "tower",
+      "native_canvas": [
+        256,
+        256
+      ],
+      "source_cutout_size": [
+        1161,
+        1160
+      ],
+      "uniform_scale": 0.22049956933677864,
+      "nearest_resized_size": [
+        256,
+        256
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "resized_cutout": [
+        256,
+        256
+      ],
+      "placement": [
+        0,
+        0
+      ],
+      "used_rect": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "bottom_baseline_exclusive": 256,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 54,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "native_sha256": "d91a29edd73f5340d389a8819c8a06fabc2770f6cea75378114617c686f9a512",
+      "delivered_path": "outputs\\battlefield_traversal_v06\\asset_images\\tower.png",
+      "runtime_path": "game\\assets\\battlefield_traversal\\tower.png"
+    },
+    "wreck_sedan": {
+      "source": "outputs\\battlefield_traversal_v06\\source_art\\wreck_sedan.png",
+      "source_canvas": [
+        2172,
+        724
+      ],
+      "source_cutout_rect": [
+        56,
+        173,
+        2115,
+        654
+      ],
+      "source_sha256": "2869c0b531dc1927f84a0d9b64e526bc96a1c334e1e27cf521301eab65f57c76",
+      "matte_edge_pixels_removed": 0,
+      "name": "wreck_sedan",
+      "native_canvas": [
+        96,
+        48
+      ],
+      "source_cutout_size": [
+        2059,
+        481
+      ],
+      "uniform_scale": 0.04662457503642545,
+      "nearest_resized_size": [
+        96,
+        22
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        96,
+        22
+      ],
+      "resized_cutout": [
+        96,
+        22
+      ],
+      "placement": [
+        0,
+        26
+      ],
+      "used_rect": [
+        0,
+        26,
+        96,
+        48
+      ],
+      "bottom_baseline_exclusive": 48,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 27,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "native_sha256": "9cf26039b4efba314696da683522d2013c96c8b8d380655cfee7df9d20ff1ef1",
+      "delivered_path": "outputs\\battlefield_traversal_v06\\asset_images\\wreck_sedan.png",
+      "runtime_path": "game\\assets\\battlefield_traversal\\wreck_sedan.png"
+    },
+    "wreck_van": {
+      "source": "outputs\\battlefield_traversal_v06\\source_art\\wreck_van.png",
+      "source_canvas": [
+        2060,
+        763
+      ],
+      "source_cutout_rect": [
+        52,
+        79,
+        2009,
+        692
+      ],
+      "source_sha256": "2d044e000693b7c6d72af2f7c5e1c15f55a6ada30cf2b6b3cd11a7238860aff4",
+      "matte_edge_pixels_removed": 0,
+      "name": "wreck_van",
+      "native_canvas": [
+        112,
+        64
+      ],
+      "source_cutout_size": [
+        1957,
+        613
+      ],
+      "uniform_scale": 0.057230454777721,
+      "nearest_resized_size": [
+        112,
+        35
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        112,
+        35
+      ],
+      "resized_cutout": [
+        112,
+        35
+      ],
+      "placement": [
+        0,
+        29
+      ],
+      "used_rect": [
+        0,
+        29,
+        112,
+        64
+      ],
+      "bottom_baseline_exclusive": 64,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 43,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "native_sha256": "ca93497938c25d96e2e2d66f0b5a1d3738d0e629e15eb1b6be8a07e70cb2895b",
+      "delivered_path": "outputs\\battlefield_traversal_v06\\asset_images\\wreck_van.png",
+      "runtime_path": "game\\assets\\battlefield_traversal\\wreck_van.png"
+    },
+    "wreck_truck": {
+      "source": "outputs\\battlefield_traversal_v06\\source_art\\wreck_truck.png",
+      "source_canvas": [
+        2172,
+        724
+      ],
+      "source_cutout_rect": [
+        43,
+        86,
+        2123,
+        671
+      ],
+      "source_sha256": "f6aea8f8721582fc157792fa9d869d92413d340d8c6eae14ca6ca34df477ab8a",
+      "matte_edge_pixels_removed": 0,
+      "name": "wreck_truck",
+      "native_canvas": [
+        128,
+        64
+      ],
+      "source_cutout_size": [
+        2080,
+        585
+      ],
+      "uniform_scale": 0.06153846153846154,
+      "nearest_resized_size": [
+        128,
+        36
+      ],
+      "sampled_used_rect": [
+        0,
+        0,
+        128,
+        36
+      ],
+      "resized_cutout": [
+        128,
+        36
+      ],
+      "placement": [
+        0,
+        28
+      ],
+      "used_rect": [
+        0,
+        28,
+        128,
+        64
+      ],
+      "bottom_baseline_exclusive": 64,
+      "pixel_scale": 1,
+      "alpha_values": [
+        0,
+        255
+      ],
+      "visible_colors": 41,
+      "source_art": "built-in-imagegen",
+      "sampling": "nearest",
+      "dithering": false,
+      "native_sha256": "26ee1fe6040fd8988c2f1e3527d5080f4f538c654d47e5d047c1a608aeedfa0b",
+      "delivered_path": "outputs\\battlefield_traversal_v06\\asset_images\\wreck_truck.png",
+      "runtime_path": "game\\assets\\battlefield_traversal\\wreck_truck.png"
+    }
+  }
+}

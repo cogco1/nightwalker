@@ -1,0 +1,29 @@
+[
+  {
+    "phase": "traversal_verified_import",
+    "exit_code": 0,
+    "seconds": 3.48,
+    "args": [
+      "--headless",
+      "--editor",
+      "--path",
+      "game",
+      "--import",
+      "--quit"
+    ]
+  },
+  {
+    "phase": "traversal_verified_gpu",
+    "exit_code": 0,
+    "seconds": 71.04,
+    "args": [
+      "--path",
+      "game",
+      "--resolution",
+      "1280x720",
+      "res://scenes/battlefield_run_test.tscn",
+      "--",
+      "--battlefield-smoke"
+    ]
+  }
+]

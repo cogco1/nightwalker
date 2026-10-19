@@ -1,0 +1,18 @@
+{
+  "foreground_size": [
+    6144,
+    512
+  ],
+  "origin": [
+    0,
+    -256
+  ],
+  "fixtures": 12,
+  "buildings": 5,
+  "vehicles": 7,
+  "colliders": 39,
+  "waypoints": 14,
+  "foreground_sha256": "a088ffe4d10eae7aa41a923d730846329e73dbf4e9f605bba62825002a3f83df",
+  "source_art": "built-in-imagegen",
+  "composition": "user-authorized pixel alignment and placement"
+}

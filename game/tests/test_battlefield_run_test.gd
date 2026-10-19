@@ -57,16 +57,21 @@ func run() -> void:
 	var near_load_status := near_image.load_png_from_buffer(FileAccess.get_file_as_bytes(scene.BACKGROUND_PATH))
 	var far_image := Image.new()
 	var far_load_status := far_image.load_png_from_buffer(FileAccess.get_file_as_bytes(scene.FAR_BACKGROUND_PATH))
+	var foreground_image := Image.new()
+	var foreground_load_status := foreground_image.load_png_from_buffer(FileAccess.get_file_as_bytes(scene.FOREGROUND_PATH))
 	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/boot.tscn", "The normal chapter entry point is unchanged")
 	check(player.view_mode == 1 and player.is_on_floor(), "The shipped side-view player stands on the new lowland")
-	check(player.scale == Vector2.ONE and scene.background.scale == Vector2.ONE and scene.far_background.scale == Vector2.ONE
+	check(is_equal_approx(player.floor_max_angle, deg_to_rad(65.0)) and player.gravity == 620.0
+		and player.jump_velocity == -225.0 and player.move_speed == 60.0 and player.run_speed == 138.0,
+		"Only this playground accepts 65-degree stairs; existing jump and movement parameters stay unchanged")
+	check(player.scale == Vector2.ONE and scene.foreground.scale == Vector2.ONE and scene.background.scale == Vector2.ONE and scene.far_background.scale == Vector2.ONE
 		and scene.mid_background.scale == Vector2.ONE and scene.camera.zoom == Vector2.ONE,
 		"Hero, all three panoramas and camera preserve the native pixel grid")
 	check(scene.world_size == Vector2i(6144, 256) and scene.art_size == Vector2i(6144, 512)
 		and scene.background.texture.get_size() == Vector2(scene.art_size),
 		"The taller art canvas is separate from the original terrain dimensions")
 	check(scene.background.position == Vector2(0, -256) and scene.mid_background.position.y == -256.0
-		and scene.far_background.position.y == -256.0,
+		and scene.far_background.position.y == -256.0 and scene.foreground.position == Vector2(0, -256),
 		"All three native art layers extend upward without moving the ground or hero")
 	check(scene.near_covers_view() and scene.near_visible_rect().position.y == scene.camera.position.y - 90.0 + 256.0,
 		"Near-source sampling includes the negative art origin and stays inside the tall canvas")
@@ -80,10 +85,18 @@ func run() -> void:
 	check(near_load_status == OK and near_image.detect_alpha() == Image.ALPHA_BIT
 		and far_load_status == OK and far_image.detect_alpha() == Image.ALPHA_NONE,
 		"Near buildings preserve binary cutout edges and the tall far sky remains opaque")
+	check(scene.foreground.texture.resource_path == scene.FOREGROUND_PATH
+		and scene.foreground.texture.get_size() == Vector2(scene.art_size)
+		and foreground_load_status == OK and foreground_image.detect_alpha() == Image.ALPHA_BIT,
+		"The playable buildings and cars use a native transparent foreground")
+	check(not scene.traversal_colliders.is_empty() and scene.traversal_terrain.get_child_count() == scene.traversal_layout.colliders.size(),
+		"Traversal colliders are built once from the delivered layout")
 	check(scene.far_background.z_index < scene.mid_background.z_index and scene.mid_background.z_index < scene.background.z_index
+		and scene.background.z_index < scene.foreground.z_index and scene.foreground.z_index < player.z_index
 		and scene.far_background.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST
-		and scene.mid_background.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST,
-		"Middle buildings render between the distant city and original terrain with nearest filtering")
+		and scene.mid_background.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST
+		and scene.foreground.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST,
+		"Playable foreground renders above the three background layers with nearest filtering")
 	check(scene.far_covers_view() and scene.far_background.position == scene.far_background.position.round(),
 		"The far skyline covers the initial viewport on whole pixels")
 	check(scene.mid_covers_view() and scene.mid_background.position == scene.mid_background.position.round(),
@@ -95,8 +108,16 @@ func run() -> void:
 		"The original 320x180 integer viewport is preserved")
 	check(scene.ground_source == scene.GROUND_PATH, "Collision follows the delivered surface profile")
 	check(scene.ground_y_at(40.0) == 224.0 and scene.ground_y_at(400.0) == 168.0
-		and scene.camera.limit_top == 0 and scene.camera.limit_bottom == 256,
-		"Building height leaves the original ground heights and vertical camera limits unchanged")
+		and scene.camera.limit_top == -256 and scene.camera.limit_bottom == 256,
+		"The original ground heights remain while the camera can reveal the upper building canvas")
+	var grounded_position: Vector2 = player.position
+	player.position.y = -180.0
+	scene._follow_player()
+	check(scene.camera.position.y == -166.0 and scene.far_covers_view() and scene.mid_covers_view()
+		and scene.near_covers_view() and scene.foreground_covers_view(),
+		"The camera reaches y=-256 without sampling outside any native art layer")
+	player.position = grounded_position
+	scene._follow_player()
 	check(player.get_node("Sprite").sprite_frames.resource_path == "res://assets/side_view.tres", "The existing side-view animation library is reused")
 	check(player.get_node("Sprite").material != null, "The existing hero material is preserved")
 	for code in [KEY_F7, KEY_F8]:
@@ -153,9 +174,9 @@ func run() -> void:
 	await ticks(8)
 	check(player.position.y < grounded_y - 12.0 and not player.is_on_floor(), "The original jump works on the continuous terrain")
 	var half := Vector2(160, 90)
-	check(scene.camera.position.x >= half.x and scene.camera.position.y >= half.y
+	check(scene.camera.position.x >= half.x and scene.camera.position.y >= half.y - 256.0
 		and scene.camera.position.x <= scene.world_size.x - half.x and scene.camera.position.y <= scene.world_size.y - half.y,
-		"The camera stays inside the original terrain bounds during a jump")
+		"The camera stays inside the complete native art bounds during a jump")
 	check(scene.far_covers_view() and scene.far_background.position.y == -256.0,
 		"The 512px far sky covers the full jump viewport from its negative origin")
 	check(scene.mid_covers_view() and scene.mid_background.position.y == -256.0,
