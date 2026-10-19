@@ -1,0 +1,67 @@
+{
+  "far": {
+    "role": "distant_city_and_industry",
+    "native_size": [
+      6144,
+      256
+    ],
+    "display_size": [
+      12288,
+      512
+    ],
+    "origin": [
+      0,
+      0
+    ],
+    "scroll_scale_x": 0.28,
+    "z_index": -20,
+    "colors": 48,
+    "opaque": true,
+    "source_sections": 8,
+    "alpha_values": [
+      255
+    ],
+    "native_sha256": "5fa4e22810f9676457706adbe679621a6e19194bf41ea12a38232a05b98bfbd4",
+    "source_art": "built-in-imagegen",
+    "integer_scale": 2
+  },
+  "mid": {
+    "role": "middle_buildings_and_factories",
+    "native_size": [
+      6144,
+      256
+    ],
+    "display_size": [
+      12288,
+      512
+    ],
+    "origin": [
+      0,
+      0
+    ],
+    "scroll_scale_x": 0.58,
+    "z_index": -15,
+    "colors": 64,
+    "opaque": false,
+    "source_sections": 8,
+    "alpha_values": [
+      0,
+      255
+    ],
+    "native_sha256": "f08c07c47119243bdda0b0641e4ca0cb5ef7cf0eac548925540eb01c4e52cdb7",
+    "source_art": "built-in-imagegen",
+    "integer_scale": 2
+  },
+  "near": {
+    "role": "main_architecture",
+    "native_size": [
+      6144,
+      256
+    ],
+    "scroll_scale_x": 1.0,
+    "z_index": -10,
+    "colors": 64,
+    "native_sha256": "34df7cfd0141c3b318668112e1fdf5fa1c748b1f1bd2d621f4da5fbbc769b140",
+    "unchanged": true
+  }
+}
