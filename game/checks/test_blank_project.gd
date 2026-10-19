@@ -5,10 +5,13 @@ const CONTROLS = preload("res://scripts/core/controls.gd")
 const MOVESET = preload("res://scripts/player/moves_long_blade.gd")
 const TOP = preload("res://assets/top_down.tres")
 const SIDE = preload("res://assets/side_view.tres")
+const CHARGE_FX = preload("res://scripts/player/charge_slash_fx.gd")
 var world: Node2D
 var checks := 0
 var failures: Array[String] = []
 var contacts: Array[bool] = []
+var max_charge_pixels := 0
+var max_charge_bounds := 0.0
 
 # A temporary data probe: no enemy behavior, artwork, collision or normal-game spawning.
 class ContactProbe extends Node2D:
@@ -52,6 +55,7 @@ func tap(code: Key) -> void:
 	await tick(2)
 
 func _run() -> void:
+	verify_charge_shape()
 	CONTROLS.install(false)
 	world = SPACE.instantiate()
 	root.add_child(world)
@@ -80,10 +84,12 @@ func _run() -> void:
 	mouse(MOUSE_BUTTON_LEFT, false)
 	await tick(3)
 	check(world.player.is_attacking, "short left click starts light attack")
+	check(world.player.fx.charge_slash.release_count == 0, "ordinary light attacks do not emit charged slash")
 	await tick(40)
 	mouse(MOUSE_BUTTON_RIGHT, true)
 	await tick(3)
 	check(world.player.is_attacking, "right click starts heavy attack")
+	check(world.player.fx.charge_slash.release_count == 0, "ordinary heavy attacks do not emit charged slash")
 	mouse(MOUSE_BUTTON_RIGHT, false)
 	await tick(50)
 	mouse(MOUSE_BUTTON_LEFT, true)
@@ -92,7 +98,12 @@ func _run() -> void:
 	mouse(MOUSE_BUTTON_LEFT, false)
 	await tick(2)
 	check(world.player.move_id == &"heavy_slash", "charge retains the draw action")
+	await tick(5)
+	check(world.player.fx.charge_slash.release_count == 1, "full charged draw emits its slash once")
+	check(not world.player.fx.charge_slash.cuts.is_empty(), "blue-white slash appears during charged swing")
 	await tick(45)
+	check(world.player.fx.charge_slash.release_count == 1, "active swing does not spawn repeated slashes")
+	check(world.player.fx.charge_slash.cuts.is_empty(), "charged afterglow disappears promptly")
 	_assert_clean_fx()
 	var probe := ContactProbe.new()
 	world.add_child(probe)
@@ -135,10 +146,54 @@ func _run() -> void:
 				var texture: Texture2D = frames.get_frame_texture(animation, index)
 				check(texture != null and texture.get_width() > 0, "retained animation %s/%s" % [animation, index])
 	CONTROLS.release_actions()
-	print(JSON.stringify({"checks": checks, "failures": failures, "status": "passed" if failures.is_empty() else "failed"}))
+	print(JSON.stringify({"checks": checks, "failures": failures, "status": "passed" if failures.is_empty() else "failed",
+		"charge_slash": {"max_visible_pixels": max_charge_pixels, "max_bounds_area": max_charge_bounds, "life_seconds": CHARGE_FX.LIFE}}))
 	quit(0 if failures.is_empty() else 1)
 
 func _assert_clean_fx() -> void:
 	for effect_name in ["ContactInk", "ChargedDraw"]:
 		check(not world.player.fx.has_node(NodePath(effect_name)), "removed node: " + effect_name)
 	check(not world.session.has_node("ImpactBurst"), "no sword qi or screen-cut system")
+
+
+func verify_charge_shape() -> void:
+	var fx := CHARGE_FX.new()
+	root.add_child(fx)
+	var origin := Vector2(160, 90)
+	for fps in [30, 60, 144]:
+		for setting in [[Vector2.RIGHT, true], [Vector2.LEFT, true], [Vector2.UP, false],
+				[Vector2.DOWN, false], [Vector2.LEFT, false], [Vector2.RIGHT, false]]:
+			fx.release(origin, setting[0], CHARGE_FX.REACH, setting[1])
+			for _frame in range(ceili(CHARGE_FX.LIFE * fps) + 2):
+				fx.step(1.0 / fps)
+				var pixels := fx.effect_pixels()
+				if pixels.is_empty():
+					continue
+				var low := Vector2(10000, 10000)
+				var high := Vector2(-10000, -10000)
+				var blue_white := true
+				for point in pixels:
+					low = low.min(Vector2(point))
+					high = high.max(Vector2(point))
+					var colour: Color = pixels[point]
+					blue_white = blue_white and colour.r <= colour.g and colour.g <= colour.b
+				var area := (high.x - low.x + 1) * (high.y - low.y + 1)
+				max_charge_pixels = maxi(max_charge_pixels, pixels.size())
+				max_charge_bounds = maxf(max_charge_bounds, area)
+				check(pixels.size() <= 720, "visible charge pixels fit 1.25 percent of native screen")
+				check(area <= 2880, "charge bounds stay within five percent of native screen")
+				check(blue_white, "charged slash palette stays blue-white")
+			check(fx.cuts.is_empty(), "effect expires at each tested frame rate and facing")
+	# A nearby wall clips the decorative extension without changing the attack's damage geometry.
+	fx.release(origin, Vector2.RIGHT, 24.0, true)
+	fx.step(0.065)
+	var clipped := fx.effect_pixels()
+	var stopped_at_wall := true
+	for point in clipped:
+		stopped_at_wall = stopped_at_wall and point.x <= origin.x + 24.0
+	check(not clipped.is_empty() and stopped_at_wall, "charged slash respects a nearby wall")
+	fx.step(CHARGE_FX.LIFE)
+	for _index in range(5):
+		fx.release(origin, Vector2.RIGHT, CHARGE_FX.REACH, true)
+	check(fx.cuts.size() == CHARGE_FX.MAX_CUTS, "rapid requests cannot stack unlimited effects")
+	fx.free()

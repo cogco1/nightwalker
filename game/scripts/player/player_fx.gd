@@ -8,6 +8,7 @@ extends Node2D
 ## It listens to the player's public move_started signal to size the blade arcs; it never reads player state.
 ## Decorative randomness has its own generator, so effects never shift the player's critical-hit rolls.
 
+const CHARGE_SLASH = preload("res://scripts/player/charge_slash_fx.gd")
 const MAX_BLADE_PIXELS := 330
 const WHITE := Color("f2f8ff")
 const BLUE := Color("8ebce8")
@@ -30,6 +31,7 @@ var afterimages: Array[Dictionary] = []
 var rng := RandomNumberGenerator.new()
 var arc_width := 1
 var _glow: Node2D
+var charge_slash: Node2D
 
 
 func _ready() -> void:
@@ -42,9 +44,29 @@ func _ready() -> void:
 	_glow.material = additive
 	add_child(_glow)
 	_glow.draw.connect(_draw_glow)
+	charge_slash = CHARGE_SLASH.new()
+	charge_slash.name = "ChargeSlash"
+	add_child(charge_slash)
 	var owner_player := get_parent()
 	if owner_player != null and owner_player.has_signal("move_started"):
 		owner_player.move_started.connect(_on_move_started)
+		owner_player.swing_released.connect(_on_swing_released)
+
+
+func _on_swing_released(move: StringName) -> void:
+	if move != &"heavy_slash":
+		return
+	var player := get_parent()
+	var origin: Vector2 = player.attack_origin()
+	if int(player.view_mode) == 1:
+		origin = player.global_position + Vector2(0, -22)
+	var direction: Vector2 = player.attack_direction
+	var reach := CHARGE_SLASH.REACH
+	var ray := get_world_2d().direct_space_state.intersect_ray(
+		PhysicsRayQueryParameters2D.create(origin, origin + direction * reach, 1))
+	if not ray.is_empty():
+		reach = minf(reach, origin.distance_to(ray.position))
+	charge_slash.release(origin, direction, reach, int(player.view_mode) == 1)
 
 
 func _on_move_started(move: StringName) -> void:
@@ -164,6 +186,7 @@ func ghost(texture: Texture2D, at: Vector2, life: float) -> void:
 
 
 func step(delta: float) -> void:
+	charge_slash.step(delta)
 	for index in range(afterimages.size() - 1, -1, -1):
 		afterimages[index]["life"] = float(afterimages[index]["life"]) - delta
 		if float(afterimages[index]["life"]) <= 0.0:
