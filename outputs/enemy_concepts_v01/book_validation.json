@@ -1,0 +1,31 @@
+{
+  "pdf": "E:\\CodexWorkspace\\Nightwalker\\outputs\\enemy_concepts_v01\\夜行者_敌人概念设定集_v01.pdf",
+  "pages": 11,
+  "rendered_pngs": 11,
+  "searchable_chinese": true,
+  "text_characters": 7124,
+  "poppler_returncode": 0,
+  "visual_review_required": false,
+  "visual_review_complete": true,
+  "reviewed_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "layout_overflows": 0,
+  "all_seven_codes_and_callsigns_searchable": true,
+  "visual_review_notes": [
+    "All 11 final Poppler page PNGs individually inspected at 100 DPI.",
+    "No clipped or overlapping text, missing glyphs, image collisions, or footer issues.",
+    "All three native-art variants per class are clear and pixel edges remain visible."
+  ],
+  "pdf_sha256": "ce4b9ccb4828eb99a6701a6a410bd39edbf282b4e4bd7b3c4d43800870dece07"
+}

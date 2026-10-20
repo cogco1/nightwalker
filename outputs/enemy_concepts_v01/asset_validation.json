@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "classes": [
+    {
+      "key": "laser_drone",
+      "variants": 3,
+      "palette_colors_used": 14,
+      "passed": true
+    },
+    {
+      "key": "sniper",
+      "variants": 3,
+      "palette_colors_used": 14,
+      "passed": true
+    },
+    {
+      "key": "rifle_guard",
+      "variants": 3,
+      "palette_colors_used": 15,
+      "passed": true
+    },
+    {
+      "key": "shield_guard",
+      "variants": 3,
+      "palette_colors_used": 14,
+      "passed": true
+    },
+    {
+      "key": "blade_assault",
+      "variants": 3,
+      "palette_colors_used": 15,
+      "passed": true
+    },
+    {
+      "key": "breacher",
+      "variants": 3,
+      "palette_colors_used": 15,
+      "passed": true
+    },
+    {
+      "key": "tether_guard",
+      "variants": 3,
+      "palette_colors_used": 14,
+      "passed": true
+    }
+  ],
+  "native_variants": 21,
+  "alpha_values": [
+    0,
+    255
+  ],
+  "palette_size": 16,
+  "game_runtime_changed": false,
+  "backup": {
+    "path": "E:\\CodexWorkspace\\Nightwalker_Backups\\夜行者_敌人概念图制作前_2026-10-21_v10.zip",
+    "crc": "passed",
+    "sha256": "6ba4dbca5b99edebb6836460aa3eff99ae1027a17eaa102f167cfb41355886df"
+  },
+  "protected_game_assets": "unchanged"
+}
