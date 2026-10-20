@@ -1,0 +1,32 @@
+[
+  {
+    "phase": "resources",
+    "returncode": 0,
+    "stderr_bytes": 0,
+    "seconds": 0.093039
+  },
+  {
+    "phase": "version",
+    "returncode": 0,
+    "stderr_bytes": 0,
+    "seconds": 0.051549
+  },
+  {
+    "phase": "import",
+    "returncode": 0,
+    "stderr_bytes": 0,
+    "seconds": 3.85503
+  },
+  {
+    "phase": "headless",
+    "returncode": 0,
+    "stderr_bytes": 0,
+    "seconds": 2.41144
+  },
+  {
+    "phase": "gpu",
+    "returncode": 0,
+    "stderr_bytes": 0,
+    "seconds": 2.319983
+  }
+]

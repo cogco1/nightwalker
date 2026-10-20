@@ -1,0 +1,3332 @@
+{
+  "source_tool": "built-in imagegen",
+  "per_frame_resize": false,
+  "source_partition": "transparent row/column gutters; preserve each nominal horizontal origin",
+  "ground_alignment": "integer sole plane; fixed horizontal unit anchor",
+  "units": {
+    "laser_drone_B": {
+      "unit_scale": 0.10313075506445672,
+      "source_root_x": 215.25,
+      "actions": {
+        "hover": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\laser_drone_B_hover_laser.png",
+          "source_sha256": "b953835f4b1966e63575b84090fab54d10622e3166b6b7e7192ee73555219114",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 0,
+              "source_rect": [
+                0,
+                0,
+                408,
+                279
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                26,
+                22
+              ],
+              "used_rect": [
+                34,
+                31,
+                62,
+                46
+              ],
+              "opaque_pixels": 202
+            },
+            {
+              "index": 1,
+              "source_cell": 1,
+              "source_rect": [
+                408,
+                0,
+                792,
+                279
+              ],
+              "nominal_origin_offset_x": 24,
+              "translation": [
+                28,
+                22
+              ],
+              "used_rect": [
+                34,
+                31,
+                62,
+                46
+              ],
+              "opaque_pixels": 206
+            },
+            {
+              "index": 2,
+              "source_cell": 2,
+              "source_rect": [
+                792,
+                0,
+                1172,
+                279
+              ],
+              "nominal_origin_offset_x": 24,
+              "translation": [
+                28,
+                22
+              ],
+              "used_rect": [
+                34,
+                31,
+                62,
+                46
+              ],
+              "opaque_pixels": 193
+            },
+            {
+              "index": 3,
+              "source_cell": 3,
+              "source_rect": [
+                1172,
+                0,
+                1536,
+                279
+              ],
+              "nominal_origin_offset_x": 20,
+              "translation": [
+                28,
+                22
+              ],
+              "used_rect": [
+                34,
+                31,
+                63,
+                46
+              ],
+              "opaque_pixels": 201
+            },
+            {
+              "index": 4,
+              "source_cell": 4,
+              "source_rect": [
+                0,
+                279,
+                404,
+                530
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                26,
+                26
+              ],
+              "used_rect": [
+                34,
+                31,
+                62,
+                46
+              ],
+              "opaque_pixels": 207
+            },
+            {
+              "index": 5,
+              "source_cell": 5,
+              "source_rect": [
+                404,
+                279,
+                791,
+                530
+              ],
+              "nominal_origin_offset_x": 20,
+              "translation": [
+                28,
+                26
+              ],
+              "used_rect": [
+                33,
+                31,
+                62,
+                46
+              ],
+              "opaque_pixels": 201
+            },
+            {
+              "index": 6,
+              "source_cell": 6,
+              "source_rect": [
+                791,
+                279,
+                1175,
+                530
+              ],
+              "nominal_origin_offset_x": 23,
+              "translation": [
+                28,
+                26
+              ],
+              "used_rect": [
+                34,
+                31,
+                62,
+                46
+              ],
+              "opaque_pixels": 198
+            },
+            {
+              "index": 7,
+              "source_cell": 7,
+              "source_rect": [
+                1175,
+                279,
+                1536,
+                530
+              ],
+              "nominal_origin_offset_x": 23,
+              "translation": [
+                28,
+                26
+              ],
+              "used_rect": [
+                34,
+                31,
+                62,
+                46
+              ],
+              "opaque_pixels": 201
+            }
+          ]
+        },
+        "laser": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\laser_drone_B_hover_laser.png",
+          "source_sha256": "b953835f4b1966e63575b84090fab54d10622e3166b6b7e7192ee73555219114",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 8,
+              "source_rect": [
+                0,
+                530,
+                406,
+                773
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                26,
+                26
+              ],
+              "used_rect": [
+                34,
+                32,
+                62,
+                46
+              ],
+              "opaque_pixels": 194
+            },
+            {
+              "index": 1,
+              "source_cell": 9,
+              "source_rect": [
+                406,
+                530,
+                782,
+                773
+              ],
+              "nominal_origin_offset_x": 22,
+              "translation": [
+                28,
+                26
+              ],
+              "used_rect": [
+                34,
+                32,
+                62,
+                46
+              ],
+              "opaque_pixels": 190
+            },
+            {
+              "index": 2,
+              "source_cell": 10,
+              "source_rect": [
+                782,
+                530,
+                1152,
+                773
+              ],
+              "nominal_origin_offset_x": 14,
+              "translation": [
+                27,
+                26
+              ],
+              "used_rect": [
+                32,
+                32,
+                60,
+                46
+              ],
+              "opaque_pixels": 195
+            },
+            {
+              "index": 3,
+              "source_cell": 11,
+              "source_rect": [
+                1152,
+                530,
+                1536,
+                773
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                26,
+                26
+              ],
+              "used_rect": [
+                31,
+                32,
+                65,
+                46
+              ],
+              "opaque_pixels": 198
+            },
+            {
+              "index": 4,
+              "source_cell": 12,
+              "source_rect": [
+                0,
+                773,
+                431,
+                1024
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                26,
+                27
+              ],
+              "used_rect": [
+                33,
+                32,
+                67,
+                46
+              ],
+              "opaque_pixels": 192
+            },
+            {
+              "index": 5,
+              "source_cell": 13,
+              "source_rect": [
+                431,
+                773,
+                782,
+                1024
+              ],
+              "nominal_origin_offset_x": 47,
+              "translation": [
+                31,
+                27
+              ],
+              "used_rect": [
+                34,
+                32,
+                61,
+                46
+              ],
+              "opaque_pixels": 190
+            },
+            {
+              "index": 6,
+              "source_cell": 14,
+              "source_rect": [
+                782,
+                773,
+                1176,
+                1024
+              ],
+              "nominal_origin_offset_x": 14,
+              "translation": [
+                27,
+                27
+              ],
+              "used_rect": [
+                34,
+                32,
+                62,
+                46
+              ],
+              "opaque_pixels": 204
+            },
+            {
+              "index": 7,
+              "source_cell": 15,
+              "source_rect": [
+                1176,
+                773,
+                1536,
+                1024
+              ],
+              "nominal_origin_offset_x": 24,
+              "translation": [
+                28,
+                27
+              ],
+              "used_rect": [
+                34,
+                32,
+                62,
+                46
+              ],
+              "opaque_pixels": 194
+            }
+          ]
+        }
+      }
+    },
+    "sniper_B": {
+      "unit_scale": 0.1415929203539823,
+      "source_root_x": 133.25,
+      "actions": {
+        "walk": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\sniper_B_walk_down.png",
+          "source_sha256": "2bcb3fa2779a58b511619a8d2dabbca00f087d0107955ba179f182a69df4e0a0",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 0,
+              "source_rect": [
+                0,
+                0,
+                396,
+                292
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                29,
+                18
+              ],
+              "used_rect": [
+                40,
+                25,
+                79,
+                57
+              ],
+              "opaque_pixels": 384
+            },
+            {
+              "index": 1,
+              "source_cell": 1,
+              "source_rect": [
+                396,
+                0,
+                764,
+                292
+              ],
+              "nominal_origin_offset_x": 12,
+              "translation": [
+                31,
+                18
+              ],
+              "used_rect": [
+                37,
+                25,
+                75,
+                57
+              ],
+              "opaque_pixels": 391
+            },
+            {
+              "index": 2,
+              "source_cell": 2,
+              "source_rect": [
+                764,
+                0,
+                1151,
+                292
+              ],
+              "nominal_origin_offset_x": -4,
+              "translation": [
+                28,
+                18
+              ],
+              "used_rect": [
+                36,
+                25,
+                74,
+                57
+              ],
+              "opaque_pixels": 396
+            },
+            {
+              "index": 3,
+              "source_cell": 3,
+              "source_rect": [
+                1151,
+                0,
+                1536,
+                292
+              ],
+              "nominal_origin_offset_x": -1,
+              "translation": [
+                29,
+                18
+              ],
+              "used_rect": [
+                38,
+                25,
+                76,
+                57
+              ],
+              "opaque_pixels": 396
+            },
+            {
+              "index": 4,
+              "source_cell": 4,
+              "source_rect": [
+                0,
+                292,
+                412,
+                555
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                29,
+                22
+              ],
+              "used_rect": [
+                39,
+                25,
+                81,
+                57
+              ],
+              "opaque_pixels": 419
+            },
+            {
+              "index": 5,
+              "source_cell": 5,
+              "source_rect": [
+                412,
+                292,
+                762,
+                555
+              ],
+              "nominal_origin_offset_x": 28,
+              "translation": [
+                33,
+                22
+              ],
+              "used_rect": [
+                40,
+                24,
+                76,
+                57
+              ],
+              "opaque_pixels": 383
+            },
+            {
+              "index": 6,
+              "source_cell": 6,
+              "source_rect": [
+                762,
+                292,
+                1157,
+                555
+              ],
+              "nominal_origin_offset_x": -6,
+              "translation": [
+                28,
+                22
+              ],
+              "used_rect": [
+                35,
+                25,
+                76,
+                57
+              ],
+              "opaque_pixels": 420
+            },
+            {
+              "index": 7,
+              "source_cell": 7,
+              "source_rect": [
+                1157,
+                292,
+                1536,
+                555
+              ],
+              "nominal_origin_offset_x": 5,
+              "translation": [
+                30,
+                22
+              ],
+              "used_rect": [
+                39,
+                25,
+                79,
+                57
+              ],
+              "opaque_pixels": 416
+            }
+          ]
+        },
+        "prone_down": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\sniper_B_walk_down.png",
+          "source_sha256": "2bcb3fa2779a58b511619a8d2dabbca00f087d0107955ba179f182a69df4e0a0",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 8,
+              "source_rect": [
+                0,
+                555,
+                412,
+                826
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                29,
+                22
+              ],
+              "used_rect": [
+                42,
+                25,
+                79,
+                57
+              ],
+              "opaque_pixels": 399
+            },
+            {
+              "index": 1,
+              "source_cell": 9,
+              "source_rect": [
+                412,
+                555,
+                778,
+                826
+              ],
+              "nominal_origin_offset_x": 28,
+              "translation": [
+                33,
+                22
+              ],
+              "used_rect": [
+                41,
+                27,
+                80,
+                57
+              ],
+              "opaque_pixels": 406
+            },
+            {
+              "index": 2,
+              "source_cell": 10,
+              "source_rect": [
+                778,
+                555,
+                1142,
+                826
+              ],
+              "nominal_origin_offset_x": 10,
+              "translation": [
+                30,
+                22
+              ],
+              "used_rect": [
+                35,
+                31,
+                79,
+                57
+              ],
+              "opaque_pixels": 403
+            },
+            {
+              "index": 3,
+              "source_cell": 11,
+              "source_rect": [
+                1142,
+                555,
+                1536,
+                826
+              ],
+              "nominal_origin_offset_x": -10,
+              "translation": [
+                28,
+                22
+              ],
+              "used_rect": [
+                31,
+                36,
+                83,
+                57
+              ],
+              "opaque_pixels": 439
+            },
+            {
+              "index": 4,
+              "source_cell": 12,
+              "source_rect": [
+                0,
+                826,
+                400,
+                1024
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                29,
+                36
+              ],
+              "used_rect": [
+                33,
+                39,
+                86,
+                57
+              ],
+              "opaque_pixels": 414
+            },
+            {
+              "index": 5,
+              "source_cell": 13,
+              "source_rect": [
+                400,
+                826,
+                776,
+                1024
+              ],
+              "nominal_origin_offset_x": 16,
+              "translation": [
+                31,
+                36
+              ],
+              "used_rect": [
+                31,
+                42,
+                84,
+                57
+              ],
+              "opaque_pixels": 349
+            },
+            {
+              "index": 6,
+              "source_cell": 14,
+              "source_rect": [
+                776,
+                826,
+                1151,
+                1024
+              ],
+              "nominal_origin_offset_x": 8,
+              "translation": [
+                30,
+                36
+              ],
+              "used_rect": [
+                30,
+                43,
+                83,
+                57
+              ],
+              "opaque_pixels": 339
+            },
+            {
+              "index": 7,
+              "source_cell": 15,
+              "source_rect": [
+                1151,
+                826,
+                1536,
+                1024
+              ],
+              "nominal_origin_offset_x": -1,
+              "translation": [
+                29,
+                36
+              ],
+              "used_rect": [
+                29,
+                43,
+                83,
+                57
+              ],
+              "opaque_pixels": 346
+            }
+          ]
+        },
+        "prone_crawl": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\sniper_B_crawl_fire.png",
+          "source_sha256": "d0182925924fc971baafd53eb0a2895f8dc81daaaf68a2780a244afc0721d081",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 0,
+              "source_rect": [
+                0,
+                0,
+                389,
+                318
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                29,
+                22
+              ],
+              "used_rect": [
+                32,
+                43,
+                81,
+                57
+              ],
+              "opaque_pixels": 298
+            },
+            {
+              "index": 1,
+              "source_cell": 1,
+              "source_rect": [
+                389,
+                0,
+                766,
+                318
+              ],
+              "nominal_origin_offset_x": 5,
+              "translation": [
+                30,
+                21
+              ],
+              "used_rect": [
+                33,
+                42,
+                81,
+                57
+              ],
+              "opaque_pixels": 299
+            },
+            {
+              "index": 2,
+              "source_cell": 2,
+              "source_rect": [
+                766,
+                0,
+                1144,
+                318
+              ],
+              "nominal_origin_offset_x": -2,
+              "translation": [
+                29,
+                22
+              ],
+              "used_rect": [
+                32,
+                43,
+                81,
+                57
+              ],
+              "opaque_pixels": 303
+            },
+            {
+              "index": 3,
+              "source_cell": 3,
+              "source_rect": [
+                1144,
+                0,
+                1536,
+                318
+              ],
+              "nominal_origin_offset_x": -8,
+              "translation": [
+                28,
+                21
+              ],
+              "used_rect": [
+                30,
+                42,
+                82,
+                57
+              ],
+              "opaque_pixels": 308
+            },
+            {
+              "index": 4,
+              "source_cell": 4,
+              "source_rect": [
+                0,
+                318,
+                394,
+                560
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                29,
+                33
+              ],
+              "used_rect": [
+                32,
+                43,
+                83,
+                57
+              ],
+              "opaque_pixels": 283
+            },
+            {
+              "index": 5,
+              "source_cell": 5,
+              "source_rect": [
+                394,
+                318,
+                766,
+                560
+              ],
+              "nominal_origin_offset_x": 10,
+              "translation": [
+                30,
+                33
+              ],
+              "used_rect": [
+                33,
+                42,
+                81,
+                57
+              ],
+              "opaque_pixels": 293
+            },
+            {
+              "index": 6,
+              "source_cell": 6,
+              "source_rect": [
+                766,
+                318,
+                1156,
+                560
+              ],
+              "nominal_origin_offset_x": -2,
+              "translation": [
+                29,
+                33
+              ],
+              "used_rect": [
+                31,
+                43,
+                81,
+                57
+              ],
+              "opaque_pixels": 289
+            },
+            {
+              "index": 7,
+              "source_cell": 7,
+              "source_rect": [
+                1156,
+                318,
+                1536,
+                560
+              ],
+              "nominal_origin_offset_x": 4,
+              "translation": [
+                30,
+                33
+              ],
+              "used_rect": [
+                33,
+                43,
+                81,
+                57
+              ],
+              "opaque_pixels": 291
+            }
+          ]
+        },
+        "prone_fire": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\sniper_B_crawl_fire.png",
+          "source_sha256": "d0182925924fc971baafd53eb0a2895f8dc81daaaf68a2780a244afc0721d081",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 8,
+              "source_rect": [
+                0,
+                560,
+                384,
+                806
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                29,
+                32
+              ],
+              "used_rect": [
+                32,
+                43,
+                81,
+                57
+              ],
+              "opaque_pixels": 283
+            },
+            {
+              "index": 1,
+              "source_cell": 9,
+              "source_rect": [
+                384,
+                560,
+                763,
+                806
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                29,
+                32
+              ],
+              "used_rect": [
+                32,
+                43,
+                81,
+                57
+              ],
+              "opaque_pixels": 275
+            },
+            {
+              "index": 2,
+              "source_cell": 10,
+              "source_rect": [
+                763,
+                560,
+                1156,
+                806
+              ],
+              "nominal_origin_offset_x": -5,
+              "translation": [
+                28,
+                33
+              ],
+              "used_rect": [
+                30,
+                43,
+                82,
+                57
+              ],
+              "opaque_pixels": 290
+            },
+            {
+              "index": 3,
+              "source_cell": 11,
+              "source_rect": [
+                1156,
+                560,
+                1536,
+                806
+              ],
+              "nominal_origin_offset_x": 4,
+              "translation": [
+                30,
+                32
+              ],
+              "used_rect": [
+                31,
+                43,
+                78,
+                57
+              ],
+              "opaque_pixels": 281
+            },
+            {
+              "index": 4,
+              "source_cell": 12,
+              "source_rect": [
+                0,
+                806,
+                385,
+                1024
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                29,
+                33
+              ],
+              "used_rect": [
+                32,
+                43,
+                82,
+                57
+              ],
+              "opaque_pixels": 310
+            },
+            {
+              "index": 5,
+              "source_cell": 13,
+              "source_rect": [
+                385,
+                806,
+                766,
+                1024
+              ],
+              "nominal_origin_offset_x": 1,
+              "translation": [
+                29,
+                33
+              ],
+              "used_rect": [
+                32,
+                43,
+                81,
+                57
+              ],
+              "opaque_pixels": 309
+            },
+            {
+              "index": 6,
+              "source_cell": 14,
+              "source_rect": [
+                766,
+                806,
+                1148,
+                1024
+              ],
+              "nominal_origin_offset_x": -2,
+              "translation": [
+                29,
+                33
+              ],
+              "used_rect": [
+                32,
+                43,
+                80,
+                57
+              ],
+              "opaque_pixels": 290
+            },
+            {
+              "index": 7,
+              "source_cell": 15,
+              "source_rect": [
+                1148,
+                806,
+                1536,
+                1024
+              ],
+              "nominal_origin_offset_x": -4,
+              "translation": [
+                28,
+                33
+              ],
+              "used_rect": [
+                31,
+                43,
+                80,
+                57
+              ],
+              "opaque_pixels": 297
+            }
+          ]
+        }
+      }
+    },
+    "rifle_guard_A": {
+      "unit_scale": 0.13973799126637554,
+      "source_root_x": 197.0,
+      "actions": {
+        "walk": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\rifle_guard_A_walk_fire.png",
+          "source_sha256": "da218b4f9a784661323bd139d5387d015b9000b5c941cf96d9fc91ee048a859f",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 0,
+              "source_rect": [
+                0,
+                0,
+                416,
+                264
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                20,
+                22
+              ],
+              "used_rect": [
+                45,
+                26,
+                69,
+                57
+              ],
+              "opaque_pixels": 394
+            },
+            {
+              "index": 1,
+              "source_cell": 1,
+              "source_rect": [
+                416,
+                0,
+                784,
+                264
+              ],
+              "nominal_origin_offset_x": 32,
+              "translation": [
+                24,
+                22
+              ],
+              "used_rect": [
+                40,
+                26,
+                64,
+                57
+              ],
+              "opaque_pixels": 369
+            },
+            {
+              "index": 2,
+              "source_cell": 2,
+              "source_rect": [
+                784,
+                0,
+                1136,
+                264
+              ],
+              "nominal_origin_offset_x": 16,
+              "translation": [
+                22,
+                22
+              ],
+              "used_rect": [
+                34,
+                26,
+                60,
+                57
+              ],
+              "opaque_pixels": 412
+            },
+            {
+              "index": 3,
+              "source_cell": 3,
+              "source_rect": [
+                1136,
+                0,
+                1536,
+                264
+              ],
+              "nominal_origin_offset_x": -16,
+              "translation": [
+                18,
+                22
+              ],
+              "used_rect": [
+                30,
+                26,
+                56,
+                57
+              ],
+              "opaque_pixels": 408
+            },
+            {
+              "index": 4,
+              "source_cell": 4,
+              "source_rect": [
+                0,
+                264,
+                415,
+                520
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                20,
+                23
+              ],
+              "used_rect": [
+                44,
+                25,
+                69,
+                57
+              ],
+              "opaque_pixels": 412
+            },
+            {
+              "index": 5,
+              "source_cell": 5,
+              "source_rect": [
+                415,
+                264,
+                786,
+                520
+              ],
+              "nominal_origin_offset_x": 31,
+              "translation": [
+                24,
+                23
+              ],
+              "used_rect": [
+                40,
+                25,
+                65,
+                57
+              ],
+              "opaque_pixels": 428
+            },
+            {
+              "index": 6,
+              "source_cell": 6,
+              "source_rect": [
+                786,
+                264,
+                1142,
+                520
+              ],
+              "nominal_origin_offset_x": 18,
+              "translation": [
+                23,
+                23
+              ],
+              "used_rect": [
+                36,
+                25,
+                61,
+                57
+              ],
+              "opaque_pixels": 373
+            },
+            {
+              "index": 7,
+              "source_cell": 7,
+              "source_rect": [
+                1142,
+                264,
+                1536,
+                520
+              ],
+              "nominal_origin_offset_x": -10,
+              "translation": [
+                19,
+                23
+              ],
+              "used_rect": [
+                31,
+                25,
+                56,
+                57
+              ],
+              "opaque_pixels": 425
+            }
+          ]
+        },
+        "fire": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\rifle_guard_A_walk_fire.png",
+          "source_sha256": "da218b4f9a784661323bd139d5387d015b9000b5c941cf96d9fc91ee048a859f",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 8,
+              "source_rect": [
+                0,
+                520,
+                415,
+                766
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                20,
+                25
+              ],
+              "used_rect": [
+                44,
+                27,
+                69,
+                57
+              ],
+              "opaque_pixels": 396
+            },
+            {
+              "index": 1,
+              "source_cell": 9,
+              "source_rect": [
+                415,
+                520,
+                790,
+                766
+              ],
+              "nominal_origin_offset_x": 31,
+              "translation": [
+                24,
+                25
+              ],
+              "used_rect": [
+                40,
+                27,
+                66,
+                57
+              ],
+              "opaque_pixels": 398
+            },
+            {
+              "index": 2,
+              "source_cell": 10,
+              "source_rect": [
+                790,
+                520,
+                1150,
+                766
+              ],
+              "nominal_origin_offset_x": 22,
+              "translation": [
+                23,
+                25
+              ],
+              "used_rect": [
+                35,
+                27,
+                62,
+                57
+              ],
+              "opaque_pixels": 401
+            },
+            {
+              "index": 3,
+              "source_cell": 11,
+              "source_rect": [
+                1150,
+                520,
+                1536,
+                766
+              ],
+              "nominal_origin_offset_x": -2,
+              "translation": [
+                20,
+                25
+              ],
+              "used_rect": [
+                31,
+                27,
+                62,
+                57
+              ],
+              "opaque_pixels": 417
+            },
+            {
+              "index": 4,
+              "source_cell": 12,
+              "source_rect": [
+                0,
+                766,
+                416,
+                1024
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                20,
+                24
+              ],
+              "used_rect": [
+                44,
+                26,
+                69,
+                57
+              ],
+              "opaque_pixels": 406
+            },
+            {
+              "index": 5,
+              "source_cell": 13,
+              "source_rect": [
+                416,
+                766,
+                794,
+                1024
+              ],
+              "nominal_origin_offset_x": 32,
+              "translation": [
+                24,
+                24
+              ],
+              "used_rect": [
+                40,
+                26,
+                67,
+                57
+              ],
+              "opaque_pixels": 424
+            },
+            {
+              "index": 6,
+              "source_cell": 14,
+              "source_rect": [
+                794,
+                766,
+                1159,
+                1024
+              ],
+              "nominal_origin_offset_x": 26,
+              "translation": [
+                24,
+                24
+              ],
+              "used_rect": [
+                35,
+                26,
+                65,
+                57
+              ],
+              "opaque_pixels": 430
+            },
+            {
+              "index": 7,
+              "source_cell": 15,
+              "source_rect": [
+                1159,
+                766,
+                1536,
+                1024
+              ],
+              "nominal_origin_offset_x": 7,
+              "translation": [
+                21,
+                24
+              ],
+              "used_rect": [
+                31,
+                26,
+                56,
+                57
+              ],
+              "opaque_pixels": 414
+            }
+          ]
+        }
+      }
+    },
+    "rifle_guard_C": {
+      "unit_scale": 0.14645308924485126,
+      "source_root_x": 173.0,
+      "actions": {
+        "walk": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\rifle_guard_C_walk_fire.png",
+          "source_sha256": "8af7babd0d258331f8fe03650d1d2527662d70aed418476e96b7146b38eb33c2",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 0,
+              "source_rect": [
+                0,
+                0,
+                405,
+                269
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                23,
+                20
+              ],
+              "used_rect": [
+                45,
+                25,
+                71,
+                57
+              ],
+              "opaque_pixels": 474
+            },
+            {
+              "index": 1,
+              "source_cell": 1,
+              "source_rect": [
+                405,
+                0,
+                766,
+                269
+              ],
+              "nominal_origin_offset_x": 21,
+              "translation": [
+                26,
+                20
+              ],
+              "used_rect": [
+                38,
+                25,
+                65,
+                57
+              ],
+              "opaque_pixels": 437
+            },
+            {
+              "index": 2,
+              "source_cell": 2,
+              "source_rect": [
+                766,
+                0,
+                1140,
+                269
+              ],
+              "nominal_origin_offset_x": -2,
+              "translation": [
+                23,
+                20
+              ],
+              "used_rect": [
+                37,
+                26,
+                64,
+                57
+              ],
+              "opaque_pixels": 408
+            },
+            {
+              "index": 3,
+              "source_cell": 3,
+              "source_rect": [
+                1140,
+                0,
+                1536,
+                269
+              ],
+              "nominal_origin_offset_x": -12,
+              "translation": [
+                21,
+                20
+              ],
+              "used_rect": [
+                33,
+                25,
+                60,
+                57
+              ],
+              "opaque_pixels": 482
+            },
+            {
+              "index": 4,
+              "source_cell": 4,
+              "source_rect": [
+                0,
+                269,
+                405,
+                525
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                23,
+                22
+              ],
+              "used_rect": [
+                43,
+                25,
+                71,
+                57
+              ],
+              "opaque_pixels": 481
+            },
+            {
+              "index": 5,
+              "source_cell": 5,
+              "source_rect": [
+                405,
+                269,
+                762,
+                525
+              ],
+              "nominal_origin_offset_x": 21,
+              "translation": [
+                26,
+                22
+              ],
+              "used_rect": [
+                37,
+                25,
+                65,
+                57
+              ],
+              "opaque_pixels": 475
+            },
+            {
+              "index": 6,
+              "source_cell": 6,
+              "source_rect": [
+                762,
+                269,
+                1138,
+                525
+              ],
+              "nominal_origin_offset_x": -6,
+              "translation": [
+                22,
+                22
+              ],
+              "used_rect": [
+                35,
+                25,
+                64,
+                57
+              ],
+              "opaque_pixels": 498
+            },
+            {
+              "index": 7,
+              "source_cell": 7,
+              "source_rect": [
+                1138,
+                269,
+                1536,
+                525
+              ],
+              "nominal_origin_offset_x": -14,
+              "translation": [
+                21,
+                22
+              ],
+              "used_rect": [
+                33,
+                24,
+                62,
+                57
+              ],
+              "opaque_pixels": 494
+            }
+          ]
+        },
+        "fire": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\rifle_guard_C_walk_fire.png",
+          "source_sha256": "8af7babd0d258331f8fe03650d1d2527662d70aed418476e96b7146b38eb33c2",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 8,
+              "source_rect": [
+                0,
+                525,
+                406,
+                776
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                23,
+                23
+              ],
+              "used_rect": [
+                44,
+                26,
+                72,
+                57
+              ],
+              "opaque_pixels": 481
+            },
+            {
+              "index": 1,
+              "source_cell": 9,
+              "source_rect": [
+                406,
+                525,
+                780,
+                776
+              ],
+              "nominal_origin_offset_x": 22,
+              "translation": [
+                26,
+                23
+              ],
+              "used_rect": [
+                38,
+                25,
+                70,
+                57
+              ],
+              "opaque_pixels": 523
+            },
+            {
+              "index": 2,
+              "source_cell": 10,
+              "source_rect": [
+                780,
+                525,
+                1160,
+                776
+              ],
+              "nominal_origin_offset_x": 12,
+              "translation": [
+                25,
+                23
+              ],
+              "used_rect": [
+                37,
+                25,
+                71,
+                57
+              ],
+              "opaque_pixels": 510
+            },
+            {
+              "index": 3,
+              "source_cell": 11,
+              "source_rect": [
+                1160,
+                525,
+                1536,
+                776
+              ],
+              "nominal_origin_offset_x": 8,
+              "translation": [
+                24,
+                23
+              ],
+              "used_rect": [
+                34,
+                26,
+                65,
+                57
+              ],
+              "opaque_pixels": 518
+            },
+            {
+              "index": 4,
+              "source_cell": 12,
+              "source_rect": [
+                0,
+                776,
+                424,
+                1024
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                23,
+                23
+              ],
+              "used_rect": [
+                42,
+                26,
+                77,
+                57
+              ],
+              "opaque_pixels": 518
+            },
+            {
+              "index": 5,
+              "source_cell": 13,
+              "source_rect": [
+                424,
+                776,
+                767,
+                1024
+              ],
+              "nominal_origin_offset_x": 40,
+              "translation": [
+                29,
+                23
+              ],
+              "used_rect": [
+                39,
+                26,
+                66,
+                57
+              ],
+              "opaque_pixels": 482
+            },
+            {
+              "index": 6,
+              "source_cell": 14,
+              "source_rect": [
+                767,
+                776,
+                1146,
+                1024
+              ],
+              "nominal_origin_offset_x": -1,
+              "translation": [
+                23,
+                23
+              ],
+              "used_rect": [
+                37,
+                26,
+                65,
+                57
+              ],
+              "opaque_pixels": 493
+            },
+            {
+              "index": 7,
+              "source_cell": 15,
+              "source_rect": [
+                1146,
+                776,
+                1536,
+                1024
+              ],
+              "nominal_origin_offset_x": -6,
+              "translation": [
+                22,
+                23
+              ],
+              "used_rect": [
+                35,
+                26,
+                63,
+                57
+              ],
+              "opaque_pixels": 474
+            }
+          ]
+        }
+      }
+    },
+    "shield_guard_B": {
+      "unit_scale": 0.13822894168466524,
+      "source_root_x": 172.5,
+      "actions": {
+        "walk": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\shield_guard_B_walk_fire.png",
+          "source_sha256": "88eeb686dfb243a302dc92b28b69efcef1099c4c471dfab49f39d8d7fab7c641",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 0,
+              "source_rect": [
+                0,
+                0,
+                390,
+                285
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                24,
+                20
+              ],
+              "used_rect": [
+                36,
+                26,
+                66,
+                57
+              ],
+              "opaque_pixels": 594
+            },
+            {
+              "index": 1,
+              "source_cell": 1,
+              "source_rect": [
+                390,
+                0,
+                775,
+                285
+              ],
+              "nominal_origin_offset_x": 6,
+              "translation": [
+                25,
+                20
+              ],
+              "used_rect": [
+                38,
+                26,
+                68,
+                57
+              ],
+              "opaque_pixels": 589
+            },
+            {
+              "index": 2,
+              "source_cell": 2,
+              "source_rect": [
+                775,
+                0,
+                1154,
+                285
+              ],
+              "nominal_origin_offset_x": 7,
+              "translation": [
+                25,
+                20
+              ],
+              "used_rect": [
+                36,
+                26,
+                65,
+                57
+              ],
+              "opaque_pixels": 585
+            },
+            {
+              "index": 3,
+              "source_cell": 3,
+              "source_rect": [
+                1154,
+                0,
+                1536,
+                285
+              ],
+              "nominal_origin_offset_x": 2,
+              "translation": [
+                24,
+                20
+              ],
+              "used_rect": [
+                36,
+                26,
+                67,
+                57
+              ],
+              "opaque_pixels": 602
+            },
+            {
+              "index": 4,
+              "source_cell": 4,
+              "source_rect": [
+                0,
+                285,
+                390,
+                540
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                24,
+                24
+              ],
+              "used_rect": [
+                36,
+                26,
+                66,
+                57
+              ],
+              "opaque_pixels": 605
+            },
+            {
+              "index": 5,
+              "source_cell": 5,
+              "source_rect": [
+                390,
+                285,
+                778,
+                540
+              ],
+              "nominal_origin_offset_x": 6,
+              "translation": [
+                25,
+                24
+              ],
+              "used_rect": [
+                39,
+                26,
+                68,
+                57
+              ],
+              "opaque_pixels": 600
+            },
+            {
+              "index": 6,
+              "source_cell": 6,
+              "source_rect": [
+                778,
+                285,
+                1158,
+                540
+              ],
+              "nominal_origin_offset_x": 10,
+              "translation": [
+                25,
+                24
+              ],
+              "used_rect": [
+                36,
+                26,
+                66,
+                57
+              ],
+              "opaque_pixels": 602
+            },
+            {
+              "index": 7,
+              "source_cell": 7,
+              "source_rect": [
+                1158,
+                285,
+                1536,
+                540
+              ],
+              "nominal_origin_offset_x": 6,
+              "translation": [
+                25,
+                24
+              ],
+              "used_rect": [
+                38,
+                26,
+                68,
+                57
+              ],
+              "opaque_pixels": 580
+            }
+          ]
+        },
+        "fire": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\shield_guard_B_walk_fire.png",
+          "source_sha256": "88eeb686dfb243a302dc92b28b69efcef1099c4c471dfab49f39d8d7fab7c641",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 8,
+              "source_rect": [
+                0,
+                540,
+                382,
+                779
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                24,
+                25
+              ],
+              "used_rect": [
+                37,
+                27,
+                65,
+                57
+              ],
+              "opaque_pixels": 576
+            },
+            {
+              "index": 1,
+              "source_cell": 9,
+              "source_rect": [
+                382,
+                540,
+                768,
+                779
+              ],
+              "nominal_origin_offset_x": -2,
+              "translation": [
+                24,
+                25
+              ],
+              "used_rect": [
+                36,
+                27,
+                65,
+                57
+              ],
+              "opaque_pixels": 596
+            },
+            {
+              "index": 2,
+              "source_cell": 10,
+              "source_rect": [
+                768,
+                540,
+                1172,
+                779
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                24,
+                25
+              ],
+              "used_rect": [
+                36,
+                27,
+                69,
+                57
+              ],
+              "opaque_pixels": 608
+            },
+            {
+              "index": 3,
+              "source_cell": 11,
+              "source_rect": [
+                1172,
+                540,
+                1536,
+                779
+              ],
+              "nominal_origin_offset_x": 20,
+              "translation": [
+                27,
+                25
+              ],
+              "used_rect": [
+                38,
+                27,
+                68,
+                57
+              ],
+              "opaque_pixels": 595
+            },
+            {
+              "index": 4,
+              "source_cell": 12,
+              "source_rect": [
+                0,
+                779,
+                390,
+                1024
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                24,
+                25
+              ],
+              "used_rect": [
+                37,
+                26,
+                67,
+                57
+              ],
+              "opaque_pixels": 592
+            },
+            {
+              "index": 5,
+              "source_cell": 13,
+              "source_rect": [
+                390,
+                779,
+                770,
+                1024
+              ],
+              "nominal_origin_offset_x": 6,
+              "translation": [
+                25,
+                25
+              ],
+              "used_rect": [
+                36,
+                26,
+                66,
+                57
+              ],
+              "opaque_pixels": 601
+            },
+            {
+              "index": 6,
+              "source_cell": 14,
+              "source_rect": [
+                770,
+                779,
+                1160,
+                1024
+              ],
+              "nominal_origin_offset_x": 2,
+              "translation": [
+                24,
+                25
+              ],
+              "used_rect": [
+                36,
+                27,
+                66,
+                57
+              ],
+              "opaque_pixels": 589
+            },
+            {
+              "index": 7,
+              "source_cell": 15,
+              "source_rect": [
+                1160,
+                779,
+                1536,
+                1024
+              ],
+              "nominal_origin_offset_x": 8,
+              "translation": [
+                25,
+                25
+              ],
+              "used_rect": [
+                38,
+                26,
+                68,
+                57
+              ],
+              "opaque_pixels": 596
+            }
+          ]
+        }
+      }
+    },
+    "blade_assault_C": {
+      "unit_scale": 0.1419068736141907,
+      "source_root_x": 208.25,
+      "actions": {
+        "walk": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\blade_assault_C_walk_attack.png",
+          "source_sha256": "acfb30742cc1c8e11edf645b2cacd48b7e59731ea57d030e2983ef54756ad7f9",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 0,
+              "source_rect": [
+                0,
+                0,
+                415,
+                276
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                18,
+                20
+              ],
+              "used_rect": [
+                37,
+                25,
+                68,
+                57
+              ],
+              "opaque_pixels": 472
+            },
+            {
+              "index": 1,
+              "source_cell": 1,
+              "source_rect": [
+                415,
+                0,
+                795,
+                276
+              ],
+              "nominal_origin_offset_x": 31,
+              "translation": [
+                22,
+                20
+              ],
+              "used_rect": [
+                38,
+                25,
+                66,
+                57
+              ],
+              "opaque_pixels": 415
+            },
+            {
+              "index": 2,
+              "source_cell": 2,
+              "source_rect": [
+                795,
+                0,
+                1178,
+                276
+              ],
+              "nominal_origin_offset_x": 27,
+              "translation": [
+                22,
+                20
+              ],
+              "used_rect": [
+                38,
+                25,
+                66,
+                57
+              ],
+              "opaque_pixels": 424
+            },
+            {
+              "index": 3,
+              "source_cell": 3,
+              "source_rect": [
+                1178,
+                0,
+                1536,
+                276
+              ],
+              "nominal_origin_offset_x": 26,
+              "translation": [
+                22,
+                20
+              ],
+              "used_rect": [
+                37,
+                25,
+                67,
+                57
+              ],
+              "opaque_pixels": 460
+            },
+            {
+              "index": 4,
+              "source_cell": 4,
+              "source_rect": [
+                0,
+                276,
+                415,
+                523
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                18,
+                23
+              ],
+              "used_rect": [
+                37,
+                25,
+                68,
+                57
+              ],
+              "opaque_pixels": 467
+            },
+            {
+              "index": 5,
+              "source_cell": 5,
+              "source_rect": [
+                415,
+                276,
+                792,
+                523
+              ],
+              "nominal_origin_offset_x": 31,
+              "translation": [
+                22,
+                23
+              ],
+              "used_rect": [
+                37,
+                25,
+                65,
+                57
+              ],
+              "opaque_pixels": 410
+            },
+            {
+              "index": 6,
+              "source_cell": 6,
+              "source_rect": [
+                792,
+                276,
+                1180,
+                523
+              ],
+              "nominal_origin_offset_x": 24,
+              "translation": [
+                21,
+                23
+              ],
+              "used_rect": [
+                37,
+                25,
+                67,
+                57
+              ],
+              "opaque_pixels": 435
+            },
+            {
+              "index": 7,
+              "source_cell": 7,
+              "source_rect": [
+                1180,
+                276,
+                1536,
+                523
+              ],
+              "nominal_origin_offset_x": 28,
+              "translation": [
+                22,
+                23
+              ],
+              "used_rect": [
+                35,
+                25,
+                67,
+                57
+              ],
+              "opaque_pixels": 475
+            }
+          ]
+        },
+        "attack": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\blade_assault_C_walk_attack.png",
+          "source_sha256": "acfb30742cc1c8e11edf645b2cacd48b7e59731ea57d030e2983ef54756ad7f9",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 8,
+              "source_rect": [
+                0,
+                523,
+                394,
+                776
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                18,
+                23
+              ],
+              "used_rect": [
+                35,
+                27,
+                65,
+                57
+              ],
+              "opaque_pixels": 461
+            },
+            {
+              "index": 1,
+              "source_cell": 9,
+              "source_rect": [
+                394,
+                523,
+                782,
+                776
+              ],
+              "nominal_origin_offset_x": 10,
+              "translation": [
+                19,
+                23
+              ],
+              "used_rect": [
+                28,
+                30,
+                63,
+                57
+              ],
+              "opaque_pixels": 449
+            },
+            {
+              "index": 2,
+              "source_cell": 10,
+              "source_rect": [
+                782,
+                523,
+                1174,
+                776
+              ],
+              "nominal_origin_offset_x": 14,
+              "translation": [
+                20,
+                23
+              ],
+              "used_rect": [
+                33,
+                28,
+                69,
+                57
+              ],
+              "opaque_pixels": 456
+            },
+            {
+              "index": 3,
+              "source_cell": 11,
+              "source_rect": [
+                1174,
+                523,
+                1536,
+                776
+              ],
+              "nominal_origin_offset_x": 22,
+              "translation": [
+                21,
+                23
+              ],
+              "used_rect": [
+                28,
+                24,
+                69,
+                57
+              ],
+              "opaque_pixels": 453
+            },
+            {
+              "index": 4,
+              "source_cell": 12,
+              "source_rect": [
+                0,
+                776,
+                417,
+                1024
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                18,
+                25
+              ],
+              "used_rect": [
+                30,
+                27,
+                68,
+                57
+              ],
+              "opaque_pixels": 447
+            },
+            {
+              "index": 5,
+              "source_cell": 13,
+              "source_rect": [
+                417,
+                776,
+                792,
+                1024
+              ],
+              "nominal_origin_offset_x": 33,
+              "translation": [
+                23,
+                25
+              ],
+              "used_rect": [
+                34,
+                28,
+                66,
+                57
+              ],
+              "opaque_pixels": 451
+            },
+            {
+              "index": 6,
+              "source_cell": 14,
+              "source_rect": [
+                792,
+                776,
+                1174,
+                1024
+              ],
+              "nominal_origin_offset_x": 24,
+              "translation": [
+                21,
+                25
+              ],
+              "used_rect": [
+                34,
+                27,
+                65,
+                57
+              ],
+              "opaque_pixels": 453
+            },
+            {
+              "index": 7,
+              "source_cell": 15,
+              "source_rect": [
+                1174,
+                776,
+                1536,
+                1024
+              ],
+              "nominal_origin_offset_x": 22,
+              "translation": [
+                21,
+                25
+              ],
+              "used_rect": [
+                35,
+                27,
+                65,
+                57
+              ],
+              "opaque_pixels": 450
+            }
+          ]
+        }
+      }
+    },
+    "breacher_A": {
+      "unit_scale": 0.14096916299559473,
+      "source_root_x": 187.75,
+      "actions": {
+        "walk": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\breacher_A_walk_attack.png",
+          "source_sha256": "b37d505b04b1b78c79573fc35b77bcc11dcc59ebb0dd7a1e50fa757fc755cd6e",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 0,
+              "source_rect": [
+                0,
+                0,
+                424,
+                265
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                22,
+                22
+              ],
+              "used_rect": [
+                39,
+                25,
+                74,
+                57
+              ],
+              "opaque_pixels": 608
+            },
+            {
+              "index": 1,
+              "source_cell": 1,
+              "source_rect": [
+                424,
+                0,
+                794,
+                265
+              ],
+              "nominal_origin_offset_x": 40,
+              "translation": [
+                28,
+                22
+              ],
+              "used_rect": [
+                37,
+                25,
+                71,
+                57
+              ],
+              "opaque_pixels": 585
+            },
+            {
+              "index": 2,
+              "source_cell": 2,
+              "source_rect": [
+                794,
+                0,
+                1176,
+                265
+              ],
+              "nominal_origin_offset_x": 26,
+              "translation": [
+                26,
+                22
+              ],
+              "used_rect": [
+                35,
+                25,
+                72,
+                57
+              ],
+              "opaque_pixels": 610
+            },
+            {
+              "index": 3,
+              "source_cell": 3,
+              "source_rect": [
+                1176,
+                0,
+                1536,
+                265
+              ],
+              "nominal_origin_offset_x": 24,
+              "translation": [
+                25,
+                22
+              ],
+              "used_rect": [
+                33,
+                26,
+                69,
+                57
+              ],
+              "opaque_pixels": 604
+            },
+            {
+              "index": 4,
+              "source_cell": 4,
+              "source_rect": [
+                0,
+                265,
+                421,
+                508
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                22,
+                23
+              ],
+              "used_rect": [
+                36,
+                25,
+                73,
+                57
+              ],
+              "opaque_pixels": 620
+            },
+            {
+              "index": 5,
+              "source_cell": 5,
+              "source_rect": [
+                421,
+                265,
+                797,
+                508
+              ],
+              "nominal_origin_offset_x": 37,
+              "translation": [
+                27,
+                23
+              ],
+              "used_rect": [
+                37,
+                25,
+                71,
+                57
+              ],
+              "opaque_pixels": 612
+            },
+            {
+              "index": 6,
+              "source_cell": 6,
+              "source_rect": [
+                797,
+                265,
+                1182,
+                508
+              ],
+              "nominal_origin_offset_x": 29,
+              "translation": [
+                26,
+                23
+              ],
+              "used_rect": [
+                36,
+                25,
+                72,
+                57
+              ],
+              "opaque_pixels": 628
+            },
+            {
+              "index": 7,
+              "source_cell": 7,
+              "source_rect": [
+                1182,
+                265,
+                1536,
+                508
+              ],
+              "nominal_origin_offset_x": 30,
+              "translation": [
+                26,
+                23
+              ],
+              "used_rect": [
+                34,
+                25,
+                71,
+                57
+              ],
+              "opaque_pixels": 615
+            }
+          ]
+        },
+        "attack": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\breacher_A_walk_attack.png",
+          "source_sha256": "b37d505b04b1b78c79573fc35b77bcc11dcc59ebb0dd7a1e50fa757fc755cd6e",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 8,
+              "source_rect": [
+                0,
+                508,
+                424,
+                790
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                22,
+                19
+              ],
+              "used_rect": [
+                39,
+                29,
+                75,
+                57
+              ],
+              "opaque_pixels": 550
+            },
+            {
+              "index": 1,
+              "source_cell": 9,
+              "source_rect": [
+                424,
+                508,
+                798,
+                790
+              ],
+              "nominal_origin_offset_x": 40,
+              "translation": [
+                28,
+                19
+              ],
+              "used_rect": [
+                35,
+                31,
+                73,
+                57
+              ],
+              "opaque_pixels": 505
+            },
+            {
+              "index": 2,
+              "source_cell": 10,
+              "source_rect": [
+                798,
+                508,
+                1136,
+                790
+              ],
+              "nominal_origin_offset_x": 30,
+              "translation": [
+                26,
+                19
+              ],
+              "used_rect": [
+                34,
+                22,
+                62,
+                57
+              ],
+              "opaque_pixels": 500
+            },
+            {
+              "index": 3,
+              "source_cell": 11,
+              "source_rect": [
+                1136,
+                508,
+                1536,
+                790
+              ],
+              "nominal_origin_offset_x": -16,
+              "translation": [
+                20,
+                19
+              ],
+              "used_rect": [
+                31,
+                19,
+                63,
+                57
+              ],
+              "opaque_pixels": 571
+            },
+            {
+              "index": 4,
+              "source_cell": 12,
+              "source_rect": [
+                0,
+                790,
+                414,
+                1024
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                22,
+                26
+              ],
+              "used_rect": [
+                33,
+                28,
+                75,
+                57
+              ],
+              "opaque_pixels": 566
+            },
+            {
+              "index": 5,
+              "source_cell": 13,
+              "source_rect": [
+                414,
+                790,
+                816,
+                1024
+              ],
+              "nominal_origin_offset_x": 30,
+              "translation": [
+                26,
+                26
+              ],
+              "used_rect": [
+                31,
+                31,
+                77,
+                57
+              ],
+              "opaque_pixels": 529
+            },
+            {
+              "index": 6,
+              "source_cell": 14,
+              "source_rect": [
+                816,
+                790,
+                1180,
+                1024
+              ],
+              "nominal_origin_offset_x": 48,
+              "translation": [
+                29,
+                26
+              ],
+              "used_rect": [
+                35,
+                28,
+                72,
+                57
+              ],
+              "opaque_pixels": 561
+            },
+            {
+              "index": 7,
+              "source_cell": 15,
+              "source_rect": [
+                1180,
+                790,
+                1536,
+                1024
+              ],
+              "nominal_origin_offset_x": 28,
+              "translation": [
+                26,
+                26
+              ],
+              "used_rect": [
+                34,
+                28,
+                70,
+                57
+              ],
+              "opaque_pixels": 571
+            }
+          ]
+        }
+      }
+    },
+    "tether_guard_B": {
+      "unit_scale": 0.13646055437100213,
+      "source_root_x": 200.25,
+      "actions": {
+        "walk": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\tether_guard_B_walk_fire.png",
+          "source_sha256": "daeed87c891a4db61689810ee92cfadaf8a78d8fd2fe269d89332fd9ada9de80",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 0,
+              "source_rect": [
+                0,
+                0,
+                407,
+                260
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                21,
+                23
+              ],
+              "used_rect": [
+                39,
+                25,
+                67,
+                57
+              ],
+              "opaque_pixels": 474
+            },
+            {
+              "index": 1,
+              "source_cell": 1,
+              "source_rect": [
+                407,
+                0,
+                790,
+                260
+              ],
+              "nominal_origin_offset_x": 23,
+              "translation": [
+                24,
+                23
+              ],
+              "used_rect": [
+                36,
+                25,
+                66,
+                57
+              ],
+              "opaque_pixels": 469
+            },
+            {
+              "index": 2,
+              "source_cell": 2,
+              "source_rect": [
+                790,
+                0,
+                1172,
+                260
+              ],
+              "nominal_origin_offset_x": 22,
+              "translation": [
+                24,
+                24
+              ],
+              "used_rect": [
+                38,
+                26,
+                66,
+                57
+              ],
+              "opaque_pixels": 459
+            },
+            {
+              "index": 3,
+              "source_cell": 3,
+              "source_rect": [
+                1172,
+                0,
+                1536,
+                260
+              ],
+              "nominal_origin_offset_x": 20,
+              "translation": [
+                24,
+                24
+              ],
+              "used_rect": [
+                34,
+                26,
+                64,
+                57
+              ],
+              "opaque_pixels": 464
+            },
+            {
+              "index": 4,
+              "source_cell": 4,
+              "source_rect": [
+                0,
+                260,
+                407,
+                518
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                21,
+                23
+              ],
+              "used_rect": [
+                39,
+                25,
+                67,
+                57
+              ],
+              "opaque_pixels": 477
+            },
+            {
+              "index": 5,
+              "source_cell": 5,
+              "source_rect": [
+                407,
+                260,
+                790,
+                518
+              ],
+              "nominal_origin_offset_x": 23,
+              "translation": [
+                24,
+                23
+              ],
+              "used_rect": [
+                38,
+                25,
+                66,
+                57
+              ],
+              "opaque_pixels": 475
+            },
+            {
+              "index": 6,
+              "source_cell": 6,
+              "source_rect": [
+                790,
+                260,
+                1177,
+                518
+              ],
+              "nominal_origin_offset_x": 22,
+              "translation": [
+                24,
+                23
+              ],
+              "used_rect": [
+                36,
+                25,
+                67,
+                57
+              ],
+              "opaque_pixels": 487
+            },
+            {
+              "index": 7,
+              "source_cell": 7,
+              "source_rect": [
+                1177,
+                260,
+                1536,
+                518
+              ],
+              "nominal_origin_offset_x": 25,
+              "translation": [
+                24,
+                23
+              ],
+              "used_rect": [
+                37,
+                25,
+                64,
+                57
+              ],
+              "opaque_pixels": 478
+            }
+          ]
+        },
+        "fire": {
+          "source": "outputs\\enemy_animations_v01\\source_art\\tether_guard_B_walk_fire.png",
+          "source_sha256": "daeed87c891a4db61689810ee92cfadaf8a78d8fd2fe269d89332fd9ada9de80",
+          "frames": [
+            {
+              "index": 0,
+              "source_cell": 8,
+              "source_rect": [
+                0,
+                518,
+                398,
+                768
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                21,
+                24
+              ],
+              "used_rect": [
+                36,
+                25,
+                64,
+                57
+              ],
+              "opaque_pixels": 483
+            },
+            {
+              "index": 1,
+              "source_cell": 9,
+              "source_rect": [
+                398,
+                518,
+                776,
+                768
+              ],
+              "nominal_origin_offset_x": 14,
+              "translation": [
+                23,
+                24
+              ],
+              "used_rect": [
+                37,
+                26,
+                63,
+                57
+              ],
+              "opaque_pixels": 467
+            },
+            {
+              "index": 2,
+              "source_cell": 10,
+              "source_rect": [
+                776,
+                518,
+                1152,
+                768
+              ],
+              "nominal_origin_offset_x": 8,
+              "translation": [
+                22,
+                24
+              ],
+              "used_rect": [
+                35,
+                25,
+                62,
+                57
+              ],
+              "opaque_pixels": 465
+            },
+            {
+              "index": 3,
+              "source_cell": 11,
+              "source_rect": [
+                1152,
+                518,
+                1536,
+                768
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                21,
+                24
+              ],
+              "used_rect": [
+                32,
+                26,
+                69,
+                57
+              ],
+              "opaque_pixels": 498
+            },
+            {
+              "index": 4,
+              "source_cell": 12,
+              "source_rect": [
+                0,
+                768,
+                428,
+                1024
+              ],
+              "nominal_origin_offset_x": 0,
+              "translation": [
+                21,
+                24
+              ],
+              "used_rect": [
+                31,
+                26,
+                75,
+                57
+              ],
+              "opaque_pixels": 529
+            },
+            {
+              "index": 5,
+              "source_cell": 13,
+              "source_rect": [
+                428,
+                768,
+                810,
+                1024
+              ],
+              "nominal_origin_offset_x": 44,
+              "translation": [
+                27,
+                24
+              ],
+              "used_rect": [
+                31,
+                26,
+                72,
+                57
+              ],
+              "opaque_pixels": 497
+            },
+            {
+              "index": 6,
+              "source_cell": 14,
+              "source_rect": [
+                810,
+                768,
+                1162,
+                1024
+              ],
+              "nominal_origin_offset_x": 42,
+              "translation": [
+                27,
+                24
+              ],
+              "used_rect": [
+                34,
+                26,
+                64,
+                57
+              ],
+              "opaque_pixels": 498
+            },
+            {
+              "index": 7,
+              "source_cell": 15,
+              "source_rect": [
+                1162,
+                768,
+                1536,
+                1024
+              ],
+              "nominal_origin_offset_x": 10,
+              "translation": [
+                22,
+                24
+              ],
+              "used_rect": [
+                33,
+                26,
+                62,
+                57
+              ],
+              "opaque_pixels": 478
+            }
+          ]
+        }
+      }
+    }
+  }
+}

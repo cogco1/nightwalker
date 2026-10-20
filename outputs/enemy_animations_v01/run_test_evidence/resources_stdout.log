@@ -1,0 +1,18 @@
+{
+  "units": 8,
+  "resources": [
+    "game/assets/enemy_animations_v01/laser_drone_B/animations.tres",
+    "game/assets/enemy_animations_v01/sniper_B/animations.tres",
+    "game/assets/enemy_animations_v01/rifle_guard_A/animations.tres",
+    "game/assets/enemy_animations_v01/rifle_guard_C/animations.tres",
+    "game/assets/enemy_animations_v01/shield_guard_B/animations.tres",
+    "game/assets/enemy_animations_v01/blade_assault_C/animations.tres",
+    "game/assets/enemy_animations_v01/breacher_A/animations.tres",
+    "game/assets/enemy_animations_v01/tether_guard_B/animations.tres"
+  ],
+  "cell_size": [
+    96,
+    64
+  ],
+  "mirroring": "AnimatedSprite2D.flip_h"
+}
