@@ -2,6 +2,7 @@
 
 Run-Demo.cmd：启动页有“序章 · 工厂黄沙”和“进入白盒测试”。两个地图都可按画面按钮返回入口。
 Run-Battlefield.cmd / Run-Whitebox.cmd：直接进入对应地图。
+Run-Sandbox.cmd：601安全屋（俯视，E调查，R回出生点）。Run-NightStreet.cmd：夜街原型（侧视，只有地图）。安全屋和夜街之间按F8往返。
 
 AD移动；空格跳跃、二段跳；鼠标左右键攻击；长按左键蓄力；短按并松开Shift闪避，长按Shift奔跑。
 F1/Esc打开设置。完美闪避会播放专用动作，慢动作期间点击攻击可反击。

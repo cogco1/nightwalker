@@ -1,8 +1,7 @@
 extends Node
-## The hero's health plate for chapter nights, in the "冷光终端" style and in the exposure plate's slot at the top
-## right (stealth and fights never share a screen): "生命" and a 50px bar. The bar is off-white, magenta at 30% or
-## less; a hit leaves a red trail that drains after a moment and rings the plate red; overheal (the vodka's
-## temporary hit points) is an amber strip over the top of the bar. The host calls build(canvas) and bind(vitals).
+## The hero's health plate for the combat scenes, in the "冷光终端" style at the top right: "生命" and a 50px bar.
+## The bar is off-white, magenta at 30% or less; a hit leaves a red trail that drains after a moment and rings the
+## plate red. The host calls build(canvas) and bind(vitals).
 
 const STYLE = preload("res://scripts/ui/hud_style.gd")
 const VIEWPORT_WIDTH := 320.0
@@ -94,6 +93,3 @@ func _draw_bar() -> void:
 		bar.draw_rect(Rect2(fill, 0, lost - fill, BAR_HEIGHT), STYLE.RED)
 	var colour: Color = STYLE.MAGENTA if vitals.ratio() <= LOW else STYLE.TEXT
 	bar.draw_rect(Rect2(0, 0, fill, BAR_HEIGHT), colour)
-	if vitals.overheal > 0:
-		var extra := columns(float(vitals.overheal) / float(vitals.max_hp))
-		bar.draw_rect(Rect2(0, 0, extra, 2), STYLE.AMBER)

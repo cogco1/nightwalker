@@ -1,15 +1,11 @@
 extends Node
 
 const CONTROLS = preload("res://scripts/core/controls.gd")
-const STORY_STATE = preload("res://scripts/core/story_state.gd")
 
 const HOME_PATH := "res://scenes/home_601.tscn"
 const MAIN_PATH := "res://scenes/main.tscn"
 const STREET_PATH := "res://scenes/night_street_proto.tscn"
-const BREATH_PATH := "res://scenes/breath_interlude.tscn"
 const INTERIORS := [HOME_PATH, MAIN_PATH]
-## Chapter steps name their place; travel() maps it to a scene.
-const STEP_SCENES := {"home": HOME_PATH, "breath": BREATH_PATH}
 var switching := false
 var _street_return: Dictionary = {}
 
@@ -21,9 +17,6 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	var current := get_tree().current_scene
 	if not event is InputEventKey or not event.pressed or event.echo or not _can_leave(current):
-		return
-	# Inside the chapter F7 / F8 are developer keys (-- --nw-debug); the sandbox keeps them.
-	if not STORY_STATE.ensure(get_tree()).allows_debug_routes():
 		return
 	var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
 	if CONTROLS.current.values().has(code):
@@ -42,13 +35,11 @@ func _can_leave(current: Node) -> bool:
 		return false
 	if get_tree().paused and (session == null or not session.hit_stop_active):
 		return false
-	if current.get("stairs_busy") == true or current.get("_using_stairs") == true:
-		return false
 	var player: Node = current.get("player")
 	return is_instance_valid(player) and not player.is_frozen()
 
 
-## F8 keeps the interior's safe feet position and projection; a directly launched street returns home.
+## F8 keeps the interior's feet position and facing; a directly launched street returns home.
 func toggle_street() -> void:
 	var current := get_tree().current_scene
 	if current != null and current.scene_file_path == STREET_PATH:
@@ -68,19 +59,6 @@ func switch_to(target: String) -> void:
 		restore = _street_return.duplicate(true)
 	switching = true
 	call_deferred("_commit_scene", target, restore)
-
-
-## Story travel: enters a chapter step and opens the scene its "scene" names. The story closes its own
-## readings first; unlike switch_to() a frozen player (sleep, transition) does not hold the scene.
-func travel(step_id: String) -> bool:
-	var story := STORY_STATE.ensure(get_tree())
-	var target := String(STEP_SCENES.get(String(story.step_data(step_id).get("scene", "")), ""))
-	if switching or target.is_empty():
-		return false
-	story.set_step(step_id)
-	switching = true
-	call_deferred("_commit_scene", target, {})
-	return true
 
 
 func _capture_interior(current: Node) -> Dictionary:

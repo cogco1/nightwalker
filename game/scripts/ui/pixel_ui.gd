@@ -5,7 +5,7 @@ const PIXEL_FONT = preload("res://assets/fonts/fusion-pixel-12px-proportional-zh
 const SMALL_PIXEL_FONT = preload("res://assets/fonts/fusion-pixel-10px-proportional-zh_hans.otf")
 const HERO_PORTRAIT = preload("res://assets/ui/hero_portrait.png")
 const FONT_SIZE := 12
-## HUD text (status, objective, prompts, hints) in the chapter UI.
+## HUD text (status, prompts, hints).
 const SMALL_FONT_SIZE := 10
 const DIALOGUE_SCALE := 0.8
 static var _font: FontFile
@@ -95,7 +95,4 @@ static func set_speaker(portrait: TextureRect, title: Label, body: Label, footer
 		"television": speaker_name = "电视播报"
 		"qiaolun": speaker_name = "乔伦 · 留言"
 		"terminal": speaker_name = "终端"
-		"sk_reply": speaker_name = "我 · 回复"
-		"sound": speaker_name = "声音"
-		"doctor": speaker_name = "医生"
 	title.text = speaker_name + " · " + context

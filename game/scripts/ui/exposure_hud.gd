@@ -1,5 +1,5 @@
 extends Node
-## Surveillance HUD shared by the night street and top-down stealth, in the "冷光终端" style: a plate at the top
+## Surveillance HUD of the night street, in the "冷光终端" style: a plate at the top
 ## right with "暴露" and ten cells (cyan, magenta from 70%, red when marked), and while the light is on the hero
 ## a small scan tag whose magnified serial never resolves ("ID 无法识别"). The tag sits above the head, or under
 ## the feet when the status plate is in the way. The host calls build(canvas) once and update() every frame.
