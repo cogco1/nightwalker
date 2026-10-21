@@ -1,4 +1,4 @@
-param([string]$GodotPath = '')
+﻿param([string]$GodotPath = '')
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'common.ps1')
 $godot = Get-NightwalkerGodot $GodotPath

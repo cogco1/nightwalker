@@ -1,4 +1,4 @@
-# Full regression: asset import, then every suite in game/tests. Logs: game/evidence/logs.
+﻿# Full regression: asset import, then every suite in game/tests. Logs: game/evidence/logs.
 param([string]$GodotPath = '')
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'common.ps1')

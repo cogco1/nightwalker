@@ -8,3 +8,7 @@ indent_style = tab
 
 [*.{cmd,ps1}]
 end_of_line = crlf
+
+# Windows PowerShell 5.1 reads BOM-less scripts in the system code page (GBK on Chinese Windows) and fails on Chinese strings.
+[*.ps1]
+charset = utf-8-bom
