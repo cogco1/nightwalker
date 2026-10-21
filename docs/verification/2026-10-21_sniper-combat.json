@@ -1,0 +1,141 @@
+{
+  "date_jst": "2026-10-21",
+  "base_commit": "1699a05e1acfa96aa0a9578a90faebcb17e7ff6f",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "scope": "Standalone sniper combat range; original chapter entry and enemy configurations retained",
+  "passed": true,
+  "checks": 826,
+  "suites": [
+    {
+      "checks": 95,
+      "failures": [],
+      "observed": {
+        "melee_push": 22.6488647460938,
+        "weapon_0": {
+          "damage": 18,
+          "push": 15.6799926757813
+        },
+        "weapon_1": {
+          "damage": 20,
+          "push": 19.1644592285156
+        },
+        "weapon_2": {
+          "damage": 10,
+          "push": 0.0
+        },
+        "weapon_3": {
+          "damage": 6,
+          "push": 0.0
+        }
+      },
+      "passed": true,
+      "physics_rate": 30
+    },
+    {
+      "checks": 135,
+      "failures": [],
+      "observed": {
+        "melee_push": 24.2666320800781,
+        "weapon_0": {
+          "damage": 18,
+          "push": 16.8000183105469
+        },
+        "weapon_1": {
+          "damage": 20,
+          "push": 20.533447265625
+        },
+        "weapon_2": {
+          "damage": 10,
+          "push": 0.0
+        },
+        "weapon_3": {
+          "damage": 6,
+          "push": 0.0
+        }
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "checks": 249,
+      "failures": [],
+      "observed": {
+        "melee_push": 25.2778015136719,
+        "weapon_0": {
+          "damage": 18,
+          "push": 17.5
+        },
+        "weapon_1": {
+          "damage": 20,
+          "push": 21.3887634277344
+        },
+        "weapon_2": {
+          "damage": 10,
+          "push": 0.0
+        },
+        "weapon_3": {
+          "damage": 6,
+          "push": 0.0
+        }
+      },
+      "passed": true,
+      "physics_rate": 144
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "failures": [],
+      "observations": {
+        "hit": {
+          "hurt_ticks": 19,
+          "pushed_px": -18.7,
+          "telegraph_ticks": 31
+        },
+        "late_dash_contact": 2
+      },
+      "status": "passed"
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "failures": [],
+      "observations": {
+        "clock_during_stop": 0.0,
+        "clock_steps": {
+          "hero": 0.1333,
+          "world": 0.0333
+        },
+        "counter_1": {
+          "damage": 3,
+          "side": -1.0
+        },
+        "counter_2": {
+          "damage": 3,
+          "side": -1.0
+        },
+        "slowmo_ticks": 72.0
+      },
+      "status": "passed"
+    },
+    {
+      "suite": "test_enemy_animation_gallery",
+      "actions": 18,
+      "checks": 287,
+      "failures": [],
+      "native_action_frames": 144,
+      "passed": true,
+      "units": 8
+    }
+  ],
+  "gpu_visual": {
+    "passed": true,
+    "gpu": "NVIDIA RTX 4060 Laptop GPU / OpenGL Compatibility",
+    "captured_frames": 237,
+    "laser_visible_frames": 64,
+    "tracer_visible_frames": 25,
+    "muzzle_flash_visible_frames": 4,
+    "failures": []
+  },
+  "original_regression_scope": "enemy_attack, perfect_counter, enemy_animation_gallery. Historical full chapter regression not rerun.",
+  "art_generation": "Built-in imagegen; exact prompts and raw images under game/art_metadata/sniper_combat_20261021/"
+}
