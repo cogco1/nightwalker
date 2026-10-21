@@ -1,6 +1,4 @@
 extends "res://tests/test_air_dash_animation_v14.gd"
-const HOVER = preload("res://scripts/levels/night_street/hover_target.gd")
-const GUARD = preload("res://scripts/enemies/guard.gd")
 var chase_events: Array[Node2D] = []
 class FlightProbe extends Node:
 	var player:CharacterBody2D
@@ -32,19 +30,14 @@ func launch(target: Node2D) -> void:
 		if target.hp < target.max_hp: break
 		await tick()
 
-func chase_combo(direction: int, production: bool, distance: float) -> void:
+func chase_combo(direction: int, distance: float) -> void:
 	await flat_reset()
 	var p: CharacterBody2D = arena.player
 	p.position = Vector2(66 if direction>0 else 254,160)
 	p.facing = "right" if direction>0 else "left"
 	p.attack_direction = Vector2(direction,0)
 	var target: Node2D
-	if production:
-		target = HOVER.new(); target.max_hp=30
-		target.position=p.position+Vector2(direction*distance,0)
-		arena.world.add_child(target); target.attacker.process_mode=Node.PROCESS_MODE_DISABLED
-	else:
-		target=target_at(p.position+Vector2(direction*distance,0),30)
+	target=target_at(p.position+Vector2(direction*distance,0),30)
 	await tick(4)
 	await launch(target)
 	check(target.hp==24 and paused and p.can_jump_chase(),"charged contact opens a chase only after the real hit")
@@ -72,7 +65,7 @@ func chase_combo(direction: int, production: bool, distance: float) -> void:
 		if target.hp<24:break
 		await tick()
 	check(target.hp==23 and String(p.sprite.animation).begins_with("air_attack2_"),"first air slash connects after the continuous chase")
-	check(p._air_hold_left>0.0 and (target._charged_air_hold_left>0.0 if production else target._air_hold_left>0.0),"contact gives hero and production/test target matching air-combo hang time")
+	check(p._air_hold_left>0.0 and target._air_hold_left>0.0,"contact gives hero and target matching air-combo hang time")
 	await attack()
 	for _i in range(180):
 		if target.hp<23:break
@@ -83,9 +76,7 @@ func chase_combo(direction: int, production: bool, distance: float) -> void:
 	check(max_step<8.0,"every sampled chase step is continuous, with no teleport")
 	await tick(210)
 	check(p.is_on_floor() and not p.is_jump_chasing and not p.can_jump_chase(),"landing clears the chase and returns to normal controls")
-	if production:
-		check(not target._charged_airborne and target.attacker.process_mode==Node.PROCESS_MODE_DISABLED,"production target lands and restores its prior AI mode after the combo")
-	observations["%d_%s_%d"%[direction,production,distance]]={"largest_step":max_step,"jump_poses":jump_poses.size(),"target_hp":target.hp}
+	observations["%d_%d"%[direction,distance]]={"largest_step":max_step,"jump_poses":jump_poses.size(),"target_hp":target.hp}
 
 func eligibility() -> void:
 	await flat_reset()
@@ -109,71 +100,6 @@ func eligibility() -> void:
 	await tick(3);await launch(enemy)
 	enemy.queue_free();await tick(3)
 	check(not p.request_jump_chase(),"freed launch targets are handled safely")
-
-func chapter_guard_chase() -> void:
-	await flat_reset()
-	var p: CharacterBody2D = arena.player
-	p.position = Vector2(66,160)
-	var guard: CharacterBody2D = GUARD.new()
-	guard.position = Vector2(160,160)
-	arena.world.add_child(guard)
-	guard.bind_hero(p)
-	await tick(4)
-	var attacks: Array[int] = []
-	guard.attacker.attack_resolved.connect(func(result: int) -> void: attacks.append(result))
-	mouse(true)
-	for _i in range(200):
-		if p.is_charging and p.charge_time >= .55: break
-		await tick()
-	# Stage a committed guard lunge as the real charged cut releases.
-	guard.active = true
-	guard.attacker.armed = true
-	guard.attacker._start = guard.global_position
-	guard.attacker.aim = p.global_position
-	guard.attacker._enter(guard.attacker.Phase.LUNGE)
-	mouse(false)
-	for _i in range(100):
-		if guard.hp < guard.max_hp: break
-		await tick()
-	check(guard.max_hp==8 and guard.hp==2 and paused and p.can_jump_chase(),"chapter guard survives six damage and offers chase after a real charged hit")
-	check(guard.attacker.phase==guard.attacker.Phase.COOLDOWN and not guard.attacker.armed and not guard.moved_by_attack(),"charged contact cancels the committed guard lunge at its current position")
-	check(guard.velocity==Vector2(105,-300),"chapter guard uses the charged launch velocity without changing ordinary uppercuts")
-	var frozen: Vector2 = guard.position
-	key(KEY_SPACE,true); key(KEY_SPACE,false)
-	await tick()
-	check(guard.position==frozen and chase_events.is_empty(),"chapter guard and buffered pursuit stay frozen during the impact")
-	for _i in range(90):
-		if not chase_events.is_empty(): break
-		await tick()
-	check(chase_events==[guard] and p.velocity.y<0,"buffered Space pursues the surviving chapter guard")
-	var previous: Vector2 = guard.position
-	var max_step := 0.0
-	var min_y := guard.position.y
-	var airborne_safe := attacks.is_empty()
-	for _i in range(150):
-		await tick()
-		max_step = maxf(max_step,guard.position.distance_to(previous))
-		previous = guard.position
-		min_y = minf(min_y,guard.position.y)
-		if not guard.is_on_floor():
-			airborne_safe = airborne_safe and not guard.attacker.armed and guard.attacker.phase not in [guard.attacker.Phase.TELEGRAPH,guard.attacker.Phase.LUNGE]
-		if p._jump_age>=.10 and absf(guard.position.x-p.position.x)<49.0 and absf(guard.position.y-p.position.y)<18.0 and not p.is_on_floor(): break
-	check(min_y<150.0 and max_step<8.0 and airborne_safe,"chapter guard rises continuously through physics with attacks held off")
-	await attack()
-	for _i in range(140):
-		if guard.hp<2: break
-		await tick()
-	check(guard.hp==1 and String(p.sprite.animation).begins_with("air_attack2_") and guard.air_hold_left>0.0,"pursuit connects an air slash and juggles the production guard")
-	for _i in range(210):
-		await tick()
-		if not guard.is_on_floor():
-			airborne_safe = airborne_safe and not guard.attacker.armed and guard.attacker.phase not in [guard.attacker.Phase.TELEGRAPH,guard.attacker.Phase.LUNGE]
-		elif guard.attacker.armed: break
-	check(airborne_safe and attacks.is_empty(),"guard cannot resolve or start another attack while launched or juggled")
-	check(guard.is_on_floor() and guard.attacker.armed and guard.can_act(),"landing restores the chapter guard's normal attack eligibility")
-	guard.receive_hit_reaction(Vector2.LEFT,true,false)
-	check(guard.velocity==Vector2(-55,-300),"ordinary uppercuts retain their original launch velocity")
-	observations["chapter_guard"]={"hp":guard.hp,"largest_step":max_step,"airborne_safe":airborne_safe}
 
 func buffered_first_swing() -> void:
 	await flat_reset()
@@ -232,10 +158,8 @@ func blockers() -> void:
 
 func run_tests() -> void:
 	CONTROLS.install(false);arena=MAIN.instantiate();root.add_child(arena)
-	for production in [false,true]:
-		for direction in [-1,1]:await chase_combo(direction,production,34.0)
-	await chase_combo(1,true,96.0)
-	await chapter_guard_chase()
+	for direction in [-1,1]:await chase_combo(direction,34.0)
+	await chase_combo(1,96.0)
 	await buffered_first_swing()
 	await survivor_choice_and_late_jump()
 	await eligibility()

@@ -44,13 +44,13 @@ func wide_case(direction:int) -> void:
 	check(beyond.hp==40 and behind.hp==40,"wide charged cut remains bounded and forward-facing")
 	check(player.attack_box().size==Vector2(120,56),"side charged hitbox expands from 56x28 to 120x56")
 	check(paused and arena.hit_stop_requested_frames==10,"multiple targets share one strong heavy pause")
-	check(player.fx.draw_cut.cuts.size()==1 and player.fx.draw_cut.cuts[0].reach>=113 and player.fx.contact_fx.contacts[0].crimson,"one black-red cut follows actual release at the expanded reach")
+	check(player.fx.get_node_or_null("ChargedDraw")==null,"charged release has no sword-qi effect node")
 	await finish_draw()
 	check(arena.hits==3 and near.hp==34 and far.hp==34 and high.hp==34,"each overlapped target takes charged damage only once")
 	check(arena.completed_stop_requests.size()==1 and arena.completed_stop_durations[0]+0.00001>=10.0/60,"multi-target charged hit does not stack extra freezes")
 	check(player.state==player.State.RECOVERY and player._recovery_left>0.19,"charged slash still commits to recovery")
 	await tick(60)
-	check(player.fx.draw_cut.cuts.is_empty(),"brief black-red cut clears after the strike")
+	check(player.fx.get_node_or_null("ChargedDraw")==null,"no sword-qi node appears after the strike")
 	observations["wide_"+str(direction)]={"box":[120,56],"damage":6,"release_to_hit_seconds":latency,"hits":arena.hits,"stops":arena.completed_stop_requests.duplicate()}
 
 func wall_case(direction:int) -> void:
@@ -62,15 +62,8 @@ func wall_case(direction:int) -> void:
 	arena.add_wall(Rect2(wall_x-2,90,4,70))
 	check(await coil_full(),"wall case reaches full charge")
 	mouse(false)
-	var saw_cut:=false
-	for _i in range(100):
-		await tick()
-		if not player.fx.draw_cut.cuts.is_empty():
-			saw_cut=true
-			check(player.fx.draw_cut.cuts[0].reach<60,"ink extension clips to the actual wall")
-			break
 	await finish_draw()
-	check(saw_cut and target.hp==40 and arena.hits==0,"expanded range never damages through a wall")
+	check(target.hp==40 and arena.hits==0,"expanded range never damages through a wall")
 	check(arena.completed_stop_requests.is_empty(),"a blocked charged slash does not invent a contact pause")
 	await tick(60)
 
@@ -82,13 +75,13 @@ func cancel_cases() -> void:
 		await tick()
 	await tick(3);mouse(false)
 	await tick(35)
-	check(not arena.player.is_charging and arena.player.fx.draw_cut.cuts.is_empty() and arena.hits==0,"early release cancels without a black-red wave or bonus hit")
+	check(not arena.player.is_charging and arena.player.fx.get_node_or_null("ChargedDraw")==null and arena.hits==0,"early release cancels without a black-red wave or bonus hit")
 	await setup_draw(1)
 	check(await coil_full(),"interrupt case reaches the full coiled pose")
 	var result:int=arena.player.receive_attack({"direction":Vector2.LEFT,"contact":true,"knockback":20})
 	mouse(false)
 	await tick(45)
-	check(result==arena.player.AttackResult.HIT and not arena.player.is_charging and arena.hits==0 and arena.player.fx.draw_cut.cuts.is_empty(),"enemy contact still interrupts full charge without delayed damage")
+	check(result==arena.player.AttackResult.HIT and not arena.player.is_charging and arena.hits==0 and arena.player.fx.get_node_or_null("ChargedDraw")==null,"enemy contact still interrupts full charge without delayed damage")
 
 func art_cases() -> void:
 	for facing in ["left","right"]:

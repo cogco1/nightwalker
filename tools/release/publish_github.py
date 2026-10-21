@@ -1,4 +1,4 @@
-"""Publish the verified source and retire only exact, already included branch tips."""
+"""Publish verified source; remove older game package assets only after the new package is available."""
 import hashlib
 import json
 import os
@@ -55,9 +55,9 @@ def main():
         raise RuntimeError('Main has changed; publish its current commit instead')
     if git('status', '--porcelain'):
         raise RuntimeError('Source checkout is dirty')
-    verified = json.loads((ROOT / 'docs/verification/2026-10-18_smooth-charge-links.json').read_text())
-    expected_game = '83c3c559f4415743d5b54a512002e498c450780c'
-    if git('rev-parse', 'HEAD:game').decode() != expected_game or verified['status'] != 'passed':
+    verified = json.loads((ROOT / 'docs/verification/combat-v07.json').read_text())
+    expected_game = verified['game_tree']
+    if git('rev-parse', 'HEAD:game').decode() != expected_game or not verified['passed']:
         raise RuntimeError('Game source no longer matches the verified release')
     output = Path(os.environ['RUNNER_TEMP']) / ('nightwalker-' + version)
     output.mkdir(exist_ok=True)
@@ -86,7 +86,7 @@ def main():
     manifest = {'version': version, 'source_commit': sha, 'source_tree': git('rev-parse', 'HEAD^{tree}').decode(),
                 'game_tree': expected_game, 'archive': archive.name, 'files': len(entries),
                 'bytes': archive.stat().st_size, 'sha256': hashlib.sha256(archive.read_bytes()).hexdigest(),
-                'verification': {'suites': verified['total_suites'], 'checks_passed': verified['checks_passed']}}
+                'verification': {'suites': verified['suite_count'], 'checks_passed': verified['checks']}}
     manifest_path = output / 'release-manifest.json'
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     notes = (ROOT / 'docs/releases' / (version + '.md')).read_text(encoding='utf-8')
@@ -115,29 +115,36 @@ def main():
     latest = api('GET', '/releases/latest')
     if latest['id'] != release['id'] or latest['tag_name'] != version:
         raise RuntimeError('Latest release verification failed')
-    retired = json.loads((ROOT / 'tools/release/retired_branches.json').read_text())
-    deleted, preserved = [], []
-    for branch in retired:
-        name, expected = branch['branch'], branch['expected_sha']
-        if name == 'main': raise RuntimeError('Refusing to delete main')
-        path = '/git/refs/heads/' + urllib.parse.quote(name, safe='/')
-        current = optional('/git/ref/heads/' + urllib.parse.quote(name, safe='/'))
-        if current is None: continue
-        if current['object']['sha'] != expected:
-            preserved.append(name)
-            continue
-        included = subprocess.run(['git', '-C', str(ROOT), 'merge-base', '--is-ancestor', expected, sha], capture_output=True).returncode == 0
-        if not included: raise RuntimeError('Branch has unique work: ' + name)
-        api('DELETE', path)
-        deleted.append(name)
+    deleted = []
+    # Limit cleanup to our own older source packages and their manifests; keep releases, tags and history.
+    page = 1
+    while True:
+        releases = api('GET', '/releases?per_page=100&page=' + str(page))
+        for old in releases:
+            if old['id'] == release['id'] or old['draft']:
+                continue
+            if not re.fullmatch(r'v\d{4}\.\d{2}\.\d{2}(?:\.\d+)?', old['tag_name']) or old['tag_name'] >= version:
+                continue
+            assets = api('GET', '/releases/' + str(old['id']) + '/assets')
+            package_name = 'Nightwalker-' + old['tag_name'] + '-source.zip'
+            if not any(asset['name'] == package_name for asset in assets):
+                continue
+            for asset in assets:
+                if asset['name'] not in [package_name, 'release-manifest.json']:
+                    continue
+                api('DELETE', '/releases/assets/' + str(asset['id']))
+                deleted.append({'release': old['tag_name'], 'asset': asset['name']})
+        if len(releases) < 100:
+            break
+        page += 1
     if api('GET', '/git/ref/heads/main')['object']['sha'] != sha:
         raise RuntimeError('Main changed during publication')
-    result = {'release': latest['html_url'], 'manifest': manifest, 'deleted_branches': deleted, 'preserved_changed_branches': preserved}
+    result = {'release': latest['html_url'], 'manifest': manifest, 'deleted_old_package_assets': deleted}
     print(json.dumps(result, ensure_ascii=False, indent=2))
     with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as summary:
         summary.write('Published [' + version + '](' + latest['html_url'] + ') as Latest.\n\n')
         summary.write('Source commit: `' + sha + '`. Verified ' + str(len(entries)) + ' archive files.\n\n')
-        summary.write('Retired ' + str(len(deleted)) + ' fully included branches; unmerged work is preserved.\n')
+        summary.write('Removed ' + str(len(deleted)) + ' older package assets after verifying the new download.\n')
 
 
 if __name__ == '__main__':

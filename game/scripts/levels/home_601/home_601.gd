@@ -164,7 +164,7 @@ func _open_interaction(id: String) -> void:
 		current_interaction = id
 		return
 	if id == "door":
-		get_tree().root.get_node("SceneRoutes").call("switch_to", "res://scenes/underground_hospital.tscn")
+		pass # Hospital map removed; prologue integration is deferred.
 		return
 	current_interaction = id
 	prop_effects.call("play_interaction", id)

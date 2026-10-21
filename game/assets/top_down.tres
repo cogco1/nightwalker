@@ -619,4 +619,8 @@ animations = [
 "name":&"walk_up",
 "speed":20.0
 }
-]
+,
+{"frames":[{"duration":1.0,"texture":ExtResource("top_down_left_run_0")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_3")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_6")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_9")}, {"duration":1.0,"texture":ExtResource("top_down_left_run_12")}, {"duration":1.0,"texture":ExtResource("top_down_left_idle_0")}],"loop":false,"name":&"perfect_dodge_left","speed":25.0},
+{"frames":[{"duration":1.0,"texture":ExtResource("top_down_right_run_0")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_3")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_6")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_9")}, {"duration":1.0,"texture":ExtResource("top_down_right_run_12")}, {"duration":1.0,"texture":ExtResource("top_down_right_idle_0")}],"loop":false,"name":&"perfect_dodge_right","speed":25.0},
+{"frames":[{"duration":1.0,"texture":ExtResource("top_down_up_run_0")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_3")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_6")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_9")}, {"duration":1.0,"texture":ExtResource("top_down_up_run_12")}, {"duration":1.0,"texture":ExtResource("top_down_up_idle_0")}],"loop":false,"name":&"perfect_dodge_up","speed":25.0},
+{"frames":[{"duration":1.0,"texture":ExtResource("top_down_down_run_0")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_3")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_6")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_9")}, {"duration":1.0,"texture":ExtResource("top_down_down_run_12")}, {"duration":1.0,"texture":ExtResource("top_down_down_idle_0")}],"loop":false,"name":&"perfect_dodge_down","speed":25.0}]

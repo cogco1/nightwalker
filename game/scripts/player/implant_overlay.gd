@@ -14,10 +14,12 @@ const FLARE := Color(1.0, 0.24, 0.43)
 static var _anchors: Dictionary = {}
 
 var scanned := 0.0
+var hurt_shift := Vector2.ZERO
 var _sprite: AnimatedSprite2D
 var _flare_layer: Node2D
 var _anchor: Variant = null
 var _drawn_offset := Vector2.ZERO
+var _drawn_hurt_shift := Vector2.ZERO
 var _clock := 0.0
 
 
@@ -44,9 +46,10 @@ func _process(delta: float) -> void:
 		var texture := _sprite.sprite_frames.get_frame_texture(_sprite.animation, _sprite.frame)
 		if texture != null:
 			anchor = _anchors.get(texture.resource_path)
-	if anchor != _anchor or (_sprite != null and _sprite.offset != _drawn_offset):
+	if anchor != _anchor or (_sprite != null and _sprite.offset != _drawn_offset) or hurt_shift != _drawn_hurt_shift:
 		_anchor = anchor
 		_drawn_offset = _sprite.offset if _sprite != null else Vector2.ZERO
+		_drawn_hurt_shift = hurt_shift
 		queue_redraw()
 	_flare_layer.queue_redraw()
 
@@ -57,7 +60,9 @@ func _visible_look() -> bool:
 
 
 func _origin() -> Vector2:
-	return _sprite.offset + Vector2(_anchor[0], _anchor[1]) - Vector2(2, 1)
+	var point := Vector2(_anchor[0], _anchor[1])
+	var weight := smoothstep(3.0, 26.0, -_sprite.offset.y - point.y)
+	return _sprite.offset + point + (hurt_shift * weight).round() - Vector2(2, 1)
 
 
 func _flaring() -> bool:

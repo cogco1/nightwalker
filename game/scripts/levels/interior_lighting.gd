@@ -3,7 +3,6 @@ extends Node2D
 ## replaces only its native-grid rig and rebinds the new player's own material.
 
 const SETTINGS_PATH := "res://assets/lighting/interiors.json"
-const PATROLS_PATH := "res://assets/lighting/hospital_patrols.json"
 const EMISSIVE := preload("res://shaders/emissive_add.gdshader")
 const FOG := preload("res://shaders/interior_fog.gdshader")
 const LIT_MASK := 1
@@ -35,7 +34,7 @@ func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	process_priority = 110
 	_settings = JSON.parse_string(FileAccess.get_file_as_string(SETTINGS_PATH))
-	_patrol_settings = JSON.parse_string(FileAccess.get_file_as_string(PATROLS_PATH))
+	_patrol_settings = {}
 	ambient = CanvasModulate.new()
 	ambient.name = "InteriorAmbient"
 	add_child(ambient)

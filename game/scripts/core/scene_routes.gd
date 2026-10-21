@@ -5,12 +5,11 @@ const STORY_STATE = preload("res://scripts/core/story_state.gd")
 
 const HOME_PATH := "res://scenes/home_601.tscn"
 const MAIN_PATH := "res://scenes/main.tscn"
-const HOSPITAL_PATH := "res://scenes/underground_hospital.tscn"
 const STREET_PATH := "res://scenes/night_street_proto.tscn"
 const BREATH_PATH := "res://scenes/breath_interlude.tscn"
-const INTERIORS := [HOME_PATH, HOSPITAL_PATH, MAIN_PATH]
+const INTERIORS := [HOME_PATH, MAIN_PATH]
 ## Chapter steps name their place; travel() maps it to a scene.
-const STEP_SCENES := {"home": HOME_PATH, "hospital": HOSPITAL_PATH, "breath": BREATH_PATH}
+const STEP_SCENES := {"home": HOME_PATH, "breath": BREATH_PATH}
 var switching := false
 var _street_return: Dictionary = {}
 
@@ -31,8 +30,6 @@ func _input(event: InputEvent) -> void:
 		return
 	if code == KEY_F8:
 		toggle_street()
-	elif code == KEY_F7 and current.scene_file_path in INTERIORS:
-		switch_to(HOME_PATH if current.scene_file_path == HOSPITAL_PATH else HOSPITAL_PATH)
 	if switching:
 		get_viewport().set_input_as_handled()
 
@@ -62,7 +59,7 @@ func toggle_street() -> void:
 
 func switch_to(target: String) -> void:
 	var current := get_tree().current_scene
-	if target not in [HOME_PATH, HOSPITAL_PATH, STREET_PATH] or not _can_leave(current):
+	if target not in [HOME_PATH, STREET_PATH] or not _can_leave(current):
 		return
 	var restore: Dictionary = {}
 	if target == STREET_PATH and current.scene_file_path in INTERIORS:
@@ -90,13 +87,6 @@ func _capture_interior(current: Node) -> Dictionary:
 	var player: CharacterBody2D = current.get("player")
 	var context := {"path": HOME_PATH if current.scene_file_path == MAIN_PATH else current.scene_file_path,
 		"position": player.global_position, "facing": player.facing}
-	if current.scene_file_path == HOSPITAL_PATH:
-		context["floor"] = current.floor_id
-		context["view"] = current.view_mode
-		context["room"] = current.room_for_position(player.global_position, current.view_mode)
-		# A jump is not a landing: return to this floor's existing safe spawn instead of an aerial snapshot.
-		if not current.position_is_clear(player.global_position, current.view_mode) or (current.view_mode == 1 and not player.is_on_floor()):
-			context["position"] = current.start_position()
 	return context
 
 
@@ -126,11 +116,7 @@ func _commit_scene(target: String, restore: Dictionary) -> void:
 
 
 func _restore_interior(current: Node, context: Dictionary) -> void:
-	if current.scene_file_path == HOSPITAL_PATH:
-		current.floor_id = int(context.get("floor", 1))
-		current.activate_view(int(context.get("view", 0)), String(context.get("room", "")), context.get("position"))
-	else:
-		current.player.position = context["position"]
+	current.player.position = context["position"]
 	var player: CharacterBody2D = current.get("player")
 	player.velocity = Vector2.ZERO
 	player.facing = String(context.get("facing", player.facing))

@@ -91,7 +91,7 @@ const MOVES := {
 	&"heavy_slash": {"stage": 1, "as": &"attack1", "cancel": 11, "followup_seconds": 0.25, "anim": "attack3", "side_anim": "charged_draw", "fps": 40.0, "start_frame": 6, "active": Vector2i(8, 10),
 		"box": {"length": 108.0, "width": 56.0, "reach": 48.0, "height": ORIGIN_HEIGHT},
 		"lunge": {"px": 36.0, "from": 7}, "crit": &"always", "dmg_mult": 2, "crit_stop": &"heavy", "launch": true, "charged_launch": true, "knockback": 20.0, "recovery": 0.22,
-		"special": "heavy_slash", "draw_cut": true, "ghosts": [8], "swing": &"heavy", "pitch": 0.78},
+		"special": "heavy_slash", "charged": true, "ghosts": [8], "swing": &"heavy", "pitch": 0.78},
 
 	# Light string 4-5 (side view, on the ground): a quick thrust, then a two-part spin with a full blade circle.
 	&"thrust4": {"stage": 4, "anim": "stab", "fps": 48.0, "active": Vector2i(6, 9),

@@ -6,79 +6,270 @@
 	"notes": "M1 范围：第 1 天到第 2 天早上；M2 加上第一夜的器官交易战斗、按键图标教学和最后一个医生的三句台词（nights.night1，全程无字幕，只有这三句）。按用户新增需求，科伯恩委托撤离回家后报酬50元到账一次、购物真实扣款；物品效果（M3）、金域大厦（M4/M5）还没做。返家结算消息为新增系统/主角引导，不是SK原文；乔伦责问保持在夜战后的第二天。原文第 3 天“信息（主线）：”之后断了，等用户补。原有台词按原文，省略号统一为“……”。",
 	"start_step": "d1_wake",
 	"days": {
-		"1": {"date": "2040-07-27"},
-		"2": {"date": "2040-07-28"},
-		"3": {"date": "2040-07-29"}
+		"1": {
+			"date": "2040-07-27"
+		},
+		"2": {
+			"date": "2040-07-28"
+		},
+		"3": {
+			"date": "2040-07-29"
+		}
 	},
 	"steps": {
-		"d1_wake": {"day": 1, "time": "12:00", "scene": "home", "objective": "电脑", "enter_sequence": "intro", "computer": "d1_contract"},
-		"d1_contract": {"objective": "出门 · 费列罗诊所", "door": "d1_hospital"},
-		"d1_hospital": {"time": "12:30", "scene": "hospital", "view": "top_down", "objective": "科伯恩 · 二楼办公室", "stealth": true},
-		"d1_target_down": {"objective": "离开 · 二楼走廊尽头的出口", "stealth": true, "exit": "d1_return"},
-		"d1_return": {"time": "14:50", "scene": "home", "objective": "电脑 · 查看结算", "computer": "d1_resupply"},
-		"d1_resupply": {"objective": "电脑 · 暗网购物", "shop_next": "d1_shopped"},
-		"d1_shopped": {"objective": "床 · 睡觉", "bed": "d1_night"},
-		"d1_night": {"time": "22:00", "scene": "hospital", "view": "side_view", "phase": "night", "fight": "night1"},
-		"d1_breath": {"phase": "night", "scene": "breath", "breath_round": 0, "next": "d2_wake"},
-		"d2_wake": {"day": 2, "time": "11:00", "scene": "home", "objective": "电脑", "enter_sequence": "wake2", "computer": "d2_contract"},
-		"d2_contract": {"objective": "莫温 · 金域大厦顶层（M4 制作中）"}
+		"d1_wake": {
+			"day": 1,
+			"time": "12:00",
+			"scene": "home",
+			"objective": "电脑",
+			"enter_sequence": "intro",
+			"computer": "d1_contract"
+		},
+		"d1_contract": {
+			"objective": "出门 · 费列罗诊所",
+			"door": "d1_hospital"
+		},
+		"d1_hospital": {
+			"time": "12:30",
+			"scene": "hospital",
+			"view": "top_down",
+			"objective": "科伯恩 · 二楼办公室",
+			"stealth": true
+		},
+		"d1_target_down": {
+			"objective": "离开 · 二楼走廊尽头的出口",
+			"stealth": true,
+			"exit": "d1_return"
+		},
+		"d1_return": {
+			"time": "14:50",
+			"scene": "home",
+			"objective": "电脑 · 查看结算",
+			"computer": "d1_resupply"
+		},
+		"d1_resupply": {
+			"objective": "电脑 · 暗网购物",
+			"shop_next": "d1_shopped"
+		},
+		"d1_shopped": {
+			"objective": "床 · 睡觉",
+			"bed": "d1_night"
+		},
+		"d1_night": {
+			"time": "22:00",
+			"scene": "hospital",
+			"view": "side_view",
+			"phase": "night",
+			"fight": "night1"
+		},
+		"d1_breath": {
+			"phase": "night",
+			"scene": "breath",
+			"breath_round": 0,
+			"next": "d2_wake"
+		},
+		"d2_wake": {
+			"day": 2,
+			"time": "11:00",
+			"scene": "home",
+			"objective": "电脑",
+			"enter_sequence": "wake2",
+			"computer": "d2_contract"
+		},
+		"d2_contract": {
+			"objective": "莫温 · 金域大厦顶层（M4 制作中）"
+		}
 	},
 	"sequences": {
 		"intro": [
-			{"title": "第一章"},
-			{"context": "电视", "lines": ["2040年7月19日晚在佩特拉新城C区又发生一起疑似SK（serial killer）杀人事件，该事件的又一次产生让C区居民高呼加强监控力度，政客们……"], "speakers": ["television"]},
-			{"context": "601", "lines": ["我到底做了些什么……", "为什么我会这样……"]},
-			{"context": "门外", "sound": "knock", "lines": ["咚咚 咚咚"], "speakers": ["sound"]},
-			{"context": "601", "lines": ["这个声音的暗号意味着……", "又有生命要逝去了……"]}
+			{
+				"title": "第一章"
+			},
+			{
+				"context": "电视",
+				"lines": [
+					"2040年7月19日晚在佩特拉新城C区又发生一起疑似SK（serial killer）杀人事件，该事件的又一次产生让C区居民高呼加强监控力度，政客们……"
+				],
+				"speakers": [
+					"television"
+				]
+			},
+			{
+				"context": "601",
+				"lines": [
+					"我到底做了些什么……",
+					"为什么我会这样……"
+				]
+			},
+			{
+				"context": "门外",
+				"sound": "knock",
+				"lines": [
+					"咚咚 咚咚"
+				],
+				"speakers": [
+					"sound"
+				]
+			},
+			{
+				"context": "601",
+				"lines": [
+					"这个声音的暗号意味着……",
+					"又有生命要逝去了……"
+				]
+			}
 		],
 		"wake2": [
-			{"wake": true},
-			{"context": "601", "lines": ["这次听的更清楚了", "但还是不知道是什么……"]}
+			{
+				"wake": true
+			},
+			{
+				"context": "601",
+				"lines": [
+					"这次听的更清楚了",
+					"但还是不知道是什么……"
+				]
+			}
 		]
 	},
 	"messages": {
 		"d1_wake": {
-			"lines": ["科伯恩 男 27岁 在C区费列罗诊所担任主治医师，上班时间为8:00—14:30。", "信息很少，但有这些足够了", "我不知道为什么要去处理这些……", "**甚至连他们为什么要死都不知道……**", "但是这是我唯一不让我饿死的办法……"],
-			"speakers": ["qiaolun", "protagonist", "protagonist", "protagonist", "protagonist"]
+			"lines": [
+				"科伯恩 男 27岁 在C区费列罗诊所担任主治医师，上班时间为8:00—14:30。",
+				"信息很少，但有这些足够了",
+				"我不知道为什么要去处理这些……",
+				"**甚至连他们为什么要死都不知道……**",
+				"但是这是我唯一不让我饿死的办法……"
+			],
+			"speakers": [
+				"qiaolun",
+				"protagonist",
+				"protagonist",
+				"protagonist",
+				"protagonist"
+			]
 		},
 		"d1_return": {
-			"lines": ["委托已结算。报酬：￥50。", "先去暗网补点东西，再休息。"],
-			"speakers": ["terminal", "protagonist"]
+			"lines": [
+				"委托已结算。报酬：￥50。",
+				"先去暗网补点东西，再休息。"
+			],
+			"speakers": [
+				"terminal",
+				"protagonist"
+			]
 		},
 		"d2_wake": {
-			"lines": ["我让你去处理那个混账科伯恩！！！", "新闻真是让我打开眼界啊", "别人不是我杀的。", "那可真是 太 巧 了", "这一单的老板很不满意", "以前我都能帮你糊弄过去", "但这老板扬言要在行动上警告我们", "你去处理这件事，然后再联系我", "莫温，金域大厦顶层，总办公室。"],
-			"speakers": ["qiaolun", "qiaolun", "sk_reply", "qiaolun", "qiaolun", "qiaolun", "qiaolun", "qiaolun", "qiaolun"]
+			"lines": [
+				"我让你去处理那个混账科伯恩！！！",
+				"新闻真是让我打开眼界啊",
+				"别人不是我杀的。",
+				"那可真是 太 巧 了",
+				"这一单的老板很不满意",
+				"以前我都能帮你糊弄过去",
+				"但这老板扬言要在行动上警告我们",
+				"你去处理这件事，然后再联系我",
+				"莫温，金域大厦顶层，总办公室。"
+			],
+			"speakers": [
+				"qiaolun",
+				"qiaolun",
+				"sk_reply",
+				"qiaolun",
+				"qiaolun",
+				"qiaolun",
+				"qiaolun",
+				"qiaolun",
+				"qiaolun"
+			]
 		}
 	},
 	"tv": {
-		"1": ["2040年7月19日晚在佩特拉新城C区又发生一起疑似SK（serial killer）杀人事件，该事件的又一次产生让C区居民高呼加强监控力度，政客们……"],
-		"2": ["2040年7月27日晚在佩特拉新城C区地下医院发生一起疑似SK杀人案，此案涉及人员过多……"],
-		"3": ["2040年7月28日晚在佩特拉新城C区著名的金域大厦发生一起疑似SK杀人案，此案已被密封处理，但是仍有知情人士透露……"]
+		"1": [
+			"2040年7月19日晚在佩特拉新城C区又发生一起疑似SK（serial killer）杀人事件，该事件的又一次产生让C区居民高呼加强监控力度，政客们……"
+		],
+		"2": [
+			"2040年7月27日晚在佩特拉新城C区地下医院发生一起疑似SK杀人案，此案涉及人员过多……"
+		],
+		"3": [
+			"2040年7月28日晚在佩特拉新城C区著名的金域大厦发生一起疑似SK杀人案，此案已被密封处理，但是仍有知情人士透露……"
+		]
 	},
 	"home": {
-		"fridge": ["冷气很弱。剩下的伏特加，喝了一口。", "睡前喝一点，夜里会好受些。"],
-		"dumbbells": ["拿起哑铃，做了几组。", "手臂发热。今晚会更有力气。"],
-		"bed_not_yet": ["还不困。还有事没做。"],
-		"door_nowhere": ["601。门外是C区的老楼走廊。", "现在没有要去的地方。"],
-		"door_m4": ["金域大厦……这一段还没做好（第一章 M4）。"],
-		"shop_bought": ["已购买：%s。", "已从账户扣款。"],
-		"shop_owned": ["已经有%s了，不需要重复购买。"],
-		"shop_insufficient": ["余额不足，无法购买%s。"],
-		"shop_invalid": ["这件物品暂时无法购买。"],
-		"no_messages": ["没有新消息。"]
+		"fridge": [
+			"冷气很弱。剩下的伏特加，喝了一口。",
+			"睡前喝一点，夜里会好受些。"
+		],
+		"dumbbells": [
+			"拿起哑铃，做了几组。",
+			"手臂发热。今晚会更有力气。"
+		],
+		"bed_not_yet": [
+			"还不困。还有事没做。"
+		],
+		"door_nowhere": [
+			"601。门外是C区的老楼走廊。",
+			"现在没有要去的地方。"
+		],
+		"door_m4": [
+			"金域大厦……这一段还没做好（第一章 M4）。"
+		],
+		"shop_bought": [
+			"已购买：%s。",
+			"已从账户扣款。"
+		],
+		"shop_owned": [
+			"已经有%s了，不需要重复购买。"
+		],
+		"shop_insufficient": [
+			"余额不足，无法购买%s。"
+		],
+		"shop_invalid": [
+			"这件物品暂时无法购买。"
+		],
+		"no_messages": [
+			"没有新消息。"
+		]
 	},
 	"shop": [
-		{"id": "throwing_spike", "name": "暗器 · 钢钉", "kind": "武器装备", "price": 40},
-		{"id": "ration", "name": "压缩口粮", "kind": "食物", "price": 12},
-		{"id": "vodka", "name": "伏特加", "kind": "饮品", "price": 18},
-		{"id": "bandage", "name": "绷带", "kind": "生活用品", "price": 8}
+		{
+			"id": "throwing_spike",
+			"name": "暗器 · 钢钉",
+			"kind": "武器装备",
+			"price": 40
+		},
+		{
+			"id": "ration",
+			"name": "压缩口粮",
+			"kind": "食物",
+			"price": 12
+		},
+		{
+			"id": "vodka",
+			"name": "伏特加",
+			"kind": "饮品",
+			"price": 18
+		},
+		{
+			"id": "bandage",
+			"name": "绷带",
+			"kind": "生活用品",
+			"price": 8
+		}
 	],
 	"hospital": {
 		"arrival_room": "storage",
-		"arrival_position": [566, 78],
+		"arrival_position": [
+			566,
+			78
+		],
 		"opening": {
-			"lines": ["光粒子监控，真是麻烦..."],
-			"speakers": ["protagonist"],
+			"lines": [
+				"光粒子监控，真是麻烦..."
+			],
+			"speakers": [
+				"protagonist"
+			],
 			"tip": "请尽快躲避光线，shift奔跑。"
 		},
 		"night_floor": 1,
@@ -86,41 +277,66 @@
 		"locked": "微光粒子监控已锁定",
 		"doctor_locked": "医生发现了你",
 		"line_overrides": {
-			"breaker": ["配电箱不能关闭。得避开光线。"],
-			"reception_pc": ["值班表：科伯恩，男，27岁。", "费列罗诊所主治医师，在岗时间8:00—14:30。"],
-			"treatment_drawer": ["抽屉里有张便签。", "办公室门禁密码：1010。"]
+			"breaker": [
+				"配电箱不能关闭。得避开光线。"
+			],
+			"reception_pc": [
+				"值班表：科伯恩，男，27岁。",
+				"费列罗诊所主治医师，在岗时间8:00—14:30。"
+			],
+			"treatment_drawer": [
+				"抽屉里有张便签。",
+				"办公室门禁密码：1010。"
+			]
 		},
-		"coburn": {"floor": 2, "position": [492, 82], "title": "科伯恩"},
-		"kill_too_bright": ["太亮了。微光粒子会拍到我。"],
-		"kill_from_front": ["从正面过去，他会看见我。得绕到他身后。"],
-		"exit_not_yet": ["科伯恩还在办公室。"]
+		"coburn": {
+			"floor": 2,
+			"position": [
+				492,
+				82
+			],
+			"title": "科伯恩"
+		},
+		"kill_too_bright": [
+			"太亮了。微光粒子会拍到我。"
+		],
+		"kill_from_front": [
+			"从正面过去，他会看见我。得绕到他身后。"
+		],
+		"exit_not_yet": [
+			"科伯恩还在办公室。"
+		]
 	},
 	"nights": {
 		"night1": {
 			"next": "d1_breath",
-			"floors": {"1": {"start": [60, 286]}, "2": {"start": [40, 164]}},
-			"enemies": [
-				{"id": "ward_guard_1", "kind": "guard", "floor": 1, "x": 236},
-				{"id": "ward_doctor", "kind": "doctor", "floor": 1, "x": 280, "faces": 1},
-				{"id": "ward_guard_2", "kind": "guard", "floor": 1, "x": 372},
-				{"id": "storage_guard", "kind": "guard", "floor": 1, "x": 468},
-				{"id": "storage_buyer", "kind": "buyer", "floor": 1, "x": 524, "faces": 1},
-				{"id": "storage_gunner", "kind": "gunner", "floor": 1, "x": 586},
-				{"id": "reception_gunner", "kind": "gunner", "floor": 2, "x": 196},
-				{"id": "treatment_doctor", "kind": "doctor", "floor": 2, "x": 296, "faces": 1},
-				{"id": "treatment_buyer", "kind": "buyer", "floor": 2, "x": 338},
-				{"id": "treatment_gunner", "kind": "gunner", "floor": 2, "x": 392},
-				{"id": "office_doctor", "kind": "doctor", "floor": 2, "x": 540, "last": true}
-			],
-			"last_words": {
-				"context": "地下医院",
-				"lines": ["你是……SK！！！", "别杀我……我什么都没做！！！", "为什么……你想要钱我可以……"],
-				"speakers": ["doctor", "doctor", "doctor"]
-			}
+			"floors": {
+				"1": {
+					"start": [
+						60,
+						286
+					]
+				},
+				"2": {
+					"start": [
+						40,
+						164
+					]
+				}
+			},
+			"enemies": []
 		}
 	},
 	"breath": [
-		["反…3%￥*#&……", "#对*%￥…%@&…", "把…%￥*（…*￥%"],
-		["反对3%￥*#&…权", "#对*%￥…%@建立", "把…%￥*（…*￥民"]
+		[
+			"反…3%￥*#&……",
+			"#对*%￥…%@&…",
+			"把…%￥*（…*￥%"
+		],
+		[
+			"反对3%￥*#&…权",
+			"#对*%￥…%@建立",
+			"把…%￥*（…*￥民"
+		]
 	]
 }

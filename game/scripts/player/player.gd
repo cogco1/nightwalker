@@ -24,6 +24,7 @@ signal charge_ended(released: bool)
 signal attack_received(result: int, attack: Dictionary)
 ## The perfect-dodge counter blinked behind this enemy and swings.
 signal counter_started(enemy: Node2D)
+signal perfect_dodge_started
 
 enum ViewMode { TOP_DOWN, SIDE_VIEW }
 ## One combat state at a time; the old flags below are read-only views of it.
@@ -83,6 +84,8 @@ const DODGE_DISTANCE := 36.0
 const DODGE_OFFSET_SECONDS := 0.25
 # Hit by an enemy: knocked back HURT_KNOCKBACK px over HURT_SLIDE_SECONDS, stunned and blinking red for HURT_SECONDS.
 const HURT_SECONDS := 0.3
+const HIT_INVULNERABILITY_SECONDS := 0.65
+const MELEE_PROTECTION_SECONDS := 0.90
 const HURT_SLIDE_SECONDS := 0.25
 const HURT_KNOCKBACK := 20.0
 const HURT_TINT := Color(1.0, 0.3, 0.3)
@@ -90,6 +93,9 @@ const HURT_TINT := Color(1.0, 0.3, 0.3)
 const PERFECT_LEAD_SECONDS := 0.2
 # The counter lands the hero this far past the enemy's centre, on its far side.
 const COUNTER_BEHIND := 18.0
+const COUNTER_MAX_DISTANCE := 260.0
+const COUNTER_WINDOW_SECONDS := 1.2
+const PERFECT_POSE_SECONDS := 0.24
 ## Attack buttons in the combo graph: left click (light) and right click (heavy).
 const ATTACK_INPUTS: Array[StringName] = [&"light", &"heavy"]
 # Code-drawn blade circle of spinning moves: radius and centre height above the feet, native px.
@@ -135,7 +141,28 @@ var _dash_started_at := -INF
 ## Set by GameSession during the perfect-dodge slow motion: enemy attacks cannot hit.
 var invulnerable := false
 var _counter_target: Node2D = null
+var _counter_until := -INF
+var _perfect_pose_at := -INF
+var _perfect_ghost_left := 0.0
+
+var counter_ready: bool:
+	get: return combat_time < _counter_until and view_mode == ViewMode.SIDE_VIEW
+
+var perfect_pose_left: float:
+	get: return maxf(0.0, PERFECT_POSE_SECONDS - (combat_time - _perfect_pose_at))
 var _hurt_brake := 0.0
+var _hit_invulnerable_until := -INF
+var _melee_protected_until := -INF
+
+var melee_protection_left: float:
+	get: return maxf(0.0,_melee_protected_until-combat_time)
+var hurt_from_back := false
+var _hurt_push := Vector2.ZERO
+var _hurt_started_at := -INF
+var hurt_pose_shift := Vector2.ZERO
+
+var hit_invulnerability_left: float:
+	get: return maxf(0.0, _hit_invulnerable_until - combat_time)
 var dash_start := Vector2.ZERO
 var dash_end := Vector2.ZERO
 ## True once the entire rush finishes or a wall stops it; never on its first moving tick.
@@ -154,7 +181,6 @@ var _critical_stop_emitted := false
 var _normal_stop_emitted := false
 var _kill_stop_emitted := false
 var _swing_release_emitted := false
-var _draw_cut_emitted := false
 var _rng := RandomNumberGenerator.new()
 var _mouse_attack_held := false
 # Mouse edges are recorded during pauses; only physics may start a charge or convert a tap into a swing.
@@ -265,6 +291,7 @@ func _physics_process(delta: float) -> void:
 		if state == State.HURT:
 			sprite.modulate = Color.WHITE
 		state = State.FREE
+	_update_hit_feedback()
 	_expire_intents()
 	if _intents.has(&"dive"):
 		_intents.erase(&"dive")
@@ -296,7 +323,7 @@ func _physics_process(delta: float) -> void:
 	if not is_attacking and not is_charging and not is_dodging and _recovery_left <= 0.0 and not direction.is_zero_approx():
 		_update_facing(direction)
 	# Perfect-dodge counter takes priority over both a buffered evade and a modifier thrust.
-	if is_instance_valid(_counter_target) and (_intent_stage(&"light") == &"raw" or _intent_stage(&"heavy") == &"raw"):
+	if counter_ready and (_intent_stage(&"light") == &"raw" or _intent_stage(&"heavy") == &"raw"):
 		if is_dodging:
 			_end_dodge()
 		_start_counter()
@@ -307,6 +334,7 @@ func _physics_process(delta: float) -> void:
 			_intents[&"dodge"]["expires"] = combat_time + DASH_BUFFER_SECONDS
 	if is_dodging:
 		_step_dodge(delta)
+		_step_perfect_feedback(delta)
 		return
 	if _intents.has(&"dash") and not is_charging:
 		var dash_direction := int(_intents[&"dash"].get("direction", signf(direction.x)))
@@ -370,7 +398,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = direction.x * crouch_speed if not was_grounded and move.get("steer", false) else attack_direction.x * (impulse if was_grounded else float(move.get("carry", 0.0)))
 	elif state == State.HURT:
-		# Knocked back, braking to a stop inside the stun; the hero blinks red.
+		# Recoil only moves the physical body; the directional pose keeps its foot pivot.
 		if view_mode == ViewMode.TOP_DOWN:
 			velocity = velocity.move_toward(Vector2.ZERO, _hurt_brake * delta)
 		else:
@@ -389,6 +417,7 @@ func _physics_process(delta: float) -> void:
 		_update_animation(direction)
 	if is_jump_chasing:
 		_step_jump_chase(delta, direction)
+	_step_perfect_feedback(delta)
 	# A thrust uses this same collision step as walking. Its swept hit is tested on each travelled segment.
 	var dash_step: bool = is_attacking and move.get("pierce", false) and not dash_executed and sprite.frame >= _attack_active_start()
 	var dash_from := global_position
@@ -432,13 +461,6 @@ func _physics_process(delta: float) -> void:
 	if dash_step:
 		_apply_dash_hits(dash_from, dash_end)
 	if is_attacking and _in_active_frames():
-		if move.get("draw_cut",false) and not _draw_cut_emitted:
-			_draw_cut_emitted=true
-			var reach:=float(move.box.reach)+float(move.box.length)/2.0+(MOVESET.SIDE_EXTRA_REACH if view_mode==ViewMode.SIDE_VIEW else 0.0)
-			var ray:=get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(attack_origin(),attack_origin()+attack_direction*reach,1))
-			if not ray.is_empty():reach=minf(reach,attack_origin().distance_to(ray.position))
-			var origin:=global_position if view_mode==ViewMode.SIDE_VIEW else attack_origin()+Vector2(-attack_direction.y,attack_direction.x)*17.0
-			fx.draw_cut.release(origin,attack_direction,reach)
 		if not move.get("pierce", false):
 			_apply_attack_hits()
 		_update_blade_trail()
@@ -565,7 +587,8 @@ func _input(event: InputEvent) -> void:
 		if event.pressed:
 			_shift_gesture.press(combat_time)
 		elif _shift_gesture.release(combat_time):
-			_press(&"dodge", DASH_BUFFER_SECONDS)
+			var buffer := maxf(DASH_BUFFER_SECONDS,_recovery_left+0.10) if state==State.HURT else DASH_BUFFER_SECONDS
+			_press(&"dodge", buffer)
 	if view_mode != ViewMode.SIDE_VIEW or not event is InputEventKey or event.echo:
 		return
 	if event.is_action_pressed("jump") and (can_jump_chase() or move.get("charged_launch", false)):
@@ -682,6 +705,8 @@ func _update_crouch(delta: float) -> void:
 
 func _update_animation(direction: Vector2) -> void:
 	if _recovery_left > 0.0:
+		return
+	if _show_perfect_pose():
 		return
 	if view_mode == ViewMode.SIDE_VIEW:
 		if is_crouching or _crouch_exiting:
@@ -829,6 +854,7 @@ func _chain_queued() -> bool:
 
 # Starts a move from MOVESET.MOVES: state, hang time, critical roll, animation, rate and start frame.
 func _start_move(id: StringName) -> void:
+	_perfect_pose_at = -INF
 	# Carry the charged cut's next drawn recovery pose into a buffered second hit.
 	var charged_source := (move_id == &"heavy_slash" and is_attacking) or (_followup_from == &"attack1" and combat_time < _followup_until)
 	var charged_pose := view_mode == ViewMode.SIDE_VIEW and is_on_floor() and String(sprite.animation) == _charge_animation()
@@ -858,7 +884,6 @@ func _start_move(id: StringName) -> void:
 	_normal_stop_emitted = false
 	_kill_stop_emitted = false
 	_swing_release_emitted = false
-	_draw_cut_emitted = false
 	match move.get("crit", &"none"):
 		&"roll":
 			critical_rolls += 1
@@ -1023,7 +1048,7 @@ func _resolve_hit(target: Node, point: Vector2, row: Dictionary = {}) -> bool:
 	var health: Variant = target.get("hp")
 	var killed: bool = health != null and int(health) <= 0
 	var substance: StringName = target.get_meta("hit_material", &"flesh")
-	fx.impact(point, weight, attack_direction, global_position, killed, substance, row.get("draw_cut",false))
+	fx.impact(point, weight, attack_direction, global_position, killed, substance, row.get("charged",false))
 	struck.emit(point, &"kill" if killed else weight, attack_direction, killed)
 	var first_critical := stage_is_critical and not _critical_stop_emitted
 	var first_normal := not stage_is_critical and not _normal_stop_emitted
@@ -1202,6 +1227,7 @@ func request_dodge(direction: Vector2 = Vector2.ZERO) -> bool:
 		return false
 	if is_charging:
 		_cancel_charge()
+	_perfect_pose_at = -INF
 	_clear_jump_chase()
 	_clear_followup()
 	_offset_from = _string_id if cancelling else (_last_string_id if combat_time - _string_end_time <= DODGE_OFFSET_SECONDS else &"")
@@ -1240,6 +1266,7 @@ func _step_dodge(delta: float) -> void:
 		velocity.x = _dodge_direction.x * speed
 		var phase := (_dodge_duration - _dodge_left) / _dodge_duration
 		_set_manual_frame("roll_" + facing, mini(15, int(phase * 16.0)))
+	_show_perfect_pose()
 	move_and_slide()
 	sprite.position = global_position.round() - global_position
 	_dodge_ghost_left -= delta
@@ -1505,12 +1532,29 @@ func receive_attack(attack: Dictionary) -> int:
 		result = AttackResult.EVADE
 	elif combat_time - _dash_started_at <= float(attack.get("window_age", 0.0)) + PERFECT_LEAD_SECONDS:
 		result = AttackResult.PERFECT
+	elif hit_invulnerability_left > 0.0 or (_is_melee_attack(attack) and melee_protection_left>0.0):
+		result = AttackResult.EVADE
 	elif not attack.get("contact", true) or is_dodging or (state == State.ATTACK and move.get("dodge", false)):
 		result = AttackResult.EVADE
 	if result == AttackResult.HIT:
 		_take_hit(attack)
+	elif result == AttackResult.PERFECT:
+		_perfect_pose_at = combat_time
+		_perfect_ghost_left = 0.0
+		_show_perfect_pose()
+		fx.speed_lines(global_position, _dodge_direction, false)
+		fx.star(global_position + Vector2(0, -19))
+		perfect_dodge_started.emit()
 	attack_received.emit(result, attack)
 	return result
+
+
+func _is_melee_attack(attack: Dictionary) -> bool:
+	return attack.get("attack_kind","")=="melee" or str(attack.get("weapon","")) in ["melee","rifle_butt","baton"]
+
+
+func can_receive_melee_windup(windup: float) -> bool:
+	return state!=State.HURT and melee_protection_left<=windup-0.05
 
 
 ## Seconds on the combat clock since the last dash started (INF before the first).
@@ -1521,38 +1565,91 @@ func seconds_since_dash() -> float:
 ## GameSession opens the counter on a perfect dodge (the enemy that missed) and closes it when the slow motion ends.
 func open_counter(enemy: Node2D) -> void:
 	_counter_target = enemy
+	_counter_until = combat_time + COUNTER_WINDOW_SECONDS
 
 
 func close_counter() -> void:
 	_counter_target = null
+	_counter_until = -INF
 
 
 # Perfect-dodge counter: blinks to the far side of the enemy (the near side if a wall is there) and cuts it with
 # counter_slash, a sure critical with the heavy freeze.
 func _start_counter() -> void:
 	var enemy := _counter_target
-	_counter_target = null
+	close_counter()
 	_clear_attack_intents()
 	if is_charging:
 		_cancel_charge()
 	var from := global_position
-	var side := 1.0 if from.x <= enemy.global_position.x else -1.0
-	var to := Vector2(enemy.global_position.x + side * COUNTER_BEHIND, from.y)
-	if not _clear_at(to):
-		side = -side
-		to = Vector2(enemy.global_position.x + side * COUNTER_BEHIND, from.y)
-		if not _clear_at(to):
-			to = from
+	var to := from
+	var side := 0.0
+	# A missing/dead/distant source still grants one empowered slash, without an unsafe teleport.
+	if _counter_target_alive(enemy) and from.distance_to(enemy.global_position) <= COUNTER_MAX_DISTANCE:
+		side = 1.0 if from.x <= enemy.global_position.x else -1.0
+		var candidate := Vector2(enemy.global_position.x + side * COUNTER_BEHIND, from.y)
+		if _counter_path_clear(candidate):
+			to = candidate
+		else:
+			side = -side
+			candidate = Vector2(enemy.global_position.x + side * COUNTER_BEHIND, from.y)
+			if _counter_path_clear(candidate):
+				to = candidate
+			else:
+				side = 0.0
 	fx.ghost(sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame), from + sprite.offset, 0.2)
 	for lane in range(3):
 		var y := -10.0 - lane * 6.0
 		fx.add({"position": to + Vector2(0, y), "velocity": Vector2.ZERO, "tail": (to - from) * (1.0 - lane * 0.25),
 			"life": 0.12, "color": PLAYER_FX.WHITE if lane == 1 else PLAYER_FX.BLUE})
 	global_position = to
-	facing = "left" if side > 0.0 else "right"
+	if side != 0.0:
+		facing = "left" if side > 0.0 else "right"
 	attack_direction = _facing_vector()
 	_start_move(&"counter_slash")
 	counter_started.emit(enemy)
+
+
+func _counter_target_alive(enemy: Node2D) -> bool:
+	if not is_instance_valid(enemy) or enemy.is_queued_for_deletion():
+		return false
+	return enemy.get("dead") != true and enemy.get("hp") != 0
+
+
+func _counter_path_clear(to: Vector2) -> bool:
+	if not _clear_at(to):
+		return false
+	# Sweep the real body past world geometry; an enemy can be crossed, a wall cannot.
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = body_shape.shape
+	query.transform = body_shape.global_transform
+	query.motion = to - global_position
+	query.collision_mask = 1
+	query.exclude = [get_rid()]
+	var safe := get_world_2d().direct_space_state.cast_motion(query)
+	return safe[0] >= 0.999
+
+
+func _show_perfect_pose() -> bool:
+	if perfect_pose_left <= 0.0 or is_attacking or is_charging or state == State.HURT:
+		return false
+	var clip := "perfect_dodge_" + facing
+	if not sprite.sprite_frames.has_animation(clip):
+		return false
+	var progress := clampf((combat_time - _perfect_pose_at) / PERFECT_POSE_SECONDS, 0.0, 0.999)
+	_set_manual_frame(clip, int(progress * 6.0))
+	sprite.modulate = Color(0.75, 1.0, 1.15)
+	return true
+
+
+func _step_perfect_feedback(delta: float) -> void:
+	if perfect_pose_left <= 0.0 or is_attacking or state == State.HURT:
+		return
+	_perfect_ghost_left -= delta
+	if _perfect_ghost_left <= 0.0:
+		fx.ghost(sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame), global_position + sprite.offset, 0.16)
+		_perfect_ghost_left = 0.04
+		fx.queue_redraw()
 
 
 func _clear_at(point: Vector2) -> bool:
@@ -1569,6 +1666,8 @@ func _clear_at(point: Vector2) -> bool:
 
 # Interrupts the move or charge, knocks the hero back and stuns it (HURT) for HURT_SECONDS.
 func _take_hit(attack: Dictionary) -> void:
+	close_counter()
+	_perfect_pose_at = -INF
 	_clear_followup()
 	_clear_jump_chase()
 	_primary_press.clear()
@@ -1584,18 +1683,54 @@ func _take_hit(attack: Dictionary) -> void:
 	state = State.HURT
 	_recovery_left = HURT_SECONDS
 	var push: Vector2 = attack.get("direction", -_facing_vector())
+	if push.is_zero_approx():
+		push = -_facing_vector()
+	hurt_from_back = push.normalized().dot(_facing_vector()) > 0.0
+	_hurt_push = push.normalized()
+	_hurt_started_at = combat_time
+	_hit_invulnerable_until = combat_time + HIT_INVULNERABILITY_SECONDS
+	if _is_melee_attack(attack):
+		_melee_protected_until=combat_time+MELEE_PROTECTION_SECONDS
 	var speed := 2.0 * float(attack.get("knockback", HURT_KNOCKBACK)) / HURT_SLIDE_SECONDS
 	_hurt_brake = speed / HURT_SLIDE_SECONDS
 	if view_mode == ViewMode.SIDE_VIEW:
 		velocity.x = signf(push.x) * speed
 		velocity.y = minf(velocity.y, 0.0)
-		_set_manual_frame("jump_" + facing, 13)
 	else:
 		velocity = push.normalized() * speed
+	# A neutral blade-low silhouette bends at the waist: front hit recoils, rear hit folds forward.
+	_set_manual_frame("idle_" + facing, 0)
+	_update_hit_feedback()
 	sprite.modulate = HURT_TINT
 	fx.clear_trails()
 	fx.sparks(global_position + Vector2(0, -15))
 	combo_changed.emit(0)
+
+
+func _update_hit_feedback() -> void:
+	var age := combat_time - _hurt_started_at
+	hurt_pose_shift = Vector2.ZERO
+	if state == State.HURT and age < HURT_SECONDS:
+		# Fast impact, brief follow-through, then a smooth return; no automatic turn toward the attacker.
+		var peak := 0.095 if hurt_from_back else 0.065
+		var settle := 0.145 if hurt_from_back else 0.12
+		var amount := lerpf(0.25, 1.0, smoothstep(0.0, peak, age)) if age < peak else 1.0 - smoothstep(settle, HURT_SECONDS, age)
+		var reach := 13.0 if hurt_from_back else 11.0
+		hurt_pose_shift = _hurt_push * reach * amount
+		if view_mode == ViewMode.SIDE_VIEW:
+			hurt_pose_shift.y = (4.0 if hurt_from_back else -2.0) * amount
+	var material := sprite.material as ShaderMaterial
+	if material != null:
+		material.set_shader_parameter("hurt_shift", hurt_pose_shift)
+		material.set_shader_parameter("hurt_foot_y", -sprite.offset.y)
+	# The protection outlasts the stun, so movement/attacks resume while a pale pulse remains visible.
+	if state != State.HURT:
+		sprite.modulate = Color(0.65, 0.9, 1.0, 0.7) if hit_invulnerability_left > 0.0 and int(age * 20.0) % 2 == 0 else Color.WHITE
+		if hit_invulnerability_left<=0.0 and melee_protection_left>0.0 and int(age*20.0)%2==0:
+			sprite.modulate=Color(1.0,0.9,0.65,0.85)
+	var implant := sprite.get_node_or_null("ImplantOverlay")
+	if implant != null:
+		implant.set("hurt_shift", hurt_pose_shift)
 
 
 func show_idle() -> void:
@@ -1727,7 +1862,7 @@ func _blade_tip_for_frame(frame: int) -> Vector2:
 
 
 func _update_blade_trail() -> void:
-	if move.get("draw_cut",false):return
+	if move.get("charged",false):return
 	if sprite.frame == _last_blade_frame:
 		return
 	var tip := _blade_tip_for_frame(sprite.frame)

@@ -1,37 +1,54 @@
 extends Node
-## Formal entry (Run-Demo): starts chapter 1 at its configured scene. With "-- --sandbox" it opens the free
-## sandbox instead, the same as Run-Sandbox.cmd starting main.tscn directly: no clock, F7 / F8 / Tab free. With
-## "-- --nw-step=<id>" (Run-Game.ps1 -Step <id>) the chapter starts at that step instead, to try one part (a step
-## that names its scene, e.g. d1_night for the first night's fight).
+## Main entry: the repository's factory/sand prologue and the requested combat whitebox.
 
 const STORY_STATE = preload("res://scripts/core/story_state.gd")
 const CONTROLS = preload("res://scripts/core/controls.gd")
-const MAIN_PATH := "res://scenes/main.tscn"
-const SANDBOX_ARGUMENT := "--sandbox"
-const STEP_ARGUMENT := "--nw-step="
+const UI = preload("res://scripts/ui/pixel_ui.gd")
+const WHITEBOX := "res://scenes/whitebox_test.tscn"
+const PROLOGUE := "res://scenes/battlefield_run_test.tscn"
 
 
 func _ready() -> void:
-	_open_initial_scene.call_deferred()
-
-
-func _open_initial_scene() -> void:
 	CONTROLS.install()
-	var story := STORY_STATE.ensure(get_tree())
-	if OS.get_cmdline_user_args().has(SANDBOX_ARGUMENT):
-		story.end_chapter()
-	else:
-		story.start_chapter()
-		var requested := requested_step(OS.get_cmdline_user_args())
-		var step: String = requested if story.step_data(requested).has("scene") and not requested.is_empty() else story.step
-		get_tree().root.get_node("SceneRoutes").travel.call_deferred(step)
-		return
-	get_tree().change_scene_to_file.call_deferred(MAIN_PATH)
+	STORY_STATE.ensure(get_tree()).end_chapter()
+	get_tree().root.content_scale_size=Vector2i(320,180)
+	get_tree().root.content_scale_mode=Window.CONTENT_SCALE_MODE_VIEWPORT
+	get_tree().root.title="夜行者"
+	var canvas := CanvasLayer.new()
+	canvas.name="EntryUI"
+	add_child(canvas)
+	var background := ColorRect.new()
+	background.size=Vector2(320,180)
+	background.color=Color("20252b")
+	canvas.add_child(background)
+	var title := UI.label(canvas,Vector2(100,44),Vector2(120,20),"夜行者",16)
+	title.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	var prologue := Button.new()
+	prologue.name="EnterPrologue"
+	prologue.text="序章 · 工厂黄沙"
+	prologue.position=Vector2(88,78)
+	prologue.size=Vector2(144,28)
+	prologue.add_theme_font_override("font",UI.font())
+	prologue.add_theme_font_size_override("font_size",12)
+	prologue.pressed.connect(open_prologue)
+	canvas.add_child(prologue)
+	var button := Button.new()
+	button.name="EnterWhitebox"
+	button.text="进入白盒测试"
+	button.position=Vector2(88,114)
+	button.size=Vector2(144,28)
+	button.add_theme_font_override("font",UI.font())
+	button.add_theme_font_size_override("font_size",12)
+	button.pressed.connect(open_whitebox)
+	canvas.add_child(button)
+	prologue.grab_focus()
 
+func open_prologue() -> void:
+	CONTROLS.release_actions()
+	get_tree().paused=false
+	get_tree().change_scene_to_file.call_deferred(PROLOGUE)
 
-## The step named by "--nw-step=<id>" among the user arguments, or "".
-static func requested_step(arguments: PackedStringArray) -> String:
-	for argument in arguments:
-		if argument.begins_with(STEP_ARGUMENT):
-			return argument.substr(STEP_ARGUMENT.length())
-	return ""
+func open_whitebox() -> void:
+	CONTROLS.release_actions()
+	get_tree().paused=false
+	get_tree().change_scene_to_file.call_deferred(WHITEBOX)

@@ -1,0 +1,170 @@
+{
+  "version": "drone-combat-v03",
+  "base_commit": "496c1884326bbd567c57b66f4e51195df02341e7",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "scope": "Cannon drone independent combat range, built on the previous sniper version",
+  "passed": true,
+  "checks": 650,
+  "suites": [
+    {
+      "checks": 56,
+      "failures": [],
+      "observed": {
+        "attack_max_step": 1.49818766117096,
+        "cannon_hit": {
+          "damage": 20,
+          "push": 19.1644439697266
+        },
+        "hover": {
+          "horizontal_span": 54.6495666503906,
+          "max_accel": 29.7308725118637,
+          "max_speed": 18.4839401245117,
+          "max_step": 0.61613130569458,
+          "vertical_span": 6.81222534179688
+        },
+        "self_destruct": {
+          "damage": 35,
+          "push": 29.6177673339844
+        }
+      },
+      "passed": true,
+      "physics_rate": 30
+    },
+    {
+      "checks": 56,
+      "failures": [],
+      "observed": {
+        "attack_max_step": 0.740833938121796,
+        "cannon_hit": {
+          "damage": 20,
+          "push": 20.5333404541016
+        },
+        "hover": {
+          "horizontal_span": 54.6502685546875,
+          "max_accel": 29.8434054851532,
+          "max_speed": 18.48464012146,
+          "max_step": 0.308077365159988,
+          "vertical_span": 6.81319427490234
+        },
+        "self_destruct": {
+          "damage": 35,
+          "push": 31.7333374023438
+        }
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "checks": 56,
+      "failures": [],
+      "observed": {
+        "attack_max_step": 0.307345181703568,
+        "cannon_hit": {
+          "damage": 20,
+          "push": 21.3890075683594
+        },
+        "hover": {
+          "horizontal_span": 54.6507568359375,
+          "max_accel": 29.967280626297,
+          "max_speed": 18.4876842498779,
+          "max_step": 0.128386706113815,
+          "vertical_span": 6.81340026855469
+        },
+        "self_destruct": {
+          "damage": 35,
+          "push": 33.0555419921875
+        }
+      },
+      "passed": true,
+      "physics_rate": 144
+    },
+    {
+      "suite": "test_sniper_combat",
+      "checks": 135,
+      "failures": [],
+      "observed": {
+        "melee_push": 24.2666320800781,
+        "weapon_0": {
+          "damage": 18,
+          "push": 16.8000183105469
+        },
+        "weapon_1": {
+          "damage": 20,
+          "push": 20.533447265625
+        },
+        "weapon_2": {
+          "damage": 10,
+          "push": 0.0
+        },
+        "weapon_3": {
+          "damage": 6,
+          "push": 0.0
+        }
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "failures": [],
+      "observations": {
+        "hit": {
+          "hurt_ticks": 19,
+          "pushed_px": -18.7,
+          "telegraph_ticks": 31
+        },
+        "late_dash_contact": 2
+      },
+      "status": "passed"
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "failures": [],
+      "observations": {
+        "clock_during_stop": 0.0,
+        "clock_steps": {
+          "hero": 0.1333,
+          "world": 0.0333
+        },
+        "counter_1": {
+          "damage": 3,
+          "side": -1.0
+        },
+        "counter_2": {
+          "damage": 3,
+          "side": -1.0
+        },
+        "slowmo_ticks": 72.0
+      },
+      "status": "passed"
+    },
+    {
+      "suite": "test_enemy_animation_gallery",
+      "actions": 18,
+      "checks": 287,
+      "failures": [],
+      "native_action_frames": 144,
+      "passed": true,
+      "units": 8
+    }
+  ],
+  "gpu_visual": {
+    "passed": true,
+    "gpu": "NVIDIA RTX 4060 Laptop GPU / OpenGL Compatibility",
+    "captured_frames": 399,
+    "visible_tracer_frames": 78,
+    "visible_muzzle_flash_frames": 15,
+    "visible_self_destruct_warning_frames": 35,
+    "visible_explosion_frames": 3
+  },
+  "critical_health": 3,
+  "fuse_seconds": 1.2,
+  "blast_radius": 64,
+  "blast_damage": 35,
+  "blast_push_parameter": 34,
+  "coverage": "Hover continuity, actual cannon damage and push, burst lock/timing, real dodge, held/frozen rounds, world collisions, charged player attacks, fuse warning/hold/range/cover/finisher/dodge",
+  "full_historical_chapter_regression_rerun": false,
+  "art": "Existing drone-B hover artwork reused byte-for-byte; no raster assets changed"
+}

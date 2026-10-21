@@ -5,7 +5,6 @@ extends Node
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const MENU = preload("res://scripts/ui/keybindings_menu.gd")
 const COMBAT_FEEDBACK = preload("res://scripts/core/combat_feedback.gd")
-const IMPACT_BURST = preload("res://scripts/core/impact_burst.gd")
 const IMPACT_FRAME = preload("res://shaders/impact_frame.gdshader")
 const PLAYER = preload("res://scripts/player/player.gd")
 # Impact weight -> displayed frames held (and at least frames/60 s), native-pixel shift and camera recoil.
@@ -23,6 +22,7 @@ const STOPS := {
 }
 const IMPACT_PRIORITY := {&"tick": 0, &"light": 1, &"critical": 2, &"heavy": 3, &"kill": 4}
 const HEAVY_STOP_FRAMES := 10
+const HURT_CAMERA_OFFSETS := [Vector2(1,0),Vector2(-1,0),Vector2(1,-1),Vector2(-1,0),Vector2(0,1),Vector2.ZERO]
 # Perfect dodge: the world runs at SLOWMO_SCALE for SLOWMO_SECONDS of real time while the hero keeps full speed
 # (enemies scale their delta by world_time_scale; Engine.time_scale stays 1). The clock stands still during hit-stops
 # and the settings menu. The screen edges glow cyan, the hero cannot be hit, and the hero's counter ends it.
@@ -43,12 +43,11 @@ signal slowmo_finished
 var settings_open := false
 var keybindings_menu: CanvasLayer
 var combat_feedback: Node
-## The hit-impact prototype (sword qi out of the screen, screen cut, tremor); F10 switches it.
-var impact_burst: Node
 var hit_stop_active := false
 ## Speed of the world relative to the hero: enemies scale their delta by it (1 = normal).
 var world_time_scale := 1.0
 var slowmo_active := false
+var hurt_shake_count := 0
 ## Real seconds of slow motion left.
 var slowmo_left := 0.0
 var slowmo_overlay: TextureRect
@@ -122,13 +121,11 @@ func _ready() -> void:
 	combat_feedback = COMBAT_FEEDBACK.new()
 	combat_feedback.name = "CombatFeedback"
 	add_child(combat_feedback)
-	impact_burst = IMPACT_BURST.new()
-	impact_burst.name = "ImpactBurst"
-	add_child(impact_burst)
 	bind_player(_host.get("player"))
 
 
 func bind_player(player: CharacterBody2D) -> void:
+	_clear_camera_kick()
 	end_slowmo()
 	_player = player
 	if not is_instance_valid(_player):
@@ -139,7 +136,6 @@ func bind_player(player: CharacterBody2D) -> void:
 		_player.attack_received.connect(_on_attack_received)
 		_player.counter_started.connect(_on_counter_started)
 	combat_feedback.bind_player(_player)
-	impact_burst.bind_player(_player)
 
 
 func _process(delta: float) -> void:
@@ -180,6 +176,10 @@ func end_slowmo() -> void:
 func _on_attack_received(result: int, attack: Dictionary) -> void:
 	if result == PLAYER.AttackResult.PERFECT and not slowmo_active:
 		start_slowmo(attack.get("source"))
+	elif result == PLAYER.AttackResult.HIT and not hit_stop_active:
+		hurt_shake_count += 1
+		var direction: Vector2 = attack.get("direction", Vector2.RIGHT)
+		_aftershock(HURT_CAMERA_OFFSETS, _token, -1.0 if direction.x < 0.0 else 1.0)
 
 
 func _on_counter_started(_enemy: Node2D) -> void:
@@ -316,7 +316,7 @@ func _run_hit_stop(direction: Vector2, weight: StringName) -> void:
 	_finish_hit_stop()
 	hit_stop_finished.emit(hit_stop_displayed_frames)
 	if stop.has("aftershock"):
-		_aftershock(impact_burst.tremor(_active_weight, stop["aftershock"]), token, -1.0 if direction.x < 0.0 else 1.0)
+		_aftershock(stop["aftershock"], token, -1.0 if direction.x < 0.0 else 1.0)
 
 
 # Frozen-frame look for displayed frame `frame` (1-based): negative first, then flash, then the plain snapshot.
@@ -354,6 +354,9 @@ func _aftershock(offsets: Array, token: int, side: float) -> void:
 	var elapsed := 0.0
 	while elapsed < offsets.size()/60.0:
 		if token != _token or id != _shock_id or not is_instance_valid(camera): return
+		if get_tree().paused:
+			await get_tree().process_frame
+			continue
 		var offset: Vector2 = offsets[mini(offsets.size()-1,int(elapsed*60.0))]
 		camera.offset = _shock_rest+Vector2(offset.x*side,offset.y)
 		camera.force_update_scroll()

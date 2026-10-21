@@ -7,6 +7,7 @@ const ROUND = preload("res://scripts/enemies/ballistic_round.gd")
 const ORIGINAL = preload("res://assets/enemy_animations_v01/sniper_B/animations.tres")
 const STAND_SHEET = preload("res://assets/sniper_combat_v02/stand_fire.png")
 const MELEE_SHEET = preload("res://assets/sniper_combat_v02/melee.png")
+const MELEE_RHYTHM = preload("res://scripts/enemies/melee_rhythm.gd")
 enum Posture { STAND, LOWER, PRONE, RISE }
 enum Mode { FAR, MIDDLE, CLOSE }
 enum Phase { READY, AIM, SHOT, MELEE, RECOVER }
@@ -17,9 +18,10 @@ const FAR_ENTER := 180.0
 const FAR_EXIT := 146.0
 const RANGE := 420.0
 const LOCK_SECONDS := 0.24
-const MELEE_WINDUP := 0.30
-const MELEE_ACTIVE := 0.12
-const MELEE_SECONDS := 0.80
+const MELEE_WINDUP := MELEE_RHYTHM.WINDUP_SECONDS
+const MELEE_ACTIVE := MELEE_RHYTHM.ACTIVE_SECONDS
+const MELEE_RECOVERY := MELEE_RHYTHM.RECOVERY_SECONDS
+const MELEE_SECONDS := MELEE_WINDUP+MELEE_ACTIVE+MELEE_RECOVERY
 const MELEE_PUSH := 26.0
 const MELEE_DAMAGE := 10
 @export_range(0.0,96.0,1.0) var region_radius := 40.0
@@ -220,7 +222,9 @@ func think(step: float) -> void:
 			if phase_time>=MELEE_WINDUP+MELEE_ACTIVE and not _melee_checked:
 				_resolve_melee(false)
 			if phase_time>=MELEE_SECONDS:
-				_change_phase(Phase.RECOVER)
+				# Frames 5-7 already finish the rifle-butt recovery. Do not jump into the
+				# unrelated raised-rifle recoil clip for another stationary pause.
+				_change_phase(Phase.READY)
 				cooldown_left=0.95
 		Phase.RECOVER:
 			phase_time+=step
@@ -230,6 +234,8 @@ func think(step: float) -> void:
 			if settle_left>0.0 or cooldown_left>0.0 or distance>RANGE:
 				return
 			if mode==Mode.CLOSE and posture==Posture.STAND:
+				if not MELEE_RHYTHM.can_begin(hero,MELEE_WINDUP):
+					return
 				_change_phase(Phase.MELEE)
 				melee_count+=1
 			elif _line_of_sight():
@@ -310,7 +316,7 @@ func _resolve_melee(contact_window: bool) -> void:
 	if not close or not clear:
 		return
 	var result := int(hero.receive_attack({"source":self,"direction":Vector2(facing,0),"contact":contact and contact_window,
-		"window_age":maxf(0.0,phase_time-MELEE_WINDUP),"knockback":MELEE_PUSH,"damage":MELEE_DAMAGE,"weapon":"rifle_butt"}))
+		"window_age":maxf(0.0,phase_time-MELEE_WINDUP),"knockback":MELEE_PUSH,"damage":MELEE_DAMAGE,"weapon":"rifle_butt","attack_kind":"melee"}))
 	melee_resolved.emit(result)
 
 func damage_point() -> Vector2:
@@ -335,7 +341,14 @@ func _sync_pose() -> void:
 		height=float([32,31,25,18,12,10,10,10][visual_index])
 		_set_pose("prone_down" if posture==Posture.LOWER else "prone_up",index)
 	elif phase==Phase.MELEE:
-		_set_pose("melee",mini(7,int(phase_time*10.0)))
+		var index := 0
+		if phase_time<MELEE_WINDUP:
+			index=mini(2,int(phase_time/MELEE_WINDUP*3.0))
+		elif phase_time<MELEE_WINDUP+MELEE_ACTIVE:
+			index=3+mini(1,int((phase_time-MELEE_WINDUP)/MELEE_ACTIVE*2.0))
+		else:
+			index=5+mini(2,int((phase_time-MELEE_WINDUP-MELEE_ACTIVE)/MELEE_RECOVERY*3.0))
+		_set_pose("melee",index)
 	elif phase==Phase.RECOVER:
 		_set_pose("stand_fire",maxi(0,3-int(phase_time*12.0)))
 	elif phase==Phase.SHOT:

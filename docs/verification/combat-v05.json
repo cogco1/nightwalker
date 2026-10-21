@@ -1,0 +1,391 @@
+{
+  "version": "combat-v05",
+  "local_only": true,
+  "base_commit": "496c1884326bbd567c57b66f4e51195df02341e7",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "passed": true,
+  "checks": 750,
+  "suite_count": 16,
+  "suites": [
+    {
+      "suite": "player_hurt",
+      "checks": 52,
+      "failures": [],
+      "observed": {
+        "protection_seconds": 0.65,
+        "rates": 30,
+        "stun_seconds": 0.3
+      },
+      "passed": true,
+      "physics_rate": 30
+    },
+    {
+      "suite": "player_hurt",
+      "checks": 52,
+      "failures": [],
+      "observed": {
+        "protection_seconds": 0.65,
+        "rates": 60,
+        "stun_seconds": 0.3
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "suite": "player_hurt",
+      "checks": 52,
+      "failures": [],
+      "observed": {
+        "protection_seconds": 0.65,
+        "rates": 144,
+        "stun_seconds": 0.3
+      },
+      "passed": true,
+      "physics_rate": 144
+    },
+    {
+      "suite": "perfect_dodge_v05",
+      "checks": 41,
+      "failures": [],
+      "observed": {
+        "camera": {
+          "max_offset": 1.41421353816986,
+          "restored": true
+        },
+        "counter_1": {
+          "damage": 3,
+          "events": 1
+        },
+        "counter_2": {
+          "damage": 3,
+          "events": 1
+        }
+      },
+      "passed": true,
+      "physics_rate": 30
+    },
+    {
+      "suite": "perfect_dodge_v05",
+      "checks": 41,
+      "failures": [],
+      "observed": {
+        "camera": {
+          "max_offset": 1.41421353816986,
+          "restored": true
+        },
+        "counter_1": {
+          "damage": 3,
+          "events": 1
+        },
+        "counter_2": {
+          "damage": 3,
+          "events": 1
+        }
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "suite": "perfect_dodge_v05",
+      "checks": 41,
+      "failures": [],
+      "observed": {
+        "camera": {
+          "max_offset": 1.41421353816986,
+          "restored": true
+        },
+        "counter_1": {
+          "damage": 3,
+          "events": 1
+        },
+        "counter_2": {
+          "damage": 3,
+          "events": 1
+        }
+      },
+      "passed": true,
+      "physics_rate": 144
+    },
+    {
+      "suite": "enemy_territory_v05",
+      "checks": 28,
+      "failures": [],
+      "observed": {
+        "escape": {
+          "charge_peak": 220.0,
+          "detonation_x": 134.524200439453,
+          "player_hp": 100
+        },
+        "pursuit": {
+          "max_speed": 47.5350522994995,
+          "radius": 280.0,
+          "travel": 99.7744445800781
+        }
+      },
+      "passed": true,
+      "physics_rate": 30
+    },
+    {
+      "suite": "enemy_territory_v05",
+      "checks": 28,
+      "failures": [],
+      "observed": {
+        "escape": {
+          "charge_peak": 220.0,
+          "detonation_x": 134.524078369141,
+          "player_hp": 100
+        },
+        "pursuit": {
+          "max_speed": 47.4890756607056,
+          "radius": 280.0,
+          "travel": 99.1549682617188
+        }
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "suite": "enemy_territory_v05",
+      "checks": 28,
+      "failures": [],
+      "observed": {
+        "escape": {
+          "charge_peak": 220.0,
+          "detonation_x": 134.523559570313,
+          "player_hp": 100
+        },
+        "pursuit": {
+          "max_speed": 47.5019946098328,
+          "radius": 280.0,
+          "travel": 99.3377685546875
+        }
+      },
+      "passed": true,
+      "physics_rate": 144
+    },
+    {
+      "suite": "drone_combat",
+      "checks": 58,
+      "failures": [],
+      "observed": {
+        "attack_max_step": 0.251311630010605,
+        "cannon_hit": {
+          "damage": 20,
+          "push": 19.1644439697266
+        },
+        "hover": {
+          "horizontal_span": 54.6492614746094,
+          "max_accel": 68.4946489334106,
+          "max_speed": 18.4839401245117,
+          "max_step": 0.61613130569458,
+          "vertical_span": 6.81006622314453
+        },
+        "self_destruct": {
+          "damage": 35,
+          "push": 29.6177673339844
+        }
+      },
+      "passed": true,
+      "physics_rate": 30
+    },
+    {
+      "suite": "drone_combat",
+      "checks": 58,
+      "failures": [],
+      "observed": {
+        "attack_max_step": 0.127046495676041,
+        "cannon_hit": {
+          "damage": 20,
+          "push": 20.5333404541016
+        },
+        "hover": {
+          "horizontal_span": 54.6502380371094,
+          "max_accel": 41.2376117706299,
+          "max_speed": 18.48464012146,
+          "max_step": 0.308077365159988,
+          "vertical_span": 6.81275939941406
+        },
+        "self_destruct": {
+          "damage": 35,
+          "push": 31.7333374023438
+        }
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "suite": "drone_combat",
+      "checks": 58,
+      "failures": [],
+      "observed": {
+        "attack_max_step": 0.0544900223612785,
+        "cannon_hit": {
+          "damage": 20,
+          "push": 21.3890075683594
+        },
+        "hover": {
+          "horizontal_span": 54.6506958007813,
+          "max_accel": 31.2201747894287,
+          "max_speed": 18.4876842498779,
+          "max_step": 0.128386706113815,
+          "vertical_span": 6.81333160400391
+        },
+        "self_destruct": {
+          "damage": 35,
+          "push": 33.0555419921875
+        }
+      },
+      "passed": true,
+      "physics_rate": 144
+    },
+    {
+      "script": "test_enemy_attack",
+      "checks": 29,
+      "failures": [],
+      "observations": {
+        "hit": {
+          "hurt_ticks": 19,
+          "pushed_px": -18.7,
+          "telegraph_ticks": 31
+        },
+        "late_dash_contact": 2
+      },
+      "status": "passed",
+      "suite": "enemy_attack"
+    },
+    {
+      "script": "test_perfect_counter",
+      "checks": 31,
+      "failures": [],
+      "observations": {
+        "clock_during_stop": 0.0,
+        "clock_steps": {
+          "hero": 0.1333,
+          "world": 0.0333
+        },
+        "counter_1": {
+          "damage": 3,
+          "side": -1.0
+        },
+        "counter_2": {
+          "damage": 3,
+          "side": -1.0
+        },
+        "slowmo_ticks": 72.0
+      },
+      "status": "passed",
+      "suite": "perfect_counter"
+    },
+    {
+      "script": "test_sniper_combat",
+      "checks": 135,
+      "failures": [],
+      "observed": {
+        "melee_push": 24.2666320800781,
+        "weapon_0": {
+          "damage": 18,
+          "push": 16.8000183105469
+        },
+        "weapon_1": {
+          "damage": 20,
+          "push": 20.533447265625
+        },
+        "weapon_2": {
+          "damage": 10,
+          "push": 0.0
+        },
+        "weapon_3": {
+          "damage": 6,
+          "push": 0.0
+        }
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "script": "test_combat_state",
+      "checks": 18,
+      "failures": [],
+      "observations": {
+        "clock_frozen_at": 0.816666666666668,
+        "queued_buffer_seconds": 0.39
+      },
+      "status": "passed",
+      "suite": "combat_state"
+    }
+  ],
+  "gpu_visual": {
+    "passed": true,
+    "gpu": "NVIDIA RTX 4060 Laptop GPU / OpenGL Compatibility",
+    "captured_frames": 711,
+    "visible_frames": {
+      "tracer": 119,
+      "muzzle": 15,
+      "warning": 35,
+      "explosion": 13,
+      "smoke": 36
+    },
+    "large_reaction_pixels": [
+      {
+        "stage": "front_right",
+        "visible_head_displacement_px": -9.901,
+        "neutral_return": true
+      },
+      {
+        "stage": "back_right",
+        "visible_head_displacement_px": 9.019,
+        "neutral_return": true
+      },
+      {
+        "stage": "front_left",
+        "visible_head_displacement_px": 9.901,
+        "neutral_return": true
+      },
+      {
+        "stage": "back_left",
+        "visible_head_displacement_px": -9.019,
+        "neutral_return": true
+      }
+    ],
+    "hurt_camera_frames_verified": 8,
+    "perfect_pose_frames": 8,
+    "perfect_cyan_fx_frames": 8,
+    "recorded_counter_damage": 3,
+    "rush_peak_speed": 220.0,
+    "rush_stayed_inside_territory": true
+  },
+  "hurt": {
+    "head_shift_front": 11,
+    "head_shift_back": 13,
+    "stun_seconds": 0.3,
+    "hit_protection_seconds": 0.65,
+    "camera_max_single_axis_px": 1,
+    "camera_seconds": 0.1
+  },
+  "perfect_dodge": {
+    "special_animation_seconds": 0.24,
+    "special_poses": 6,
+    "slowmo_scale": 0.25,
+    "counter_window_seconds": 1.2,
+    "counter_damage_multiplier": 3,
+    "max_teleport_distance": 260,
+    "body_sweep_required": true
+  },
+  "drone_pursuit": {
+    "shared_component": "game/scripts/enemies/enemy_territory.gd",
+    "fixed_spawn_radius": 280,
+    "collider_margin": 14,
+    "station_speed": 48,
+    "close_encounter_distance": 170,
+    "retreat_distance": 230,
+    "retreat_seconds": 0.65,
+    "rush_warning_seconds": 0.5,
+    "rush_initial_speed": 36,
+    "rush_max_speed": 220,
+    "rush_acceleration": 300,
+    "rush_max_seconds": 1.6,
+    "bound_applies_to_rush": true
+  },
+  "future_enemies": "Reuse the shared pursuit component. Self-destruction stays drone-specific. See game/scripts/enemies/AGENTS.md.",
+  "full_historical_chapter_regression_rerun": false
+}

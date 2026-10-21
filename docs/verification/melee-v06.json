@@ -1,0 +1,299 @@
+{
+  "version": "melee-v06",
+  "local_only": true,
+  "base_commit": "496c1884326bbd567c57b66f4e51195df02341e7",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "passed": true,
+  "checks": 595,
+  "suite_count": 11,
+  "suites": [
+    {
+      "checks": 42,
+      "failures": [],
+      "observed": {
+        "crowd": {
+          "hits": 3,
+          "longest_control": 2.2,
+          "longest_stun": 0.333333333333333,
+          "min_hit_interval": 2.43333333333332
+        },
+        "guard": {
+          "first_contact_delay": 0.566666666666667,
+          "recovery_checked": 0.433333333333334
+        },
+        "ordinary_dodge": {
+          "events": [
+            {
+              "kind": "melee",
+              "result": 1,
+              "time": 1.03333333333333
+            }
+          ],
+          "hp": 100,
+          "slowmo": false
+        },
+        "sniper": {
+          "first_contact_delay": 0.566666666666667,
+          "recovery_checked": 0.433333333333335
+        }
+      },
+      "passed": true,
+      "physics_rate": 30,
+      "suite": "melee_rhythm_v06"
+    },
+    {
+      "checks": 42,
+      "failures": [],
+      "observed": {
+        "crowd": {
+          "hits": 3,
+          "longest_control": 2.16666666666666,
+          "longest_stun": 0.316666666666667,
+          "min_hit_interval": 2.48333333333333
+        },
+        "guard": {
+          "first_contact_delay": 0.583333333333334,
+          "recovery_checked": 0.433333333333333
+        },
+        "ordinary_dodge": {
+          "events": [
+            {
+              "kind": "melee",
+              "result": 1,
+              "time": 0.983333333333335
+            }
+          ],
+          "hp": 100,
+          "slowmo": false
+        },
+        "sniper": {
+          "first_contact_delay": 0.550000000000001,
+          "recovery_checked": 0.433333333333332
+        }
+      },
+      "passed": true,
+      "physics_rate": 60,
+      "suite": "melee_rhythm_v06"
+    },
+    {
+      "checks": 42,
+      "failures": [],
+      "observed": {
+        "crowd": {
+          "hits": 3,
+          "longest_control": 2.18055555555555,
+          "longest_stun": 0.305555555555555,
+          "min_hit_interval": 2.47222222222229
+        },
+        "guard": {
+          "first_contact_delay": 0.604166666666665,
+          "recovery_checked": 0.42361111111111
+        },
+        "ordinary_dodge": {
+          "events": [
+            {
+              "kind": "melee",
+              "result": 1,
+              "time": 0.965277777777775
+            }
+          ],
+          "hp": 100,
+          "slowmo": false
+        },
+        "sniper": {
+          "first_contact_delay": 0.555555555555554,
+          "recovery_checked": 0.42361111111111
+        }
+      },
+      "passed": true,
+      "physics_rate": 144,
+      "suite": "melee_rhythm_v06"
+    },
+    {
+      "script": "test_enemy_attack",
+      "checks": 29,
+      "failures": [],
+      "observations": {
+        "hit": {
+          "hurt_ticks": 19,
+          "pushed_px": -18.7,
+          "telegraph_ticks": 33
+        },
+        "late_dash_contact": 2
+      },
+      "status": "passed",
+      "suite": "enemy_attack"
+    },
+    {
+      "script": "test_perfect_counter",
+      "checks": 31,
+      "failures": [],
+      "observations": {
+        "clock_during_stop": 0.0,
+        "clock_steps": {
+          "hero": 0.1333,
+          "world": 0.0333
+        },
+        "counter_1": {
+          "damage": 3,
+          "side": -1.0
+        },
+        "counter_2": {
+          "damage": 3,
+          "side": -1.0
+        },
+        "slowmo_ticks": 72.0
+      },
+      "status": "passed",
+      "suite": "perfect_counter"
+    },
+    {
+      "script": "test_player_hurt",
+      "checks": 52,
+      "failures": [],
+      "observed": {
+        "protection_seconds": 0.65,
+        "rates": 60,
+        "stun_seconds": 0.3
+      },
+      "passed": true,
+      "physics_rate": 60,
+      "suite": "player_hurt"
+    },
+    {
+      "script": "test_perfect_dodge_v05",
+      "checks": 41,
+      "failures": [],
+      "observed": {
+        "camera": {
+          "max_offset": 1.41421353816986,
+          "restored": true
+        },
+        "counter_1": {
+          "damage": 3,
+          "events": 1
+        },
+        "counter_2": {
+          "damage": 3,
+          "events": 1
+        }
+      },
+      "passed": true,
+      "physics_rate": 60,
+      "suite": "perfect_dodge_v05"
+    },
+    {
+      "script": "test_sniper_combat",
+      "checks": 135,
+      "failures": [],
+      "observed": {
+        "melee_push": 24.2666320800781,
+        "weapon_0": {
+          "damage": 18,
+          "push": 16.8000183105469
+        },
+        "weapon_1": {
+          "damage": 20,
+          "push": 20.533447265625
+        },
+        "weapon_2": {
+          "damage": 10,
+          "push": 0.0
+        },
+        "weapon_3": {
+          "damage": 6,
+          "push": 0.0
+        }
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "script": "test_combat_state",
+      "checks": 18,
+      "failures": [],
+      "observations": {
+        "clock_frozen_at": 0.816666666666668,
+        "queued_buffer_seconds": 0.39
+      },
+      "status": "passed",
+      "suite": "combat_state"
+    },
+    {
+      "script": "test_drone_combat",
+      "checks": 58,
+      "failures": [],
+      "observed": {
+        "attack_max_step": 0.127046495676041,
+        "cannon_hit": {
+          "damage": 20,
+          "push": 20.5333404541016
+        },
+        "hover": {
+          "horizontal_span": 54.6502380371094,
+          "max_accel": 41.2376117706299,
+          "max_speed": 18.48464012146,
+          "max_step": 0.308077365159988,
+          "vertical_span": 6.81275939941406
+        },
+        "self_destruct": {
+          "damage": 35,
+          "push": 31.7333374023438
+        }
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "script": "test_night_fight",
+      "checks": 105,
+      "failures": [],
+      "observations": {
+        "deaths": 1,
+        "entry": "res://scenes/boot.tscn",
+        "lessons": {
+          "frames": 183,
+          "tally": {
+            "clicks": 9,
+            "counters": 1,
+            "evade": 2,
+            "heavy_clicks": 2,
+            "hit": 3,
+            "perfect": 1,
+            "shift": 1
+          }
+        },
+        "results": 14
+      },
+      "status": "passed",
+      "suite": "night_fight"
+    }
+  ],
+  "gpu_visual": {
+    "passed": true,
+    "gpu": "NVIDIA RTX 4060 Laptop GPU / OpenGL Compatibility",
+    "captured_frames": 348,
+    "visible_red_windup_frames": 33,
+    "harmless_recovery_frames": 17,
+    "buffered_escape_after_hit_seconds": 0.3,
+    "perfect_animation_frames": 7,
+    "recorded_crowd_hits": 2,
+    "recorded_crowd_min_interval": 2.4833
+  },
+  "melee": {
+    "windup_min_seconds": 0.55,
+    "active_seconds": 0.1,
+    "recovery_min_seconds": 0.55,
+    "cooldown_min_seconds": 0.8,
+    "one_hit_per_swing": true
+  },
+  "hero": {
+    "stun_seconds": 0.3,
+    "hit_protection_seconds": 0.65,
+    "shared_melee_protection_seconds": 0.9,
+    "dodge_buffer": "Stun remainder plus 0.10 seconds",
+    "deliberate_dodge_can_be_perfect_during_melee_protection": true
+  },
+  "coverage": "Real guard and sniper close hits, punishable recovery, actual Shift evade/perfect counter, early-stun input retention, real crowd spacing, distinct melee sources during and after protection, solid cover, settings, slow motion and full chapter-night path",
+  "full_historical_chapter_regression_rerun": false
+}

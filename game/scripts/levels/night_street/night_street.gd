@@ -1,15 +1,13 @@
 extends Node2D
 ## Night street (side view only). F8 enters from an interior and returns to that interior's safe position.
 ## Run-NightStreet.cmd can also launch it directly; F8 then returns to the safe house.
-## Light = being watched: standing in the patrol drone's cone raises exposure; full exposure marks you.
+## Map exploration only: the unrequested patrol and melee drones have been removed.
 
 const PLAYER_SCENE = preload("res://scenes/player.tscn")
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const GAME_SESSION = preload("res://scripts/core/game_session.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
 const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
-const BEAM_DRONE = preload("res://scripts/levels/night_street/beam_drone.gd")
-const HOVER_TARGET = preload("res://scripts/levels/night_street/hover_target.gd")
 const RAIN = preload("res://scripts/levels/night_street/rain.gd")
 const EXPOSURE_HUD = preload("res://scripts/ui/exposure_hud.gd")
 const EMISSIVE = preload("res://shaders/emissive_add.gdshader")
@@ -39,7 +37,6 @@ const UNMARK_BELOW := 0.35
 
 var player: CharacterBody2D
 var camera: Camera2D
-var drone: Node2D
 var exposure := 0.0
 var marked := false
 var in_beam := false
@@ -47,7 +44,6 @@ var look_on := true
 var layout: Dictionary = {}
 var _parallax: Array = []
 var _lights: Array[PointLight2D] = []
-var _beam_light: PointLight2D
 var _hero_material: ShaderMaterial
 var _wet: ShaderMaterial
 var _fog: ShaderMaterial
@@ -141,22 +137,6 @@ func _build_world() -> void:
 		var light := _make_light(item[0], item[1], item[2], item[3])
 		world.add_child(light)
 		_lights.append(light)
-	drone = BEAM_DRONE.new()
-	drone.name = "PatrolDrone"
-	drone.position = Vector2(300, 14)
-	drone.floor_y = FLOOR_Y
-	drone.z_index = 1
-	world.add_child(drone)
-	_beam_light = _make_light(Vector2(300, FLOOR_Y - 8), BEAM_DRONE.WATCH, 1.2, 42.0)
-	world.add_child(_beam_light)
-	var hover_targets: Array = []
-	for spot in layout.get("targets", []):
-		var target := HOVER_TARGET.new()
-		target.max_hp = int(spot[2]) if spot.size() > 2 else 3
-		target.position = Vector2(spot[0], spot[1])
-		target.z_index = 1
-		world.add_child(target)
-		hover_targets.append(target)
 	player = PLAYER_SCENE.instantiate()
 	player.name = "Player"
 	player.view_mode = 1
@@ -164,8 +144,6 @@ func _build_world() -> void:
 	player.floor_snap_length = 6.0
 	player.z_index = 2
 	world.add_child(player)
-	for target in hover_targets:
-		target.attacker.bind_target(player)
 	_hero_material = player.get_node("Sprite").material as ShaderMaterial
 	_hero_material.set_shader_parameter("emission_lift", Vector3(1.0 / AMBIENT.r, 1.0 / AMBIENT.g, 1.0 / AMBIENT.b))
 	_hero_material.set_shader_parameter("emission_gain", 1.5)
@@ -304,15 +282,9 @@ func _physics_process(delta: float) -> void:
 	if not is_instance_valid(player):
 		return
 	_follow_player()
-	var feet := player.global_position + Vector2(0, -2)
-	in_beam = drone.contains(feet) or drone.contains(feet + Vector2(0, -14)) or drone.contains(feet + Vector2(0, -24))
-	exposure = clampf(exposure + (EXPOSURE_RISE if in_beam else -EXPOSURE_FALL) * delta, 0.0, 1.0)
-	if exposure >= 1.0:
-		marked = true
-	elif exposure < UNMARK_BELOW:
-		marked = false
-	drone.marked = marked
-	drone.target_x = player.global_position.x if marked else -1.0
+	in_beam=false
+	exposure=0.0
+	marked=false
 	_update_hero_light()
 
 
@@ -322,8 +294,6 @@ func _process(delta: float) -> void:
 	var left := camera.get_screen_center_position().x - VIEWPORT_SIZE.x * 0.5
 	for entry in _parallax:
 		entry[0].position.x = roundf(left * (1.0 - entry[1]))
-	_beam_light.position = drone.ground_spot() + Vector2(0, -8)
-	_beam_light.color = drone.light_color()
 	_wet.set_shader_parameter("scroll_x", left)
 	_fog.set_shader_parameter("scroll_x", left)
 	_rain.scroll_x = left
@@ -356,8 +326,6 @@ func _update_hero_light() -> void:
 		var influence := light.energy * clampf(1.0 - to_light.length() / float(light.get_meta("radius")), 0.0, 1.0)
 		if influence > 0.03:
 			candidates.append([influence, to_light.normalized(), light.color])
-	if in_beam:
-		candidates.append([1.4, (drone.global_position - chest).normalized(), drone.light_color()])
 	candidates.sort_custom(func(a: Array, b: Array) -> bool: return a[0] > b[0])
 	var rims := [[Vector2.UP, Color(0.31, 0.94, 1.0), 0.15], [Vector2.RIGHT, Color(1.0, 0.24, 0.6), 0.0]]
 	for index in range(mini(2, candidates.size())):

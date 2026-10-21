@@ -1,7 +1,8 @@
 extends Node
 ## Telegraphed straight-line lunge for an enemy body (the parent, a Node2D in the world). Once the hero is in reach
 ## the parent blinks red for telegraph_seconds, aiming at the hero until lock_lead seconds before the end, then
-## rushes at the locked point in lunge_seconds. The hit window is the last active_seconds of the rush: the first
+## rushes at the locked point in lunge_seconds. Shared minima keep both the tell and recovery at 0.55 s.
+## The hit window is the last active_seconds of the rush: the first
 ## overlap with the hero's hurtbox calls hero.receive_attack(attack); a window that closes without contact still
 ## reports once (contact = false), so a dash that took the hero out of the line of fire can count as a perfect
 ## dodge. Then the body hangs for recover_seconds, drifts back to its post and waits cooldown_seconds.
@@ -16,16 +17,17 @@ extends Node
 signal telegraph_started
 signal lunge_started(aim: Vector2)
 signal attack_resolved(result: int)
+const RHYTHM = preload("res://scripts/enemies/melee_rhythm.gd")
 
 enum Phase { IDLE, TELEGRAPH, LUNGE, RECOVER, RETURN, COOLDOWN }
 
 @export var reach := Vector2(96, 40)
-@export var telegraph_seconds := 0.5
+@export var telegraph_seconds := RHYTHM.WINDUP_SECONDS
 @export var lock_lead := 0.2
 @export var lunge_seconds := 0.18
 @export var lunge_overshoot := 10.0
-@export var active_seconds := 0.12
-@export var recover_seconds := 0.25
+@export var active_seconds := RHYTHM.ACTIVE_SECONDS
+@export var recover_seconds := RHYTHM.RECOVERY_SECONDS
 @export var return_speed := 70.0
 @export var cooldown_seconds := 1.2
 ## Attack box around the parent's origin, native px.
@@ -61,6 +63,9 @@ var _base_modulate := Color.WHITE
 
 
 func _ready() -> void:
+	telegraph_seconds=maxf(telegraph_seconds,RHYTHM.WINDUP_SECONDS)
+	recover_seconds=maxf(recover_seconds,RHYTHM.RECOVERY_SECONDS)
+	cooldown_seconds=maxf(cooldown_seconds,RHYTHM.MIN_COOLDOWN_SECONDS)
 	_body = get_parent()
 	post = _body.global_position
 	_base_modulate = _body.modulate
@@ -94,12 +99,17 @@ func _physics_process(delta: float) -> void:
 		phase_time = 0.0
 		return
 	phase_time += delta * world_scale()
+	if phase==Phase.TELEGRAPH and not armed:
+		stagger(RHYTHM.MIN_COOLDOWN_SECONDS)
 	match phase:
 		Phase.IDLE:
 			# The post follows the body while it idles, so a scene can still move or bob the enemy.
 			post = _body.global_position
-			if armed and _in_reach():
+			if armed and _in_reach() and RHYTHM.can_begin(target,telegraph_seconds):
 				_enter(Phase.TELEGRAPH)
+				aim=target.global_position+aim_offset
+				if horizontal:
+					aim.y=_body.global_position.y
 				telegraph_started.emit()
 		Phase.TELEGRAPH:
 			if phase_time <= telegraph_seconds - lock_lead:
@@ -118,7 +128,12 @@ func _physics_process(delta: float) -> void:
 			var goal := aim + heading * (lunge_overshoot - standoff)
 			if (goal - _start).dot(heading) < 0.0:
 				goal = _start
-			_body.global_position = _start.lerp(goal, minf(1.0, phase_time / lunge_seconds))
+			# Ease the physical step into and out of the swing; collision still resolves each tick.
+			var next := _start.lerp(goal, smoothstep(0.0, lunge_seconds, phase_time))
+			if _body is PhysicsBody2D:
+				(_body as PhysicsBody2D).move_and_collide(next-_body.global_position)
+			else:
+				_body.global_position=next
 			if not resolved and window_age() >= 0.0:
 				if hit_rect().intersects(target.call("hurtbox")):
 					_resolve(true)
@@ -127,7 +142,7 @@ func _physics_process(delta: float) -> void:
 			if phase_time >= lunge_seconds:
 				_enter(Phase.RECOVER)
 		Phase.RECOVER:
-			if phase_time >= recover_seconds:
+			if phase_time >= maxf(recover_seconds,RHYTHM.RECOVERY_SECONDS):
 				if returns:
 					_enter(Phase.RETURN)
 				else:
@@ -138,7 +153,7 @@ func _physics_process(delta: float) -> void:
 			if _body.global_position.distance_to(post) < 0.5:
 				_enter(Phase.COOLDOWN)
 		Phase.COOLDOWN:
-			if phase_time >= cooldown_seconds:
+			if phase_time >= maxf(cooldown_seconds,RHYTHM.MIN_COOLDOWN_SECONDS):
 				_enter(Phase.IDLE)
 
 
@@ -182,9 +197,13 @@ func _in_reach() -> bool:
 
 func _resolve(contact: bool) -> void:
 	resolved = true
+	var origin := _body.global_position+Vector2(0,-13) if horizontal else _body.global_position
+	var ray := PhysicsRayQueryParameters2D.create(origin,target.hurtbox().get_center(),1)
+	if not _body.get_world_2d().direct_space_state.intersect_ray(ray).is_empty():
+		return
 	var direction := Vector2(signf(aim.x - _start.x), 0.0)
 	if direction.x == 0.0:
 		direction.x = 1.0
 	last_result = int(target.call("receive_attack", {"source": _body, "direction": direction, "contact": contact,
-		"window_age": clampf(window_age(), 0.0, active_seconds), "knockback": knockback, "damage": damage}))
+		"window_age": clampf(window_age(), 0.0, active_seconds), "knockback": knockback, "damage": damage,"attack_kind":"melee"}))
 	attack_resolved.emit(last_result)

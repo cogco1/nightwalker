@@ -116,7 +116,7 @@ func run() -> void:
 	observed.melee_push=hero_x-arena.player.position.x
 	await fresh(30.0)
 	check(await until(func() -> bool: return arena.sniper.phase==arena.sniper.Phase.MELEE),"A fresh close attacker starts a new strike")
-	await seconds(0.12)
+	await seconds(arena.sniper.MELEE_WINDUP-0.16)
 	key(KEY_SHIFT,true)
 	await frames(2)
 	key(KEY_SHIFT,false)
