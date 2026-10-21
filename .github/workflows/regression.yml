@@ -1,0 +1,65 @@
+name: Regression
+
+# Windows PowerShell 5.1 runs the same scripts as Test-Game.cmd. The runner's code page is not Chinese, so
+# tools/Check-Scripts.ps1 checks the UTF-8 BOM that 5.1 needs on Chinese Windows directly.
+# Godot comes from the official 4.7.2 release, checked against the release asset's SHA-256.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: regression-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    name: Godot 4.7.2 on Windows PowerShell 5.1
+    runs-on: windows-latest
+    timeout-minutes: 60
+    env:
+      GODOT_VERSION: 4.7.2-stable
+      GODOT_ZIP_SHA256: 731980f9608d61333e5baf54a2ef17210acc7a538446c0cb9969f002aca1e953
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Install Godot ${{ env.GODOT_VERSION }}
+        id: godot
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $ProgressPreference = 'SilentlyContinue'
+          $name = "Godot_v$($env:GODOT_VERSION)_win64.exe"
+          $zip = Join-Path $env:RUNNER_TEMP "$name.zip"
+          Invoke-WebRequest -Uri "https://github.com/godotengine/godot/releases/download/$($env:GODOT_VERSION)/$name.zip" -OutFile $zip
+          $hash = (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($hash -ne $env:GODOT_ZIP_SHA256) { throw "Godot download SHA-256 is $hash, expected $($env:GODOT_ZIP_SHA256)" }
+          Expand-Archive -LiteralPath $zip -DestinationPath (Join-Path $env:RUNNER_TEMP 'godot')
+          & (Join-Path $env:RUNNER_TEMP "godot\Godot_v$($env:GODOT_VERSION)_win64_console.exe") --version
+          $PSVersionTable.PSVersion.ToString()
+
+      - name: Regression (tools/Test-Game.ps1)
+        shell: cmd
+        env:
+          NIGHTWALKER_GODOT: ${{ runner.temp }}\godot\Godot_v${{ env.GODOT_VERSION }}_win64.exe
+        run: powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools\Test-Game.ps1
+
+      - name: Parse check (tools/Check-Scripts.ps1)
+        if: ${{ !cancelled() && steps.godot.outcome == 'success' }}
+        shell: cmd
+        env:
+          NIGHTWALKER_GODOT: ${{ runner.temp }}\godot\Godot_v${{ env.GODOT_VERSION }}_win64.exe
+        run: powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools\Check-Scripts.ps1
+
+      - name: Upload Godot logs
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: godot-logs
+          path: game/evidence/logs/
+          if-no-files-found: ignore
