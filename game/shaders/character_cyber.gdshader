@@ -17,6 +17,9 @@ uniform float glow_strength : hint_range(0.0, 2.0) = 0.8;
 uniform vec3 emission_lift = vec3(1.0);
 uniform float emission_gain = 1.0;
 uniform float body_lift = 1.0;
+// Waist bend in native pixels; feet remain planted and all palette/rim samples follow the bent silhouette.
+uniform vec2 hurt_shift = vec2(0.0);
+uniform float hurt_foot_y = 84.0;
 // Reflective tape (lookup row 3): dull silver in the dark, flares to the colour of the light that hits it.
 uniform vec4 reflect_base : source_color = vec4(0.38, 0.36, 0.5, 1.0);
 uniform vec4 reflect_color : source_color = vec4(0.85, 0.95, 1.0, 1.0);
@@ -63,9 +66,15 @@ void vertex() {
 	modulate = COLOR;
 }
 
+vec2 posed_uv(vec2 uv, vec2 px) {
+	float height = hurt_foot_y - uv.y / px.y;
+	float weight = smoothstep(3.0, 26.0, height);
+	return uv - floor(hurt_shift * weight + vec2(0.5)) * px;
+}
+
 void fragment() {
-	vec4 source = texture(TEXTURE, UV);
 	vec2 px = TEXTURE_PIXEL_SIZE;
+	vec4 source = texture(TEXTURE, posed_uv(UV, px));
 	vec4 result = source;
 	float self_emission = 0.0;
 
@@ -81,10 +90,10 @@ void fragment() {
 			float rim_a = 0.0;
 			float rim_b = 0.0;
 			float edge = 0.0;
-			edge_term(texture(TEXTURE, UV + vec2(px.x, 0.0)).a, vec2(1.0, 0.0), edge, rim_a, rim_b);
-			edge_term(texture(TEXTURE, UV - vec2(px.x, 0.0)).a, vec2(-1.0, 0.0), edge, rim_a, rim_b);
-			edge_term(texture(TEXTURE, UV + vec2(0.0, px.y)).a, vec2(0.0, 1.0), edge, rim_a, rim_b);
-			edge_term(texture(TEXTURE, UV - vec2(0.0, px.y)).a, vec2(0.0, -1.0), edge, rim_a, rim_b);
+			edge_term(texture(TEXTURE, posed_uv(UV + vec2(px.x, 0.0), px)).a, vec2(1.0, 0.0), edge, rim_a, rim_b);
+			edge_term(texture(TEXTURE, posed_uv(UV - vec2(px.x, 0.0), px)).a, vec2(-1.0, 0.0), edge, rim_a, rim_b);
+			edge_term(texture(TEXTURE, posed_uv(UV + vec2(0.0, px.y), px)).a, vec2(0.0, 1.0), edge, rim_a, rim_b);
+			edge_term(texture(TEXTURE, posed_uv(UV - vec2(0.0, px.y), px)).a, vec2(0.0, -1.0), edge, rim_a, rim_b);
 			float strength_a = step(0.45, rim_a) * rim_a_color.a * look;
 			float strength_b = step(0.45, rim_b) * rim_b_color.a * look;
 			float unlit = edge * (1.0 - step(0.2, max(rim_a * rim_a_color.a, rim_b * rim_b_color.a)));
@@ -109,7 +118,7 @@ void fragment() {
 				if (distance_px < 0.5 || distance_px > float(GLOW_RADIUS) + 0.5) {
 					continue;
 				}
-				vec4 emission = emission_for(texture(TEXTURE, UV + vec2(float(x), float(y)) * px));
+				vec4 emission = emission_for(texture(TEXTURE, posed_uv(UV + vec2(float(x), float(y)) * px, px)));
 				float falloff = pow(1.0 - distance_px / (float(GLOW_RADIUS) + 1.0), 2.0);
 				float weight = emission.a * falloff;
 				if (weight > halo_alpha) {

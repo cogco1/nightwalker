@@ -120,7 +120,7 @@ func verify_hit() -> void:
 		telegraph_ticks += 1
 		await frames(1)
 	check(red_seen and plain_seen, "the drone blinks red during the telegraph")
-	check(absi(telegraph_ticks - 30) <= 2, "the telegraph lasts about 0.5 s")
+	check(absi(telegraph_ticks - roundi(attacker.telegraph_seconds*60.0)) <= 2, "the full readable melee windup completes before the lunge")
 	check(phase() == attacker.Phase.LUNGE, "the telegraph ends in the lunge")
 	var start_x := player.position.x
 	check(await wait_until(func() -> bool: return not results.is_empty(), 30), "the lunge resolves against the hero")
@@ -133,7 +133,8 @@ func verify_hit() -> void:
 		hurt_ticks += 1
 		await frames(1)
 	var pushed := player.position.x - start_x
-	check(tint_seen and player.sprite.modulate == Color.WHITE, "the hero blinks red while stunned and returns to normal colour")
+	check(tint_seen and player.sprite.modulate != player.HURT_TINT and player.hit_invulnerability_left > 0.0,
+		"the red stun blink gives way to a pale protection pulse when control returns")
 	check(absi(hurt_ticks - 18) <= 2, "the stun lasts about 0.3 s")
 	check(pushed <= -15.0 and pushed >= -25.0, "the hit knocks the hero about 20 px away from the drone")
 	check(player.state == player.State.FREE, "the hero is free after the stun")

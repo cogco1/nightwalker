@@ -5,7 +5,7 @@ extends CharacterBody2D
 ## hits juggle it, the last hit leaves a body on the floor. It does not block the hero (a collision exception).
 ## Its own time runs on the world clock (GameSession.world_time_scale), so the perfect-dodge slow motion slows it.
 ##
-## The kinds (guard.gd, gunner.gd, buyer.gd, doctor.gd) say what an active one does in think() and how it looks
+## The kinds (sniper.gd) say what an active one does in think() and how it looks
 ## in figure(); night_fight.gd wakes them (active), holds them during story moments (held) and binds the hero.
 
 signal defeated(enemy: Node2D)

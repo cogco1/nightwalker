@@ -1,0 +1,248 @@
+{
+  "version": "combat-v04",
+  "repository_base_commit": "496c1884326bbd567c57b66f4e51195df02341e7",
+  "local_only": true,
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "passed": true,
+  "suites": [
+    {
+      "suite": "player_hurt",
+      "checks": 52,
+      "failures": [],
+      "observed": {
+        "protection_seconds": 0.65,
+        "rates": 30,
+        "stun_seconds": 0.3
+      },
+      "passed": true,
+      "physics_rate": 30
+    },
+    {
+      "suite": "player_hurt",
+      "checks": 52,
+      "failures": [],
+      "observed": {
+        "protection_seconds": 0.65,
+        "rates": 60,
+        "stun_seconds": 0.3
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "suite": "player_hurt",
+      "checks": 52,
+      "failures": [],
+      "observed": {
+        "protection_seconds": 0.65,
+        "rates": 144,
+        "stun_seconds": 0.3
+      },
+      "passed": true,
+      "physics_rate": 144
+    },
+    {
+      "suite": "drone_combat",
+      "checks": 58,
+      "failures": [],
+      "observed": {
+        "attack_max_step": 1.49818766117096,
+        "cannon_hit": {
+          "damage": 20,
+          "push": 19.1644439697266
+        },
+        "hover": {
+          "horizontal_span": 54.6495666503906,
+          "max_accel": 29.7308725118637,
+          "max_speed": 18.4839401245117,
+          "max_step": 0.61613130569458,
+          "vertical_span": 6.81222534179688
+        },
+        "self_destruct": {
+          "damage": 35,
+          "push": 29.6177673339844
+        }
+      },
+      "passed": true,
+      "physics_rate": 30
+    },
+    {
+      "suite": "drone_combat",
+      "checks": 58,
+      "failures": [],
+      "observed": {
+        "attack_max_step": 0.740833938121796,
+        "cannon_hit": {
+          "damage": 20,
+          "push": 20.5333404541016
+        },
+        "hover": {
+          "horizontal_span": 54.6502685546875,
+          "max_accel": 29.8434054851532,
+          "max_speed": 18.48464012146,
+          "max_step": 0.308077365159988,
+          "vertical_span": 6.81319427490234
+        },
+        "self_destruct": {
+          "damage": 35,
+          "push": 31.7333374023438
+        }
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "suite": "drone_combat",
+      "checks": 58,
+      "failures": [],
+      "observed": {
+        "attack_max_step": 0.307345181703568,
+        "cannon_hit": {
+          "damage": 20,
+          "push": 21.3890075683594
+        },
+        "hover": {
+          "horizontal_span": 54.6507568359375,
+          "max_accel": 29.967280626297,
+          "max_speed": 18.4876842498779,
+          "max_step": 0.128386706113815,
+          "vertical_span": 6.81340026855469
+        },
+        "self_destruct": {
+          "damage": 35,
+          "push": 33.0555419921875
+        }
+      },
+      "passed": true,
+      "physics_rate": 144
+    },
+    {
+      "script": "test_enemy_attack",
+      "checks": 29,
+      "failures": [],
+      "observations": {
+        "hit": {
+          "hurt_ticks": 19,
+          "pushed_px": -18.7,
+          "telegraph_ticks": 31
+        },
+        "late_dash_contact": 2
+      },
+      "status": "passed",
+      "suite": "enemy_attack"
+    },
+    {
+      "script": "test_perfect_counter",
+      "checks": 31,
+      "failures": [],
+      "observations": {
+        "clock_during_stop": 0.0,
+        "clock_steps": {
+          "hero": 0.1333,
+          "world": 0.0333
+        },
+        "counter_1": {
+          "damage": 3,
+          "side": -1.0
+        },
+        "counter_2": {
+          "damage": 3,
+          "side": -1.0
+        },
+        "slowmo_ticks": 72.0
+      },
+      "status": "passed",
+      "suite": "perfect_counter"
+    },
+    {
+      "script": "test_sniper_combat",
+      "checks": 135,
+      "failures": [],
+      "observed": {
+        "melee_push": 24.2666320800781,
+        "weapon_0": {
+          "damage": 18,
+          "push": 16.8000183105469
+        },
+        "weapon_1": {
+          "damage": 20,
+          "push": 20.533447265625
+        },
+        "weapon_2": {
+          "damage": 10,
+          "push": 0.0
+        },
+        "weapon_3": {
+          "damage": 6,
+          "push": 0.0
+        }
+      },
+      "passed": true,
+      "physics_rate": 60
+    },
+    {
+      "script": "test_combat_state",
+      "checks": 18,
+      "failures": [],
+      "observations": {
+        "clock_frozen_at": 0.816666666666668,
+        "queued_buffer_seconds": 0.39
+      },
+      "status": "passed",
+      "suite": "combat_state"
+    }
+  ],
+  "suite_count": 10,
+  "checks": 543,
+  "gpu_visual": {
+    "passed": true,
+    "captured_frames": 540,
+    "gpu": "NVIDIA RTX 4060 Laptop GPU / OpenGL Compatibility",
+    "visible_frames": {
+      "tracer": 89,
+      "muzzle": 15,
+      "warning": 35,
+      "explosion": 7,
+      "smoke": 24
+    },
+    "directional_reaction_pixels": [
+      {
+        "stage": "front_right",
+        "visible_head_displacement_px": -5.613,
+        "recovered": true
+      },
+      {
+        "stage": "back_right",
+        "visible_head_displacement_px": 5.777,
+        "recovered": true
+      },
+      {
+        "stage": "front_left",
+        "visible_head_displacement_px": 5.613,
+        "recovered": true
+      },
+      {
+        "stage": "back_left",
+        "visible_head_displacement_px": -5.777,
+        "recovered": true
+      }
+    ],
+    "method": "Real game screenshots; warm tracer/flash/fire pixels, red warning, smoke, and head displacement relative to physical player root"
+  },
+  "player": {
+    "hit_protection_seconds": 0.65,
+    "stun_seconds": 0.3,
+    "directional_animation": "Procedural native-pixel waist bend, front/rear and left/right, no new hand-drawn frames",
+    "stacking": "Rejected damage does not extend protection or add knockback; independent of perfect-dodge invulnerability"
+  },
+  "drone": {
+    "critical_health_ratio": 0.25,
+    "critical_hp_default": 3,
+    "fuse_seconds": 1.2,
+    "blast_radius": 64,
+    "damage": 35,
+    "knockback": 34,
+    "visual_seconds": 0.78
+  },
+  "full_historical_chapter_regression_rerun": false
+}

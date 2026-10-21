@@ -27,8 +27,7 @@ func record(count:int,label:String) -> void:
 		root.get_texture().get_image().save_png(OUTPUT+"/%04d.png"%index)
 		states.append({"frame":index,"section":section,"move":String(p.move_id),"stage":p.combo_stage,"pose":p.sprite.frame,"animation":String(p.sprite.animation),"texture":p.sprite.sprite_frames.get_frame_texture(p.sprite.animation,p.sprite.frame).resource_path,
 			"position":[p.position.x,p.position.y],"velocity":[p.velocity.x,p.velocity.y],"clock":p.combat_time,"paused":paused,
-			"charging":p.is_charging,"primary_pending":not p._primary_press.is_empty(),"charge_time":p.charge_time,
-			"draw_cuts":p.fx.draw_cut.cuts.size(),"camera_kick":[street.camera.offset.x,street.camera.offset.y]})
+			"charging":p.is_charging,"primary_pending":not p._primary_press.is_empty(),"charge_time":p.charge_time,"camera_kick":[street.camera.offset.x,street.camera.offset.y]})
 		index+=1
 
 func click(which:MouseButton,label:String) -> void:

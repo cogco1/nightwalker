@@ -9,7 +9,6 @@ extends Node2D
 ## Decorative randomness has its own generator, so effects never shift the player's critical-hit rolls.
 
 const IMPACT_V2 = preload("res://scripts/player/impact_v2.gd")
-const CHARGED_DRAW = preload("res://scripts/player/charged_draw.gd")
 const MAX_BLADE_PIXELS := 330
 const WHITE := Color("f2f8ff")
 const BLUE := Color("8ebce8")
@@ -33,7 +32,6 @@ var rng := RandomNumberGenerator.new()
 var arc_width := 1
 var _glow: Node2D
 var contact_fx: Node2D
-var draw_cut: Node2D
 
 
 func _ready() -> void:
@@ -49,9 +47,6 @@ func _ready() -> void:
 	contact_fx = IMPACT_V2.new()
 	contact_fx.name = "ContactInk"
 	add_child(contact_fx)
-	draw_cut=CHARGED_DRAW.new()
-	draw_cut.name="ChargedDraw"
-	add_child(draw_cut)
 	var owner_player := get_parent()
 	if owner_player != null and owner_player.has_signal("move_started"):
 		owner_player.move_started.connect(_on_move_started)
@@ -176,7 +171,6 @@ func ghost(texture: Texture2D, at: Vector2, life: float) -> void:
 
 func step(delta: float) -> void:
 	contact_fx.step(delta)
-	draw_cut.step(delta)
 	for index in range(afterimages.size() - 1, -1, -1):
 		afterimages[index]["life"] = float(afterimages[index]["life"]) - delta
 		if float(afterimages[index]["life"]) <= 0.0:

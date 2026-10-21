@@ -8,6 +8,7 @@ const LEVEL_KIT = preload("res://scripts/levels/level_kit.gd")
 const ELEVATOR = preload("res://scripts/battlefield_elevator.gd")
 const AMBIENT = preload("res://scripts/battlefield_ambient.gd")
 const PIXEL_UI = preload("res://scripts/ui/pixel_ui.gd")
+const SESSION = preload("res://scripts/core/game_session.gd")
 const BACKGROUND_PATH := "res://assets/battlefield_layer_01/battlefield_layer_01_native.png"
 const FAR_BACKGROUND_PATH := "res://assets/battlefield_far_background/battlefield_far_native.png"
 const MID_BACKGROUND_PATH := "res://assets/battlefield_mid_background/battlefield_mid_native.png"
@@ -47,6 +48,7 @@ var ready_for_test := false
 var smoke_report: Dictionary = {}
 var _smoke := false
 var _smoke_layer_totals: Dictionary = {}
+var session: Node
 
 
 func _ready() -> void:
@@ -57,7 +59,7 @@ func _ready() -> void:
 	window.content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
 	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
 	window.content_scale_stretch = Window.CONTENT_SCALE_STRETCH_INTEGER
-	window.title = "夜行者 · 废车烟火与工业战场 v10"
+	window.title = "夜行者 · 序章 · 工厂黄沙"
 	_smoke = OS.get_cmdline_user_args().has("--battlefield-smoke")
 	if _smoke:
 		CONTROLS.settings_path = "user://battlefield_smoke_keybindings.cfg"
@@ -70,10 +72,14 @@ func _ready() -> void:
 	_build_terrain()
 	_build_player()
 	_build_camera()
+	session=SESSION.new()
+	session.name="GameSession"
+	add_child(session)
+	_build_entry_link()
 	_follow_player()
 	ambient.update_at(0.0)
 	ready_for_test = true
-	print("战场跑步试玩 | %s/%s 左右移动 | 长按 %s 奔跑 | %s 跳跃 | %s 返回起点 | Esc 退出" % [
+	print("战场跑步试玩 | %s/%s 左右移动 | 长按 %s 奔跑 | %s 跳跃 | %s 返回起点 | F1 设置；左上角返回入口" % [
 		CONTROLS.hint_text("move_left"), CONTROLS.hint_text("move_right"),
 		CONTROLS.hint_text("run"), CONTROLS.hint_text("jump"), CONTROLS.hint_text("reset_arena")])
 	print("原生像素: 背景 %d×%d / y=-256 / scale 1；地形 %d×%d；主角 scale 1；视口 320×180。" % [art_size.x, art_size.y, world_size.x, world_size.y])
@@ -369,6 +375,8 @@ func foreground_covers_view() -> bool:
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if session!=null and session.settings_open:
+		return
 	if not event.is_pressed() or event.is_echo():
 		return
 	if CONTROLS.is_interact(event) and elevator != null and ready_for_test:
@@ -379,13 +387,37 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	var key_event := event as InputEventKey
 	var code := key_event.physical_keycode if key_event.physical_keycode != 0 else key_event.keycode
 	if code == KEY_ESCAPE:
-		get_tree().quit()
+		return_to_entry()
 	elif event.is_action_pressed("reset_arena") and ready_for_test:
 		player.clear_input_buffer()
 		CONTROLS.release_actions()
 		player.position = Vector2(START_X, ground_y_at(START_X) - 1.0)
 		player.velocity = Vector2.ZERO
 		_follow_player()
+
+
+func _build_entry_link() -> void:
+	var canvas := CanvasLayer.new()
+	canvas.name="PrologueUI"
+	add_child(canvas)
+	var back := Button.new()
+	back.name="BackToEntry"
+	back.text="返回入口"
+	back.position=Vector2(4,4)
+	back.size=Vector2(60,20)
+	back.add_theme_font_override("font",PIXEL_UI.small_font())
+	back.add_theme_font_size_override("font_size",10)
+	back.pressed.connect(return_to_entry)
+	canvas.add_child(back)
+
+
+func return_to_entry() -> void:
+	session.cancel_hit_stop()
+	session.end_slowmo()
+	player.clear_input_buffer()
+	CONTROLS.release_actions()
+	get_tree().paused=false
+	get_tree().change_scene_to_file.call_deferred("res://scenes/boot.tscn")
 
 
 func _key(code: int, pressed: bool) -> void:

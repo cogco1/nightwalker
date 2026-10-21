@@ -66,7 +66,7 @@ func _build_ui() -> void:
 	title_label = PIXEL_UI.label(self, Vector2(9, 6), Vector2(302, 14), "", 12)
 	unit_label = PIXEL_UI.label(self, Vector2(9, 23), Vector2(302, 12), "", 10, true, PIXEL_UI.small_font())
 	action_label = PIXEL_UI.label(self, Vector2(9, 39), Vector2(302, 12), "", 10, true, PIXEL_UI.small_font())
-	PIXEL_UI.label(self, Vector2(9, 143), Vector2(302, 12), "← → / 1—8 换兵种　↑ ↓ 换动作", 10, true, PIXEL_UI.small_font())
+	PIXEL_UI.label(self, Vector2(9, 143), Vector2(302, 12), "← → / 1—2 换兵种　↑ ↓ 换动作", 10, true, PIXEL_UI.small_font())
 	PIXEL_UI.label(self, Vector2(9, 157), Vector2(302, 12), "A D 移动　F 攻击　S 卧倒　空格暂停", 10, true, PIXEL_UI.small_font())
 
 
@@ -193,7 +193,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			if paused: sprite.pause()
 			else: sprite.play()
 		_:
-			if event.keycode >= KEY_1 and event.keycode <= KEY_8:
+			if event.keycode >= KEY_1 and event.keycode <= KEY_2:
 				select_unit(event.keycode - KEY_1)
 
 

@@ -453,7 +453,8 @@ func run_tests() -> void:
 		for animation in frames.get_animation_names():
 			clip_count += 1
 			frame_count += frames.get_frame_count(animation)
-			check(frames.get_frame_count(animation) == 16, "16-frame clip: " + animation)
+			var expected_frames := 6 if String(animation).begins_with("perfect_dodge_") else 16
+			check(frames.get_frame_count(animation) == expected_frames, "complete native clip: " + animation)
 			var first_texture: Texture2D = frames.get_frame_texture(animation, 0)
 			var expected_size := Vector2(48,48)
 			if path.ends_with("side_view.tres"):
@@ -478,7 +479,7 @@ func run_tests() -> void:
 				check(idle_has_drawn_motion, "cloth/shoulder breathing is drawn inside sprite: " + animation)
 				check(idle_face_is_fixed, "breathing keeps exposed face pixels fixed: " + animation)
 				check(first_face.size() <= 3 and (first_face.is_empty() if String(animation).ends_with("_up") else not first_face.is_empty()), "hood exposes only a few face pixels: " + animation)
-	check(clip_count == 76 and frame_count == 1216, "76 clips reference1216 frames including four charge links, with1152 unique original PNGs")
+	check(clip_count == 82 and frame_count == 1252, "82 clips include the six requested perfect-dodge animations and retain the original frames")
 	check(root.content_scale_size == Vector2i(320,180), "320x180 native viewport")
 	check(arena.player.sprite.scale == Vector2.ONE, "character native scale")
 	check(arena.player.sprite.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST or arena.player.texture_filter == CanvasItem.TEXTURE_FILTER_NEAREST, "nearest pixel filtering")

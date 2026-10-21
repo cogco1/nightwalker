@@ -1,5 +1,4 @@
 extends "res://tests/test_air_dash_animation_v14.gd"
-const HOVER=preload("res://scripts/levels/night_street/hover_target.gd")
 
 func held_charge(direction:int) -> void:
 	await reset()
@@ -66,46 +65,11 @@ func short_taps() -> void:
 	mouse(true);await tick(8);p.clear_input_buffer();mouse(false);await tick(100)
 	check(not p.is_attacking and not p.is_charging,"cancelled gesture never becomes a delayed light or charged attack")
 
-func production_launch(direction:int) -> void:
-	await reset()
-	var p:CharacterBody2D=arena.player
-	p.position=Vector2(80 if direction>0 else 120,160)
-	p.facing="right" if direction>0 else "left";p.attack_direction=Vector2(direction,0)
-	var target:=HOVER.new();target.max_hp=20;target.position=p.position+Vector2(direction*32,0)
-	arena.world.add_child(target);target.attacker.process_mode=Node.PROCESS_MODE_DISABLED
-	await tick(6)
-	var origin:Vector2=target.position
-	mouse(true)
-	for _i in range(180):
-		if p.is_charging and p.charge_time>=.55:break
-		await tick()
-	check(target.hp==20,"production target takes no mandatory light before charging")
-	mouse(false)
-	for _i in range(90):
-		if target.hp<20:break
-		await tick()
-	check(target.hp==14 and target._charged_airborne and target._charged_velocity.y<0,"charged cut launches the production drone")
-	var minimum_y:float=target.position.y
-	var body_follows:=true
-	for _i in range(250):
-		await tick()
-		minimum_y=minf(minimum_y,target.position.y)
-		body_follows=body_follows and target.damage_point().is_equal_approx(target.global_position+Vector2(0,-17)) and target._shape.global_position.is_equal_approx(target.global_position+Vector2(0,-13))
-		if not target._charged_airborne and not paused:break
-	check(origin.y-minimum_y>45,"production drone visibly rises through a real launch arc")
-	check(body_follows,"production hitbox and aim point follow the launched body")
-	check(not target._charged_airborne and target.position.y<=160.1,"production drone settles onto a floor or its hover plane")
-	check(target.attacker.process_mode==Node.PROCESS_MODE_DISABLED,"landing restores the original AI mode instead of forcing it on")
-	check(target.hp==14,"production flight causes no second damage event")
-	target.queue_free();await tick(5)
-
 func run_tests() -> void:
 	CONTROLS.install(false);arena=MAIN.instantiate();root.add_child(arena)
 	await held_charge(1)
 	await held_charge(-1)
 	await short_taps()
-	await production_launch(1)
-	await production_launch(-1)
 	var report={"suite":"direct_charge","status":"passed" if failures.is_empty() else "failed","checks":checks,"failures":failures,"observations":observations}
 	print(JSON.stringify(report));FileAccess.open("res://evidence/direct_charge_report.json",FileAccess.WRITE).store_string(JSON.stringify(report,"\t"))
 	arena.queue_free();await tick(6);quit(0 if failures.is_empty() else 1)

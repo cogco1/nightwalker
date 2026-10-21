@@ -1,0 +1,311 @@
+{
+  "version": "combat-v07",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "passed": true,
+  "suite_count": 51,
+  "checks": 4933,
+  "suites": [
+    {
+      "suite": "core_v07",
+      "checks": 565,
+      "passed": true
+    },
+    {
+      "suite": "keybindings",
+      "checks": 74,
+      "passed": true
+    },
+    {
+      "suite": "keybindings_reload",
+      "checks": 21,
+      "passed": true
+    },
+    {
+      "suite": "air_combat",
+      "checks": 116,
+      "passed": true
+    },
+    {
+      "suite": "air_dash_animation_v14",
+      "checks": 174,
+      "passed": true
+    },
+    {
+      "suite": "contact_refresh_v07",
+      "checks": 6,
+      "passed": true
+    },
+    {
+      "suite": "moveset",
+      "checks": 1014,
+      "passed": true
+    },
+    {
+      "suite": "combat_state",
+      "checks": 18,
+      "passed": true
+    },
+    {
+      "suite": "rhythm_combat",
+      "checks": 94,
+      "passed": true
+    },
+    {
+      "suite": "enemy_attack",
+      "checks": 29,
+      "passed": true
+    },
+    {
+      "suite": "melee_rhythm_v06_30",
+      "checks": 42,
+      "passed": true
+    },
+    {
+      "suite": "melee_rhythm_v06",
+      "checks": 42,
+      "passed": true
+    },
+    {
+      "suite": "melee_rhythm_v06_144",
+      "checks": 42,
+      "passed": true
+    },
+    {
+      "suite": "player_hurt_30",
+      "checks": 52,
+      "passed": true
+    },
+    {
+      "suite": "player_hurt",
+      "checks": 52,
+      "passed": true
+    },
+    {
+      "suite": "player_hurt_144",
+      "checks": 52,
+      "passed": true
+    },
+    {
+      "suite": "perfect_counter",
+      "checks": 31,
+      "passed": true
+    },
+    {
+      "suite": "perfect_dodge_v05_30",
+      "checks": 41,
+      "passed": true
+    },
+    {
+      "suite": "perfect_dodge_v05",
+      "checks": 41,
+      "passed": true
+    },
+    {
+      "suite": "perfect_dodge_v05_144",
+      "checks": 41,
+      "passed": true
+    },
+    {
+      "suite": "sniper_combat_30",
+      "checks": 95,
+      "passed": true
+    },
+    {
+      "suite": "sniper_combat",
+      "checks": 135,
+      "passed": true
+    },
+    {
+      "suite": "sniper_combat_144",
+      "checks": 249,
+      "passed": true
+    },
+    {
+      "suite": "drone_combat_30",
+      "checks": 58,
+      "passed": true
+    },
+    {
+      "suite": "drone_combat",
+      "checks": 58,
+      "passed": true
+    },
+    {
+      "suite": "drone_combat_144",
+      "checks": 58,
+      "passed": true
+    },
+    {
+      "suite": "enemy_territory_v05_30",
+      "checks": 28,
+      "passed": true
+    },
+    {
+      "suite": "enemy_territory_v05",
+      "checks": 28,
+      "passed": true
+    },
+    {
+      "suite": "enemy_territory_v05_144",
+      "checks": 28,
+      "passed": true
+    },
+    {
+      "suite": "map_entry",
+      "checks": 33,
+      "passed": true
+    },
+    {
+      "suite": "combat_impact_v2",
+      "checks": 60,
+      "passed": true
+    },
+    {
+      "suite": "combat_impact_v2_144",
+      "checks": 60,
+      "passed": true
+    },
+    {
+      "suite": "effect_removal",
+      "checks": 32,
+      "passed": true
+    },
+    {
+      "suite": "effect_removal_144",
+      "checks": 72,
+      "passed": true
+    },
+    {
+      "suite": "thrust_path",
+      "checks": 60,
+      "passed": true
+    },
+    {
+      "suite": "jump_chase",
+      "checks": 43,
+      "passed": true
+    },
+    {
+      "suite": "jump_chase_144",
+      "checks": 43,
+      "passed": true
+    },
+    {
+      "suite": "smooth_charge_links",
+      "checks": 92,
+      "passed": true
+    },
+    {
+      "suite": "smooth_charge_links_144",
+      "checks": 92,
+      "passed": true
+    },
+    {
+      "suite": "primary_charge_chain",
+      "checks": 114,
+      "passed": true
+    },
+    {
+      "suite": "primary_charge_chain_144",
+      "checks": 133,
+      "passed": true
+    },
+    {
+      "suite": "direct_charge",
+      "checks": 26,
+      "passed": true
+    },
+    {
+      "suite": "direct_charge_144",
+      "checks": 26,
+      "passed": true
+    },
+    {
+      "suite": "charged_draw",
+      "checks": 71,
+      "passed": true
+    },
+    {
+      "suite": "charged_draw_144",
+      "checks": 71,
+      "passed": true
+    },
+    {
+      "suite": "heavy_cleave",
+      "checks": 67,
+      "passed": true
+    },
+    {
+      "suite": "roll_thrust_motion",
+      "checks": 80,
+      "passed": true
+    },
+    {
+      "suite": "shift_controls",
+      "checks": 40,
+      "passed": true
+    },
+    {
+      "suite": "locomotion_blade",
+      "checks": 260,
+      "passed": true
+    },
+    {
+      "suite": "factory_prologue",
+      "checks": 67,
+      "passed": true
+    },
+    {
+      "suite": "requested_enemy_gallery",
+      "checks": 107,
+      "passed": true
+    }
+  ],
+  "verification_note": "One complete retained-suite pass plus focused reruns for the corrected 6-frame perfect-dodge asset assertions and final map entry; 51 current suites passed.",
+  "gpu": {
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "renderer": "GL Compatibility",
+    "map_entry_checks": 33,
+    "melee_capture_frames": 348,
+    "screenshots": [
+      "entry",
+      "whitebox_start",
+      "sniper_windup",
+      "sniper_recovery",
+      "drone_combat",
+      "prologue_start",
+      "prologue_1540",
+      "prologue_3420",
+      "prologue_6020"
+    ]
+  },
+  "prologue": {
+    "source_commit": "496c1884326bbd567c57b66f4e51195df02341e7",
+    "scene": "game/scenes/battlefield_run_test.tscn",
+    "art_size": [
+      6144,
+      512
+    ],
+    "layers": [
+      "far",
+      "mid",
+      "near",
+      "foreground"
+    ],
+    "art_unchanged": true,
+    "far_parallax": 0.28,
+    "mid_parallax": 0.58,
+    "unchanged_map_asset_files": 53
+  },
+  "removed": [
+    "screen split and flying/charged sword qi",
+    "F10 prototype toggle",
+    "unrequested enemy types and gallery variants",
+    "underground hospital runtime map and obsolete related QA"
+  ],
+  "remaining_enemies": [
+    "sniper",
+    "cannon_drone"
+  ],
+  "game_tree": "34c089d348f5f0c345bc9fcdd9fca11ffcfb2397"
+}

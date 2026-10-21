@@ -38,14 +38,14 @@ func run() -> void:
 		finish()
 		return
 	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/boot.tscn", "The original game entry remains unchanged")
-	check(scene.units.size() == 8, "Eight selected enemy variants are delivered")
+	check(scene.units.size() == 2, "Only sniper and cannon-drone art remains")
 	check(Vector2i(int(scene.manifest.cell_size[0]), int(scene.manifest.cell_size[1])) == Vector2i(96, 64)
 		and Vector2i(int(scene.manifest.foot_anchor[0]), int(scene.manifest.foot_anchor[1])) == Vector2i(48, 57), "All poses use the same native cell and fixed floor anchor")
 	check(scene.scale == Vector2.ONE and scene.actor.scale == Vector2.ONE and scene.sprite.scale == Vector2.ONE, "The viewer never scales character sprites")
 	check(root.content_scale_size == Vector2i(320, 180) and root.content_scale_stretch == Window.CONTENT_SCALE_STRETCH_INTEGER, "The viewer retains a 320×180 nearest-neighbor integer viewport")
 	var frame_total := 0
 	var action_total := 0
-	var expected := ["laser_drone_B", "sniper_B", "rifle_guard_A", "rifle_guard_C", "shield_guard_B", "blade_assault_C", "breacher_A", "tether_guard_B"]
+	var expected := ["laser_drone_B", "sniper_B"]
 	for unit_index in range(scene.units.size()):
 		var unit: Dictionary = scene.units[unit_index]
 		check(unit.unit == expected[unit_index], "The chosen variant is preserved: " + expected[unit_index])
@@ -71,7 +71,7 @@ func run() -> void:
 		scene.select_action("hover" if unit_index == 0 else "walk")
 		await create_timer(0.22).timeout
 		check(scene.sprite.is_playing() and scene.sprite.frame > 0, "Selecting a walk or hover action plays continuously in place: " + unit.unit)
-	check(frame_total == 144 and action_total == 18, "All 18 requested actions and 144 new native frames are delivered")
+	check(frame_total == 48 and action_total == 6, "Only the six actions of the two retained types are delivered")
 	scene.select_unit(1)
 	scene.select_action("idle")
 	scene.trigger_attack()
@@ -92,14 +92,14 @@ func run() -> void:
 	var sniper_frames: SpriteFrames = scene.sprite.sprite_frames
 	for index in range(8):
 		check(sniper_frames.get_frame_texture("right_prone_up", index) == sniper_frames.get_frame_texture("right_prone_down", 7 - index), "Rising reuses the lowering artwork in reverse: %d" % index)
-	for unit_index in [0, 2, 3, 4, 5, 6, 7]:
+	for unit_index in [0]:
 		scene.select_unit(unit_index)
 		scene.trigger_attack()
 		var wanted := "laser" if unit_index == 0 else ("attack" if unit_index in [5, 6] else "fire")
 		check(scene.current_action == wanted, "The attack shortcut selects the correct weapon animation: " + str(unit_index))
 		scene._on_animation_finished()
 		check(scene.current_action == ("hover" if unit_index == 0 else "idle"), "A completed attack returns to the correct resting pose: " + str(unit_index))
-	scene.select_unit(2)
+	scene.select_unit(1)
 	key(KEY_D, true)
 	await create_timer(0.13).timeout
 	check(scene.actor.position.x > 160 and scene.actor.position.x == roundf(scene.actor.position.x) and scene.current_action == "walk", "D moves the native sprite along the stage on integer coordinates")
@@ -125,7 +125,7 @@ func run() -> void:
 
 func finish() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUTPUT))
-	var report := {"passed": failures.is_empty(), "checks": checks, "failures": failures, "units": 8, "actions": 18, "native_action_frames": 144}
+	var report := {"passed": failures.is_empty(), "checks": checks, "failures": failures, "units": 2, "actions": 6, "native_action_frames": 48}
 	var file := FileAccess.open(OUTPUT + "headless_report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t") + "\n")
 	print("ENEMY_GALLERY_TEST " + JSON.stringify(report))
