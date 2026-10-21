@@ -1,12 +1,12 @@
 extends CharacterBody2D
-## Side-view human of the chapter nights, drawn in code on the native grid until the real sprites exist (like
-## story_target.gd). Origin is the feet; about 28 px tall. The hero hits it like any target (take_damage,
+## Side-view human enemy, drawn in code on the native grid until the real sprites exist. Origin is the feet; about
+## 28 px tall. The hero hits it like any target (take_damage,
 ## damage_point, receive_hit_reaction, knock_up, knock_back): a hit flinches it, a launcher throws it up, airborne
 ## hits juggle it, the last hit leaves a body on the floor. It does not block the hero (a collision exception).
 ## Its own time runs on the world clock (GameSession.world_time_scale), so the perfect-dodge slow motion slows it.
 ##
 ## The kinds (sniper.gd) say what an active one does in think() and how it looks
-## in figure(); night_fight.gd wakes them (active), holds them during story moments (held) and binds the hero.
+## in figure(); the scene that spawns them wakes them (active), can hold them still (held) and binds the hero.
 
 signal defeated(enemy: Node2D)
 
@@ -19,19 +19,14 @@ const FLASH := Color("f0e8d8")
 const BLOOD := Color("5a0f1c")
 const SLASH := Color("8ebce8")
 const SLASH_CORE := Color("f2f8ff")
-## Feet above this height are on floor 2 of the side-view hospital (floor 1 at 286, floor 2 at 164): floor 1's
-## ceiling, the floor-2 slab, ends at 174, so a hero jumping on floor 1 keeps the feet below about 200.
-const FLOOR_SPLIT := 190.0
 
 @export var max_hp := 4
 var hp := 4
-## Chapter id (chapter1.json nights.*.enemies[].id) and kind name.
-var id := ""
+## Kind name (sniper.gd sets "sniper").
 var kind := ""
-var floor_id := 1
-## Woken by the night: it fights, flees or begs; asleep it keeps to its post.
+## Woken by its scene: it fights; asleep it keeps to its post.
 var active := false
-## Story moments (death, dialogue, execution) hold everyone still.
+## Held still by its scene, e.g. while the hero is down.
 var held := false
 var dead := false
 var hero: CharacterBody2D
@@ -71,7 +66,6 @@ func _ready() -> void:
 	glow.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(glow)
 	glow.draw.connect(_draw_glow_layer)
-	floor_id = 2 if position.y < FLOOR_SPLIT else 1
 
 
 ## The hero it reacts to; the hero walks through it rather than being blocked.
@@ -85,8 +79,9 @@ func world_scale() -> float:
 	return float(session.world_time_scale) if session != null else 1.0
 
 
+## The base has no floors; a kind that only engages on its own level (sniper.gd) overrides this.
 func hero_on_my_floor() -> bool:
-	return is_instance_valid(hero) and (2 if hero.global_position.y < FLOOR_SPLIT else 1) == floor_id
+	return is_instance_valid(hero)
 
 
 ## Horizontal offset to the hero (positive: the hero is to the right).

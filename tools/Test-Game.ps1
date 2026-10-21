@@ -11,6 +11,13 @@ $suites = @(
     @{ Name = 'keybindings_reload';       Script = 'test_keybindings'; Extra = @('--', '--reload-profile') },
     @{ Name = 'air_combat';               Script = 'test_air_combat' },
     @{ Name = 'air_dash_animation_v14';   Script = 'test_air_dash_animation_v14' },
+    # Safehouse and night street (Run-Sandbox.cmd, Run-NightStreet.cmd, F8 between them).
+    @{ Name = 'scene_integration_v14';    Script = 'test_scene_integration_v14' },
+    @{ Name = 'scene_routes';             Script = 'test_scene_routes' },
+    @{ Name = 'interior_lighting';        Script = 'test_interior_lighting' },
+    @{ Name = 'home_furniture';           Script = 'test_home_furniture' },
+    @{ Name = 'level_shared';             Script = 'test_level_shared' },
+    @{ Name = 'night_street_proto';       Script = 'test_night_street_proto' },
     # Fps: physics/process rate passed as --fixed-fps (default 60); contact_refresh is the high-refresh case.
     @{ Name = 'contact_refresh_v07';      Script = 'test_contact_refresh_v07'; Fps = 144 },
     @{ Name = 'moveset';                  Script = 'test_moveset' },

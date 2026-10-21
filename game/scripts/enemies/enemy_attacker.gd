@@ -10,7 +10,7 @@ extends Node
 ## Time runs on the world clock: delta times GameSession.world_time_scale, and the paused tree of a hit-stop
 ## stops it.
 ##
-## Floor-bound bodies (the chapter's guards, scripts/enemies/guard.gd) set horizontal (the lunge keeps to the
+## Floor-bound bodies set horizontal (the lunge keeps to the
 ## floor), standoff (it stops short of the hero), returns = false (no drift back: the post is where it stopped),
 ## mirror_hitbox (the box is drawn facing right) and damage; armed = false holds the next attack back.
 

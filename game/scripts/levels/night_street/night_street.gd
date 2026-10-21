@@ -23,9 +23,8 @@ const AMBIENT := Color(0.6, 0.55, 0.76)
 # name, scroll factor (0 = fixed to the screen, 1 = moves with the street)
 const LAYERS := [["sky", 0.0], ["far_towers", 0.15], ["petra", 0.34], ["district_c", 0.7], ["street", 1.0]]
 # Street lights come from the art: tools/art/assemble_night_street.py writes one entry per self-lit fixture
-# (lamp heads, kiosk sign, vending machine, ID gate) into lights.json. layout.json holds the hand-placed data:
-# hover drone spots ("targets") and "fallback_lights" (same entry format, colour as hex or [r, g, b]) used
-# only if lights.json is missing.
+# (lamp heads, kiosk sign, vending machine, ID gate) into lights.json. layout.json holds the hand-placed
+# "fallback_lights" (same entry format, colour as hex or [r, g, b]) used only if lights.json is missing.
 const LIGHTS_PATH := "res://assets/night_street/lights.json"
 const LAYOUT_PATH := "res://assets/night_street/layout.json"
 # Street lights only reach the street layer and the actors; the parallax backdrop keeps its own colours.

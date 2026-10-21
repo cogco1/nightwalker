@@ -1,7 +1,6 @@
 extends Node
 ## Main entry: the repository's factory/sand prologue and the requested combat whitebox.
 
-const STORY_STATE = preload("res://scripts/core/story_state.gd")
 const CONTROLS = preload("res://scripts/core/controls.gd")
 const UI = preload("res://scripts/ui/pixel_ui.gd")
 const WHITEBOX := "res://scenes/whitebox_test.tscn"
@@ -10,7 +9,6 @@ const PROLOGUE := "res://scenes/battlefield_run_test.tscn"
 
 func _ready() -> void:
 	CONTROLS.install()
-	STORY_STATE.ensure(get_tree()).end_chapter()
 	get_tree().root.content_scale_size=Vector2i(320,180)
 	get_tree().root.content_scale_mode=Window.CONTENT_SCALE_MODE_VIEWPORT
 	get_tree().root.title="夜行者"

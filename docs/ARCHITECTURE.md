@@ -6,6 +6,7 @@
 - `sniper.gd`：三段距离行为、驻守、激光瞄准、可见狙击弹、枪托前摇/命中/收招。枪托收招完成接READY，不接开火的RECOVER动画。
 - `cannon_drone.gd`：阻尼悬浮、机炮点射、低血自爆和撤远冲撞。`enemy_territory.gd`共享范围约束；自爆只属于无人机。
 - `player.gd`：共用受击入口，0.65秒受击保护、0.3秒硬直、0.9秒跨来源近战保护；硬直期间可缓冲闪避。`player_hit.gdshader`负责正背面受击形变，专用完美闪避动画复用现有姿势。伤害、曳光、击退和实体碰撞按既有组件处理。
+- `home_601`（`Run-Sandbox.cmd`）与 `night_street`（`Run-NightStreet.cmd`）：保留的安全屋和夜街原型。`scene_routes.gd` 只负责两者之间的 F8 往返，`interior_lighting.gd` 只服务安全屋。
 - `game_session.gd`：声音、命中停顿、小幅镜头反馈、设置和完美闪避慢动作。已移除ImpactBurst、切屏着色器和F10开关。`player_fx.gd`已移除ChargedDraw刀气节点。
 
 当前敌怪只有狙击手与机炮无人机。测试目录中的训练靶、合成攻击驱动只用于自动验证，没有游戏入口。已删除的医院和其他敌怪的历史记录不得用于恢复功能。后续修改必须遵守根目录AGENTS.md及敌人目录中的区域/近战约定。
